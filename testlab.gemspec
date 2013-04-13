@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = TestLab::VERSION
   gem.authors       = ["Zachary Patten"]
   gem.email         = ["zachary@jovelabs.com"]
-  gem.description   = %q{A framework for building virtual testing laboratories}
-  gem.summary       = %q{A framework for building virtual testing laboratories}
+  gem.description   = %q{A framework for building virtual laboratories}
+  gem.summary       = %q{A framework for building virtual laboratories}
   gem.homepage      = "https://github.com/zpatten"
 
   gem.files         = `git ls-files`.split($/)
