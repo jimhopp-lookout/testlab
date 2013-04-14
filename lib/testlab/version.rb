@@ -1,3 +1,6 @@
 module TestLab
-  VERSION = "0.0.1"
+  unless const_defined?(:VERSION)
+    # TestLab Gem Version
+    VERSION = "0.0.1"
+  end
 end
