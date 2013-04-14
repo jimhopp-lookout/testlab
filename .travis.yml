@@ -1,0 +1,16 @@
+language: ruby
+
+rvm:
+  - 1.9.2
+  - 1.9.3
+  - 2.0.0
+
+before_install:
+  - sudo apt-get -qq -y --force-yes update
+
+bundler_args: --binstubs
+
+script: "bin/rake test"
+
+notifications:
+  irc: "irc.freenode.net#jovelabs"
