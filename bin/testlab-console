@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'pry'
+require 'testlab'
+
+tl = TestLab.new
+
+##
+#
+# Welcome to the Cucumber-Chef pry console!
+#
+##
+binding.pry
