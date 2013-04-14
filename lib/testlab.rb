@@ -1,5 +1,13 @@
-require "testlab/version"
+require 'ztk'
 
-module TestLab
-  # Your code goes here...
+require 'testlab/version'
+
+# Top-Level LXC Class
+#
+# @author Zachary Patten <zachary@jovelabs.net>
+class TestLab
+
+  # Top-Level Error Class
+  class TestLabError < StandardError; end
+
 end
