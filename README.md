@@ -1,7 +1,7 @@
-[![Gem Version](https://badge.fury.io/rb/lxc.png)](http://badge.fury.io/rb/lxc)
-[![Dependency Status](https://gemnasium.com/zpatten/lxc.png)](https://gemnasium.com/zpatten/lxc)
-[![Build Status](https://secure.travis-ci.org/zpatten/lxc.png)](http://travis-ci.org/zpatten/lxc)
-[![Code Climate](https://codeclimate.com/github/zpatten/lxc.png)](https://codeclimate.com/github/zpatten/lxc)
+[![Gem Version](https://badge.fury.io/rb/testlab.png)](http://badge.fury.io/rb/testlab)
+[![Dependency Status](https://gemnasium.com/zpatten/testlab.png)](https://gemnasium.com/zpatten/testlab)
+[![Build Status](https://secure.travis-ci.org/zpatten/testlab.png)](http://travis-ci.org/zpatten/testlab)
+[![Code Climate](https://codeclimate.com/github/zpatten/testlab.png)](https://codeclimate.com/github/zpatten/testlab)
 
 # TestLab
 
@@ -11,15 +11,15 @@ A framework for building lightweight virtual laboratories using LXC
 
 Source:
 
-* https://github.com/zpatten/lxc
+* https://github.com/zpatten/testlab
 
 Issues:
 
-* https://github.com/zpatten/lxc/issues
+* https://github.com/zpatten/testlab/issues
 
 Documentation:
 
-* http://zpatten.github.com/lxc/
+* http://zpatten.github.com/testlab/
 
 # LICENSE
 
