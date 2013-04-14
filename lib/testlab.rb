@@ -10,4 +10,7 @@ class TestLab
   # Top-Level Error Class
   class TestLabError < StandardError; end
 
+  autoload :Provider, 'testlab/provider'
+  autoload :Provisioner, 'testlab/provisioner'
+
 end
