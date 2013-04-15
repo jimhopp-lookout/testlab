@@ -13,4 +13,7 @@ class TestLab
   autoload :Provider, 'testlab/provider'
   autoload :Provisioner, 'testlab/provisioner'
 
+  autoload :Container, 'testlab/container'
+  autoload :Network, 'testlab/network'
+
 end
