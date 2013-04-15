@@ -7,8 +7,10 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
-    belongs_to  :lab,         :class_name => 'TestLab::Lab'
+    belongs_to  :host,        :class_name => 'TestHost::Host'
     belongs_to  :network,     :class_name => 'TestLab::Network'
+
+    attribute   :provisioner
 
     attribute   :name
     attribute   :ip
@@ -17,9 +19,7 @@ class TestLab
     attribute   :distro
     attribute   :release
     attribute   :arch
-
-    attribute   :provider
-    attribute   :provisioner
+    attribute   :config
   end
 
 end

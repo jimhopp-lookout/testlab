@@ -7,12 +7,11 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Network < ZTK::DSL::Base
-    belongs_to  :lab,         :class_name => 'TestLab::Lab'
+    belongs_to  :host,        :class_name => 'TestLab::Host'
 
     has_many    :containers,  :class_name => 'TestLab::Container'
 
-    attribute   :name
-    attribute   :network
+    attribute   :netaddr
     attribute   :netmask
   end
 

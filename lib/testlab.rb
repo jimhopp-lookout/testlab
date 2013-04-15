@@ -13,7 +13,33 @@ class TestLab
   autoload :Provider, 'testlab/provider'
   autoload :Provisioner, 'testlab/provisioner'
 
+  autoload :Labfile, 'testlab/labfile'
+  autoload :Host, 'testlab/host'
   autoload :Container, 'testlab/container'
   autoload :Network, 'testlab/network'
+
+  # attr_accessor :provider, :containers
+
+  def initialize(labfile='Labfile', ui=ZTK::UI.new)
+    @ui           = ui
+    @labfile      = TestLab::Labfile.load(labfile)
+    @provisioner  = TestLab::Provisioner.new(@labfile.provisioner)
+  end
+
+  def hosts
+    @labfile.hosts
+  end
+
+  def config
+    @labfile.config
+  end
+
+  def provider
+    @provider
+  end
+
+  def provisioner
+    @provisioner
+  end
 
 end

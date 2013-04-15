@@ -7,7 +7,9 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Labfile < ZTK::DSL::Base
-    has_many :labs, :class_name => 'TestLab::Lab'
+    has_many    :hosts,       :class_name => 'TestLab::Host'
+
+    attribute   :config
   end
 
 end

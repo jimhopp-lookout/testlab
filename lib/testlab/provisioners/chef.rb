@@ -9,6 +9,11 @@ class TestLab
     #
     # @author Zachary Patten <zachary@jovelabs.net>
     class Chef
+
+      def initialize(ui=ZTK::UI.new)
+        @ui = ui
+      end
+
     end
 
   end
