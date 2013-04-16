@@ -15,6 +15,7 @@ class TestLab
     attribute   :ip
     attribute   :port
 
+    attribute   :config
     attribute   :provider
 
     def method_missing(method_name, *method_args)

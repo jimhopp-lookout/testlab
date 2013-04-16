@@ -13,6 +13,8 @@ class TestLab
 
     attribute   :netaddr
     attribute   :netmask
+
+    attribute   :config
   end
 
 end
