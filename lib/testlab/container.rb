@@ -19,6 +19,7 @@ class TestLab
     attribute   :distro
     attribute   :release
     attribute   :arch
+
     attribute   :config
   end
 
