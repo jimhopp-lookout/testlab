@@ -18,25 +18,20 @@
 #
 ################################################################################
 require 'simplecov'
+require 'coveralls'
+
+# SimpleCov.formatter = Coveralls::SimpleCov::Formatter
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter
+]
+
 SimpleCov.start do
   add_filter '/spec/'
-end if ENV["COVERAGE"]
-################################################################################
-require 'testlab'
-
-ENV['LOG_LEVEL'] = "DEBUG"
-
-RSpec.configure do |config|
-
-  config.before(:all) do
-    $stdout = File.open("/dev/null", "w")
-    $stderr = File.open("/dev/null", "w")
-    $stdin = File.open("/dev/null", "r")
-    $logger = ZTK::Logger.new(File.join("/tmp", "test.log"))
-
-    $logger.info { "=" * 80 }
-    $logger.info { "STARTING TESTLAB v#{TestLab::VERSION} TEST RUN @ #{Time.now.utc}" }
-    $logger.info { "=" * 80 }
-  end
-
 end
+
+Coveralls.wear!
+################################################################################
+
+require 'testlab'
