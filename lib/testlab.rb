@@ -23,7 +23,6 @@ class TestLab
   def initialize(labfile='Labfile', ui=ZTK::UI.new)
     @ui           = ui
     @labfile      = TestLab::Labfile.load(labfile)
-    @provisioner  = TestLab::Provisioner.new(@labfile.provisioner)
   end
 
   def hosts
