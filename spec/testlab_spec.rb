@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe TestLab do
 
-  subject { TestLab.new }
+  subject { TestLab.new(File.join(File.dirname(__FILE__), 'support', 'Labfile')) }
 
   describe "class" do
 

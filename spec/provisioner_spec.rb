@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe TestLab::Provisioner do
 
-  subject { TestLab::Provisioner.new }
+  subject { TestLab::Provisioner.new(TestLab::Provisioner::Shell) }
 
   describe "class" do
 
