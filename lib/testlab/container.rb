@@ -10,6 +10,7 @@ class TestLab
     belongs_to  :host,        :class_name => 'TestHost::Host'
     belongs_to  :network,     :class_name => 'TestLab::Network'
 
+    attribute   :config
     attribute   :provisioner
 
     attribute   :name
@@ -19,8 +20,6 @@ class TestLab
     attribute   :distro
     attribute   :release
     attribute   :arch
-
-    attribute   :config
   end
 
 end

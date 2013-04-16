@@ -12,11 +12,11 @@ class TestLab
     has_many    :containers,  :class_name => 'TestLab::Container'
     has_many    :networks,    :class_name => 'TestLab::Network'
 
-    attribute   :ip
-    attribute   :port
-
     attribute   :config
     attribute   :provider
+
+    attribute   :ip
+    attribute   :port
 
     def method_missing(method_name, *method_args)
       if TestLab::Provider::PROXY_METHODS.include?(method_name.to_s)
