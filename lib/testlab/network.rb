@@ -11,9 +11,6 @@ class TestLab
     has_many    :containers,  :class_name => 'TestLab::Container'
 
     attribute   :config
-
-    attribute   :netaddr
-    attribute   :netmask
   end
 
 end
