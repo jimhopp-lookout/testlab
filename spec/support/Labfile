@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+host :vagrant do
+  provider    TestLab::Provider::Vagrant
+  config      ({
+    :vagrant => {
+      :ip => "192.168.33.10",
+      :cpus => 4,
+      :memory => 4096
+    }
+  })
+
+  network "west-1" do
+  end
+
+  container "devop-test-1" do
+    provisioner   TestLab::Provisioner::Chef
+    distro        "ubuntu"
+    release       "lucid"
+    persist       true
+    ip            "192.168.0.1"
+    mac           "00:00:5e:35:ea:d5"
+
+    config ({
+      :chef => {
+        :environment => "test",
+        :run_list => [
+          "role[base]",
+          "role[chef-client]"
+        ]
+      }
+    })
+  end
+
+end
