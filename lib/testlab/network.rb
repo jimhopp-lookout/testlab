@@ -8,8 +8,9 @@ class TestLab
   # @author Zachary Patten <zachary@jovelabs.net>
   class Network < ZTK::DSL::Base
     belongs_to  :host,        :class_name => 'TestLab::Host'
-    has_many    :containers,  :class_name => 'TestLab::Container'
+    # has_many    :containers,  :class_name => 'TestLab::Container'
 
+    attribute   :cidr
     attribute   :config
   end
 

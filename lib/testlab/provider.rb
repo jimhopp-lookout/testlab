@@ -15,9 +15,23 @@ class TestLab
 
     attr_accessor :provider
 
-    def initialize(klass, ui=ZTK::UI.new)
-      @ui       = ui
-      @provider = klass.new
+    def initialize(klass, config={}, ui=nil)
+      @ui       = (ui || TestLab.ui)
+
+      @config   = config
+      @provider = klass.new(@config, @ui)
+    end
+
+    def method_missing(method_name, *method_args)
+      if TestLab::Provider::PROXY_METHODS.include?(method_name.to_s)
+        @ui.logger.debug { "Provider.#{method_name}" }
+        result = @provider.send(method_name.to_sym, *method_args)
+        # splat = [method_name, *method_args].flatten.compact
+        # @ui.logger.debug { "Provider: #{splat.inspect}=#{result.inspect}" }
+        result
+      else
+        super(method_name, *method_args)
+      end
     end
 
   end

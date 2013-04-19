@@ -8,7 +8,8 @@ class TestLab
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
     belongs_to  :host,        :class_name => 'TestHost::Host'
-    belongs_to  :network,     :class_name => 'TestLab::Network'
+    # belongs_to  :network,     :class_name => 'TestLab::Network'
+    attribute   :links
 
     attribute   :config
     attribute   :provisioner
