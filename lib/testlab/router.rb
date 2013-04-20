@@ -9,7 +9,7 @@ class TestLab
   class Router < ZTK::DSL::Base
     belongs_to  :node,        :class_name => 'TestNode::Node'
 
-    attribute   :links
+    attribute   :interfaces
 
     def initialize(*args)
       super(*args)
@@ -58,6 +58,12 @@ class TestLab
     def before_down
       @ui.logger.debug { "Router Callback: Before Down: #{self.id} " }
       self.down
+    end
+
+    # Method missing handler
+    def method_missing(method_name, *method_args)
+      @ui.logger.debug { "ROUTER METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
+      super(method_name, *method_args)
     end
 
   end

@@ -29,17 +29,21 @@ class TestLab
     @labfile      = TestLab::Labfile.load(labfile)
   end
 
-  # def nodes
-  #   TestLab::Node.all
-  # end
+  def nodes
+    TestLab::Node.all
+  end
 
-  # def containers
-  #   TestLab::Container.all
-  # end
+  def containers
+    TestLab::Container.all
+  end
 
-  # def networks
-  #   TestLab::Network.all
-  # end
+  def routers
+    TestLab::Router.all
+  end
+
+  def networks
+    TestLab::Network.all
+  end
 
   # def config
   #   @labfile.config
@@ -47,19 +51,24 @@ class TestLab
 
   def status
     ZTK::Report.new.spreadsheet(TestLab::Node.all, TestLab::Provider::STATUS_KEYS) do |node|
-      OpenStruct.new(node.status)
+      OpenStruct.new(node.status.merge(:id => node.id))
     end
   end
 
   # Proxy various method calls to our subordinate classes
+  def method_proxy(method_name, *method_args)
+    @@ui.logger.debug { "TestLab.#{method_name}" }
+    TestLab::Node.all.map do |node|
+      node.send(method_name.to_sym, *method_args)
+    end
+  end
+
+  # Method missing handler
   def method_missing(method_name, *method_args)
-    puts("TESTLAB METHOD_MISSING -- #{method_name.inspect} -- #{method_args.inspect}")
+    @@ui.logger.debug { "TESTLAB METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
 
     if TestLab::Provider::PROXY_METHODS.include?(method_name)
-      @@ui.logger.debug { "TestLab.#{method_name}" }
-      TestLab::Node.all.map do |node|
-        node.send(method_name.to_sym, *method_args)
-      end
+      method_proxy(method_name, *method_args)
     else
       super(method_name, *method_args)
     end

@@ -35,27 +35,15 @@ class TestLab
       def initialize(config={}, ui=nil)
         @config   = config
         @ui       = (ui || TestLab.ui)
+
+        render_vagrantfile
       end
 
 ################################################################################
 
       # Create the Vagrant instance
       def create
-        @ui.logger.debug { "@config == #{@config.inspect}" }
-
-        klass = self.class.to_s.split('::').last
-        @ui.logger.debug { "klass == #{klass.inspect}" }
-
-        ZTK::Benchmark.bench(:message => "Creating #{klass} instance", :mark => "completed in %0.4f seconds.", :ui => @ui) do
-          vagrantfile_template = File.join(TestLab::Provider.template_dir, klass.downcase, "Vagrantfile.erb")
-          vagrantfile          = File.join(@config[:repo], "Vagrantfile")
-          IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, @config))
-
-          self.vagrant_cli("up", self.instance_id)
-          ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120).wait
-        end
-
-        self.state
+        self.up
       end
 
       # Destroy Vagrant-controlled VM
@@ -72,8 +60,6 @@ class TestLab
 
       # Online Vagrant-controlled VM
       def up
-        !self.exists? and raise VagrantError, MSG_NO_LAB
-
         self.vagrant_cli("up", self.instance_id)
         ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120, :ui => @ui).wait
 
@@ -152,6 +138,10 @@ class TestLab
         (@config[:vagrant][:user] || "vagrant")
       end
 
+      def identity
+        (@config[:vagrant][:identity] || File.join(ENV['HOME'], ".vagrant.d", "insecure_private_key"))
+      end
+
       def ip
         (@config[:vagrant][:ip] || "192.168.33.10")
       end
@@ -169,6 +159,12 @@ class TestLab
         @ui.logger.debug { "command == #{command.inspect}" }
 
         ZTK::Command.new(:ui => @ui).exec(command, :silence => true)
+      end
+
+      def render_vagrantfile
+        vagrantfile_template = File.join(TestLab::Provider.template_dir, "vagrant", "Vagrantfile.erb")
+        vagrantfile          = File.join(@config[:repo], "Vagrantfile")
+        IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, @config))
       end
 
 ################################################################################

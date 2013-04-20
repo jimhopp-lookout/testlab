@@ -61,6 +61,12 @@ class TestLab
       self.down
     end
 
+    # Method missing handler
+    def method_missing(method_name, *method_args)
+      @ui.logger.debug { "NETWORK METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
+      super(method_name, *method_args)
+    end
+
   end
 
 end
