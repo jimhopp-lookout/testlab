@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe TestLab::Provider do
 
-  subject { TestLab::Provider.new(TestLab::Provider::Local) }
+  subject { TestLab::Provider.new }
 
   describe "class" do
 

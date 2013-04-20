@@ -11,24 +11,26 @@ class TestLab
     class Vagrant
 
       # States which indicate the VM is running
-      RUNNING_STATES      = %w(running).map(&:to_sym)
+      RUNNING_STATES  = %w(running).map(&:to_sym)
 
       # States which indicate the VM is shut down
-      SHUTDOWN_STATES     = %w(aborted paused saved poweroff).map(&:to_sym)
+      SHUTDOWN_STATES = %w(aborted paused saved poweroff).map(&:to_sym)
 
       # The state we report if we can not determine the VM state
-      UNKNOWN_STATE       = :unknown
+      UNKNOWN_STATE   = :unknown
 
       # A collection of all valid states the VM can be in
-      VALID_STATES        = (RUNNING_STATES + SHUTDOWN_STATES).flatten
+      VALID_STATES    = (RUNNING_STATES + SHUTDOWN_STATES).flatten
 
       # A collection of all invalid states the VM can be in
-      INVALID_STATES      = (%w(not_created).map(&:to_sym) + [UNKNOWN_STATE]).flatten
+      INVALID_STATES  = (%w(not_created).map(&:to_sym) + [UNKNOWN_STATE]).flatten
 
       # A collection of all states the VM can be in
-      ALL_STATES          = (VALID_STATES + INVALID_STATES).flatten
+      ALL_STATES      = (VALID_STATES + INVALID_STATES).flatten
 
-      MSG_NO_LAB          = %(We could not find a test lab!)
+      MSG_NO_LAB      = %(We could not find a test lab!)
+
+################################################################################
 
       def initialize(config={}, ui=nil)
         @config   = config
@@ -45,11 +47,11 @@ class TestLab
         @ui.logger.debug { "klass == #{klass.inspect}" }
 
         ZTK::Benchmark.bench(:message => "Creating #{klass} instance", :mark => "completed in %0.4f seconds.", :ui => @ui) do
-          vagrantfile_template  = File.join(TestLab.gem_dir, "lib", "testlab", "providers", "templates", klass.downcase, "Vagrantfile.erb")
-          vagrantfile           = File.join(@config[:repo], "Vagrantfile")
+          vagrantfile_template = File.join(TestLab::Provider.template_dir, klass.downcase, "Vagrantfile.erb")
+          vagrantfile          = File.join(@config[:repo], "Vagrantfile")
           IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, @config))
 
-          self.vagrant_cli("up", id)
+          self.vagrant_cli("up", self.instance_id)
           ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120).wait
         end
 
@@ -60,7 +62,8 @@ class TestLab
       def destroy
         !self.exists? and raise VagrantError, MSG_NO_LAB
 
-        self.vagrant_cli("destroy", "--force", id)
+        self.down
+        self.vagrant_cli("destroy", "--force", self.instance_id)
 
         self.state
       end
@@ -71,8 +74,8 @@ class TestLab
       def up
         !self.exists? and raise VagrantError, MSG_NO_LAB
 
-        self.vagrant_cli("up", id)
-        ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120).wait
+        self.vagrant_cli("up", self.instance_id)
+        ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120, :ui => @ui).wait
 
         self.state
       end
@@ -81,7 +84,7 @@ class TestLab
       def down
         !self.exists? and raise VagrantError, MSG_NO_LAB
 
-        self.vagrant_cli("halt", id)
+        self.vagrant_cli("halt", self.instance_id)
 
         self.state
       end
@@ -100,7 +103,7 @@ class TestLab
 
       # Inquire the state of the Vagrant-controlled VM
       def state
-        output = self.vagrant_cli("status | grep '#{id}'").output
+        output = self.vagrant_cli("status | grep '#{self.instance_id}'").output
         result = UNKNOWN_STATE
         ALL_STATES.map{ |s| s.to_s.gsub('_', ' ') }.each do |state|
           if output =~ /#{state}/
@@ -109,6 +112,17 @@ class TestLab
           end
         end
         result.to_sym
+      end
+
+      def status
+        {
+          :instance_id => self.instance_id,
+          :state => self.state,
+          :user => self.user,
+          :ip => self.ip,
+          :port => self.port,
+          :provider => self.class
+        }
       end
 
 ################################################################################
@@ -130,27 +144,31 @@ class TestLab
 
 ################################################################################
 
-      def id
+      def instance_id
         (@config[:vagrant][:id] || "testlab-#{ENV['USER']}".downcase)
       end
 
       def user
-        "vagrant"
+        (@config[:vagrant][:user] || "vagrant")
       end
 
       def ip
-        "192.168.33.10"
+        (@config[:vagrant][:ip] || "192.168.33.10")
       end
 
       def port
-        22
+        (@config[:vagrant][:port] || 22)
       end
 
 ################################################################################
 
       def vagrant_cli(*args)
+        @ui.logger.debug { "args == #{args.inspect}" }
+
         command = TestLab.build_command("vagrant", *args)
-        ZTK::Command.new.exec(command, :silence => true)
+        @ui.logger.debug { "command == #{command.inspect}" }
+
+        ZTK::Command.new(:ui => @ui).exec(command, :silence => true)
       end
 
 ################################################################################

@@ -14,10 +14,11 @@ class TestLab
   autoload :Provisioner, 'testlab/provisioner'
 
   autoload :Labfile, 'testlab/labfile'
-  autoload :Host, 'testlab/host'
+  autoload :Node, 'testlab/node'
   autoload :Router, 'testlab/router'
   autoload :Container, 'testlab/container'
   autoload :Network, 'testlab/network'
+  autoload :Link, 'testlab/link'
 
   @@ui ||= nil
 
@@ -28,32 +29,43 @@ class TestLab
     @labfile      = TestLab::Labfile.load(labfile)
   end
 
-  def hosts
-    TestLab::Host.all
+  # def nodes
+  #   TestLab::Node.all
+  # end
+
+  # def containers
+  #   TestLab::Container.all
+  # end
+
+  # def networks
+  #   TestLab::Network.all
+  # end
+
+  # def config
+  #   @labfile.config
+  # end
+
+  def status
+    ZTK::Report.new.spreadsheet(TestLab::Node.all, TestLab::Provider::STATUS_KEYS) do |node|
+      OpenStruct.new(node.status)
+    end
   end
 
-  def containers
-    TestLab::Container.all
-  end
-
-  def networks
-    TestLab::Network.all
-  end
-
-  def config
-    @labfile.config
-  end
-
+  # Proxy various method calls to our subordinate classes
   def method_missing(method_name, *method_args)
-    if TestLab::Provider::PROXY_METHODS.include?(method_name.to_s)
-      TestLab::Host.all.map do |host|
-        host.send(method_name.to_sym, *method_args)
+    puts("TESTLAB METHOD_MISSING -- #{method_name.inspect} -- #{method_args.inspect}")
+
+    if TestLab::Provider::PROXY_METHODS.include?(method_name)
+      @@ui.logger.debug { "TestLab.#{method_name}" }
+      TestLab::Node.all.map do |node|
+        node.send(method_name.to_sym, *method_args)
       end
     else
       super(method_name, *method_args)
     end
   end
 
+  # Class Helpers
   class << self
 
     def ui
@@ -61,7 +73,8 @@ class TestLab
     end
 
     def gem_dir
-      File.expand_path(File.join(File.dirname(__FILE__), ".."), File.dirname(__FILE__))
+      directory = File.join(File.dirname(__FILE__), "..")
+      File.expand_path(directory, File.dirname(__FILE__))
     end
 
     def build_command(name, *args)

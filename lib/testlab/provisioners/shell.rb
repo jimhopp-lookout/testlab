@@ -10,8 +10,9 @@ class TestLab
     # @author Zachary Patten <zachary@jovelabs.net>
     class Shell
 
-      def initialize(ui=ZTK::UI.new)
-        @ui = ui
+      def initialize(config={}, ui=nil)
+        @config   = config
+        @ui       = (ui || TestLab.ui)
       end
 
     end
