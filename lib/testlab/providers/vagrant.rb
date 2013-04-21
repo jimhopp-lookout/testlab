@@ -100,17 +100,6 @@ class TestLab
         result.to_sym
       end
 
-      def status
-        {
-          :instance_id => self.instance_id,
-          :state => self.state,
-          :user => self.user,
-          :ip => self.ip,
-          :port => self.port,
-          :provider => self.class
-        }
-      end
-
 ################################################################################
 
       # Does the Vagrant-controlled VM exist?

@@ -49,9 +49,32 @@ class TestLab
   #   @labfile.config
   # end
 
+  def alive?
+    nodes.map(&:state).all?{ |state| state == :running }
+  end
+
+  def dead?
+    !alive?
+  end
+
   def status
-    ZTK::Report.new.spreadsheet(TestLab::Node.all, TestLab::Provider::STATUS_KEYS) do |node|
-      OpenStruct.new(node.status.merge(:id => node.id))
+    if alive?
+      @@ui.stdout.puts("NODES:")
+      ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Node.all, TestLab::Node::STATUS_KEYS) do |node|
+        OpenStruct.new(node.status.merge(:id => node.id))
+      end
+      @@ui.stdout.puts
+      @@ui.stdout.puts("NETWORKS:")
+      ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Network.all, TestLab::Network::STATUS_KEYS) do |network|
+        OpenStruct.new(network.status.merge(:id => network.id))
+      end
+      @@ui.stdout.puts
+      @@ui.stdout.puts("CONTAINERS:")
+      ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Container.all, TestLab::Container::STATUS_KEYS) do |container|
+        OpenStruct.new(container.status.merge(:id => container.id))
+      end
+    else
+      @@ui.stdout.puts("Looks like your test lab is dead; fix this and try again.")
     end
   end
 

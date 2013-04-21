@@ -9,6 +9,8 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Node < ZTK::DSL::Base
+    STATUS_KEYS   = %w(id instance_id state user ip port provider con net rtr).map(&:to_sym)
+
     belongs_to :labfile,    :class_name => 'TestLab::Lab'
 
     has_many   :routers,    :class_name => 'TestLab::Router'
@@ -25,10 +27,24 @@ class TestLab
       @provider = self.provider.new(self.config)
     end
 
+    def status
+      {
+        :instance_id => @provider.instance_id,
+        :state => @provider.state,
+        :user => @provider.user,
+        :ip => @provider.ip,
+        :port => @provider.port,
+        :provider => @provider.class,
+        :con => self.containers.count,
+        :net => self.networks.count,
+        :rtr => self.routers.count
+      }
+    end
+
     # SSH to the Node
     def ssh(options={})
       if (!defined?(@ssh) || @ssh.nil?)
-        @ssh ||= ZTK::SSH.new({:ui => @ui, :timeout => 1200}.merge(options))
+        @ssh ||= ZTK::SSH.new({:ui => @ui, :timeout => 1200, :silence => true}.merge(options))
         @ssh.config do |c|
           c.host_name = @provider.ip
           c.user      = @provider.user
@@ -55,16 +71,20 @@ class TestLab
     end
 
     def arch
-      @arch ||= self.ssh.exec(%(uname -m), :silence => true, :ignore_exit_status => true).output.strip
+      @arch ||= self.ssh.exec(%(uname -m)).output.strip
     end
 
 ################################################################################
 
-    # Callback: After Up
+    # Callback: After Create
     # Ensure our packages are installed.
+    def after_create
+      self.ssh.exec(%(sudo apt-get -qq -y --force-yes update))
+      self.ssh.exec(%(sudo apt-get -qq -y --force-yes install lxc bridge-utils debootstrap yum isc-dhcp-server bind9 ntpdate ntp))
+    end
+
+    # Callback: After Up
     def after_up
-      self.ssh.exec(%(sudo apt-get -qq -y --force-yes update), :silence => true)
-      self.ssh.exec(%(sudo apt-get -qq -y --force-yes install lxc bridge-utils debootstrap yum isc-dhcp-server bind9 ntpdate ntp), :silence => true)
     end
 
 ################################################################################
