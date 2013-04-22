@@ -120,7 +120,8 @@ class TestLab
         !self.alive?
       end
 
-################################################################################
+      # START CORE CONFIG
+      ####################
 
       def instance_id
         (@config[:vagrant][:id] || "testlab-#{ENV['USER']}".downcase)
@@ -140,6 +141,29 @@ class TestLab
 
       def port
         (@config[:vagrant][:port] || 22)
+      end
+
+      ##################
+      # END CORE CONFIG
+
+      def hostname
+        (@config[:vagrant][:hostname] || self.instance_id)
+      end
+
+      def box
+        (@config[:vagrant][:box] || "precise64")
+      end
+
+      def box_url
+        (@config[:vagrant][:box_url] || "http://files.vagrantup.com/precise64.box")
+      end
+
+      def cpus
+        (@config[:vagrant][:cpus] || 2)
+      end
+
+      def memory
+        (@config[:vagrant][:memory] || 1024)
       end
 
 ################################################################################
