@@ -36,6 +36,9 @@ class TestLab
         @config   = config
         @ui       = (ui || TestLab.ui)
 
+        # ensure our vagrant key is there
+        @config[:vagrant] ||= Hash.new
+
         render_vagrantfile
       end
 
