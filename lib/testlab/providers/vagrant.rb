@@ -178,9 +178,21 @@ class TestLab
       end
 
       def render_vagrantfile
+        config = {
+          :id => self.instance_id,
+          :ip => self.ip,
+          :hostname => self.hostname,
+          :user => self.user,
+          :port => self.port,
+          :cpus => self.cpus,
+          :memory => self.memory,
+          :box => self.box,
+          :box_url => self.box_url
+        }
+
         vagrantfile_template = File.join(TestLab::Provider.template_dir, "vagrant", "Vagrantfile.erb")
         vagrantfile          = File.join(@config[:repo], "Vagrantfile")
-        IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, @config))
+        IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, config))
       end
 
 ################################################################################
