@@ -90,7 +90,7 @@ class TestLab
 ################################################################################
 
     # Provides a generic interface for triggering our callback framework
-    def do_callbacks(action, objects, method_name, *method_args)
+    def proxy_callbacks(action, objects, method_name, *method_args)
       callback_method = "#{action}_#{method_name}".to_sym
 
       objects.each do |object|
@@ -120,7 +120,7 @@ class TestLab
         self_callbacks(:before, method_name, *method_args)
 
         object_collections.each do |object_collection|
-          do_callbacks(:before, object_collection, method_name, *method_args)
+          proxy_callbacks(:before, object_collection, method_name, *method_args)
         end
 
         @ui.logger.debug { "method_name == #{method_name.inspect}" }
@@ -134,7 +134,7 @@ class TestLab
         self_callbacks(:after, method_name, *method_args)
 
         object_collections.reverse.each do |object_collection|
-          do_callbacks(:after, object_collection, method_name, *method_args)
+          proxy_callbacks(:after, object_collection, method_name, *method_args)
         end
 
         result
