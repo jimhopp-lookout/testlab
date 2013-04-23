@@ -178,7 +178,7 @@ class TestLab
       end
 
       def render_vagrantfile
-        config = {
+        context = {
           :id => self.instance_id,
           :ip => self.ip,
           :hostname => self.hostname,
@@ -192,7 +192,7 @@ class TestLab
 
         vagrantfile_template = File.join(TestLab::Provider.template_dir, "vagrant", "Vagrantfile.erb")
         vagrantfile          = File.join(@config[:repo], "Vagrantfile")
-        IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, config))
+        IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, context))
       end
 
 ################################################################################
