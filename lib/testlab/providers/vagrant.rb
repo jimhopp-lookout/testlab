@@ -163,7 +163,7 @@ class TestLab
       end
 
       def memory
-        (@config[:vagrant][:memory] || 1024)
+        (@config[:vagrant][:memory] || 2048)
       end
 
 ################################################################################
