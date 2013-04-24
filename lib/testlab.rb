@@ -73,8 +73,12 @@ class TestLab
       ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Container.all, TestLab::Container::STATUS_KEYS) do |container|
         OpenStruct.new(container.status.merge(:id => container.id))
       end
+
+      true
     else
       @@ui.stdout.puts("Looks like your test lab is dead; fix this and try again.")
+
+      false
     end
   end
 
