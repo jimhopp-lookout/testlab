@@ -7,7 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Network < ZTK::DSL::Base
-    STATUS_KEYS   = %w(node_id id state).map(&:to_sym)
+    STATUS_KEYS   = %w(node_id id state interface).map(&:to_sym)
 
     belongs_to  :node,        :class_name => 'TestLab::Node'
 
@@ -24,10 +24,12 @@ class TestLab
 
     # Network status
     def status
+      interface = "#{bridge}:#{cidr}"
       {
         :id => self.id,
         :node_id => self.node.id,
-        :state => self.state
+        :state => self.state,
+        :interface => interface
       }
     end
 
