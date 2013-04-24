@@ -31,6 +31,7 @@ class TestLab
 
     def status
       interfaces = self.interfaces.collect{ |key, value| "#{key}:#{value[:name]}:#{value[:ip]}" }.join(', ')
+
       {
         :id => self.id,
         :state => self.state,
@@ -52,6 +53,23 @@ class TestLab
       @ui.logger.debug { "Container Create: #{self.id} " }
 
       self.arch ||= detect_arch
+
+      self.lxc.config.clear
+
+      self.lxc.config['lxc.utsname'] = self.id
+
+      self.interfaces.each do |network, network_config|
+        n = Hash.new
+        n['lxc.network.type']         = :veth
+        n['lxc.network.flags']        = :up
+        n['lxc.network.link']         = TestLab::Network.first(network).bridge
+        n['lxc.network.name']         = (network_config[:name] || "eth0")
+        n['lxc.network.hwaddr']       = (network_config[:mac] || generate_mac)
+        n['lxc.network.ipv4']         = (network_config[:ip] || generate_ip)
+        self.lxc.config.networks << n
+      end
+
+      self.lxc.config.save
 
       self.lxc.create(*create_args)
     end
