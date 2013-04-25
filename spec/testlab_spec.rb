@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe TestLab do
 
-  subject { TestLab.new(LABFILE) }
+  subject { TestLab.new(:labfile => LABFILE) }
 
   describe "class" do
 

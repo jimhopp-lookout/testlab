@@ -22,11 +22,13 @@ class TestLab
 
   @@ui ||= nil
 
-  def initialize(ui=ZTK::UI.new)
-    labfile = ZTK::Locator.find('Labfile')
+  def initialize(options={})
+    labfile      = (options[:labfile] || 'Labfile')
+    labfile_path = ZTK::Locator.find(labfile)
 
-    @@ui          = ui
-    @labfile      = TestLab::Labfile.load(labfile)
+    @@ui         = (options[:ui] || ZTK::UI.new)
+
+    @labfile     = TestLab::Labfile.load(labfile_path)
   end
 
   def nodes
