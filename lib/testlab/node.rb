@@ -100,24 +100,13 @@ class TestLab
       end
     end
 
-    # Provides a generic interface for triggering our callback framework
-    def self_callbacks(action, method_name, *method_args)
-      callback_method = "#{action}_#{method_name}".to_sym
-
-      if self.respond_to?(callback_method)
-        self.send(callback_method, *method_args)
-      end
-    end
-
     # Method missing handler
     def method_missing(method_name, *method_args)
       @ui.logger.debug { "NODE METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
 
       if TestLab::Provider::PROXY_METHODS.include?(method_name)
         result = nil
-        object_collections = [self.containers, self.routers, self.networks]
-
-        self_callbacks(:before, method_name, *method_args)
+        object_collections = [[self], self.containers, self.routers, self.networks]
 
         object_collections.each do |object_collection|
           proxy_callbacks(:before, object_collection, method_name, *method_args)
@@ -130,8 +119,6 @@ class TestLab
         else
           raise TestLab::ProviderError, "Your provider does not respond to the method '#{method_name}'!"
         end
-
-        self_callbacks(:after, method_name, *method_args)
 
         object_collections.reverse.each do |object_collection|
           proxy_callbacks(:after, object_collection, method_name, *method_args)
