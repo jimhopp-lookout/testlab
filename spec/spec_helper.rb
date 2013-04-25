@@ -21,3 +21,5 @@ require 'coveralls'
 Coveralls.wear!
 ################################################################################
 require 'testlab'
+
+LABFILE = File.join(File.dirname(__FILE__), 'support', 'Labfile')
