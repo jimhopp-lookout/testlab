@@ -6,7 +6,7 @@
 
 # TestLab
 
-A framework for building lightweight virtual laboratories using LXC
+A framework for building lightweight virtual infrastructure using LXC
 
 # RESOURCES
 
