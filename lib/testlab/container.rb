@@ -7,6 +7,12 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
+    autoload :Args, 'testlab/container/args'
+    autoload :Callbacks, 'testlab/container/callbacks'
+    autoload :Detect, 'testlab/container/detect'
+    autoload :Generators, 'testlab/container/generators'
+    autoload :Network, 'testlab/container/network'
+
     STATUS_KEYS   = %w(node_id id state distro release interfaces provisioner).map(&:to_sym)
 
     belongs_to  :node,        :class_name => 'TestLab::Node'
@@ -30,7 +36,7 @@ class TestLab
     end
 
     def status
-      interfaces = self.interfaces.collect{ |key, value| "#{key}:#{value[:name]}:#{value[:ip]}" }.join(', ')
+      interfaces = self.interfaces.collect{ |network, network_config| "#{network}:#{network_config[:name]}:#{network_config[:ip]}" }.join(', ')
 
       {
         :id => self.id,
@@ -105,34 +111,6 @@ class TestLab
 
 ################################################################################
 
-    # Container Callback: after_create
-    def after_create
-      @ui.logger.debug { "Container Callback: After Create: #{self.id} " }
-    end
-
-    # Container Callback: after_up
-    def after_up
-      @ui.logger.debug { "Container Callback: After Up: #{self.id} " }
-
-      self.create
-      self.up
-    end
-
-    # Container Callback: before_down
-    def before_down
-      @ui.logger.debug { "Container Callback: Before Down: #{self.id} " }
-
-      self.down
-      self.destroy
-    end
-
-    # Container Callback: before_destroy
-    def before_destroy
-      @ui.logger.debug { "Container Callback: Before Destroy: #{self.id} " }
-    end
-
-################################################################################
-
     # Method missing handler
     def method_missing(method_name, *method_args)
       @ui.logger.debug { "CONTAINER METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
@@ -144,81 +122,16 @@ class TestLab
       end
     end
 
+    include(TestLab::Container::Callbacks)
+
 ################################################################################
   private
 ################################################################################
 
-    # Builds an array of hashes containing the lxc configuration options for
-    # our networks
-    def build_lxc_network_conf(interfaces)
-      networks = Array.new
-
-      interfaces.each do |network, network_config|
-        networks << Hash[
-          'lxc.network.type'   => :veth,
-          'lxc.network.flags'  => :up,
-          'lxc.network.link'   => TestLab::Network.first(network).bridge,
-          'lxc.network.name'   => (network_config[:name] || "eth0"),
-          'lxc.network.hwaddr' => (network_config[:mac] || generate_mac),
-          'lxc.network.ipv4'   => (network_config[:ip] || generate_ip)
-        ]
-      end
-
-      networks
-    end
-
-    # Returns arguments for lxc-create based on our distro
-    def create_args
-      case self.distro.downcase
-      when "ubuntu" then
-        %W(-f /etc/lxc/#{self.id} -t #{self.distro} -- --release #{self.release} --arch #{arch})
-      when "fedora" then
-        %W(-f /etc/lxc/#{self.id} -t #{self.distro} -- --release #{self.release})
-      end
-    end
-
-    # Attempt to detect the architecture of the node our container is running on
-    def detect_arch
-      case self.distro.downcase
-      when "ubuntu" then
-        ((self.node.arch =~ /x86_64/) ? "amd64" : "i386")
-      when "fedora" then
-        ((self.node.arch =~ /x86_64/) ? "amd64" : "i686")
-      end
-    end
-
-    def generate_ip
-      octets = [ 192..192,
-                 168..168,
-                 0..254,
-                 1..254 ]
-      ip = Array.new
-      for x in 1..4 do
-        ip << octets[x-1].to_a[rand(octets[x-1].count)].to_s
-      end
-      ip.join(".")
-    end
-
-    def generate_mac
-      digits = [ %w(0),
-                 %w(0),
-                 %w(0),
-                 %w(0),
-                 %w(5),
-                 %w(e),
-                 %w(0 1 2 3 4 5 6 7 8 9 a b c d e f),
-                 %w(0 1 2 3 4 5 6 7 8 9 a b c d e f),
-                 %w(5 6 7 8 9 a b c d e f),
-                 %w(3 4 5 6 7 8 9 a b c d e f),
-                 %w(0 1 2 3 4 5 6 7 8 9 a b c d e f),
-                 %w(0 1 2 3 4 5 6 7 8 9 a b c d e f) ]
-      mac = ""
-      for x in 1..12 do
-        mac += digits[x-1][rand(digits[x-1].count)]
-        mac += ":" if (x.modulo(2) == 0) && (x != 12)
-      end
-      mac
-    end
+    include(TestLab::Container::Args)
+    include(TestLab::Container::Detect)
+    include(TestLab::Container::Generators)
+    include(TestLab::Container::Network)
 
   end
 
