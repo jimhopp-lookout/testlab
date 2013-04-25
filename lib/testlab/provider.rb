@@ -7,11 +7,11 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Provider
-    PROXY_METHODS = %w(instance_id state user ip port create destroy up down reload status alive? dead? exists?).map(&:to_sym)
-
     autoload :AWS, 'testlab/providers/aws'
     autoload :Local, 'testlab/providers/local'
     autoload :Vagrant, 'testlab/providers/vagrant'
+
+    PROXY_METHODS = %w(instance_id state user ip port create destroy up down reload status alive? dead? exists?).map(&:to_sym)
 
     class << self
 
