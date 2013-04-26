@@ -37,27 +37,22 @@ class TestLab
       @ui.logger.debug { "Router Down: #{self.id} " }
     end
 
-    # Reload the router
-    def reload
-      self.down
-      self.up
-    end
-
     # State of the router
     def state
     end
 
     # Router Callback: after_up
-    def after_up
+    def setup
       @ui.logger.debug { "Router Callback: After Up: #{self.id} " }
       self.create
       self.up
     end
 
     # Router Callback: before_down
-    def before_down
+    def teardown
       @ui.logger.debug { "Router Callback: Before Down: #{self.id} " }
       self.down
+      self.destroy
     end
 
     # Method missing handler

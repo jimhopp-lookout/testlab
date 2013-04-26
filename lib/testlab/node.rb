@@ -76,26 +76,38 @@ class TestLab
 
 ################################################################################
 
-    # Callback: After Create
-    # Ensure our packages are installed.
-    def after_create
+    # Setup the node.
+    def setup
       self.ssh.exec(%(sudo apt-get -qq -y --force-yes update))
       self.ssh.exec(%(sudo apt-get -qq -y --force-yes install lxc bridge-utils debootstrap yum isc-dhcp-server bind9 ntpdate ntp))
+
+      call_collections([self.networks, self.routers, self.containers], :setup)
+
+      true
     end
 
-    # Callback: After Up
-    def after_up
+    # Teardown the node.
+    def teardown
+      call_collections([self.containers, self.routers, self.networks], :teardown)
+
+      true
     end
 
 ################################################################################
 
-    # Provides a generic interface for triggering our callback framework
-    def proxy_callbacks(action, objects, method_name, *method_args)
-      callback_method = "#{action}_#{method_name}".to_sym
+    # Iterates an array of arrays calling the specified method on all the
+    # collections of objects
+    def call_collections(collections, method_name)
+      collections.each do |collection|
+        call_methods(collection, method_name)
+      end
+    end
 
+    # Calls the specified method on all the objects supplied
+    def call_methods(objects, method_name)
       objects.each do |object|
-        if object.respond_to?(callback_method)
-          object.send(callback_method, *method_args)
+        if object.respond_to?(method_name)
+          object.send(method_name)
         end
       end
     end
@@ -106,22 +118,12 @@ class TestLab
 
       if TestLab::Provider::PROXY_METHODS.include?(method_name)
         result = nil
-        object_collections = [[self], self.containers, self.routers, self.networks]
 
-        object_collections.each do |object_collection|
-          proxy_callbacks(:before, object_collection, method_name, *method_args)
-        end
-
-        @ui.logger.debug { "method_name == #{method_name.inspect}" }
         if @provider.respond_to?(method_name)
           @ui.logger.debug { "@provider.send(#{method_name.inspect}, #{method_args.inspect})" }
           result = @provider.send(method_name, *method_args)
         else
           raise TestLab::ProviderError, "Your provider does not respond to the method '#{method_name}'!"
-        end
-
-        object_collections.reverse.each do |object_collection|
-          proxy_callbacks(:after, object_collection, method_name, *method_args)
         end
 
         result

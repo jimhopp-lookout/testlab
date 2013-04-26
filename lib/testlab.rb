@@ -96,7 +96,7 @@ class TestLab
   def method_missing(method_name, *method_args)
     @@ui.logger.debug { "TESTLAB METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
 
-    if TestLab::Provider::PROXY_METHODS.include?(method_name)
+    if (TestLab::Provider::PROXY_METHODS.include?(method_name) || %w(setup teardown).map(&:to_sym).include?(method_name))
       method_proxy(method_name, *method_args)
     else
       super(method_name, *method_args)

@@ -8,7 +8,6 @@ class TestLab
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
     autoload :Args, 'testlab/container/args'
-    autoload :Callbacks, 'testlab/container/callbacks'
     autoload :Detect, 'testlab/container/detect'
     autoload :Generators, 'testlab/container/generators'
     autoload :Network, 'testlab/container/network'
@@ -19,6 +18,9 @@ class TestLab
 
     attribute   :provisioner
     attribute   :config
+
+    attribute   :user
+    attribute   :keys
 
     attribute   :interfaces
 
@@ -49,10 +51,14 @@ class TestLab
       }
     end
 
-    # Our LXC Container class
-    def lxc
-      @lxc ||= self.node.lxc.container(self.id)
+################################################################################
+
+    # State of the container
+    def state
+      self.lxc.state
     end
+
+################################################################################
 
     # Create the container
     def create
@@ -89,13 +95,7 @@ class TestLab
       self.lxc.stop
     end
 
-    # Reload the container
-    def reload
-      @ui.logger.debug { "Container Reload: #{self.id} " }
-
-      self.down
-      self.up
-    end
+################################################################################
 
     # Does the container exist?
     def exists?
@@ -104,9 +104,36 @@ class TestLab
       self.lxc.exists?
     end
 
-    # State of the container
-    def state
-      self.lxc.state
+    # Container Setup
+    def setup
+      @ui.logger.debug { "Container Setup: #{self.id} " }
+
+      self.create
+      self.up
+    end
+
+    # Container Teardown
+    def teardown
+      @ui.logger.debug { "Container Teardown: #{self.id} " }
+
+      self.down
+      self.destroy
+    end
+
+################################################################################
+
+    # Our LXC Container class
+    def lxc
+      @lxc ||= self.node.lxc.container(self.id)
+    end
+
+    # SSH to the container
+    def ssh(options={})
+      self.node.container_ssh(self, options)
+    end
+
+    def ip
+      self.interfaces.values.first[:ip].split('/').first
     end
 
 ################################################################################
@@ -121,8 +148,6 @@ class TestLab
         super(method_name, *method_args)
       end
     end
-
-    include(TestLab::Container::Callbacks)
 
 ################################################################################
   private

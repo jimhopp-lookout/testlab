@@ -22,6 +22,8 @@ class TestLab
       @ui = TestLab.ui
     end
 
+################################################################################
+
     # Network status
     def status
       interface = "#{bridge}:#{cidr}"
@@ -31,6 +33,18 @@ class TestLab
         :state => self.state,
         :interface => interface
       }
+    end
+
+################################################################################
+
+    # State of the network
+    def state
+      output = self.node.ssh.exec(%(sudo ifconfig #{self.bridge} | grep 'MTU'), :silence => true, :ignore_exit_status => true).output.strip
+      if ((output =~ /UP/) && (output =~ /RUNNING/))
+        :running
+      else
+        :stopped
+      end
     end
 
 ################################################################################
@@ -66,52 +80,20 @@ class TestLab
 
 ################################################################################
 
-    # Reload the network
-    def reload
-      @ui.logger.debug { "Network Reload: #{self.id} " }
-
-      self.down
-      self.up
-    end
-
-################################################################################
-
-    # State of the network
-    def state
-      output = self.node.ssh.exec(%(sudo ifconfig #{self.bridge} | grep 'MTU'), :silence => true, :ignore_exit_status => true).output.strip
-      if ((output =~ /UP/) && (output =~ /RUNNING/))
-        :running
-      else
-        :stopped
-      end
-    end
-
-################################################################################
-
-    # Network Callback: after_create
-    def after_create
-      @ui.logger.debug { "Network Callback: After Create: #{self.id} " }
-    end
-
-    # Network Callback: after_up
-    def after_up
-      @ui.logger.debug { "Network Callback: After Up: #{self.id} " }
+    # Network Setup
+    def setup
+      @ui.logger.debug { "Network Setup: #{self.id} " }
 
       self.create
       self.up
     end
 
-    # Network Callback: before_down
-    def before_down
-      @ui.logger.debug { "Network Callback: Before Down: #{self.id} " }
+    # Network Teardown
+    def teardown
+      @ui.logger.debug { "Network Teardown: #{self.id} " }
 
       self.down
       self.destroy
-    end
-
-    # Network Callback: before_destroy
-    def before_destroy
-      @ui.logger.debug { "Network Callback: Before Destroy: #{self.id} " }
     end
 
 ################################################################################
