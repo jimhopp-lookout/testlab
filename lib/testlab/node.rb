@@ -49,8 +49,9 @@ class TestLab
 
     # Setup the node.
     def setup
+      # APT
       self.ssh.exec(%(sudo apt-get -qq -y --force-yes update))
-      self.ssh.exec(%(sudo apt-get -qq -y --force-yes install lxc bridge-utils debootstrap yum isc-dhcp-server bind9 ntpdate ntp))
+      self.ssh.exec(%(sudo apt-get -qq -y --force-yes install lxc bridge-utils debootstrap yum iptables isc-dhcp-server bind9 ntpdate ntp))
 
       call_collections([self.networks, self.routers, self.containers], :setup)
 
