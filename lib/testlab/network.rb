@@ -7,14 +7,18 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Network < ZTK::DSL::Base
+    autoload :CIDR, 'testlab/network/cidr'
+
     STATUS_KEYS   = %w(node_id id state interface).map(&:to_sym)
 
     belongs_to  :node,        :class_name => 'TestLab::Node'
 
     attribute   :bridge
 
-    attribute   :cidr
+    attribute   :ip
     attribute   :config
+
+    include(TestLab::Network::CIDR)
 
     def initialize(*args)
       super(*args)
@@ -26,7 +30,7 @@ class TestLab
 
     # Network status
     def status
-      interface = "#{bridge}:#{cidr}"
+      interface = "#{bridge}:#{ip}"
       {
         :id => self.id,
         :node_id => self.node.id,
@@ -54,7 +58,7 @@ class TestLab
       @ui.logger.debug { "Network Create: #{self.id} " }
 
       self.node.ssh.exec(%(sudo brctl addbr #{self.bridge}), :silence => true, :ignore_exit_status => true)
-      self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.cidr} down), :silence => true, :ignore_exit_status => true)
+      self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.ip} down), :silence => true, :ignore_exit_status => true)
     end
 
     # Destroy the network
