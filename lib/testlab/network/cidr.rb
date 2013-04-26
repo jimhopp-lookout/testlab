@@ -46,7 +46,7 @@ class TestLab
 
       # Returns the IP with the CIDR notation stripped away
       def clean_ip
-        ip = self.ip.split('/').first
+        self.ip.split('/').first
       end
 
       # Returns the entry from the CIDR_MATRIX constant based on our CIDR
