@@ -2,13 +2,14 @@ class TestLab
   class Node
 
     module LXC
+      require 'lxc'
 
       # Returns the LXC object for this Node
       #
       # This object is used to control containers on the node via it's provider
       def lxc(options={})
         if (!defined?(@lxc) || @lxc.nil?)
-          @lxc ||= LXC.new
+          @lxc ||= ::LXC.new
           @lxc.use_sudo = true
           @lxc.use_ssh = self.ssh
         end

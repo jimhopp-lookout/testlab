@@ -1,5 +1,3 @@
-require 'lxc'
-
 class TestLab
 
   # Node Error Class
