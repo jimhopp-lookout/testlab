@@ -9,6 +9,9 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Node < ZTK::DSL::Base
+    autoload :LXC, 'testlab/node/lxc'
+    autoload :SSH, 'testlab/node/ssh'
+
     STATUS_KEYS   = %w(id instance_id state user ip port provider con net rtr).map(&:to_sym)
 
     belongs_to :labfile,    :class_name => 'TestLab::Lab'
@@ -19,6 +22,9 @@ class TestLab
 
     attribute  :provider
     attribute  :config
+
+    include(TestLab::Node::LXC)
+    include(TestLab::Node::SSH)
 
     def initialize(*args)
       super(*args)
@@ -39,39 +45,6 @@ class TestLab
         :net => self.networks.count,
         :rtr => self.routers.count
       }
-    end
-
-    # SSH to the Node
-    def ssh(options={})
-      if (!defined?(@ssh) || @ssh.nil?)
-        @ssh ||= ZTK::SSH.new({:ui => @ui, :timeout => 1200, :silence => true}.merge(options))
-        @ssh.config do |c|
-          c.host_name = @provider.ip
-          c.user      = @provider.user
-          c.keys      = @provider.identity
-        end
-      end
-      @ssh
-    end
-
-    # SSH to a container running on the Node
-    def ssh_container(id, options={})
-    end
-
-    # Returns the LXC object for this Node
-    #
-    # This object is used to control containers on the node via it's provider
-    def lxc(options={})
-      if (!defined?(@lxc) || @lxc.nil?)
-        @lxc ||= LXC.new
-        @lxc.use_sudo = true
-        @lxc.use_ssh = self.ssh
-      end
-      @lxc
-    end
-
-    def arch
-      @arch ||= self.ssh.exec(%(uname -m)).output.strip
     end
 
 ################################################################################
