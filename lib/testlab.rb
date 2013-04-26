@@ -87,17 +87,17 @@ class TestLab
   def setup
     self.dead? and raise TestLabError, "You must have a running node in order to setup your infrastructure!"
 
-    method_proxy(:setup)
+    node_method_proxy(:setup)
   end
 
   def teardown
     self.dead? and raise TestLabError, "You must have a running node in order to teardown your infrastructure!"
 
-    method_proxy(:teardown)
+    node_method_proxy(:teardown)
   end
 
   # Proxy various method calls to our subordinate classes
-  def method_proxy(method_name, *method_args)
+  def node_method_proxy(method_name, *method_args)
     @@ui.logger.debug { "TestLab.#{method_name}" }
     TestLab::Node.all.map do |node|
       node.send(method_name.to_sym, *method_args)
@@ -109,7 +109,7 @@ class TestLab
     @@ui.logger.debug { "TESTLAB METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
 
     if TestLab::Provider::PROXY_METHODS.include?(method_name) # || %w(setup teardown).map(&:to_sym).include?(method_name))
-      method_proxy(method_name, *method_args)
+      node_method_proxy(method_name, *method_args)
     else
       super(method_name, *method_args)
     end
