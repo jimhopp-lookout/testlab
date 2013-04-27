@@ -69,6 +69,12 @@ class TestLab
         cidr_matrix[:broadcast] % clean_ip.split('.')
       end
 
+      # Returns the ARPA address
+      def arpa
+        result = self.network.split('.').delete_if{ |ip| ip == '0' }.reverse.join('.')
+        "#{result}.in-addr.arpa."
+      end
+
     end
 
   end
