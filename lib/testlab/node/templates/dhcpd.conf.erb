@@ -1,0 +1,26 @@
+#
+# WARNING: Automatically generated file; DO NOT EDIT!
+# TestLab v<%= TestLab::VERSION %> DHCPD Configuration
+# Generated on <%= Time.now.utc.to_s %>
+#
+
+log-facility local7;
+authoritative;
+
+ddns-updates on;
+ddns-update-style interim;
+ddns-domainname "lab.";
+ddns-rev-domainname "in-addr.arpa.";
+ignore client-updates;
+update-static-leases on;
+update-conflict-detection false;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+include "/etc/bind/rndc.key";
+
+zone test-lab. {
+  primary 127.0.0.1;
+  key "rndc-key";
+}

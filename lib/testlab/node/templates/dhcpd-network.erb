@@ -1,0 +1,12 @@
+zone <%= @arpa %> {
+  primary 127.0.0.1;
+  key "rndc-key";
+}
+
+subnet <%= @network %> netmask <%= @netmask %> {
+  option routers <%= @gateway %>;
+  option subnet-mask <%= @netmask %>;
+  option broadcast-address <%= @broadcast %>;
+  option domain-name-servers <%= @gateway %>, 8.8.8.8, 8.8.4.4;
+  option ntp-servers <%= @gateway %>;
+}

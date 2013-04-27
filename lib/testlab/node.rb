@@ -60,6 +60,7 @@ class TestLab
 
       # Enable NAT'ing of traffic out our external interface
       self.ssh.exec(%(sudo /bin/bash -c '(iptables -t nat --list | grep "MASQUERADE") || (iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE)'))
+      build_dhcpd_conf
 
       call_collections([self.networks, self.routers, self.containers], :setup)
 
@@ -110,6 +111,15 @@ class TestLab
       else
         super(method_name, *method_args)
       end
+    end
+
+    class << self
+
+      # Returns the path to the gems provider templates
+      def template_dir
+        File.join(TestLab.gem_dir, "lib", "testlab", "node", "templates")
+      end
+
     end
 
   end
