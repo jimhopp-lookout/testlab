@@ -5,7 +5,7 @@ class TestLab
       require 'tempfile'
 
       # Builds the main DHCPD configuration sections
-      def build_dhcpd_main_conf(file)
+      def build_dhcpd_main_partial(file)
         dhcpd_conf_template = File.join(self.class.template_dir, "dhcpd.erb")
 
         file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} DHCPD Configuration"))
@@ -16,7 +16,7 @@ class TestLab
       end
 
       # Builds the DHCPD configuration sections for our zones
-      def build_dhcpd_zone_conf(file)
+      def build_dhcpd_zone_partial(file)
         dhcpd_zone_template = File.join(self.class.template_dir, 'dhcpd-zone.erb')
 
         TestLab::Network.all.each do |network|
@@ -40,7 +40,7 @@ class TestLab
       end
 
       # Builds the DHCPD configuration sections for our subnets
-      def build_dhcpd_subnet_conf(file)
+      def build_dhcpd_subnet_partial(file)
         dhcpd_subnet_template = File.join(self.class.template_dir, 'dhcpd-subnet.erb')
 
         TestLab::Network.all.each do |network|
@@ -57,7 +57,7 @@ class TestLab
       end
 
       # Builds the DHCPD configuration sections for our hosts (i.e. containers)
-      def build_dhcpd_host_conf(file)
+      def build_dhcpd_host_partial(file)
         dhcpd_host_template = File.join(self.class.template_dir, 'dhcpd-host.erb')
 
         TestLab::Container.all.each do |container|
@@ -81,10 +81,10 @@ class TestLab
 
         tempfile = Tempfile.new("dhcpd")
         File.open(tempfile, 'w') do |file|
-          build_dhcpd_main_conf(file)
-          build_dhcpd_zone_conf(file)
-          build_dhcpd_subnet_conf(file)
-          build_dhcpd_host_conf(file)
+          build_dhcpd_main_partial(file)
+          build_dhcpd_zone_partial(file)
+          build_dhcpd_subnet_partial(file)
+          build_dhcpd_host_partial(file)
 
           file.respond_to?(:flush) and file.flush
         end
@@ -92,7 +92,14 @@ class TestLab
         self.ssh.upload(tempfile.path, File.basename(tempfile.path))
         self.ssh.exec(%(sudo mv -v #{File.basename(tempfile.path)} #{dhcpd_conf}))
 
-        self.ssh.exec(%(sudo service isc-dhcp-server restart))
+        self.ssh.exec(%(sudo /bin/bash -c 'service isc-dhcp-server restart || service isc-dhcp-server restart'))
+      end
+
+      def dhcpd_setup
+        dhcpd_setup_template = File.join(self.class.template_dir, 'dhcpd-setup.erb')
+        self.ssh.bootstrap(ZTK::Template.render(dhcpd_setup_template))
+
+        build_dhcpd_conf
       end
 
     end

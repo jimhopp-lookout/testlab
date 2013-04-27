@@ -8,9 +8,14 @@ class TestLab
       def build_resolv_main_conf(file)
         resolv_conf_template = File.join(self.class.template_dir, "resolv.erb")
 
-        file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
         tlds = ([self.labfile.config[:tld]] + TestLab::Container.tlds).flatten
-        file.puts(ZTK::Template.render(resolv_conf_template, { :servers => TestLab::Network.all.map(&:clean_ip), :search => tlds.join(' ') }))
+        context = {
+          :servers => [TestLab::Network.all.map(&:clean_ip), "8.8.8.8", "8.8.4.4" ].flatten,
+          :search => tlds.join(' ')
+        }
+
+        file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration", :char => ';'))
+        file.puts(ZTK::Template.render(resolv_conf_template, context))
       end
 
       def build_resolv_conf

@@ -8,9 +8,15 @@ class TestLab
         @ui.logger.debug { "Node Setup: #{self.id} " }
 
         bootstrap
-        build_resolv_conf
-        build_bind_conf
-        build_dhcpd_conf
+
+        if self.components.include?('resolv')
+          build_resolv_conf
+        end
+
+        if self.components.include?('dhcpd')
+          bind_setup
+          dhcpd_setup
+        end
 
         call_collections([self.networks, self.routers, self.containers], :setup)
 

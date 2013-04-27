@@ -5,7 +5,7 @@ class TestLab
       require 'tempfile'
 
       # Builds the main bind configuration sections
-      def build_bind_main_conf(file)
+      def build_bind_main_partial(file)
         bind_conf_template = File.join(self.class.template_dir, "bind.erb")
 
         file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND Configuration", :char => '//'))
@@ -13,7 +13,7 @@ class TestLab
       end
 
       # Builds the bind configuration sections for our zones
-      def build_bind_zone_conf(file)
+      def build_bind_zone_partial(file)
         bind_zone_template = File.join(self.class.template_dir, 'bind-zone.erb')
 
         TestLab::Network.all.each do |network|
@@ -58,8 +58,8 @@ class TestLab
         bind_conf = File.join("/etc/bind/named.conf")
         tempfile = Tempfile.new("bind")
         File.open(tempfile, 'w') do |file|
-          build_bind_main_conf(file)
-          build_bind_zone_conf(file)
+          build_bind_main_partial(file)
+          build_bind_zone_partial(file)
 
           file.respond_to?(:flush) and file.flush
         end
@@ -67,7 +67,14 @@ class TestLab
         self.ssh.upload(tempfile.path, File.basename(tempfile.path))
         self.ssh.exec(%(sudo mv -v #{File.basename(tempfile.path)} #{bind_conf}))
 
-        self.ssh.exec(%(sudo service bind9 restart))
+        self.ssh.exec(%(sudo /bin/bash -c 'service bind9 restart || service bind9 start'))
+      end
+
+      def bind_setup
+        bind_setup_template = File.join(self.class.template_dir, 'bind-setup.erb')
+        self.ssh.bootstrap(ZTK::Template.render(bind_setup_template))
+
+        build_bind_conf
       end
 
     end

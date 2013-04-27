@@ -17,6 +17,8 @@ class TestLab
 
     attribute  :provider
     attribute  :config
+    attribute  :components
+
 
     autoload :Bind,      'testlab/node/bind'
     autoload :Bootstrap, 'testlab/node/bootstrap'
@@ -35,6 +37,7 @@ class TestLab
     include TestLab::Node::Resolv
     include TestLab::Node::SSH
     include TestLab::Node::Status
+
 
     def initialize(*args)
       super(*args)

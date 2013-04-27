@@ -27,6 +27,7 @@ class TestLab
 
     attribute   :persist
 
+
     autoload :Actions,    'testlab/container/actions'
     autoload :Args,       'testlab/container/args'
     autoload :Detect,     'testlab/container/detect'
@@ -44,6 +45,7 @@ class TestLab
     include TestLab::Container::LXC
     include TestLab::Container::Network
     include TestLab::Container::Status
+
 
     def initialize(*args)
       super(*args)
