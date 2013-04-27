@@ -25,11 +25,13 @@ class TestLab
 
     attribute   :persist
 
+    autoload :Actions, 'testlab/container/actions'
     autoload :Args, 'testlab/container/args'
     autoload :Detect, 'testlab/container/detect'
     autoload :Generators, 'testlab/container/generators'
     autoload :Network, 'testlab/container/network'
 
+    include TestLab::Container::Actions
     include TestLab::Container::Args
     include TestLab::Container::Detect
     include TestLab::Container::Generators
@@ -61,43 +63,6 @@ class TestLab
     # State of the container
     def state
       self.lxc.state
-    end
-
-################################################################################
-
-    # Create the container
-    def create
-      @ui.logger.debug { "Container Create: #{self.id} " }
-
-      self.arch ||= detect_arch
-
-      self.lxc.config.clear
-      self.lxc.config['lxc.utsname'] = self.id
-      self.lxc.config.networks = build_lxc_network_conf(self.interfaces)
-      self.lxc.config.save
-
-      self.lxc.create(*create_args)
-    end
-
-    # Destroy the container
-    def destroy
-      @ui.logger.debug { "Container Destroy: #{self.id} " }
-
-      self.lxc.destroy
-    end
-
-    # Start the container
-    def up
-      @ui.logger.debug { "Container Up: #{self.id} " }
-
-      self.lxc.start
-    end
-
-    # Stop the container
-    def down
-      @ui.logger.debug { "Container Down: #{self.id} " }
-
-      self.lxc.stop
     end
 
 ################################################################################
@@ -153,15 +118,6 @@ class TestLab
         super(method_name, *method_args)
       end
     end
-
-################################################################################
-  private
-################################################################################
-
-    include(TestLab::Container::Args)
-    include(TestLab::Container::Detect)
-    include(TestLab::Container::Generators)
-    include(TestLab::Container::Network)
 
   end
 
