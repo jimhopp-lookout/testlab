@@ -9,13 +9,17 @@ class TestLab
         networks = Array.new
 
         interfaces.each do |network, network_config|
+          network_config[:name] ||= "eth0"
+          network_config[:mac]  ||= generate_mac
+          network_config[:ip]   ||= generate_ip
+
           networks << Hash[
             'lxc.network.type'   => :veth,
             'lxc.network.flags'  => :up,
             'lxc.network.link'   => TestLab::Network.first(network).bridge,
-            'lxc.network.name'   => (network_config[:name] || "eth0"),
-            'lxc.network.hwaddr' => (network_config[:mac] || generate_mac),
-            'lxc.network.ipv4'   => (network_config[:ip] || generate_ip)
+            'lxc.network.name'   => network_config[:name],
+            'lxc.network.hwaddr' => network_config[:mac],
+            'lxc.network.ipv4'   => '0.0.0.0' #network_config[:ip]
           ]
         end
 
