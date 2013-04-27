@@ -7,11 +7,6 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
-    autoload :Args, 'testlab/container/args'
-    autoload :Detect, 'testlab/container/detect'
-    autoload :Generators, 'testlab/container/generators'
-    autoload :Network, 'testlab/container/network'
-
     STATUS_KEYS   = %w(node_id id state distro release interfaces provisioner).map(&:to_sym)
 
     belongs_to  :node,        :class_name => 'TestLab::Node'
@@ -29,6 +24,16 @@ class TestLab
     attribute   :arch
 
     attribute   :persist
+
+    autoload :Args, 'testlab/container/args'
+    autoload :Detect, 'testlab/container/detect'
+    autoload :Generators, 'testlab/container/generators'
+    autoload :Network, 'testlab/container/network'
+
+    include TestLab::Container::Args
+    include TestLab::Container::Detect
+    include TestLab::Container::Generators
+    include TestLab::Container::Network
 
     def initialize(*args)
       super(*args)

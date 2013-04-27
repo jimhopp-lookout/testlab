@@ -21,10 +21,10 @@ class TestLab
     autoload :Lifecycle, 'testlab/network/lifecycle'
     autoload :Status, 'testlab/network/status'
 
-    include(TestLab::Network::Actions)
-    include(TestLab::Network::CIDR)
-    include(TestLab::Network::Lifecycle)
-    include(TestLab::Network::Status)
+    include TestLab::Network::Actions
+    include TestLab::Network::CIDR
+    include TestLab::Network::Lifecycle
+    include TestLab::Network::Status
 
     def initialize(*args)
       super(*args)

@@ -7,9 +7,6 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Node < ZTK::DSL::Base
-    autoload :LXC, 'testlab/node/lxc'
-    autoload :SSH, 'testlab/node/ssh'
-
     STATUS_KEYS   = %w(id instance_id state user ip port provider con net rtr).map(&:to_sym)
 
     belongs_to :labfile,    :class_name => 'TestLab::Lab'
@@ -21,8 +18,13 @@ class TestLab
     attribute  :provider
     attribute  :config
 
-    include(TestLab::Node::LXC)
-    include(TestLab::Node::SSH)
+    autoload :DHCPD, 'testlab/node/dhcpd'
+    autoload :LXC, 'testlab/node/lxc'
+    autoload :SSH, 'testlab/node/ssh'
+
+    include TestLab::Node::DHCPD
+    include TestLab::Node::LXC
+    include TestLab::Node::SSH
 
     def initialize(*args)
       super(*args)
