@@ -8,7 +8,6 @@ class TestLab
         @ui.logger.debug { "Network Create: #{self.id} " }
 
         self.node.ssh.exec(%(sudo brctl addbr #{self.bridge}), :silence => true, :ignore_exit_status => true)
-        self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.ip} down), :silence => true, :ignore_exit_status => true)
       end
 
       # Destroy the network
@@ -22,7 +21,7 @@ class TestLab
       def up
         @ui.logger.debug { "Network Up: #{self.id} " }
 
-        self.node.ssh.exec(%(sudo ifconfig #{self.bridge} up), :silence => true, :ignore_exit_status => true)
+        self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.ip} up), :silence => true, :ignore_exit_status => true)
       end
 
       # Stop the network
