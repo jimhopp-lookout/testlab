@@ -18,10 +18,12 @@ class TestLab
     attribute  :provider
     attribute  :config
 
-    autoload :DHCPD, 'testlab/node/dhcpd'
-    autoload :LXC, 'testlab/node/lxc'
-    autoload :SSH, 'testlab/node/ssh'
+    autoload :Bootstrap, 'testlab/node/bootstrap'
+    autoload :DHCPD,     'testlab/node/dhcpd'
+    autoload :LXC,       'testlab/node/lxc'
+    autoload :SSH,       'testlab/node/ssh'
 
+    include TestLab::Node::Bootstrap
     include TestLab::Node::DHCPD
     include TestLab::Node::LXC
     include TestLab::Node::SSH
@@ -51,15 +53,7 @@ class TestLab
 
     # Setup the node.
     def setup
-      # APT
-      self.ssh.exec(%(sudo apt-get -qq -y --force-yes update))
-      self.ssh.exec(%(sudo apt-get -qq -y --force-yes install lxc bridge-utils debootstrap yum iptables isc-dhcp-server bind9 ntpdate ntp))
-
-      # Enable IPv4 forwarding
-      self.ssh.exec(%(sudo /bin/bash -c '(sysctl net.ipv4.ip_forward | grep "net.ipv4.ip_forward = 1") || (sysctl -w net.ipv4.ip_forward=1)'))
-
-      # Enable NAT'ing of traffic out our external interface
-      self.ssh.exec(%(sudo /bin/bash -c '(iptables -t nat --list | grep "MASQUERADE") || (iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE)'))
+      bootstrap
       build_dhcpd_conf
 
       call_collections([self.networks, self.routers, self.containers], :setup)

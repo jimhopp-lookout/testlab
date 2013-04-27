@@ -1,0 +1,10 @@
+set -x
+
+apt-get -qq -y --force-yes update
+apt-get -qq -y --force-yes install lxc chkconfig bridge-utils debootstrap yum iptables isc-dhcp-server bind9 ntpdate ntp apparmor
+
+sudo service apparmor start
+
+(sysctl net.ipv4.ip_forward | grep "net.ipv4.ip_forward = 1") || (sysctl -w net.ipv4.ip_forward=1)
+(iptables -t nat --list | grep "MASQUERADE") || (iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE)
+chmod -v 0644 /etc/bind/rndc.key
