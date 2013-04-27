@@ -32,6 +32,7 @@ class TestLab
     autoload :Detect,     'testlab/container/detect'
     autoload :Generators, 'testlab/container/generators'
     autoload :Lifecycle,  'testlab/container/lifecycle'
+    autoload :LXC,        'testlab/container/lxc'
     autoload :Network,    'testlab/container/network'
     autoload :Status,     'testlab/container/status'
 
@@ -40,6 +41,7 @@ class TestLab
     include TestLab::Container::Detect
     include TestLab::Container::Generators
     include TestLab::Container::Lifecycle
+    include TestLab::Container::LXC
     include TestLab::Container::Network
     include TestLab::Container::Status
 
@@ -60,11 +62,6 @@ class TestLab
     end
 
 ################################################################################
-
-    # Our LXC Container class
-    def lxc
-      @lxc ||= self.node.lxc.container(self.id)
-    end
 
     # SSH to the container
     def ssh(options={})
