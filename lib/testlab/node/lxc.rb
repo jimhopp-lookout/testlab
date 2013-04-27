@@ -7,6 +7,8 @@ class TestLab
       # Returns the LXC object for this Node
       #
       # This object is used to control containers on the node via it's provider
+      #
+      # @return [LXC] An instance of LXC configured for this node.
       def lxc(options={})
         if (!defined?(@lxc) || @lxc.nil?)
           @lxc ||= ::LXC.new

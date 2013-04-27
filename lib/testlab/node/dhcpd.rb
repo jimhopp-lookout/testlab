@@ -64,9 +64,9 @@ class TestLab
 
           context = {
             :id => container.id,
+            :tld => (container.tld || self.labfile.config[:tld]),
             :ip => interface[:ip].split('/').first,
-            :mac => interface[:mac],
-            :tld => (container.tld || self.labfile.config[:tld])
+            :mac => interface[:mac]
           }
 
           file.puts
