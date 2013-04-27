@@ -1,8 +1,4 @@
-#
-# WARNING: Automatically generated file; DO NOT EDIT!
-# TestLab v<%= TestLab::VERSION %> DHCPD Configuration
-# Generated on <%= Time.now.utc.to_s %>
-#
+include "/etc/bind/rndc.key";
 
 log-facility local7;
 authoritative;
@@ -17,5 +13,3 @@ max-lease-time 7200;
 ddns-updates on;
 ddns-update-style interim;
 ddns-rev-domainname "in-addr.arpa.";
-
-include "/etc/bind/rndc.key";

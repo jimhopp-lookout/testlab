@@ -7,9 +7,10 @@ class TestLab
       def build_dhcpd_main_conf(file)
         dhcpd_conf_template = File.join(self.class.template_dir, "dhcpd.erb")
 
+        file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} DHCPD Configuration"))
+
         context = {}
 
-        # f.puts(Cucumber::Chef.generate_do_not_edit_warning("DHCPD Configuration"))
         file.puts(ZTK::Template.render(dhcpd_conf_template, context))
       end
 
