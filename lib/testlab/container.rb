@@ -27,44 +27,27 @@ class TestLab
 
     attribute   :persist
 
-    autoload :Actions, 'testlab/container/actions'
-    autoload :Args, 'testlab/container/args'
-    autoload :Detect, 'testlab/container/detect'
+    autoload :Actions,    'testlab/container/actions'
+    autoload :Args,       'testlab/container/args'
+    autoload :Detect,     'testlab/container/detect'
     autoload :Generators, 'testlab/container/generators'
-    autoload :Network, 'testlab/container/network'
+    autoload :Lifecycle,  'testlab/container/lifecycle'
+    autoload :Network,    'testlab/container/network'
+    autoload :Status,     'testlab/container/status'
 
     include TestLab::Container::Actions
     include TestLab::Container::Args
     include TestLab::Container::Detect
     include TestLab::Container::Generators
+    include TestLab::Container::Lifecycle
     include TestLab::Container::Network
+    include TestLab::Container::Status
 
     def initialize(*args)
       super(*args)
 
       @ui          = TestLab.ui
       @provisioner = self.provisioner.new(self.config) if !self.provisioner.nil?
-    end
-
-    def status
-      interfaces = self.interfaces.collect{ |network, network_config| "#{network}:#{network_config[:name]}:#{network_config[:ip]}" }.join(', ')
-
-      {
-        :id => self.id,
-        :state => self.state,
-        :distro => self.distro,
-        :release => self.release,
-        :interfaces => interfaces,
-        :provisioner => self.provisioner,
-        :node_id => self.node.id
-      }
-    end
-
-################################################################################
-
-    # State of the container
-    def state
-      self.lxc.state
     end
 
 ################################################################################
@@ -74,22 +57,6 @@ class TestLab
       @ui.logger.debug { "Container Exists?: #{self.id} " }
 
       self.lxc.exists?
-    end
-
-    # Container Setup
-    def setup
-      @ui.logger.debug { "Container Setup: #{self.id} " }
-
-      self.create
-      self.up
-    end
-
-    # Container Teardown
-    def teardown
-      @ui.logger.debug { "Container Teardown: #{self.id} " }
-
-      self.down
-      self.destroy
     end
 
 ################################################################################

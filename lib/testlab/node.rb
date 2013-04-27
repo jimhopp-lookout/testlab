@@ -21,57 +21,26 @@ class TestLab
     autoload :Bind,      'testlab/node/bind'
     autoload :Bootstrap, 'testlab/node/bootstrap'
     autoload :DHCPD,     'testlab/node/dhcpd'
+    autoload :Lifecycle, 'testlab/node/lifecycle'
     autoload :LXC,       'testlab/node/lxc'
     autoload :Resolv,    'testlab/node/resolv'
     autoload :SSH,       'testlab/node/ssh'
+    autoload :Status,    'testlab/node/status'
 
     include TestLab::Node::Bind
     include TestLab::Node::Bootstrap
     include TestLab::Node::DHCPD
+    include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::Resolv
     include TestLab::Node::SSH
+    include TestLab::Node::Status
 
     def initialize(*args)
       super(*args)
 
       @ui       = TestLab.ui
       @provider = self.provider.new(self.config)
-    end
-
-    def status
-      {
-        :instance_id => @provider.instance_id,
-        :state => @provider.state,
-        :user => @provider.user,
-        :ip => @provider.ip,
-        :port => @provider.port,
-        :provider => @provider.class,
-        :con => self.containers.count,
-        :net => self.networks.count,
-        :rtr => self.routers.count
-      }
-    end
-
-################################################################################
-
-    # Setup the node.
-    def setup
-      build_resolv_conf
-      bootstrap
-      build_bind_conf
-      build_dhcpd_conf
-
-      call_collections([self.networks, self.routers, self.containers], :setup)
-
-      true
-    end
-
-    # Teardown the node.
-    def teardown
-      call_collections([self.containers, self.routers, self.networks], :teardown)
-
-      true
     end
 
 ################################################################################
