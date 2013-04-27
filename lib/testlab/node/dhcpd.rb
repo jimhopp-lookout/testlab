@@ -5,7 +5,7 @@ class TestLab
 
       # Builds the main DHCPD configuration sections
       def build_dhcpd_main_conf(file)
-        dhcpd_conf_template = File.join(self.class.template_dir, "dhcpd.conf.erb")
+        dhcpd_conf_template = File.join(self.class.template_dir, "dhcpd.erb")
 
         context = {}
 
@@ -13,7 +13,7 @@ class TestLab
         file.puts(ZTK::Template.render(dhcpd_conf_template, context))
       end
 
-      # Builds the DHCPD configuration sections for our networks
+      # Builds the DHCPD configuration sections for our zones
       def build_dhcpd_zone_conf(file)
         dhcpd_zone_template = File.join(self.class.template_dir, 'dhcpd-zone.erb')
 
