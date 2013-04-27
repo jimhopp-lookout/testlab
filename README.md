@@ -10,6 +10,10 @@ A framework for building lightweight virtual infrastructure using LXC
 
 # RESOURCES
 
+Documentation:
+
+* http://zpatten.github.io/testlab/
+
 Source:
 
 * https://github.com/zpatten/testlab
@@ -17,10 +21,6 @@ Source:
 Issues:
 
 * https://github.com/zpatten/testlab/issues
-
-Documentation:
-
-* http://zpatten.github.com/testlab/
 
 # LICENSE
 
