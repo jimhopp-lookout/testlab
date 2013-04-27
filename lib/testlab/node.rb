@@ -18,14 +18,18 @@ class TestLab
     attribute  :provider
     attribute  :config
 
+    autoload :Bind,      'testlab/node/bind'
     autoload :Bootstrap, 'testlab/node/bootstrap'
     autoload :DHCPD,     'testlab/node/dhcpd'
     autoload :LXC,       'testlab/node/lxc'
+    autoload :Resolv,    'testlab/node/resolv'
     autoload :SSH,       'testlab/node/ssh'
 
+    include TestLab::Node::Bind
     include TestLab::Node::Bootstrap
     include TestLab::Node::DHCPD
     include TestLab::Node::LXC
+    include TestLab::Node::Resolv
     include TestLab::Node::SSH
 
     def initialize(*args)
@@ -53,7 +57,9 @@ class TestLab
 
     # Setup the node.
     def setup
+      build_resolv_conf
       bootstrap
+      build_bind_conf
       build_dhcpd_conf
 
       call_collections([self.networks, self.routers, self.containers], :setup)

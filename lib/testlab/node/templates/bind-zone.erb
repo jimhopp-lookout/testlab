@@ -1,0 +1,6 @@
+zone "<%= @zone %>." {
+  type master;
+  file "/var/lib/bind/db.<%= @zone %>";
+  allow-update { key "rndc-key"; };
+  notify yes;
+};

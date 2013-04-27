@@ -1,0 +1,5 @@
+include "/etc/bind/rndc.key";
+
+controls {
+  inet 127.0.0.1 allow { 127.0.0.1; } keys { "rndc-key"; };
+};
