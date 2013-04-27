@@ -9,10 +9,6 @@ class TestLab
         networks = Array.new
 
         interfaces.each do |network, network_config|
-          network_config[:name] ||= "eth0"
-          network_config[:mac]  ||= generate_mac
-          network_config[:ip]   ||= generate_ip
-
           networks << Hash[
             'lxc.network.type'   => :veth,
             'lxc.network.flags'  => :up,

@@ -14,6 +14,8 @@ class TestLab
     attribute   :provisioner
     attribute   :config
 
+    attribute   :tld
+
     attribute   :user
     attribute   :keys
 
@@ -103,7 +105,23 @@ class TestLab
     end
 
     def ip
-      self.interfaces.values.first[:ip].split('/').first
+      self.primary_interface.last[:ip].split('/').first
+    end
+
+    def primary_interface
+      if self.interfaces.any?{ |i,c| c[:primary] == true }
+        self.interfaces.find{ |i,c| c[:primary] == true }
+      else
+        self.interfaces.first
+      end
+    end
+
+    class << self
+
+      def tlds
+        self.all.map(&:tld).compact
+      end
+
     end
 
 ################################################################################

@@ -7,43 +7,66 @@ class TestLab
       def build_dhcpd_main_conf(file)
         dhcpd_conf_template = File.join(self.class.template_dir, "dhcpd.conf.erb")
 
+        context = {}
+
         # f.puts(Cucumber::Chef.generate_do_not_edit_warning("DHCPD Configuration"))
-        file.puts(ZTK::Template.render(dhcpd_conf_template, {}))
+        file.puts(ZTK::Template.render(dhcpd_conf_template, context))
       end
 
       # Builds the DHCPD configuration sections for our networks
-      def build_dhcpd_networks_conf(file)
-        TestLab::Network.all.each do |network|
-          dhcpd_network_template = File.join(self.class.template_dir, 'dhcpd-network.erb')
+      def build_dhcpd_zone_conf(file)
+        dhcpd_zone_template = File.join(self.class.template_dir, 'dhcpd-zone.erb')
 
+        TestLab::Network.all.each do |network|
+          context = {
+            :zone => network.arpa
+          }
+
+          file.puts
+          file.puts(ZTK::Template.render(dhcpd_zone_template, context))
+        end
+
+        tlds = ([self.labfile.config[:tld]] + TestLab::Container.tlds).flatten
+        tlds.each do |tld|
+          context = {
+            :zone => tld
+          }
+
+          file.puts
+          file.puts(ZTK::Template.render(dhcpd_zone_template, context))
+        end
+
+      end
+
+      # Builds the DHCPD configuration sections for our subnets
+      def build_dhcpd_subnet_conf(file)
+        dhcpd_subnet_template = File.join(self.class.template_dir, 'dhcpd-subnet.erb')
+
+        TestLab::Network.all.each do |network|
           context = {
             :gateway => network.clean_ip,
             :network => network.network,
             :netmask => network.netmask,
-            :broadcast => network.broadcast,
-            :arpa => network.arpa
+            :broadcast => network.broadcast
           }
 
           file.puts
-          file.puts(ZTK::Template.render(dhcpd_network_template, context))
+          file.puts(ZTK::Template.render(dhcpd_subnet_template, context))
         end
       end
 
       # Builds the DHCPD configuration sections for our hosts (i.e. containers)
-      def build_dhcpd_hosts_conf(file)
+      def build_dhcpd_host_conf(file)
         dhcpd_host_template = File.join(self.class.template_dir, 'dhcpd-host.erb')
 
         TestLab::Container.all.each do |container|
-          interface = (container.interfaces.find{ |i,c| c[:primary] == true }.last rescue container.interfaces.first.last)
-
-          interface[:name] ||= "eth0"
-          interface[:ip]   ||= container.send(:generate_ip)
-          interface[:mac]  ||= container.send(:generate_mac)
+          interface = container.primary_interface.last
 
           context = {
             :id => container.id,
             :ip => interface[:ip].split('/').first,
-            :mac => interface[:mac]
+            :mac => interface[:mac],
+            :tld => (container.tld || self.labfile.config[:tld])
           }
 
           file.puts
@@ -58,8 +81,9 @@ class TestLab
         tempfile = Tempfile.new("dhcpd")
         File.open(tempfile, 'w') do |file|
           build_dhcpd_main_conf(file)
-          build_dhcpd_networks_conf(file)
-          build_dhcpd_hosts_conf(file)
+          build_dhcpd_zone_conf(file)
+          build_dhcpd_subnet_conf(file)
+          build_dhcpd_host_conf(file)
 
           file.respond_to?(:flush) and file.flush
         end
