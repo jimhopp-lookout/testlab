@@ -2,6 +2,7 @@ class TestLab
   class Node
 
     module DHCPD
+      require 'tempfile'
 
       # Builds the main DHCPD configuration sections
       def build_dhcpd_main_conf(file)
@@ -36,7 +37,6 @@ class TestLab
           file.puts
           file.puts(ZTK::Template.render(dhcpd_zone_template, context))
         end
-
       end
 
       # Builds the DHCPD configuration sections for our subnets
