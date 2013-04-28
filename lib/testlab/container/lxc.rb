@@ -23,6 +23,20 @@ class TestLab
         end
       end
 
+      # Attempt to detect the architecture of the node.  The value returned is
+      # respective to the container distro.
+      #
+      # @return [String] The arch of the node in the context of the container
+      #   distro
+      def detect_arch
+        case self.distro.downcase
+        when "ubuntu" then
+          ((self.node.arch =~ /x86_64/) ? "amd64" : "i386")
+        when "fedora" then
+          ((self.node.arch =~ /x86_64/) ? "amd64" : "i686")
+        end
+      end
+
     end
 
   end

@@ -29,7 +29,6 @@ class TestLab
 
 
     autoload :Actions,    'testlab/container/actions'
-    autoload :Detect,     'testlab/container/detect'
     autoload :Generators, 'testlab/container/generators'
     autoload :Lifecycle,  'testlab/container/lifecycle'
     autoload :LXC,        'testlab/container/lxc'
@@ -37,7 +36,6 @@ class TestLab
     autoload :Status,     'testlab/container/status'
 
     include TestLab::Container::Actions
-    include TestLab::Container::Detect
     include TestLab::Container::Generators
     include TestLab::Container::Lifecycle
     include TestLab::Container::LXC

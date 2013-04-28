@@ -21,7 +21,6 @@ class TestLab
 
 
     autoload :Bind,      'testlab/node/bind'
-    autoload :Bootstrap, 'testlab/node/bootstrap'
     autoload :Lifecycle, 'testlab/node/lifecycle'
     autoload :LXC,       'testlab/node/lxc'
     autoload :Resolv,    'testlab/node/resolv'
@@ -29,7 +28,6 @@ class TestLab
     autoload :Status,    'testlab/node/status'
 
     include TestLab::Node::Bind
-    include TestLab::Node::Bootstrap
     include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::Resolv

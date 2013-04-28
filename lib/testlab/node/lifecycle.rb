@@ -3,11 +3,17 @@ class TestLab
 
     module Lifecycle
 
+      # Bootstrap the node
+      def node_setup
+        node_setup_template = File.join(self.class.template_dir, 'node-setup.erb')
+        self.ssh.bootstrap(ZTK::Template.render(node_setup_template))
+      end
+
       # Setup the node.
       def setup
         @ui.logger.debug { "Node Setup: #{self.id} " }
 
-        bootstrap
+        node_setup
 
         if self.components.include?('resolv')
           build_resolv_conf
