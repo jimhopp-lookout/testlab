@@ -17,14 +17,14 @@ class TestLab
         reverse_records = Hash.new
 
         TestLab::Container.all.each do |container|
-          interface = container.primary_interface
-          domain       = (container.domain || container.node.labfile.config[:domain])
+          interface          = container.primary_interface
+          container.domain ||= container.node.labfile.config[:domain]
 
-          forward_records[domain] ||= Array.new
-          forward_records[domain] << %(#{container.id} IN A #{container.ip})
+          forward_records[container.domain] ||= Array.new
+          forward_records[container.domain] << %(#{container.id} IN A #{container.ip})
 
           reverse_records[interface.first] ||= Array.new
-          reverse_records[interface.first] << %(#{container.ptr} IN PTR #{container.id}.#{domain}.)
+          reverse_records[interface.first] << %(#{container.ptr} IN PTR #{container.id}.#{container.domain}.)
         end
         { :forward => forward_records, :reverse => reverse_records }
       end
@@ -48,8 +48,7 @@ class TestLab
           build_bind_db(network.arpa, reverse_records[network.id])
         end
 
-        domains = ([self.labfile.config[:domain]] + TestLab::Container.domains).flatten
-        domains.each do |domain|
+        TestLab::Container.domains.each do |domain|
           context = {
             :zone => domain
           }

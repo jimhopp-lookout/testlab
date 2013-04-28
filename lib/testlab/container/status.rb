@@ -4,9 +4,9 @@ class TestLab
     module Status
 
       def fqdn
-        domain = (self.domain || self.node.labfile.config[:domain])
+        self.domain ||= self.node.labfile.config[:domain]
 
-        [self.id, domain].join('.')
+        [self.id, self.domain].join('.')
       end
 
       def status

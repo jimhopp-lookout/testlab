@@ -4,7 +4,10 @@ class TestLab
     module ClassMethods
 
       def domains
-        self.all.map(&:domain).compact
+        self.all.map do |container|
+          container.domain ||= container.node.labfile.config[:domain]
+          container.domain
+        end.compact
       end
 
     end

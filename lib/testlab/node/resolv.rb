@@ -8,10 +8,9 @@ class TestLab
       def build_resolv_main_conf(file)
         resolv_conf_template = File.join(self.class.template_dir, "resolv.erb")
 
-        domains = ([self.labfile.config[:domain]] + TestLab::Container.domains).flatten
         context = {
           :servers => [TestLab::Network.ips, "8.8.8.8", "8.8.4.4" ].flatten,
-          :search => domains.join(' ')
+          :search => TestLab::Container.domains.join(' ')
         }
 
         file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
