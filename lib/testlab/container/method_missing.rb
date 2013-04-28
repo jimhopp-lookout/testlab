@@ -1,5 +1,5 @@
 class TestLab
-  class Node
+  class Container
 
     module MethodMissing
 
