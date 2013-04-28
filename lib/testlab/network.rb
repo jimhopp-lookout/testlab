@@ -7,7 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Network < ZTK::DSL::Base
-    STATUS_KEYS   = %w(node_id id state interface).map(&:to_sym)
+    STATUS_KEYS   = %w(node_id id state interface network netmask broadcast).map(&:to_sym)
 
     belongs_to  :node,        :class_name => 'TestLab::Node'
 

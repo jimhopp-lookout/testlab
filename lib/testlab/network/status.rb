@@ -10,7 +10,10 @@ class TestLab
           :id => self.id,
           :node_id => self.node.id,
           :state => self.state,
-          :interface => interface
+          :interface => interface,
+          :broadcast => self.broadcast,
+          :network => self.network,
+          :netmask => self.netmask
         }
       end
 
