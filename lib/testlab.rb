@@ -63,12 +63,12 @@ class TestLab
     if alive?
       @@ui.stdout.puts("NODES:")
       ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Node.all, TestLab::Node::STATUS_KEYS) do |node|
-        OpenStruct.new(node.status.merge(:id => node.id))
+        OpenStruct.new(node.status)
       end
       @@ui.stdout.puts
       @@ui.stdout.puts("NETWORKS:")
       ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Network.all, TestLab::Network::STATUS_KEYS) do |network|
-        OpenStruct.new(network.status.merge(:id => network.id))
+        OpenStruct.new(network.status)
       end
       @@ui.stdout.puts
       @@ui.stdout.puts("CONTAINERS:")
