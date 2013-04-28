@@ -20,6 +20,10 @@ A framework for building lightweight virtual infrastructure using LXC
 
 # RESOURCES
 
+IRC:
+
+* #jovelabs on irc.freenode.net
+
 Documentation:
 
 * http://zpatten.github.io/testlab/
