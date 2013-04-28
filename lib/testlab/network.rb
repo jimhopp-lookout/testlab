@@ -9,13 +9,7 @@ class TestLab
   class Network < ZTK::DSL::Base
     STATUS_KEYS   = %w(node_id id state interface network netmask broadcast).map(&:to_sym)
 
-    belongs_to  :node,        :class_name => 'TestLab::Node'
-
-    attribute   :bridge
-
-    attribute   :ip
-    attribute   :config
-
+    # Sub-Modules
     autoload :Actions, 'testlab/network/actions'
     autoload :CIDR, 'testlab/network/cidr'
     autoload :Lifecycle, 'testlab/network/lifecycle'
@@ -25,6 +19,15 @@ class TestLab
     include TestLab::Network::CIDR
     include TestLab::Network::Lifecycle
     include TestLab::Network::Status
+
+    # Associations and Attributes
+    belongs_to  :node,        :class_name => 'TestLab::Node'
+
+    attribute   :bridge
+
+    attribute   :ip
+    attribute   :config
+
 
     def initialize(*args)
       super(*args)

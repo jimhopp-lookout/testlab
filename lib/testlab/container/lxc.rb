@@ -11,6 +11,11 @@ class TestLab
         @lxc ||= self.node.lxc.container(self.id)
       end
 
+      # SSH to the container
+      def ssh(options={})
+        self.node.container_ssh(self, options)
+      end
+
       # Does the container exist?
       def exists?
         @ui.logger.debug { "Container Exists?: #{self.id} " }

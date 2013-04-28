@@ -20,13 +20,14 @@ class TestLab
     autoload :Status,        'testlab/node/status'
 
     include TestLab::Node::Bind
-    extend  TestLab::Node::ClassMethods
     include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::MethodMissing
     include TestLab::Node::Resolv
     include TestLab::Node::SSH
     include TestLab::Node::Status
+
+    extend  TestLab::Node::ClassMethods
 
     # Associations and Attributes
     belongs_to :labfile,    :class_name => 'TestLab::Lab'
