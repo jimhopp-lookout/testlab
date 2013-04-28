@@ -69,6 +69,23 @@ class TestLab
         cidr_matrix[:broadcast] % clean_ip.split('.')
       end
 
+      def ptr
+        octets = self.clean_ip.split('.')
+
+        result = case self.cidr
+        when 0..7 then
+          octets[-4,4]
+        when 8..15 then
+          octets[-3,3]
+        when 16..23 then
+          octets[-2,2]
+        when 24..31 then
+          octets[-1,1]
+        end
+
+        result.reverse.join('.')
+      end
+
       # Returns the ARPA address
       def arpa
         result = self.network.split('.').delete_if{ |ip| ip == '0' }.reverse.join('.')
