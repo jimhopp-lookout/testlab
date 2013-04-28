@@ -73,7 +73,7 @@ class TestLab
       @@ui.stdout.puts
       @@ui.stdout.puts("CONTAINERS:")
       ZTK::Report.new(:ui => @@ui).spreadsheet(TestLab::Container.all, TestLab::Container::STATUS_KEYS) do |container|
-        OpenStruct.new(container.status.merge(:id => container.id))
+        OpenStruct.new(container.status)
       end
 
       true
