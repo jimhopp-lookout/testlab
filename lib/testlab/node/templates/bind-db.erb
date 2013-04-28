@@ -1,9 +1,12 @@
-$TTL  86400
+$TTL 1d
 @ IN  SOA localhost. root.localhost. (
-            1   ; Serial
-       604800   ; Refresh
-        86400   ; Retry
-      2419200   ; Expire
-        86400 ) ; Negative Cache TTL
+            0   ; Serial
+           1w   ; Refresh
+           1d   ; Retry
+           4w   ; Expire
+           1d ) ; Negative Cache TTL
 ;
 @ IN  NS  localhost.
+<% @records.each do |record| -%>
+<%= record %>
+<% end -%>

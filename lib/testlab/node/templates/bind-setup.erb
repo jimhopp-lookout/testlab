@@ -1,7 +1,3 @@
 set -x
 
 apt-get -y install bind9
-service bind9 stop
-
-# Ensure the bind key is readable by all
-chmod -v 0644 /etc/bind/rndc.key
