@@ -13,9 +13,8 @@ class TestLab
           build_resolv_conf
         end
 
-        if self.components.include?('dhcpd')
+        if self.components.include?('bind')
           bind_setup
-          dhcpd_setup
         end
 
         call_collections([self.networks, self.routers, self.containers], :setup)

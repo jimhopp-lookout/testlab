@@ -22,7 +22,6 @@ class TestLab
 
     autoload :Bind,      'testlab/node/bind'
     autoload :Bootstrap, 'testlab/node/bootstrap'
-    autoload :DHCPD,     'testlab/node/dhcpd'
     autoload :Lifecycle, 'testlab/node/lifecycle'
     autoload :LXC,       'testlab/node/lxc'
     autoload :Resolv,    'testlab/node/resolv'
@@ -31,7 +30,6 @@ class TestLab
 
     include TestLab::Node::Bind
     include TestLab::Node::Bootstrap
-    include TestLab::Node::DHCPD
     include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::Resolv
