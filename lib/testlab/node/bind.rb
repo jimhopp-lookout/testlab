@@ -18,8 +18,7 @@ class TestLab
 
         TestLab::Container.all.each do |container|
           interface = container.primary_interface
-          puts interface.inspect
-          tld = (container.tld || container.node.labfile.config[:tld])
+          tld       = (container.tld || container.node.labfile.config[:tld])
 
           forward_records[tld] ||= Array.new
           forward_records[tld] << %(#{container.id} IN A #{container.ip})
@@ -33,8 +32,8 @@ class TestLab
       # Builds the bind configuration sections for our zones
       def build_bind_zone_partial(file)
         bind_zone_template = File.join(self.class.template_dir, 'bind-zone.erb')
+
         bind_records = build_bind_records
-        puts("bind_records == #{bind_records.inspect}")
         forward_records = bind_records[:forward]
         reverse_records = bind_records[:reverse]
 
