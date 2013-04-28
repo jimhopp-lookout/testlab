@@ -14,7 +14,7 @@ class TestLab
           :search => tlds.join(' ')
         }
 
-        file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration", :char => ';'))
+        file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
         file.puts(ZTK::Template.render(resolv_conf_template, context))
       end
 
