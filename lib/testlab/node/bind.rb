@@ -81,12 +81,11 @@ class TestLab
       end
 
       def bind_setup
-        bind_setup_template = File.join(self.class.template_dir, 'bind-setup.erb')
-        self.ssh.bootstrap(ZTK::Template.render(bind_setup_template))
+        self.ssh.exec(%(sudo /bin/bash -c 'apt-get -y install bind9'))
 
         build_bind_conf
 
-        self.ssh.exec(%(sudo /bin/bash -c 'service bind9 restart || service bind9 start'))
+        self.ssh.exec(%(sudo /bin/bash -c 'service bind9 stop ; service bind9 start'))
       end
 
     end
