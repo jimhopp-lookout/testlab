@@ -17,7 +17,7 @@ class TestLab
       def create_args
         case self.distro.downcase
         when "ubuntu" then
-          %W(-f /etc/lxc/#{self.id} -t #{self.distro} -- --release #{self.release} --arch #{arch})
+          %W(-f /etc/lxc/#{self.id} -t #{self.distro} -- --release #{self.release} --arch #{self.arch})
         when "fedora" then
           %W(-f /etc/lxc/#{self.id} -t #{self.distro} -- --release #{self.release})
         end

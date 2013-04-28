@@ -14,7 +14,7 @@ class TestLab
     attribute   :provisioner
     attribute   :config
 
-    attribute   :tld
+    attribute   :domain
 
     attribute   :user
     attribute   :keys
@@ -102,8 +102,8 @@ class TestLab
 
     class << self
 
-      def tlds
-        self.all.map(&:tld).compact
+      def domains
+        self.all.map(&:domain).compact
       end
 
     end

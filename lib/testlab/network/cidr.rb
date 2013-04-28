@@ -69,21 +69,25 @@ class TestLab
         cidr_matrix[:broadcast] % clean_ip.split('.')
       end
 
-      def ptr
+      def cidr_octets(fill=nil)
         octets = self.clean_ip.split('.')
 
         result = case self.cidr
         when 0..7 then
           octets[-4,4]
         when 8..15 then
-          octets[-3,3]
+          [octets[-3,3], fill]
         when 16..23 then
-          octets[-2,2]
+          [octets[-2,2], fill, fill]
         when 24..31 then
-          octets[-1,1]
+          [octets[-1,1], fill, fill, fill]
         end
 
-        result.reverse.join('.')
+        result.flatten.compact
+      end
+
+      def ptr
+        cidr_octets.reverse.join('.')
       end
 
       # Returns the ARPA address

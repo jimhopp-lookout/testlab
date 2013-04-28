@@ -8,10 +8,10 @@ class TestLab
       def build_resolv_main_conf(file)
         resolv_conf_template = File.join(self.class.template_dir, "resolv.erb")
 
-        tlds = ([self.labfile.config[:tld]] + TestLab::Container.tlds).flatten
+        domains = ([self.labfile.config[:domain]] + TestLab::Container.domains).flatten
         context = {
           :servers => [TestLab::Network.all.map(&:clean_ip), "8.8.8.8", "8.8.4.4" ].flatten,
-          :search => tlds.join(' ')
+          :search => domains.join(' ')
         }
 
         file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
@@ -19,16 +19,9 @@ class TestLab
       end
 
       def build_resolv_conf
-        resolv_conf = File.join("/etc/resolv.conf")
-        tempfile = Tempfile.new("bind")
-        File.open(tempfile, 'w') do |file|
+        self.ssh.file(:target => File.join("/etc/resolv.conf"), :chown => "root:root") do |file|
           build_resolv_main_conf(file)
-
-          file.respond_to?(:flush) and file.flush
         end
-
-        self.ssh.upload(tempfile.path, File.basename(tempfile.path))
-        self.ssh.exec(%(sudo mv -v #{File.basename(tempfile.path)} #{resolv_conf}))
       end
 
     end
