@@ -7,7 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
-    STATUS_KEYS   = %w(node_id id state distro release interfaces provisioner).map(&:to_sym)
+    STATUS_KEYS   = %w(node_id id fqdn state distro release interfaces provisioner).map(&:to_sym)
 
     belongs_to  :node,        :class_name => 'TestLab::Node'
 
