@@ -29,7 +29,6 @@ class TestLab
 
 
     autoload :Actions,    'testlab/container/actions'
-    autoload :Args,       'testlab/container/args'
     autoload :Detect,     'testlab/container/detect'
     autoload :Generators, 'testlab/container/generators'
     autoload :Lifecycle,  'testlab/container/lifecycle'
@@ -38,7 +37,6 @@ class TestLab
     autoload :Status,     'testlab/container/status'
 
     include TestLab::Container::Actions
-    include TestLab::Container::Args
     include TestLab::Container::Detect
     include TestLab::Container::Generators
     include TestLab::Container::Lifecycle
