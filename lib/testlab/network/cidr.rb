@@ -41,7 +41,7 @@ class TestLab
 
       # Returns the CIDR of the network
       def cidr
-        self.ip.split('/').last
+        self.ip.split('/').last.to_i
       end
 
       # Returns the IP with the CIDR notation stripped away
@@ -51,7 +51,7 @@ class TestLab
 
       # Returns the entry from the CIDR_MATRIX constant based on our CIDR
       def cidr_matrix
-        CIDR_MATRIX[self.cidr.to_i]
+        CIDR_MATRIX[self.cidr]
       end
 
       # Returns the network mask
