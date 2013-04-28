@@ -14,6 +14,10 @@ A framework for building lightweight virtual infrastructure using LXC
 * Latest Vagrant Package (non-gem version)
 * Ubuntu 13.04 Server 64-bit (Raring) Base Box - https://github.com/zpatten/raring64
 
+# EXAMPLE USE
+
+* See the `testlab-repo` - https://github.com/zpatten/testlab-repo
+
 # RESOURCES
 
 Documentation:
