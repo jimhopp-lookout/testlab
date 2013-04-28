@@ -32,14 +32,12 @@ class TestLab
     autoload :Generators, 'testlab/container/generators'
     autoload :Lifecycle,  'testlab/container/lifecycle'
     autoload :LXC,        'testlab/container/lxc'
-    autoload :Network,    'testlab/container/network'
     autoload :Status,     'testlab/container/status'
 
     include TestLab::Container::Actions
     include TestLab::Container::Generators
     include TestLab::Container::Lifecycle
     include TestLab::Container::LXC
-    include TestLab::Container::Network
     include TestLab::Container::Status
 
 
@@ -49,17 +47,6 @@ class TestLab
       @ui          = TestLab.ui
       @provisioner = self.provisioner.new(self.config) if !self.provisioner.nil?
     end
-
-################################################################################
-
-    # Does the container exist?
-    def exists?
-      @ui.logger.debug { "Container Exists?: #{self.id} " }
-
-      self.lxc.exists?
-    end
-
-################################################################################
 
     # SSH to the container
     def ssh(options={})
