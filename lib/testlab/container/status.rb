@@ -3,11 +3,17 @@ class TestLab
 
     module Status
 
+      def fqdn
+        domain = (self.domain || self.node.labfile.config[:domain])
+
+        [self.id, domain].join('.')
+      end
+
       def status
         interfaces = self.interfaces.collect{ |network, network_config| "#{network}:#{network_config[:name]}:#{network_config[:ip]}" }.join(', ')
-
         {
           :id => self.id,
+          :fqdn => self.fqdn,
           :state => self.state,
           :distro => self.distro,
           :release => self.release,
