@@ -3,6 +3,23 @@ class TestLab
 
     module Lifecycle
 
+      # Iterates an array of arrays calling the specified method on all the
+      # collections of objects
+      def call_collections(collections, method_name)
+        collections.each do |collection|
+          call_methods(collection, method_name)
+        end
+      end
+
+      # Calls the specified method on all the objects supplied
+      def call_methods(objects, method_name)
+        objects.each do |object|
+          if object.respond_to?(method_name)
+            object.send(method_name)
+          end
+        end
+      end
+
       # Bootstrap the node
       def node_setup
         node_setup_template = File.join(self.class.template_dir, 'node-setup.erb')
@@ -24,6 +41,10 @@ class TestLab
         end
 
         call_collections([self.networks, self.routers, self.containers], :setup)
+
+        if self.components.include?('bind')
+          bind_reload
+        end
 
         true
       end

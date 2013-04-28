@@ -78,12 +78,18 @@ class TestLab
         end
       end
 
+      def bind_install
+        self.ssh.exec(%(sudo apt-get -y install bind9))
+      end
+
+      def bind_reload
+        self.ssh.exec(%(sudo rndc reload))
+      end
+
       def bind_setup
-        self.ssh.exec(%(sudo /bin/bash -c 'apt-get -y install bind9'))
-
+        bind_install
         build_bind_conf
-
-        self.ssh.exec(%(sudo /bin/bash -c 'service bind9 stop ; service bind9 start'))
+        bind_reload
       end
 
     end
