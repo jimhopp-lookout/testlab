@@ -68,8 +68,6 @@ class TestLab
           file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND DB: #{zone}", :char => ';'))
           file.puts(ZTK::Template.render(bind_db_template, { :zone => zone, :records => records }))
         end
-
-        # self.ssh.exec(%(sudo rm -fv /etc/bind/db.#{zone}.jnl))
       end
 
       # Builds the BIND configuration
