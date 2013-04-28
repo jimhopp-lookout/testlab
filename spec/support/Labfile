@@ -18,7 +18,7 @@ node :localhost do
   ]
 
   network :testnet do
-    cidr        "192.168.255.254/16"
+    ip          "192.168.255.254/16"
     bridge      :br0
   end
 
