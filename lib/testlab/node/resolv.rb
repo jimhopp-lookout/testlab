@@ -10,7 +10,7 @@ class TestLab
 
         domains = ([self.labfile.config[:domain]] + TestLab::Container.domains).flatten
         context = {
-          :servers => [TestLab::Network.all.map(&:clean_ip), "8.8.8.8", "8.8.4.4" ].flatten,
+          :servers => [TestLab::Network.ips, "8.8.8.8", "8.8.4.4" ].flatten,
           :search => domains.join(' ')
         }
 

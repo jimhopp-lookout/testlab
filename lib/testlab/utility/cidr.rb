@@ -1,6 +1,12 @@
 class TestLab
-  class Network
+  module Utility
 
+    # CIDR Error Class
+    class CIDRError < UtilityError; end
+
+    # CIDR Module
+    #
+    # @author Zachary Patten <zachary@jovelabs.net>
     module CIDR
 
       CIDR_MATRIX = {
@@ -39,61 +45,81 @@ class TestLab
          0 => { :netmask => '0.0.0.0',         :broadcast => '255.255.255.255', :network => '0.0.0.0' }
       }
 
-      # Returns the CIDR of the network
-      def cidr
-        self.ip.split('/').last.to_i
+      def ip(ip)
+        ip.split('/').first
       end
 
-      # Returns the IP with the CIDR notation stripped away
-      def clean_ip
-        self.ip.split('/').first
+      def cidr(ip)
+        ip.split('/').last.to_i
       end
 
-      # Returns the entry from the CIDR_MATRIX constant based on our CIDR
-      def cidr_matrix
-        CIDR_MATRIX[self.cidr]
+      def octets(ip)
+        ip.split('.')
       end
 
-      # Returns the network mask
-      def netmask
-        cidr_matrix[:netmask]
+      def cidr_matrix(cidr)
+        CIDR_MATRIX[cidr.to_i]
+      end
+
+      def netmask(ip)
+        ip, cidr = ip.split('/')
+        cidr_matrix(cidr)[:netmask]
       end
 
       # Returns the network address
-      def network
-        cidr_matrix[:network] % clean_ip.split('.')
+      def network(ip)
+        ip, cidr = ip.split('/')
+        cidr_matrix(cidr)[:network] % ip.split('.')
       end
 
       # Returns the broadcast address
-      def broadcast
-        cidr_matrix[:broadcast] % clean_ip.split('.')
+      def broadcast(ip)
+        ip, cidr = ip.split('/')
+        cidr_matrix(cidr)[:broadcast] % ip.split('.')
       end
 
-      def cidr_octets(fill=nil)
-        octets = self.clean_ip.split('.')
+      def cidr_octets(ip, fill=nil)
+        ip, cidr = ip.split('/')
+        oct = octets(ip)
 
-        result = case self.cidr
+        result = case cidr.to_i
         when 0..7 then
-          octets[-4,4]
+          oct[-4,4]
         when 8..15 then
-          [octets[-3,3], fill]
+          [fill, oct[-3,3]]
         when 16..23 then
-          [octets[-2,2], fill, fill]
+          [fill, fill, oct[-2,2]]
         when 24..31 then
-          [octets[-1,1], fill, fill, fill]
+          [fill, fill, fill, oct[-1,1]]
         end
 
         result.flatten.compact
       end
 
-      def ptr
-        cidr_octets.reverse.join('.')
+      def arpa_octets(ip, fill=nil)
+        ip, cidr = ip.split('/')
+        oct = octets(ip)
+
+        result = case cidr.to_i
+        when 0..7 then
+          [fill, fill, fill, fill]
+        when 8..15 then
+          [oct[0,1], fill, fill, fill]
+        when 16..23 then
+          [oct[0,2], fill, fill]
+        when 24..31 then
+          [oct[0,3], fill]
+        end
+
+        result.flatten.compact.reverse
       end
 
-      # Returns the ARPA address
-      def arpa
-        result = self.network.split('.').delete_if{ |ip| ip == '0' }.reverse.join('.')
-        "#{result}.in-addr.arpa"
+      def ptr(ip)
+        cidr_octets(ip).reverse.join('.')
+      end
+
+      def arpa(ip)
+        [arpa_octets(ip), 'in-addr', 'arpa'].flatten.join('.')
       end
 
     end

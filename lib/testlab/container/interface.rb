@@ -4,12 +4,12 @@ class TestLab
     module Interface
 
       def ip
-        self.primary_interface.last[:ip].split('/').first
+        TestLab::Utility.ip(self.primary_interface.last[:ip])
       end
 
       # Returns the CIDR of the container
       def cidr
-        self.primary_interface.last[:ip].split('/').last.to_i
+        TestLab::Utility.cidr(self.primary_interface.last[:ip]).to_i
       end
 
       def ptr

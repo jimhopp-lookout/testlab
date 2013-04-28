@@ -10,15 +10,15 @@ class TestLab
   # Top-Level Error Class
   class TestLabError < StandardError; end
 
-  autoload :Provider, 'testlab/provider'
+  # Main Classes
+  autoload :Container,   'testlab/container'
+  autoload :Labfile,     'testlab/labfile'
+  autoload :Network,     'testlab/network'
+  autoload :Node,        'testlab/node'
+  autoload :Provider,    'testlab/provider'
   autoload :Provisioner, 'testlab/provisioner'
-
-  autoload :Labfile, 'testlab/labfile'
-  autoload :Node, 'testlab/node'
-  autoload :Router, 'testlab/router'
-  autoload :Container, 'testlab/container'
-  autoload :Network, 'testlab/network'
-  autoload :Link, 'testlab/link'
+  autoload :Router,      'testlab/router'
+  autoload :Utility,     'testlab/utility'
 
   @@ui ||= nil
 
