@@ -7,8 +7,10 @@ class TestLab
       def create
         @ui.logger.debug { "Container Create: #{self.id} " }
 
+        self.domain  ||= self.node.labfile.config[:domain]
         self.distro  ||= "ubuntu"
         self.release ||= "precise"
+
         self.arch    ||= detect_arch
 
         self.lxc.config.clear
