@@ -53,7 +53,7 @@ class TestLab
       super(*args)
 
       @ui          = TestLab.ui
-      @provisioner = self.provisioner.new(self.config) if !self.provisioner.nil?
+      @provisioner = self.provisioner.new(self.config, @ui) if !self.provisioner.nil?
     end
 
   end

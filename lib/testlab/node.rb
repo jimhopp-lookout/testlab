@@ -45,7 +45,7 @@ class TestLab
       super(*args)
 
       @ui       = TestLab.ui
-      @provider = self.provider.new(self.config)
+      @provider = self.provider.new(self.config, @ui)
     end
 
   end
