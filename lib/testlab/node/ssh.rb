@@ -31,7 +31,11 @@ class TestLab
 
             c.host_name       = container.ip
             c.user            = (container.user || "ubuntu")
-            c.keys            = container.keys
+            if container.keys.nil?
+              c.password      = (container.passwd || "ubuntu")
+            else
+              c.keys          = container.keys
+            end
           end
         end
         @container_ssh[name]

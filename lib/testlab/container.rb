@@ -38,6 +38,7 @@ class TestLab
     attribute   :domain
 
     attribute   :user
+    attribute   :passwd
     attribute   :keys
 
     attribute   :interfaces
