@@ -79,9 +79,11 @@ class TestLab
 
       def bind_install
         self.ssh.exec(%(sudo apt-get -y install bind9))
+        self.ssh.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
       def bind_reload
+        self.ssh.exec(%(sudo chown -Rv bind:bind /etc/bind))
         self.ssh.exec(%(sudo rndc reload))
       end
 
