@@ -11,8 +11,14 @@ class TestLab
     class Shell
 
       def initialize(config={}, ui=nil)
-        @config   = config
+        @config   = (config || Hash.new)
         @ui       = (ui || TestLab.ui)
+      end
+
+      def setup(container)
+      end
+
+      def teardown(container)
       end
 
     end

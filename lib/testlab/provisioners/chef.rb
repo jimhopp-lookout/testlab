@@ -15,6 +15,12 @@ class TestLab
         @ui       = (ui || TestLab.ui)
       end
 
+      def setup(container)
+      end
+
+      def teardown(container)
+      end
+
     end
 
   end
