@@ -3,6 +3,7 @@ class TestLab
 
     module Interface
 
+      # Returns the IP of the container
       def ip
         TestLab::Utility.ip(self.primary_interface.last[:ip])
       end
@@ -12,21 +13,9 @@ class TestLab
         TestLab::Utility.cidr(self.primary_interface.last[:ip]).to_i
       end
 
+      # Returns a BIND PTR record
       def ptr
-        octets = self.ip.split('.')
-
-        result = case self.cidr
-        when 0..7 then
-          octets[-4,4]
-        when 8..15 then
-          octets[-3,3]
-        when 16..23 then
-          octets[-2,2]
-        when 24..31 then
-          octets[-1,1]
-        end
-
-        result.reverse.join('.')
+        TestLab::Utility.ptr(self.primary_interface.last[:ip])
       end
 
       def primary_interface
