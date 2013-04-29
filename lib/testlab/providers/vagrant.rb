@@ -33,7 +33,7 @@ class TestLab
 ################################################################################
 
       def initialize(config={}, ui=nil)
-        @config   = config
+        @config   = (config || Hash.new)
         @ui       = (ui || TestLab.ui)
 
         # ensure our vagrant key is there
