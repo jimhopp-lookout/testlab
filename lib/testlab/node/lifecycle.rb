@@ -26,6 +26,18 @@ class TestLab
         self.ssh.bootstrap(ZTK::Template.render(node_setup_template))
       end
 
+      def create
+        @provider.create
+
+        true
+      end
+
+      def destroy
+        @provider.destroy
+
+        true
+      end
+
       # Setup the node.
       def setup
         @ui.logger.debug { "Node Setup: #{self.id} " }
