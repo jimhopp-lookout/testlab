@@ -13,6 +13,8 @@ class TestLab
         if (!@provisioner.nil? && @provisioner.respond_to?(:setup))
           @provisioner.setup(self)
         end
+
+        true
       end
 
       # Container Teardown
@@ -25,6 +27,8 @@ class TestLab
 
         self.down
         self.destroy
+
+        true
       end
 
     end
