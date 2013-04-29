@@ -11,7 +11,7 @@ class TestLab
     class Chef
 
       def initialize(config={}, ui=nil)
-        @config   = config
+        @config   = (config || Hash.new)
         @ui       = (ui || TestLab.ui)
       end
 
