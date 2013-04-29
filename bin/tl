@@ -1,13 +1,6 @@
 #!/usr/bin/env ruby
 require 'gli'
-begin # XXX: Remove this begin/rescue before distributing your app
 require 'testlab'
-rescue LoadError
-  STDERR.puts "In development, you need to use `bundle exec bin/testlab` to run your app"
-  STDERR.puts "At install-time, RubyGems will make sure lib, etc. are in the load path"
-  STDERR.puts "Feel free to remove this message from bin/testlab now"
-  exit 64
-end
 
 include GLI::App
 
@@ -23,97 +16,94 @@ version Testlab::VERSION
 # arg_name 'The name of the argument'
 # flag [:f,:flagname]
 
-desc 'Manage the test lab'
-arg_name 'Describe arguments to lab here'
-command :lab do |c|
+# desc 'Manage the test lab'
+# arg_name 'Describe arguments to lab here'
+# command :lab do |c|
 
-  c.desc 'Create the test lab'
-  c.command :create do |create|
-    create.action do |global_options,options,args|
-      @testlab.create
-    end
+#   # c.desc 'Describe a switch to lab'
+#   # c.switch :s
+
+#   # c.desc 'Describe a flag to lab'
+#   # c.default_value 'default'
+#   # c.flag :f
+#   # c.action do |global_options,options,args|
+
+#   #   # Your command logic here
+
+#   #   # If you have any errors, just raise them
+#   #   # raise "that command made no sense"
+
+#   #   puts "lab command ran"
+#   # end
+# end
+
+desc 'Create the test lab'
+command :create do |create|
+  create.action do |global_options,options,args|
+    @testlab.create
   end
-
-  c.desc 'Destroy the test lab'
-  c.command :destroy do |destroy|
-    destroy.action do |global_options,options,args|
-      @testlab.destroy
-    end
-  end
-
-  c.desc 'Online the test lab'
-  c.command :up do |up|
-    up.action do |global_options,options,args|
-      @testlab.up
-    end
-  end
-
-  c.desc 'Offline the test lab'
-  c.command :down do |down|
-    down.action do |global_options,options,args|
-      @testlab.down
-    end
-  end
-
-  c.desc 'Setup the test lab infrastructure'
-  c.command :setup do |setup|
-    setup.action do |global_options,options,args|
-      @testlab.setup
-    end
-  end
-
-  c.desc 'Teardown the test lab infrastructure'
-  c.command :teardown do |teardown|
-    teardown.action do |global_options,options,args|
-      @testlab.teardown
-    end
-  end
-
-  c.desc 'Display information on the status of the test lab'
-  c.command :status do |status|
-    status.action do |global_options,options,args|
-      @testlab.status
-    end
-  end
-
-  # c.desc 'Describe a switch to lab'
-  # c.switch :s
-
-  # c.desc 'Describe a flag to lab'
-  # c.default_value 'default'
-  # c.flag :f
-  # c.action do |global_options,options,args|
-
-  #   # Your command logic here
-
-  #   # If you have any errors, just raise them
-  #   # raise "that command made no sense"
-
-  #   puts "lab command ran"
-  # end
 end
 
-desc 'Describe node here'
+desc 'Destroy the test lab'
+command :destroy do |destroy|
+  destroy.action do |global_options,options,args|
+    @testlab.destroy
+  end
+end
+
+desc 'Online the test lab'
+command :up do |up|
+  up.action do |global_options,options,args|
+    @testlab.up
+  end
+end
+
+desc 'Offline the test lab'
+command :down do |down|
+  down.action do |global_options,options,args|
+    @testlab.down
+  end
+end
+
+desc 'Setup the test lab infrastructure'
+command :setup do |setup|
+  setup.action do |global_options,options,args|
+    @testlab.setup
+  end
+end
+
+desc 'Teardown the test lab infrastructure'
+command :teardown do |teardown|
+  teardown.action do |global_options,options,args|
+    @testlab.teardown
+  end
+end
+
+desc 'Display information on the status of the test lab'
+command :status do |status|
+  status.action do |global_options,options,args|
+    @testlab.status
+  end
+end
+
+desc 'Manage nodes'
 arg_name 'Describe arguments to node here'
 command :node do |c|
 
-  c.desc 'A node ID'
-  c.flag :n
+  c.desc 'Node ID'
+  c.flag [:i, :id]
 
-  c.desc 'Open an SSH console to the node'
+  c.desc 'Open an SSH console to a node'
   c.command :ssh do |ssh|
     ssh.action do |global_options,options,args|
-      node = TestLab::Node.all.first{ |n| n.id.to_sym == options[:n].to_sym }
+      node = TestLab::Node.all.select{ |n| n.id.to_sym == options[:id].to_sym }.first
       node.ssh.console
     end
   end
 
-  # c.action do |global_options,options,args|
-  #   puts "node command ran"
-  # end
 end
 
-desc 'Describe network here'
+desc 'Manage networks'
 arg_name 'Describe arguments to network here'
 command :network do |c|
   c.action do |global_options,options,args|
@@ -121,12 +111,21 @@ command :network do |c|
   end
 end
 
-desc 'Describe container here'
+desc 'Manage containers'
 arg_name 'Describe arguments to container here'
 command :container do |c|
-  c.action do |global_options,options,args|
-    puts "container command ran"
+
+  c.desc 'Container ID'
+  c.flag [:i, :id]
+
+  c.desc 'Open an SSH console to a container'
+  c.command :ssh do |ssh|
+    ssh.action do |global_options,options,args|
+      container = TestLab::Container.all.select{ |n| n.id.to_sym == options[:id].to_sym }.first
+      container.ssh.console
+    end
   end
+
 end
 
 pre do |global,command,options,args|
