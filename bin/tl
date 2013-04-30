@@ -159,8 +159,7 @@ end
 on_error do |exception|
   # Error logic here
   # return false to skip default error handling
-  @ui.stdout.puts
-  @ui.stdout.puts("EXCEPTION: #{exception.inspect}")
+  puts(["EXCEPTION:".red.bold, exception.inspect.red].join(' '))
 
   false
 end
