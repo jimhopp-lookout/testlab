@@ -19,7 +19,6 @@ class TestLab
       end
 
       def setup(container)
-        puts("Hello from Shell Provisioner Setup for #{container.id}")
         if !@config[:setup].nil?
           tempfile = Tempfile.new("bootstrap")
           container.node.ssh.file(:target => File.join(container.lxc.fs_root, tempfile.path), :chmod => '0777', :chown => 'root:root') do |file|
@@ -30,7 +29,7 @@ class TestLab
       end
 
       def teardown(container)
-        puts("Hello from Shell Provisioner Teardown for #{container.id}")
+        # NOOP
       end
 
     end
