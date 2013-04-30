@@ -68,19 +68,16 @@ class TestLab
 
   def status
     if alive?
-      @@ui.stdout.puts("NODES:".green.bold)
-      ZTK::Report.new(:ui => @@ui).list(TestLab::Node.all, TestLab::Node::STATUS_KEYS) do |node|
-        OpenStruct.new(node.status)
-      end
-      @@ui.stdout.puts
-      @@ui.stdout.puts("NETWORKS:".green.bold)
-      ZTK::Report.new(:ui => @@ui).list(TestLab::Network.all, TestLab::Network::STATUS_KEYS) do |network|
-        OpenStruct.new(network.status)
-      end
-      @@ui.stdout.puts
-      @@ui.stdout.puts("CONTAINERS:".green.bold)
-      ZTK::Report.new(:ui => @@ui).list(TestLab::Container.all, TestLab::Container::STATUS_KEYS) do |container|
-        OpenStruct.new(container.status)
+      %w(nodes networks containers).map(&:to_sym).each do |object_symbol|
+        @@ui.stdout.puts
+        @@ui.stdout.puts("#{object_symbol}:".upcase.green.bold)
+
+        klass = object_symbol.to_s.singularize.capitalize
+        status_keys = "TestLab::#{klass}::STATUS_KEYS".constantize
+
+        ZTK::Report.new(:ui => @@ui).list(self.send(object_symbol), status_keys) do |object|
+          OpenStruct.new(object.status)
+        end
       end
 
       true
