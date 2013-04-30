@@ -23,6 +23,8 @@ class TestLab
 
     extend  TestLab::Network::ClassMethods
 
+    include TestLab::Utility::Misc
+
     # Associations and Attributes
     belongs_to  :node,        :class_name => 'TestLab::Node'
 
@@ -35,7 +37,7 @@ class TestLab
     def initialize(*args)
       super(*args)
 
-      @ui = TestLab.ui
+      @ui     = TestLab.ui
     end
 
   end

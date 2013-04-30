@@ -7,40 +7,48 @@ class TestLab
       def create
         @ui.logger.debug { "Container Create: #{self.id} " }
 
-        self.domain  ||= self.node.labfile.config[:domain]
-        self.distro  ||= "ubuntu"
-        self.release ||= "precise"
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
+          self.domain  ||= self.node.labfile.config[:domain]
+          self.distro  ||= "ubuntu"
+          self.release ||= "precise"
 
-        self.arch    ||= detect_arch
+          self.arch    ||= detect_arch
 
-        self.lxc.config.clear
-        self.lxc.config['lxc.utsname'] = self.id
-        self.lxc.config['lxc.arch'] = self.arch
-        self.lxc.config.networks = build_lxc_network_conf(self.interfaces)
-        self.lxc.config.save
+          self.lxc.config.clear
+          self.lxc.config['lxc.utsname'] = self.id
+          self.lxc.config['lxc.arch'] = self.arch
+          self.lxc.config.networks = build_lxc_network_conf(self.interfaces)
+          self.lxc.config.save
 
-        self.lxc.create(*create_args)
+          self.lxc.create(*create_args)
+        end
       end
 
       # Destroy the container
       def destroy
         @ui.logger.debug { "Container Destroy: #{self.id} " }
 
-        self.lxc.destroy
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
+          self.lxc.destroy
+        end
       end
 
       # Start the container
       def up
         @ui.logger.debug { "Container Up: #{self.id} " }
 
-        self.lxc.start
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
+          self.lxc.start
+        end
       end
 
       # Stop the container
       def down
         @ui.logger.debug { "Container Down: #{self.id} " }
 
-        self.lxc.stop
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
+          self.lxc.stop
+        end
       end
 
     end

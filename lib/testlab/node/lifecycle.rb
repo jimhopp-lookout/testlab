@@ -14,6 +14,8 @@ class TestLab
       # Calls the specified method on all the objects supplied
       def call_methods(objects, method_name)
         objects.each do |object|
+          # @ui.stdout.puts(format_message(format_object(object, (method_name == :setup ? :green : :red))))
+
           if object.respond_to?(method_name)
             object.send(method_name)
           end
@@ -26,30 +28,22 @@ class TestLab
         self.ssh.bootstrap(ZTK::Template.render(node_setup_template))
       end
 
-      def create
-        @provider.create
-
-        true
-      end
-
-      def destroy
-        @provider.destroy
-
-        true
-      end
-
       # Setup the node.
       def setup
         @ui.logger.debug { "Node Setup: #{self.id} " }
 
-        node_setup
+        # @ui.stdout.puts(format_message(format_object(self, :green)))
 
-        if self.components.include?('resolv')
-          build_resolv_conf
-        end
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
+          node_setup
 
-        if self.components.include?('bind')
-          bind_setup
+          if self.components.include?('resolv')
+            build_resolv_conf
+          end
+
+          if self.components.include?('bind')
+            bind_setup
+          end
         end
 
         call_collections([self.networks, self.routers, self.containers], :setup)
@@ -65,7 +59,12 @@ class TestLab
       def teardown
         @ui.logger.debug { "Node Teardown: #{self.id} " }
 
+        # @ui.stdout.puts(format_message(format_object(self, :red)))
+
         call_collections([self.containers, self.routers, self.networks], :teardown)
+
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
+        end
 
         true
       end

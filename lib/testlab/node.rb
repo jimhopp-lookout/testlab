@@ -10,6 +10,7 @@ class TestLab
     STATUS_KEYS   = %w(id instance_id state user ip port provider con net rtr).map(&:to_sym)
 
     # Sub-Modules
+    autoload :Actions,       'testlab/node/actions'
     autoload :Bind,          'testlab/node/bind'
     autoload :ClassMethods,  'testlab/node/class_methods'
     autoload :Lifecycle,     'testlab/node/lifecycle'
@@ -19,6 +20,7 @@ class TestLab
     autoload :SSH,           'testlab/node/ssh'
     autoload :Status,        'testlab/node/status'
 
+    include TestLab::Node::Actions
     include TestLab::Node::Bind
     include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
@@ -28,6 +30,8 @@ class TestLab
     include TestLab::Node::Status
 
     extend  TestLab::Node::ClassMethods
+
+    include TestLab::Utility::Misc
 
     # Associations and Attributes
     belongs_to :labfile,    :class_name => 'TestLab::Lab'

@@ -29,6 +29,8 @@ class TestLab
 
     extend  TestLab::Container::ClassMethods
 
+    include TestLab::Utility::Misc
+
     # Associations and Attributes
     belongs_to  :node,        :class_name => 'TestLab::Node'
 

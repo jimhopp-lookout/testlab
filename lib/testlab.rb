@@ -2,6 +2,11 @@ require 'ztk'
 
 require 'testlab/version'
 
+# Monkey Patch the String class so we can have some easy ANSI methods
+class String
+  include ZTK::ANSI
+end
+
 # Top-Level LXC Class
 #
 # @author Zachary Patten <zachary@jovelabs.net>
@@ -19,6 +24,8 @@ class TestLab
   autoload :Provisioner, 'testlab/provisioner'
   autoload :Router,      'testlab/router'
   autoload :Utility,     'testlab/utility'
+
+  include TestLab::Utility::Misc
 
   @@ui ||= nil
 
@@ -61,17 +68,17 @@ class TestLab
 
   def status
     if alive?
-      @@ui.stdout.puts("NODES:")
+      @@ui.stdout.puts("NODES:".green.bold)
       ZTK::Report.new(:ui => @@ui).list(TestLab::Node.all, TestLab::Node::STATUS_KEYS) do |node|
         OpenStruct.new(node.status)
       end
       @@ui.stdout.puts
-      @@ui.stdout.puts("NETWORKS:")
+      @@ui.stdout.puts("NETWORKS:".green.bold)
       ZTK::Report.new(:ui => @@ui).list(TestLab::Network.all, TestLab::Network::STATUS_KEYS) do |network|
         OpenStruct.new(network.status)
       end
       @@ui.stdout.puts
-      @@ui.stdout.puts("CONTAINERS:")
+      @@ui.stdout.puts("CONTAINERS:".green.bold)
       ZTK::Report.new(:ui => @@ui).list(TestLab::Container.all, TestLab::Container::STATUS_KEYS) do |container|
         OpenStruct.new(container.status)
       end
@@ -98,7 +105,6 @@ class TestLab
 
   # Proxy various method calls to our subordinate classes
   def node_method_proxy(method_name, *method_args)
-    @@ui.logger.debug { "TestLab.#{method_name}" }
     TestLab::Node.all.map do |node|
       node.send(method_name.to_sym, *method_args)
     end
@@ -113,6 +119,10 @@ class TestLab
     else
       super(method_name, *method_args)
     end
+  end
+
+  def ui
+    @@ui ||= ZTK::UI.new
   end
 
   # Class Helpers
