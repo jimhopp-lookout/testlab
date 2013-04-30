@@ -96,6 +96,8 @@ command :node do |c|
   c.desc 'Open an SSH console to a node'
   c.command :ssh do |ssh|
     ssh.action do |global_options,options,args|
+      help_now!('id is required') if options[:id].nil?
+
       node = TestLab::Node.all.select{ |n| n.id.to_sym == options[:id].to_sym }.first
       node.ssh.console
     end
@@ -121,6 +123,8 @@ command :container do |c|
   c.desc 'Open an SSH console to a container'
   c.command :ssh do |ssh|
     ssh.action do |global_options,options,args|
+      help_now!('id is required') if options[:id].nil?
+
       container = TestLab::Container.all.select{ |n| n.id.to_sym == options[:id].to_sym }.first
       container.ssh.console
     end
