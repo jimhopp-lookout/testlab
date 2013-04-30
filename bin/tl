@@ -98,7 +98,7 @@ command :node do |c|
     ssh.action do |global_options,options,args|
       help_now!('id is required') if options[:id].nil?
 
-      node = TestLab::Node.all.select{ |n| n.id.to_sym == options[:id].to_sym }.first
+      node = @testlab.nodes.select{ |n| n.id.to_sym == options[:id].to_sym }.first
       node.ssh.console
     end
   end
@@ -125,7 +125,7 @@ command :container do |c|
     ssh.action do |global_options,options,args|
       help_now!('id is required') if options[:id].nil?
 
-      container = TestLab::Container.all.select{ |n| n.id.to_sym == options[:id].to_sym }.first
+      container = @testlab.containers.select{ |n| n.id.to_sym == options[:id].to_sym }.first
       container.ssh.console
     end
   end
