@@ -159,7 +159,10 @@ end
 on_error do |exception|
   # Error logic here
   # return false to skip default error handling
-  true
+  @ui.stdout.puts
+  @ui.stdout.puts("EXCEPTION: #{exception.inspect}")
+
+  false
 end
 
 exit run(ARGV)
