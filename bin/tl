@@ -185,7 +185,12 @@ end
 on_error do |exception|
   # Error logic here
   # return false to skip default error handling
-  puts(["EXCEPTION:".red.bold, exception.inspect.red].join(' '))
+  @ui.stderr.puts(["EXCEPTION:".red.bold, exception.inspect.red].join(' '))
+
+  @logger.fatal { exception.inspect }
+  exception.backtrace.each do |line|
+    @logger.logdev.write("#{line}\n")
+  end
 
   false
 end
