@@ -4,38 +4,13 @@ require 'testlab'
 
 include GLI::App
 
-program_desc %(TestLab #{TestLab::VERSION} - A framework for building lightweight virtual infrastructure using LXC)
+version TestLab::VERSION
 
-version Testlab::VERSION
+program_desc %(A framework for building lightweight virtual infrastructure using LXC)
+program_long_desc %(Program Long Description)
 
-# desc 'Describe some switch here'
-# switch [:s,:switch]
-
-# desc 'Describe some flag here'
-# default_value 'the default'
-# arg_name 'The name of the argument'
-# flag [:f,:flagname]
-
-# desc 'Manage the test lab'
-# arg_name 'Describe arguments to lab here'
-# command :lab do |c|
-
-#   # c.desc 'Describe a switch to lab'
-#   # c.switch :s
-
-#   # c.desc 'Describe a flag to lab'
-#   # c.default_value 'default'
-#   # c.flag :f
-#   # c.action do |global_options,options,args|
-
-#   #   # Your command logic here
-
-#   #   # If you have any errors, just raise them
-#   #   # raise "that command made no sense"
-
-#   #   puts "lab command ran"
-#   # end
-# end
+sort_help :manually
+default_command :help
 
 desc 'Create the test lab'
 command :create do |create|
@@ -90,7 +65,8 @@ desc 'Manage nodes'
 arg_name 'Describe arguments to node here'
 command :node do |c|
 
-  c.desc 'Node ID'
+  c.desc 'Node ID or Name'
+  c.arg_name 'node'
   c.flag [:i, :id]
 
   c.desc 'Open an SSH console to a node'
@@ -117,7 +93,8 @@ desc 'Manage containers'
 arg_name 'Describe arguments to container here'
 command :container do |c|
 
-  c.desc 'Container ID'
+  c.desc 'Container ID or Name'
+  c.arg_name 'container'
   c.flag [:i, :id]
 
   c.desc 'Open an SSH console to a container'
