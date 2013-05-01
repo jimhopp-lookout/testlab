@@ -3,6 +3,7 @@ require 'gli'
 require 'testlab'
 
 include GLI::App
+include TestLab::Utility::Misc
 
 version TestLab::VERSION
 
@@ -147,7 +148,7 @@ pre do |global,command,options,args|
   @ui = ZTK::UI.new(:logger => @logger)
   @testlab = TestLab.new(:ui => @ui)
 
-  message = TestLab::Utility.format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
+  message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
   @testlab.ui.stdout.puts(message)
 
   true
