@@ -165,7 +165,10 @@ on_error do |exception|
 
   case exception
   when GLI::BadCommandLine, GLI::UnknownCommand, GLI::UnknownCommandArgument, GLI::UnknownGlobalArgument then
-    commands[:help] and commands[:help].execute({},{},[]) #command.nil? ? [] : [command.name.to_s])
+    command_regex = /Command '([\w]+)' /
+    command = exception.message.scan(command_regex).flatten.first
+
+    commands[:help] and commands[:help].execute({}, {}, (command.nil? ? [] : [command.to_s]))
 
     false
   else
