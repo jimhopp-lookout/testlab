@@ -43,6 +43,7 @@ class TestLab
     attribute  :provider
     attribute  :config
     attribute  :components
+    attribute  :route
 
 
     def initialize(*args)
