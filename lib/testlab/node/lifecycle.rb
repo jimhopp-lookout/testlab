@@ -29,8 +29,6 @@ class TestLab
       end
 
       def route_setup(action)
-        !self.route and return
-
         self.networks.each do |network|
           command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
           command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.ip)} netmask #{TestLab::Utility.netmask(network.ip)} gw #{network.node.ip}))
@@ -43,7 +41,10 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
-          route_setup(:add)
+          if (self.route == true)
+            route_setup(:add)
+          end
+
           node_setup
 
           if self.components.include?('resolv')
@@ -68,12 +69,13 @@ class TestLab
       def teardown
         @ui.logger.debug { "Node Teardown: #{self.id} " }
 
-        # @ui.stdout.puts(format_message(format_object(self, :red)))
-
         call_collections([self.containers, self.routers, self.networks], :teardown)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
-          route_setup(:del)
+
+          if (self.route == true)
+            route_setup(:del)
+          end
         end
 
         true

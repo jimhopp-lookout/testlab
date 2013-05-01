@@ -132,6 +132,32 @@ command :container do |c|
 
 end
 
+desc 'Manage routes'
+command :route do |c|
+
+  c.desc 'Add routes to lab networks'
+  c.command :add do |add|
+    add.action do |global_options,options,args|
+      @testlab.nodes.each do |node|
+        node.route_setup(:add)
+        @testlab.ui.stdout.puts("Added routes successfully!".green.bold)
+        @testlab.ui.stdout.puts %x(netstat -nr | grep '#{node.ip}').strip
+      end
+    end
+  end
+
+  c.desc 'Delete routes to lab networks'
+  c.command :del do |del|
+    del.action do |global_options,options,args|
+      @testlab.nodes.each do |node|
+        node.route_setup(:del)
+        @testlab.ui.stdout.puts("Deleted routes successfully!".red.bold)
+        @testlab.ui.stdout.puts %x(netstat -nr | grep '#{node.ip}').strip
+      end
+    end
+  end
+end
+
 pre do |global,command,options,args|
   # Pre logic here
   # Return true to proceed; false to abort and not call the
