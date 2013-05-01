@@ -161,16 +161,21 @@ post do |global,command,options,args|
 end
 
 on_error do |exception|
-  # Error logic here
-  # return false to skip default error handling
-  @ui.stderr.puts(["EXCEPTION:".red.bold, exception.inspect.red].join(' '))
+  @ui.stderr.puts(format_message(["ERROR:".red.bold, exception.message.red].join(' ')))
 
-  @logger.fatal { exception.inspect }
-  exception.backtrace.each do |line|
-    @logger.logdev.write("#{line}\n")
+  case exception
+  when GLI::BadCommandLine, GLI::UnknownCommand, GLI::UnknownCommandArgument, GLI::UnknownGlobalArgument then
+    commands[:help] and commands[:help].execute({},{},[]) #command.nil? ? [] : [command.name.to_s])
+
+    false
+  else
+    @logger.fatal { exception.inspect }
+    exception.backtrace.each do |line|
+      @logger.logdev.write("#{line}\n")
+    end
+
+    false
   end
-
-  false
 end
 
 exit run(ARGV)
