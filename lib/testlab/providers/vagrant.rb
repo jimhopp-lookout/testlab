@@ -151,11 +151,11 @@ class TestLab
       end
 
       def box
-        (@config[:vagrant][:box] || "precise64")
+        (@config[:vagrant][:box] || "raring64")
       end
 
       def box_url
-        (@config[:vagrant][:box_url] || "http://files.vagrantup.com/precise64.box")
+        (@config[:vagrant][:box_url] || "http://files.vagrantup.com/raring64.box")
       end
 
       def cpus
