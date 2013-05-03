@@ -61,7 +61,7 @@ class TestLab
             'lxc.network.link'         => interface.network.bridge,
             'lxc.network.name'         => interface.name,
             'lxc.network.hwaddr'       => interface.mac,
-            'lxc.network.ipv4'         => "#{interface.ip}/#{interface.cidr}" ##{interface.netmask}"
+            'lxc.network.ipv4'         => "#{interface.ip}/#{interface.cidr} #{interface.netmask}"
           ]
           if (interface.primary == true) || (interfaces.count == 1)
             networks.last.merge!('lxc.network.ipv4.gateway' => :auto)
