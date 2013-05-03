@@ -14,8 +14,6 @@ class TestLab
       # Calls the specified method on all the objects supplied
       def call_methods(objects, method_name)
         objects.each do |object|
-          # @ui.stdout.puts(format_message(format_object(object, (method_name == :setup ? :green : :red))))
-
           if object.respond_to?(method_name)
             object.send(method_name)
           end
