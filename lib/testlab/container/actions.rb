@@ -8,7 +8,7 @@ class TestLab
       # Builds the configuration for the container and sends a request to the
       # LXC sub-system to create the container.
       #
-      # @return [Boolean] Returns true if successful.
+      # @return [Boolean] True if successful.
       def create
         @ui.logger.debug { "Container Create: #{self.id} " }
 
@@ -35,7 +35,7 @@ class TestLab
       #
       # Sends a request to the LXC sub-system to destroy the container.
       #
-      # @return [Boolean] Returns true if successful.
+      # @return [Boolean] True if successful.
       def destroy
         @ui.logger.debug { "Container Destroy: #{self.id} " }
 
@@ -50,7 +50,7 @@ class TestLab
       #
       # Sends a request to the LXC sub-system to bring the container online.
       #
-      # @return [Boolean] Returns true if successful.
+      # @return [Boolean] True if successful.
       def up
         @ui.logger.debug { "Container Up: #{self.id} " }
 
@@ -70,7 +70,7 @@ class TestLab
       #
       # Sends a request to the LXC sub-system to take the container offline.
       #
-      # @return [Boolean] Returns true if successful.
+      # @return [Boolean] True if successful.
       def down
         @ui.logger.debug { "Container Down: #{self.id} " }
 

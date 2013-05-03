@@ -35,7 +35,9 @@ class TestLab
 
       # Container Status
       #
-      # Returns a hash of status information for the container
+      # Returns a hash of status information for the container.
+      #
+      # @return [Hash] A hash of status information for the container.
       def status
         interfaces = self.interfaces.collect do |interface|
           "#{interface.network_id}:#{interface.name}:#{interface.ip}/#{interface.cidr}"
@@ -56,6 +58,8 @@ class TestLab
       # Container State
       #
       # What state the container is in.
+      #
+      # @return [Symbol] A symbol indicating the state of the container.
       def state
         self.lxc.state
       end

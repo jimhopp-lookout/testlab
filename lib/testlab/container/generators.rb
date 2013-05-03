@@ -3,6 +3,12 @@ class TestLab
 
     module Generators
 
+      # Generate IP address
+      #
+      # Generates an RFC compliant private IP address.
+      #
+      # @return [String] A random, private IP address in the 192.168.0.1/24
+      #   range.
       def generate_ip
         octets = [ 192..192,
                    168..168,
@@ -15,6 +21,11 @@ class TestLab
         ip.join(".")
       end
 
+      # Generate MAC address
+      #
+      # Generates an RFC compliant private MAC address.
+      #
+      # @return [String] A random, private MAC address.
       def generate_mac
         digits = [ %w(0),
                    %w(0),

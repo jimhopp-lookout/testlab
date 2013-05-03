@@ -17,6 +17,8 @@ class TestLab
       end
 
       # Does the container exist?
+      #
+      # @return [Boolean] True if the containers exists, false otherwise.
       def exists?
         @ui.logger.debug { "Container Exists?: #{self.id} " }
 
@@ -25,7 +27,7 @@ class TestLab
 
       # Returns arguments for lxc-create based on our distro
       #
-      # @return [Array] An array of arguments for lxc-create
+      # @return [Array<String>] An array of arguments for lxc-create
       def create_args
         case self.distro.downcase
         when "ubuntu" then
@@ -49,8 +51,13 @@ class TestLab
         end
       end
 
+      # LXC Network Configuration
+      #
       # Builds an array of hashes containing the lxc configuration options for
-      # our networks
+      # our network interfaces.
+      #
+      # @return [Array<Hash>] An array of hashes defining the containers
+      #   interfaces for use in configuring LXC.
       def build_lxc_network_conf(interfaces)
         networks = Array.new
 

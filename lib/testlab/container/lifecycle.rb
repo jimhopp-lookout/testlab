@@ -3,7 +3,13 @@ class TestLab
 
     module Lifecycle
 
-      # Container Setup
+      # Setup the container
+      #
+      # Attempts to setup the container.  We first create the container, then
+      # attempt to bring it online.  Afterwards the containers provisioner is
+      # called.
+      #
+      # @return [Boolean] True if successful.
       def setup
         @ui.logger.debug { "Container Setup: #{self.id} " }
 
@@ -19,7 +25,13 @@ class TestLab
         true
       end
 
-      # Container Teardown
+      # Teardown the container
+      #
+      # Attempts to teardown the container.  We first call the provisioner
+      # teardown method defined for the container, if any.  Next we attempt to
+      # offline the container.  Afterwards the container is destroy.
+      #
+      # @return [Boolean] True if successful.
       def teardown
         @ui.logger.debug { "Container Teardown: #{self.id} " }
 
