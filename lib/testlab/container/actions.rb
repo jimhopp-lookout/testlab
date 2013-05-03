@@ -40,6 +40,8 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           self.lxc.start
           self.lxc.wait(:running)
+
+          (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
         end
       end
 
@@ -50,6 +52,8 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           self.lxc.stop
           self.lxc.wait(:stopped)
+
+          (self.lxc.state != :stopped) and raise ContainerError, "The container failed to offline!"
         end
       end
 
