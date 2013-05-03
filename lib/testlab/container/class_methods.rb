@@ -3,6 +3,12 @@ class TestLab
 
     module ClassMethods
 
+      # Container domain list
+      #
+      # Returns an array of strings containing all the unique domains defined
+      # across all containers
+      #
+      # @return [Array<String>] A unique array of all defined domain names.
       def domains
         self.all.map do |container|
           container.domain ||= container.node.labfile.config[:domain]
