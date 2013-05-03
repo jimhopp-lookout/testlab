@@ -26,7 +26,7 @@ class TestLab
               file.puts(@config[:setup])
             end
             if container.lxc.attach(@config[:shell], tempfile.path) =~ /No such file or directory/
-              raise ShellError, "The bootstrap failed!"
+              raise ShellError, "We could not find the bootstrap file!"
             end
           end
         end
