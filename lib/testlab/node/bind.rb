@@ -17,14 +17,16 @@ class TestLab
         reverse_records = Hash.new
 
         TestLab::Container.all.each do |container|
-          interface          = container.primary_interface
           container.domain ||= container.node.labfile.config[:domain]
 
-          forward_records[container.domain] ||= Array.new
-          forward_records[container.domain] << %(#{container.id} IN A #{container.ip})
+          container.interfaces.each do |interface|
+            forward_records[container.domain] ||= Array.new
+            forward_records[container.domain] << %(#{container.id} IN A #{interface.ip})
 
-          reverse_records[interface.network_id] ||= Array.new
-          reverse_records[interface.network_id] << %(#{container.ptr} IN PTR #{container.id}.#{container.domain}.)
+            reverse_records[interface.network_id] ||= Array.new
+            reverse_records[interface.network_id] << %(#{interface.ptr} IN PTR #{container.fqdn}.)
+          end
+
         end
         { :forward => forward_records, :reverse => reverse_records }
       end
