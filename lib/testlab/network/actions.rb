@@ -26,7 +26,7 @@ class TestLab
         @ui.logger.debug { "Network Up: #{self.id} " }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
-          self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.ip} up), :silence => true, :ignore_exit_status => true)
+          self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} up), :silence => true, :ignore_exit_status => true)
         end
       end
 
