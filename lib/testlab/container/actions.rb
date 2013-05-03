@@ -4,6 +4,11 @@ class TestLab
     module Actions
 
       # Create the container
+      #
+      # Builds the configuration for the container and sends a request to the
+      # LXC sub-system to create the container.
+      #
+      # @return [Boolean] Returns true if successful.
       def create
         @ui.logger.debug { "Container Create: #{self.id} " }
 
@@ -22,18 +27,30 @@ class TestLab
 
           self.lxc.create(*create_args)
         end
+
+        true
       end
 
       # Destroy the container
+      #
+      # Sends a request to the LXC sub-system to destroy the container.
+      #
+      # @return [Boolean] Returns true if successful.
       def destroy
         @ui.logger.debug { "Container Destroy: #{self.id} " }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           self.lxc.destroy
         end
+
+        true
       end
 
       # Start the container
+      #
+      # Sends a request to the LXC sub-system to bring the container online.
+      #
+      # @return [Boolean] Returns true if successful.
       def up
         @ui.logger.debug { "Container Up: #{self.id} " }
 
@@ -45,9 +62,15 @@ class TestLab
 
           (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
         end
+
+        true
       end
 
       # Stop the container
+      #
+      # Sends a request to the LXC sub-system to take the container offline.
+      #
+      # @return [Boolean] Returns true if successful.
       def down
         @ui.logger.debug { "Container Down: #{self.id} " }
 
@@ -59,6 +82,8 @@ class TestLab
 
           (self.lxc.state != :stopped) and raise ContainerError, "The container failed to offline!"
         end
+
+        true
       end
 
     end
