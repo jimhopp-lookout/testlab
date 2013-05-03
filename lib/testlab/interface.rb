@@ -7,29 +7,6 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Interface < ZTK::DSL::Base
-    # STATUS_KEYS   = %w(node_id id fqdn state distro release interfaces provisioner).map(&:to_sym)
-
-    # Sub-Modules
-    # autoload :Actions,       'testlab/interface/actions'
-    # autoload :ClassMethods,  'testlab/interface/class_methods'
-    # autoload :Generators,    'testlab/interface/generators'
-    # autoload :Interface,     'testlab/interface/interface'
-    # autoload :Lifecycle,     'testlab/interface/lifecycle'
-    # autoload :LXC,           'testlab/interface/lxc'
-    # autoload :MethodMissing, 'testlab/interface/method_missing'
-    # autoload :Status,        'testlab/interface/status'
-
-    # include TestLab::Interface::Actions
-    # include TestLab::Interface::Generators
-    # include TestLab::Interface::Interface
-    # include TestLab::Interface::Lifecycle
-    # include TestLab::Interface::LXC
-    # include TestLab::Interface::MethodMissing
-    # include TestLab::Interface::Status
-
-    # extend  TestLab::Interface::ClassMethods
-
-    # include TestLab::Utility::Misc
 
     # Associations and Attributes
     belongs_to  :container, :class_name => 'TestLab::Container'
