@@ -36,6 +36,10 @@ class TestLab
       TestLab::Utility.netmask(self.address)
     end
 
+    def ptr
+      TestLab::Utility.ptr(self.address)
+    end
+
   end
 
 end
