@@ -20,11 +20,15 @@ class TestLab
 
       def setup(container)
         if !@config[:setup].nil?
-          tempfile = Tempfile.new("bootstrap")
-          container.node.ssh.file(:target => File.join(container.lxc.fs_root, tempfile.path), :chmod => '0777', :chown => 'root:root') do |file|
-            file.puts(@config[:setup])
+          ZTK::RescueRetry.try(:tries => 2, :on => ShellError) do
+            tempfile = Tempfile.new("bootstrap")
+            container.node.ssh.file(:target => File.join(container.lxc.fs_root, tempfile.path), :chmod => '0777', :chown => 'root:root') do |file|
+              file.puts(@config[:setup])
+            end
+            if container.lxc.attach(@config[:shell], tempfile.path) =~ /No such file or directory/
+              raise ShellError, "The bootstrap failed!"
+            end
           end
-          container.lxc.attach(@config[:shell], tempfile.path)
         end
       end
 
