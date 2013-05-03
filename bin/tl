@@ -161,7 +161,8 @@ post do |global,command,options,args|
 end
 
 on_error do |exception|
-  @ui.stderr.puts(format_message(["ERROR:".red.bold, exception.message.red].join(' ')))
+  @ui.stderr.puts
+  @ui.stderr.puts(format_message(["ERROR:".red, exception.message.red.bold].join(' ')))
 
   case exception
   when GLI::BadCommandLine, GLI::UnknownCommand, GLI::UnknownCommandArgument, GLI::UnknownGlobalArgument then
