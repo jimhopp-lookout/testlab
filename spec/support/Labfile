@@ -8,7 +8,7 @@ node :localhost do
   config      Hash[
     :vagrant => {
       :id       => "mytestlab-#{ENV['USER']}".downcase,
-      :ip       => "192.168.33.10",
+      :ip       => "192.168.255.1",
       :user     => "vagrant",
       :port     => 22,
       :cpus     => 1,
@@ -18,20 +18,19 @@ node :localhost do
   ]
 
   network :testnet do
-    ip          "192.168.255.254/16"
-    bridge      :br0
+    address '192.168.255.254/16'
+    bridge  :br0
   end
 
   container "server-1" do
     distro        "ubuntu"
     release       "lucid"
 
-    interfaces Hash[
-      :testnet => {
-        :ip => "192.168.0.254/16",
-        :name => :eth0
-      }
-    ]
+    interface do
+      name       :eth0
+      network_id :testnet
+      address    '192.168.0.254/16'
+    end
   end
 
 end
