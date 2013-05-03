@@ -7,7 +7,7 @@ class TestLab
         self.all.map do |container|
           container.domain ||= container.node.labfile.config[:domain]
           container.domain
-        end.compact
+        end.compact.uniq
       end
 
     end
