@@ -39,6 +39,7 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           self.lxc.start
+          self.lxc.wait(:running)
         end
       end
 
@@ -48,6 +49,7 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           self.lxc.stop
+          self.lxc.wait(:stopped)
         end
       end
 
