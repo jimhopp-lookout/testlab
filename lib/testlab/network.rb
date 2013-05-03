@@ -27,10 +27,11 @@ class TestLab
 
     # Associations and Attributes
     belongs_to  :node,        :class_name => 'TestLab::Node'
+    has_many    :interfaces,  :class_name => 'TestLab::Interface'
 
+    attribute   :address
     attribute   :bridge
 
-    attribute   :ip
     attribute   :config
 
 

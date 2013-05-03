@@ -4,7 +4,7 @@ class TestLab
     module ClassMethods
 
       def ips
-        self.all.map(&:ip).collect{ |ip| TestLab::Utility.ip(ip) }.compact
+        self.all.map(&:address).collect{ |address| TestLab::Utility.ip(address) }.compact
       end
 
     end

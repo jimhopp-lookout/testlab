@@ -31,7 +31,7 @@ class TestLab
       def route_setup(action)
         self.networks.each do |network|
           command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
-          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.ip)} netmask #{TestLab::Utility.netmask(network.ip)} gw #{network.node.ip}))
+          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.address)} netmask #{TestLab::Utility.netmask(network.address)} gw #{network.node.ip}))
         end
       end
 

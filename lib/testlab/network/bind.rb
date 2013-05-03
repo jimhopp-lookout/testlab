@@ -5,12 +5,12 @@ class TestLab
 
       # BIND PTR Record
       def ptr
-        TestLab::Utility.ptr(self.ip)
+        TestLab::Utility.ptr(self.address)
       end
 
       # Returns the ARPA network
       def arpa
-        TestLab::Utility.arpa(self.ip)
+        TestLab::Utility.arpa(self.address)
       end
 
     end

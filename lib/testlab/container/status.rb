@@ -10,7 +10,10 @@ class TestLab
       end
 
       def status
-        interfaces = self.interfaces.collect{ |network, network_config| "#{network}:#{network_config[:name]}:#{network_config[:ip]}" }.join(', ')
+        interfaces = self.interfaces.collect do |interface|
+          "#{interface.network_id}:#{interface.name}:#{interface.ip}/#{interface.cidr}"
+        end.join(', ')
+
         {
           :id => self.id,
           :fqdn => self.fqdn,

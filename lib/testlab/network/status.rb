@@ -5,7 +5,7 @@ class TestLab
 
       # Network status
       def status
-        interface = "#{bridge}:#{ip}"
+        interface = "#{bridge}:#{self.address}"
         {
           :id => self.id,
           :node_id => self.node.id,
@@ -17,19 +17,27 @@ class TestLab
         }
       end
 
+      def ip
+        TestLab::Utility.ip(self.address)
+      end
+
+      def cidr
+        TestLab::Utility.cidr(self.address)
+      end
+
       # Returns the network mask
       def netmask
-        TestLab::Utility.netmask(self.ip)
+        TestLab::Utility.netmask(self.address)
       end
 
       # Returns the network address
       def network
-        TestLab::Utility.network(self.ip)
+        TestLab::Utility.network(self.address)
       end
 
       # Returns the broadcast address
       def broadcast
-        TestLab::Utility.broadcast(self.ip)
+        TestLab::Utility.broadcast(self.address)
       end
 
       # Network Bridge State

@@ -17,6 +17,7 @@ class TestLab
 
   # Main Classes
   autoload :Container,   'testlab/container'
+  autoload :Interface,   'testlab/interface'
   autoload :Labfile,     'testlab/labfile'
   autoload :Network,     'testlab/network'
   autoload :Node,        'testlab/node'
@@ -75,7 +76,7 @@ class TestLab
         klass = object_symbol.to_s.singularize.capitalize
         status_keys = "TestLab::#{klass}::STATUS_KEYS".constantize
 
-        ZTK::Report.new(:ui => @@ui).list(self.send(object_symbol), status_keys) do |object|
+        ZTK::Report.new(:ui => @@ui).spreadsheet(self.send(object_symbol), status_keys) do |object|
           OpenStruct.new(object.status)
         end
       end

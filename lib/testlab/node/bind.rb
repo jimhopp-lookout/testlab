@@ -23,8 +23,8 @@ class TestLab
           forward_records[container.domain] ||= Array.new
           forward_records[container.domain] << %(#{container.id} IN A #{container.ip})
 
-          reverse_records[interface.first] ||= Array.new
-          reverse_records[interface.first] << %(#{container.ptr} IN PTR #{container.id}.#{container.domain}.)
+          reverse_records[interface.network_id] ||= Array.new
+          reverse_records[interface.network_id] << %(#{container.ptr} IN PTR #{container.id}.#{container.domain}.)
         end
         { :forward => forward_records, :reverse => reverse_records }
       end
