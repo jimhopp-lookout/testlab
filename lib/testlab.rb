@@ -84,7 +84,7 @@ require 'testlab/monkeys'
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
 
-  # Top-Level Error Class
+  # TestLab Error Class
   class TestLabError < StandardError; end
 
   # Main Classes
