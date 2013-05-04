@@ -50,6 +50,8 @@ class TestLab
   # again only if it is set.  The hostname (container ID) and the domain will be
   # joined together to form the FQDN of the container.
   #
+  # @see TestLab::Interface
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
 
