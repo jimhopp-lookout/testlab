@@ -3,7 +3,9 @@ class TestLab
 
     module LXC
 
-      # Our LXC Container class
+      # LXC::Container object
+      #
+      # Returns a *LXC::Container* class instance configured for this container.
       #
       # @return [LXC] An instance of LXC::Container configured for this
       #   container.
@@ -11,7 +13,12 @@ class TestLab
         @lxc ||= self.node.lxc.container(self.id)
       end
 
-      # SSH to the container
+      # ZTK:SSH object
+      #
+      # Returns a *ZTK:SSH* class instance configured for this container.
+      #
+      # @return [ZTK::SSH] An instance of ZTK::SSH configured for this
+      #   container.
       def ssh(options={})
         self.node.container_ssh(self, options)
       end
