@@ -131,7 +131,7 @@ class TestLab
       File.expand_path(directory, File.dirname(__FILE__))
     end
 
-    def build_command(name, *args)
+    def build_command_line(name, *args)
       executable = (ZTK::Locator.find('bin', name) rescue "/bin/env #{name}")
       [executable, args].flatten.compact.join(' ')
     end

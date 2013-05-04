@@ -171,7 +171,7 @@ class TestLab
       def vagrant_cli(*args)
         @ui.logger.debug { "args == #{args.inspect}" }
 
-        command = TestLab.build_command("vagrant", *args)
+        command = TestLab.build_command_line("vagrant", *args)
         @ui.logger.debug { "command == #{command.inspect}" }
 
         ZTK::Command.new(:ui => @ui).exec(command, :silence => true)
