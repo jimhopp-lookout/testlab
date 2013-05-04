@@ -54,7 +54,7 @@ class TestLab
           end
         end
 
-        call_collections([self.networks, self.routers, self.containers], :setup)
+        call_collections([self.networks, self.containers], :setup)
 
         if self.components.include?('bind')
           bind_reload
@@ -67,7 +67,7 @@ class TestLab
       def teardown
         @ui.logger.debug { "Node Teardown: #{self.id} " }
 
-        call_collections([self.containers, self.routers, self.networks], :teardown)
+        call_collections([self.containers, self.networks], :teardown)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 

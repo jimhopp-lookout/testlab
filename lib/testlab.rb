@@ -47,10 +47,6 @@ class TestLab
     TestLab::Container.all
   end
 
-  def routers
-    TestLab::Router.all
-  end
-
   def networks
     TestLab::Network.all
   end

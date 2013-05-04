@@ -7,7 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Node < ZTK::DSL::Base
-    STATUS_KEYS   = %w(id instance_id state user ip port provider con net rtr).map(&:to_sym)
+    STATUS_KEYS   = %w(id instance_id state user ip port provider con net).map(&:to_sym)
 
     # Sub-Modules
     autoload :Actions,       'testlab/node/actions'
@@ -36,7 +36,6 @@ class TestLab
     # Associations and Attributes
     belongs_to :labfile,    :class_name => 'TestLab::Lab'
 
-    has_many   :routers,    :class_name => 'TestLab::Router'
     has_many   :containers, :class_name => 'TestLab::Container'
     has_many   :networks,   :class_name => 'TestLab::Network'
 

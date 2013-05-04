@@ -16,8 +16,7 @@ class TestLab
           :port => @provider.port,
           :provider => @provider.class,
           :con => self.containers.count,
-          :net => self.networks.count,
-          :rtr => self.routers.count
+          :net => self.networks.count
         }
       end
 
