@@ -162,37 +162,6 @@ class TestLab
     !alive?
   end
 
-  # Test Lab Status
-  #
-  # Iterates our various DSL objects and calls their status methods pushing
-  # the results through ZTK::Report to generate nice tabled output for us
-  # indicating the state of the lab.
-  #
-  # This can only be run if the lab is alive.
-  #
-  # @return [Boolean] True if successful; false otherwise.
-  def status
-    if alive?
-      %w(nodes networks containers).map(&:to_sym).each do |object_symbol|
-        self.ui.stdout.puts
-        self.ui.stdout.puts("#{object_symbol}:".upcase.green.bold)
-
-        klass = object_symbol.to_s.singularize.capitalize
-        status_keys = "TestLab::#{klass}::STATUS_KEYS".constantize
-
-        ZTK::Report.new(:ui => self.ui).spreadsheet(self.send(object_symbol), status_keys) do |object|
-          OpenStruct.new(object.status)
-        end
-      end
-
-      true
-    else
-      self.ui.stdout.puts("Looks like your test lab is dead; fix this and try again.")
-
-      false
-    end
-  end
-
   # Test Lab Setup
   #
   # Attempts to setup our lab topology.  This calls the setup method on all of

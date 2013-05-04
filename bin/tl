@@ -77,7 +77,14 @@ end
 desc 'Display information on the status of the test lab'
 command :status do |status|
   status.action do |global_options,options,args|
-    @testlab.status
+    @testlab.ui.stdout.puts("\nNODES:".green.bold)
+    commands[:node].commands[:status].execute({}, {}, [])
+
+    @testlab.ui.stdout.puts("\nNETWORKS:".green.bold)
+    commands[:network].commands[:status].execute({}, {}, [])
+
+    @testlab.ui.stdout.puts("\nCONTAINERS:".green.bold)
+    commands[:container].commands[:status].execute({}, {}, [])
   end
 end
 
