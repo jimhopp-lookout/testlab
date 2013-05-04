@@ -23,13 +23,11 @@ class TestLab
 
   include TestLab::Utility::Misc
 
-  @@ui ||= nil
-
   def initialize(options={})
     labfile      = (options[:labfile] || 'Labfile')
     labfile_path = ZTK::Locator.find(labfile)
 
-    @@ui         = (options[:ui] || ZTK::UI.new)
+    self.ui      = (options[:ui] || ZTK::UI.new)
 
     @labfile     = TestLab::Labfile.load(labfile_path)
   end
@@ -95,20 +93,20 @@ class TestLab
   def status
     if alive?
       %w(nodes networks containers).map(&:to_sym).each do |object_symbol|
-        @@ui.stdout.puts
-        @@ui.stdout.puts("#{object_symbol}:".upcase.green.bold)
+        self.ui.stdout.puts
+        self.ui.stdout.puts("#{object_symbol}:".upcase.green.bold)
 
         klass = object_symbol.to_s.singularize.capitalize
         status_keys = "TestLab::#{klass}::STATUS_KEYS".constantize
 
-        ZTK::Report.new(:ui => @@ui).spreadsheet(self.send(object_symbol), status_keys) do |object|
+        ZTK::Report.new(:ui => self.ui).spreadsheet(self.send(object_symbol), status_keys) do |object|
           OpenStruct.new(object.status)
         end
       end
 
       true
     else
-      @@ui.stdout.puts("Looks like your test lab is dead; fix this and try again.")
+      self.ui.stdout.puts("Looks like your test lab is dead; fix this and try again.")
 
       false
     end
@@ -162,7 +160,7 @@ class TestLab
   #
   # @see TestLab::Provider::PROXY_METHODS
   def method_missing(method_name, *method_args)
-    @@ui.logger.debug { "TESTLAB METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
+    self.ui.logger.debug { "TESTLAB METHOD MISSING: #{method_name.inspect}(#{method_args.inspect})" }
 
     if TestLab::Provider::PROXY_METHODS.include?(method_name) # || %w(setup teardown).map(&:to_sym).include?(method_name))
       node_method_proxy(method_name, *method_args)
@@ -171,20 +169,34 @@ class TestLab
     end
   end
 
-  def ui
-    @@ui ||= ZTK::UI.new
-  end
+  # Test Lab Class Methods
+  #
+  # These are special methods that we both include and extend on the parent
+  # class.
+  module ClassMethods
 
-  # Class Helpers
-  class << self
+    @@ui ||= nil
 
-    # Test Lab User Interface
+    # Get Test Lab User Interface
     #
     # Returns the instance of ZTK:UI the lab is using for its user interface.
     #
     # @return [ZTK::UI] Our user interface instance of ZTK::UI.
     def ui
       @@ui ||= ZTK::UI.new
+    end
+
+    # Set Test Lab User Interface
+    #
+    # Sets the instance of ZTK::UI the lab will use for its user interface.
+    #
+    # @param [ZTK:UI] value The instance of ZTK::UI to use for the labs user
+    #   interface.
+    #
+    # @return [ZTK::UI]
+    def ui=(value)
+      @@ui = value
+      value
     end
 
     # Test Lab Gem Directory
@@ -211,5 +223,8 @@ class TestLab
     end
 
   end
+
+  include TestLab::ClassMethods
+  extend  TestLab::ClassMethods
 
 end
