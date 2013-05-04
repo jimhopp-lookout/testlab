@@ -1,6 +1,6 @@
 ################################################################################
 #
-#      Author: Zachary Patten <zachary@jovelabs.net>
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
 #   Copyright: Copyright (c) Zachary Patten
 #     License: Apache License, Version 2.0
 #
@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
   spec.name          = "testlab"
   spec.version       = TestLab::VERSION
   spec.authors       = ["Zachary Patten"]
-  spec.email         = ["zachary@jovelabs.com"]
+  spec.email         = ["zachary AT jovelabs DOT com"]
   spec.description   = %q{A framework for building lightweight virtual infrastructure using LXC}
   spec.summary       = %q{A framework for building lightweight virtual infrastructure using LXC}
   spec.homepage      = "https://github.com/zpatten/testlab"
