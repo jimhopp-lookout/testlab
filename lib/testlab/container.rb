@@ -5,8 +5,57 @@ class TestLab
 
   # Container Class
   #
+  # This class represents the TestLab Container DSL object.
+  #
+  # @example A simple container definition with a single interface:
+  #   container "server-west-1" do
+  #     domain        "west.zone"
+  #
+  #     distro        "ubuntu"
+  #     release       "precise"
+  #
+  #     interface do
+  #       network_id :west
+  #       name       :eth0
+  #       address    '10.11.0.254/16'
+  #       mac        '00:00:5e:48:e9:6f'
+  #     end
+  #   end
+  #
+  # @example Multiple interfaces can be defined as well:
+  #   container "dual-nic" do
+  #     distro        "ubuntu"
+  #     release       "precise"
+  #
+  #     interface do
+  #       network_id :east
+  #       name       :eth0
+  #       address    '10.10.0.200/16'
+  #       mac        '00:00:5e:63:b5:9f'
+  #     end
+  #
+  #     interface do
+  #       network_id :west
+  #       primary    true
+  #       name       :eth1
+  #       address    '10.11.0.200/16'
+  #       mac        '00:00:5e:08:63:df'
+  #     end
+  #   end
+  #
+  # The operating system is determined by the *distro* and *release* attributes.
+  # The hostname (container ID) is passed as a parameter to the container call.
+  # A *domain* may additionally be specified (overriding the global domain, if
+  # set).  If the *domain* attributes is omited, then the global domain is use,
+  # again only if it is set.  The hostname (container ID) and the domain will be
+  # joined together to form the FQDN of the container.
+  #
   # @author Zachary Patten <zachary@jovelabs.net>
   class Container < ZTK::DSL::Base
+
+    # An array of symbols of the various keys in our status hash.
+    #
+    # @see TestLab::Container::Status
     STATUS_KEYS   = %w(node_id id fqdn state distro release interfaces provisioner).map(&:to_sym)
 
     # Sub-Modules
