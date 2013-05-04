@@ -24,11 +24,10 @@ class TestLab
   include TestLab::Utility::Misc
 
   def initialize(options={})
-    labfile      = (options[:labfile] || 'Labfile')
-    labfile_path = ZTK::Locator.find(labfile)
-
     self.ui      = (options[:ui] || ZTK::UI.new)
 
+    labfile      = (options[:labfile] || 'Labfile')
+    labfile_path = ZTK::Locator.find(labfile)
     @labfile     = TestLab::Labfile.load(labfile_path)
   end
 
