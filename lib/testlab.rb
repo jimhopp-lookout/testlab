@@ -18,6 +18,7 @@
 #
 ################################################################################
 require 'ztk'
+require 'active_support/inflector'
 
 require 'testlab/version'
 require 'testlab/monkeys'

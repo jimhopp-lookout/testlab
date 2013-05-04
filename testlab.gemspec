@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency("gli")
   spec.add_dependency("lxc")
   spec.add_dependency("ztk")
+  spec.add_dependency("activesupport")
 
   spec.add_development_dependency("bundler")
   spec.add_development_dependency("pry")
