@@ -1,3 +1,9 @@
+require 'ztk'
+require 'active_support/inflector'
+
+require 'testlab/version'
+require 'testlab/monkeys'
+
 # TestLab - A framework for building lightweight virtual infrastructure using LXC
 #
 # The core concept with the TestLab is the *Labfile*.  This file dictates the
@@ -77,11 +83,6 @@
 #
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
-  require 'ztk'
-  require 'active_support/inflector'
-
-  require 'testlab/version'
-  require 'testlab/monkeys'
 
   # TestLab Error Class
   class TestLabError < StandardError; end
