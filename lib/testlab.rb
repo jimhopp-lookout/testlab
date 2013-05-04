@@ -59,9 +59,15 @@ class TestLab
     TestLab::Network.all
   end
 
-  # def config
-  #   @labfile.config
-  # end
+  # Test Lab Configuration
+  #
+  # The hash defined in our *Labfile* DSL object which represents any high-level
+  # lab configuration options.
+  #
+  # @return [Hash] A hash representing the labs configuration options.
+  def config
+    @labfile.config
+  end
 
   # Test Lab Alive?
   #
