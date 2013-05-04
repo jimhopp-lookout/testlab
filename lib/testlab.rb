@@ -1,29 +1,85 @@
-################################################################################
-#
-#      Author: Zachary Patten <zachary AT jovelabs DOT com>
-#   Copyright: Copyright (c) Zachary Patten
-#     License: Apache License, Version 2.0
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#       http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-#
-################################################################################
 require 'ztk'
 require 'active_support/inflector'
 
 require 'testlab/version'
 require 'testlab/monkeys'
 
-# Top-Level TestLab Class
+# TestLab - A framework for building lightweight virtual infrastructure using LXC
+#
+# The core concept with the TestLab is the *Labfile*.  This file dictates the
+# topology of your virtual infrastructure.  With simple commands you can setup
+# and teardown this infrastructure on the fly for all sorts of purposes from
+# automating infrastructure testing to testing new software to experimenting
+# in general where you want to spin up alot of servers but do not want the
+# overhead of virtualization.  At it's core TestLab uses Linux Containers (LXC)
+# to accomplish this.
+#
+# @example Sample Labfile:
+#   shell_provision_script = <<-EOF
+#   set -x
+#   apt-get -y update
+#   apt-get -y install dnsutils
+#   EOF
+#
+#   config Hash[
+#     :domain => "default.zone"
+#   ]
+#
+#   node :localhost do
+#     components %w(resolv bind)
+#
+#     provider    TestLab::Provider::Vagrant
+#     config      Hash[
+#       :vagrant => {
+#         :id       => "mytestlab-#{ENV['USER']}".downcase,
+#         :ip       => "192.168.13.37",
+#         :user     => "vagrant",
+#         :port     => 22,
+#         :cpus     => 8,
+#         :memory   => 16384,
+#         :box      => 'raring64'
+#       },
+#       :repo => File.join(ENV['HOME'], "code", "personal", "testlab-repo")
+#     ]
+#
+#     network :east do
+#       address '10.10.0.1/16'
+#       bridge  :br0
+#     end
+#
+#     container "server-east-1" do
+#       domain        "east.zone"
+#
+#       distro        "ubuntu"
+#       release       "precise"
+#
+#       provisioner   TestLab::Provisioner::Shell
+#       config        Hash[
+#         :shell => "/bin/bash",
+#         :setup => shell_provision_script
+#       ]
+#
+#       interface do
+#         name       :eth0
+#         network_id :east
+#         address    '10.10.0.254/16'
+#         mac        '00:00:5e:b7:e5:15'
+#       end
+#     end
+#
+#   end
+#
+# @example TestLab can be instantiated easily:
+#   log_file = File.join(Dir.pwd, "testlab.log")
+#   logger = ZTK::Logger.new(log_file)
+#   ui = ZTK::UI.new(:logger => logger)
+#   testlab = TestLab.new(:ui => ui)
+#
+# @example We can control things via code easily as well:
+#   testlab.create   # creates the lab
+#   testlab.up       # ensures the lab is up and running
+#   testlab.setup    # setup the lab, creating all networks and containers
+#   testlab.teardown # teardown the lab, destroy all networks and containers
 #
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
