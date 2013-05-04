@@ -146,16 +146,16 @@ class TestLab
 
   # Test Lab Alive?
   #
-  # Are all of our nodes alive; that is up and running?
+  # Are all of our nodes up and running?
   #
-  # @return [Boolean] True is all nodes are running; false otherwise.
+  # @return [Boolean] True if all nodes are running; false otherwise.
   def alive?
     nodes.map(&:state).all?{ |state| state == :running }
   end
 
   # Test Lab Dead?
   #
-  # Are any of our nodes dead; that is not up and running?
+  # Are any of our nodes not up and running?
   #
   # @return [Boolean] False is all nodes are running; true otherwise.
   def dead?
