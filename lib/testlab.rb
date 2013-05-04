@@ -1,11 +1,7 @@
 require 'ztk'
 
 require 'testlab/version'
-
-# Monkey Patch the String class so we can have some easy ANSI methods
-class String
-  include ZTK::ANSI
-end
+require 'testlab/monkeys'
 
 # Top-Level LXC Class
 #
