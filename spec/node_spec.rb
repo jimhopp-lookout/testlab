@@ -41,7 +41,7 @@ describe TestLab::Node do
 
     describe "#status" do
       it "should return a hash of status information about the node" do
-        subject.provider.stub(:state) { :not_created }
+        subject.instance_variable_get(:@provider).stub(:state) { :not_created }
         subject.status.should be_kind_of(Hash)
         subject.status.should_not be_empty
       end
