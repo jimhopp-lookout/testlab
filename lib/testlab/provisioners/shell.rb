@@ -18,6 +18,14 @@ class TestLab
         @config[:shell] ||= "/bin/bash"
       end
 
+      # Shell Provisioner Container Setup
+      #
+      # Renders the defined script to a temporary file on the target container
+      # and proceeds to execute said script as root via *lxc-attach*.
+      #
+      # @param [TestLab::Container] container The container which we want to
+      #   provision.
+      # @return [Boolean] True if successful.
       def setup(container)
         if !@config[:setup].nil?
           ZTK::RescueRetry.try(:tries => 2, :on => ShellError) do
@@ -30,10 +38,19 @@ class TestLab
             end
           end
         end
+
+        true
       end
 
+      # Shell Provisioner Container Teardown
+      #
+      # This is a NO-OP currently.
+      #
+      # @return [Boolean] True if successful.
       def teardown(container)
         # NOOP
+
+        true
       end
 
     end
