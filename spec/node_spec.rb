@@ -19,14 +19,14 @@
 ################################################################################
 require "spec_helper"
 
-describe TestLab::Provisioner do
+describe TestLab::Node do
 
-  subject { TestLab::Provisioner.new }
+  subject { @testlab = TestLab.new(:labfile => LABFILE); @testlab.nodes.first }
 
   describe "class" do
 
-    it "should be an instance of TestLab::Provisioner" do
-      subject.should be_an_instance_of TestLab::Provisioner
+    it "should be an instance of TestLab::Node" do
+      subject.should be_an_instance_of TestLab::Node
     end
 
   end
@@ -34,8 +34,15 @@ describe TestLab::Provisioner do
   describe "methods" do
 
     describe "template_dir" do
-      it "should return the path to the provisioner template directory" do
-        subject.class.template_dir.should == "#{TestLab.gem_dir}/lib/testlab/provisioners/templates"
+      it "should return the path to the node template directory" do
+        subject.class.template_dir.should == "#{TestLab.gem_dir}/lib/testlab/node/templates"
+      end
+    end
+
+    describe "#status" do
+      it "should return a hash of status information about the node" do
+        subject.status.should be_kind_of(Hash)
+        subject.status.should_not be_empty
       end
     end
 

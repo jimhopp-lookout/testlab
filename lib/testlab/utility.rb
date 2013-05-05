@@ -5,6 +5,9 @@ class TestLab
 
   # Utility Module
   #
+  # This provides an interface to our various child utility modules.  We also at
+  # times mix those child modules in instead of calling them here.
+  #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   module Utility
     autoload :CIDR, 'testlab/utility/cidr'

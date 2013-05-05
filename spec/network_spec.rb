@@ -19,23 +19,40 @@
 ################################################################################
 require "spec_helper"
 
-describe TestLab::Provisioner do
+describe TestLab::Network do
 
-  subject { TestLab::Provisioner.new }
+  subject { @testlab = TestLab.new(:labfile => LABFILE); @testlab.networks.first }
 
   describe "class" do
 
-    it "should be an instance of TestLab::Provisioner" do
-      subject.should be_an_instance_of TestLab::Provisioner
+    it "should be an instance of TestLab::Network" do
+      subject.should be_an_instance_of TestLab::Network
     end
 
   end
 
   describe "methods" do
 
-    describe "template_dir" do
-      it "should return the path to the provisioner template directory" do
-        subject.class.template_dir.should == "#{TestLab.gem_dir}/lib/testlab/provisioners/templates"
+    describe "ips" do
+      it "should return the ips for all defined containers" do
+        subject.class.ips.should be_kind_of(Array)
+        subject.class.ips.should_not be_empty
+      end
+    end
+
+    describe "#ptr" do
+      it "should return a BIND PTR record for the networks bridge interface" do
+        subject.ptr.should be_kind_of(String)
+        subject.ptr.should_not be_empty
+        subject.ptr.should == "254.255"
+      end
+    end
+
+    describe "#arpa" do
+      it "should return the ARPA network calculated from the cidr address" do
+        subject.arpa.should be_kind_of(String)
+        subject.arpa.should_not be_empty
+        subject.arpa.should == "168.192.in-addr.arpa"
       end
     end
 
