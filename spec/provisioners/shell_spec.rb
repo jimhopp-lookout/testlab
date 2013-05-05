@@ -38,10 +38,20 @@ describe TestLab::Provisioner::Shell do
   describe "methods" do
 
     describe "setup" do
-      it "should provision the container" do
-        subject.node.ssh.stub(:file).and_yield(StringIO.new)
-        subject.lxc.stub(:attach) { "" }
-        subject.instance_variable_get(:@provisioner).setup(subject)
+      context "bootstrap successful" do
+        it "should provision the container" do
+          subject.node.ssh.stub(:file).and_yield(StringIO.new)
+          subject.lxc.stub(:attach) { "" }
+          subject.instance_variable_get(:@provisioner).setup(subject)
+        end
+      end
+
+      context "bootstrap fails" do
+        it "should raise an exception" do
+          subject.node.ssh.stub(:file).and_yield(StringIO.new)
+          subject.lxc.stub(:attach) { "No such file or directory" }
+          lambda{ subject.instance_variable_get(:@provisioner).setup(subject) }.should raise_error TestLab::Provisioner::ShellError
+        end
       end
     end
 
