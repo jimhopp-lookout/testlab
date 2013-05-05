@@ -168,6 +168,26 @@ describe TestLab::Container do
       end
     end
 
+    describe "#setup" do
+      it "should create and online the container" do
+        subject.stub(:create) { true }
+        subject.stub(:up) { true }
+        subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:setup) { true }
+
+        subject.setup
+      end
+    end
+
+    describe "#teardown" do
+      it "should create and online the container" do
+        subject.stub(:down) { true }
+        subject.stub(:destroy) { true }
+        subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:teardown) { true }
+
+        subject.teardown
+      end
+    end
+
   end
 
 end
