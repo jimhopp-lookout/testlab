@@ -77,14 +77,14 @@ describe TestLab::Node do
     end
 
     describe "#up" do
-      it "should up the node" do
+      it "should online the node" do
         subject.instance_variable_get(:@provider).stub(:up) { true }
         subject.up
       end
     end
 
     describe "#down" do
-      it "should down the node" do
+      it "should offline the node" do
         subject.instance_variable_get(:@provider).stub(:down) { true }
         subject.down
       end

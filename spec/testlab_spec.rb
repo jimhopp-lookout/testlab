@@ -49,6 +49,54 @@ describe TestLab do
       end
     end
 
+    describe "teardown" do
+      it "should teardown the test lab" do
+        subject.stub(:dead?) { false }
+        subject.nodes.each do |node|
+          node.stub(:teardown) { true }
+        end
+        subject.containers.each do |container|
+          container.stub(:teardown) { true }
+        end
+        subject.networks.each do |network|
+          network.stub(:teardown) { true }
+        end
+        subject.teardown
+      end
+    end
+
+    describe "up" do
+      it "should online the test lab" do
+        subject.stub(:dead?) { false }
+        subject.nodes.each do |node|
+          node.stub(:up) { true }
+        end
+        subject.containers.each do |container|
+          container.stub(:up) { true }
+        end
+        subject.networks.each do |network|
+          network.stub(:up) { true }
+        end
+        subject.up
+      end
+    end
+
+    describe "down" do
+      it "should offline the test lab" do
+        subject.stub(:dead?) { false }
+        subject.nodes.each do |node|
+          node.stub(:down) { true }
+        end
+        subject.containers.each do |container|
+          container.stub(:down) { true }
+        end
+        subject.networks.each do |network|
+          network.stub(:down) { true }
+        end
+        subject.down
+      end
+    end
+
   end
 
 

@@ -29,7 +29,7 @@ node :localhost do
 
   container "server-1" do
     distro        "ubuntu"
-    release       "lucid"
+    release       "precise"
 
     interface do
       name       :eth0
@@ -42,6 +42,17 @@ node :localhost do
       name       :eth1
       network_id :testnet
       address    '192.168.0.253/16'
+    end
+  end
+
+  container "server-2" do
+    distro        "ubuntu"
+    release       "precise"
+
+    interface do
+      name       :eth0
+      network_id :testnet
+      address    '192.168.0.200/16'
     end
   end
 
