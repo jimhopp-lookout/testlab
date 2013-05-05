@@ -14,6 +14,7 @@ config Hash[
 node :localhost do
 
   components %w(resolv bind)
+  route true
 
   provider    TestLab::Provider::Vagrant
   config      Hash[
