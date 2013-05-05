@@ -31,5 +31,25 @@ describe TestLab do
 
   end
 
+  describe "methods" do
+
+    describe "setup" do
+      it "should setup the test lab" do
+        subject.stub(:dead?) { false }
+        subject.nodes.each do |node|
+          node.stub(:setup) { true }
+        end
+        subject.containers.each do |container|
+          container.stub(:setup) { true }
+        end
+        subject.networks.each do |network|
+          network.stub(:setup) { true }
+        end
+        subject.setup
+      end
+    end
+
+  end
+
 
 end

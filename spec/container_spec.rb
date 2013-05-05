@@ -51,8 +51,29 @@ describe TestLab::Container do
 
     describe "#lxc" do
       it "should return an instance of LXC::Container configured for this container" do
-        subject.lxc.should be_kind_of(LXC::Container)
         subject.lxc.should_not be_nil
+        subject.lxc.should be_kind_of(LXC::Container)
+      end
+    end
+
+    describe "#ssh" do
+      it "should return an instance of ZTK::SSH configured for this container" do
+        subject.ssh.should_not be_nil
+        subject.ssh.should be_kind_of(ZTK::SSH)
+      end
+    end
+
+    describe "#exists?" do
+      it "should return false for a non-existant container" do
+        subject.lxc.stub(:exists?) { false }
+        subject.exists?.should == false
+      end
+    end
+
+    describe "#detect_arch" do
+      it "should return the appropriate disto dependent machine architecture for our lxc-template" do
+        subject.node.stub(:arch) { "x86_64" }
+        subject.detect_arch.should == "amd64"
       end
     end
 
