@@ -7,8 +7,8 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Provisioner
-    autoload :Shell, 'testlab/provisioners/shell'
-    autoload :Chef, 'testlab/provisioners/chef'
+    autoload :Shell,     'testlab/provisioners/shell'
+    autoload :OmniBus,   'testlab/provisioners/omnibus'
 
     class << self
 
