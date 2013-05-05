@@ -21,7 +21,10 @@ require "spec_helper"
 
 describe TestLab do
 
-  subject { TestLab.new(:labfile => LABFILE) }
+  subject {
+    @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
+    @testlab = TestLab.new(:labfile => LABFILE, :ui => @ui)
+  }
 
   describe "class" do
 

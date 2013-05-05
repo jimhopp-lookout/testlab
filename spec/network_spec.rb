@@ -21,7 +21,11 @@ require "spec_helper"
 
 describe TestLab::Network do
 
-  subject { @testlab = TestLab.new(:labfile => LABFILE); @testlab.networks.first }
+  subject {
+    @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
+    @testlab = TestLab.new(:labfile => LABFILE, :ui => @ui)
+    @testlab.networks.first
+  }
 
   describe "class" do
 
