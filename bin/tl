@@ -88,6 +88,8 @@ command :status do |status|
   end
 end
 
+# NODES
+########
 desc 'Manage nodes'
 arg_name 'Describe arguments to node here'
 command :node do |c|
@@ -96,6 +98,8 @@ command :node do |c|
   c.arg_name 'node'
   c.flag [:i, :id]
 
+  # NODE SSH
+  ###########
   c.desc 'Open an SSH console to a node'
   c.command :ssh do |ssh|
     ssh.action do |global_options,options,args|
@@ -108,15 +112,19 @@ command :node do |c|
     end
   end
 
+  # NODE STATUS
+  ##############
   c.desc 'Display the status of node(s)'
   c.long_desc 'Displays the status of all nodes or a single node if supplied via the id parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:id].nil?
+        # No ID supplied; show everything
         ZTK::Report.new(:ui => @testlab.ui).spreadsheet(@testlab.nodes, TestLab::Node::STATUS_KEYS) do |node|
           OpenStruct.new(node.status)
         end
       else
+        # ID supplied; show just that item
         node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
@@ -223,9 +231,13 @@ command :container do |c|
 
 end
 
+# ROUTES
+#########
 desc 'Manage routes'
 command :route do |c|
 
+  # ROUTE ADD
+  ############
   c.desc 'Add routes to lab networks'
   c.command :add do |add|
     add.action do |global_options,options,args|
@@ -237,6 +249,8 @@ command :route do |c|
     end
   end
 
+  # ROUTE DEL
+  ############
   c.desc 'Delete routes to lab networks'
   c.command :del do |del|
     del.action do |global_options,options,args|
