@@ -49,6 +49,39 @@ describe TestLab::Container do
       end
     end
 
+    describe "#state" do
+      it "should return the state of the container" do
+        subject.lxc.stub(:state) { :not_created }
+        subject.state.should == :not_created
+      end
+    end
+
+    describe "#fqdn" do
+      it "should return the FQDN for the container" do
+        subject.fqdn.should == "server-1.default.zone"
+      end
+    end
+
+    describe "#ip" do
+      it "should return the IP address of the containers primary interface" do
+        subject.ip.should == "192.168.0.254"
+      end
+    end
+
+    describe "#cidr" do
+      it "should return the CIDR of the containers primary interface" do
+        subject.cidr.should == 16
+      end
+    end
+
+    describe "#ptr" do
+      it "should return a BIND PTR record for the containers primary interface" do
+        subject.ptr.should be_kind_of(String)
+        subject.ptr.should_not be_empty
+        subject.ptr.should == "254.0"
+      end
+    end
+
     describe "#lxc" do
       it "should return an instance of LXC::Container configured for this container" do
         subject.lxc.should_not be_nil

@@ -57,6 +57,44 @@ describe TestLab::Network do
       end
     end
 
+    describe "#ip" do
+      it "should return the IP address of the networks bridge interface" do
+        subject.ip.should == "192.168.255.254"
+      end
+    end
+
+    describe "#cidr" do
+      it "should return the CIDR of the networks bridge interface" do
+        subject.cidr.should == 16
+      end
+    end
+
+    describe "#netmask" do
+      it "should return the netmask of the networks bridge interface" do
+        subject.netmask.should == "255.255.0.0"
+      end
+    end
+
+    describe "#network" do
+      it "should return the network address of the networks bridge interface" do
+        subject.network.should == "192.168.0.0"
+      end
+    end
+
+    describe "#broadcast" do
+      it "should return the broadcast address of the networks bridge interface" do
+        subject.broadcast.should == "192.168.255.255"
+      end
+    end
+
+    describe "#status" do
+      it "should return a hash of status information about the container" do
+        subject.stub(:state) { :stopped }
+        subject.status.should be_kind_of(Hash)
+        subject.status.should_not be_empty
+      end
+    end
+
   end
 
 end
