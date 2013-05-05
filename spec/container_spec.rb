@@ -110,6 +110,30 @@ describe TestLab::Container do
       end
     end
 
+    describe "#primary_interface" do
+      it "should return the primary interface for a container" do
+        subject.primary_interface.should_not be_nil
+        subject.primary_interface.should be_kind_of(TestLab::Interface)
+
+        @testlab.containers.last.primary_interface.should_not be_nil
+        @testlab.containers.last.primary_interface.should be_kind_of(TestLab::Interface)
+      end
+    end
+
+    describe "#generate_ip" do
+      it "should generate a random RFC compliant private IP address" do
+        subject.generate_ip.should_not be_nil
+        subject.generate_ip.should be_kind_of(String)
+      end
+    end
+
+    describe "#generate_mac" do
+      it "should generate a random RFC compliant private MAC address" do
+        subject.generate_mac.should_not be_nil
+        subject.generate_mac.should be_kind_of(String)
+      end
+    end
+
     describe "#create" do
       it "should create the container" do
         subject.lxc.config.stub(:save) { true }
