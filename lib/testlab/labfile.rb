@@ -7,9 +7,9 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Labfile < ZTK::DSL::Base
-    has_many    :nodes,       :class_name => 'TestLab::Node'
+    has_many   :nodes,  :class_name => 'TestLab::Node'
 
-    attribute   :config
+    attribute  :config, :default => Hash.new
   end
 
 end
