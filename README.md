@@ -10,7 +10,7 @@ What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Usin
 
 TestLab can be run directly on the command-line or can be interfaced with directly via code.  Unlike the trend with some popular open-source software recently, I want you to build off this API interface and hopefully create tools I would of never dreamed up.
 
-Accessing TestLab via code is meant to be fairly easy and straight foreward.  To get an instance of TestLab you only need about four lines of code:
+Accessing TestLab via code is meant to be fairly easy and straightforward.  To get an instance of TestLab you only need about four lines of code:
 
     log_file = File.join(Dir.pwd, "testlab.log")
     @logger = ZTK::Logger.new(log_file)
