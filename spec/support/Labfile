@@ -13,6 +13,8 @@ config Hash[
 
 node :localhost do
 
+  components %w(resolv bind)
+
   provider    TestLab::Provider::Vagrant
   config      Hash[
     :vagrant => {
