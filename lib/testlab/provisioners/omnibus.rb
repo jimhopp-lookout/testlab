@@ -9,14 +9,13 @@ class TestLab
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class OmniBus
-      require 'tempfile'
 
       def initialize(config={}, ui=nil)
         @config = (config || Hash.new)
         @ui     = (ui || TestLab.ui)
 
         @config[:version]     ||= %(latest)
-        @config[:omnibus_url] ||= %(http://www.opscode.com/chef/install.sh)
+        @config[:omnibus_url] ||= %(https://www.opscode.com/chef/install.sh)
       end
 
       # OmniBus Provisioner Container Setup
