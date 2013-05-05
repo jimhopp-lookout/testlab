@@ -47,6 +47,49 @@ describe TestLab::Node do
       end
     end
 
+    describe "#lxc" do
+      it "should return an instance of LXC configured for this node" do
+        subject.lxc.should be_kind_of(LXC)
+        subject.lxc.should_not be_nil
+      end
+    end
+
+    describe "#arch" do
+      it "should return the machine architecture of the node" do
+        subject.ssh.stub(:exec) { OpenStruct.new(:output => "x86_64") }
+        subject.arch.should be_kind_of(String)
+        subject.arch.should_not be_empty
+      end
+    end
+
+    describe "#create" do
+      it "should create the node" do
+        subject.instance_variable_get(:@provider).stub(:create) { true }
+        subject.create
+      end
+    end
+
+    describe "#destroy" do
+      it "should destroy the node" do
+        subject.instance_variable_get(:@provider).stub(:destroy) { true }
+        subject.destroy
+      end
+    end
+
+    describe "#up" do
+      it "should up the node" do
+        subject.instance_variable_get(:@provider).stub(:up) { true }
+        subject.up
+      end
+    end
+
+    describe "#down" do
+      it "should down the node" do
+        subject.instance_variable_get(:@provider).stub(:down) { true }
+        subject.down
+      end
+    end
+
   end
 
 end

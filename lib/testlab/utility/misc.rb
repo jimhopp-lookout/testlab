@@ -36,7 +36,8 @@ class TestLab
 
         message = format_message(message)
         length = message.uncolor.length
-        mark = ((' ' * (60 - length)) + mark)
+        max = (length >= 60 ? (length+1) : (60 - length))
+        mark = ((' ' * max) + mark)
 
         ZTK::Benchmark.bench(:ui => ui, :message => message, :mark => mark) do
           yield
