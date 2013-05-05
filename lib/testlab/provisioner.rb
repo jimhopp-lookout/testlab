@@ -9,6 +9,7 @@ class TestLab
   class Provisioner
     autoload :Shell,     'testlab/provisioners/shell'
     autoload :OmniBus,   'testlab/provisioners/omnibus'
+    autoload :OmniTruck, 'testlab/provisioners/omnitruck'
 
     class << self
 
