@@ -14,8 +14,6 @@ class TestLab
       def initialize(config={}, ui=nil)
         @config = (config || Hash.new)
         @ui     = (ui || TestLab.ui)
-
-        @config[:shell] ||= "/bin/bash"
       end
 
       # Shell Provisioner Container Setup
@@ -28,15 +26,7 @@ class TestLab
       # @return [Boolean] True if successful.
       def setup(container)
         if !@config[:setup].nil?
-          ZTK::RescueRetry.try(:tries => 2, :on => ShellError) do
-            tempfile = Tempfile.new("bootstrap")
-            container.node.ssh.file(:target => File.join(container.lxc.fs_root, tempfile.path), :chmod => '0777', :chown => 'root:root') do |file|
-              file.puts(@config[:setup])
-            end
-            if container.lxc.attach(@config[:shell], tempfile.path) =~ /No such file or directory/
-              raise ShellError, "We could not find the bootstrap file!"
-            end
-          end
+          container.bootstrap(@config[:setup])
         end
 
         true

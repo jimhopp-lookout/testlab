@@ -50,7 +50,7 @@ describe TestLab::Provisioner::Shell do
         it "should raise an exception" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
           subject.lxc.stub(:attach) { "No such file or directory" }
-          lambda{ subject.instance_variable_get(:@provisioner).setup(subject) }.should raise_error TestLab::Provisioner::ShellError
+          lambda{ subject.instance_variable_get(:@provisioner).setup(subject) }.should raise_error TestLab::ContainerError
         end
       end
     end

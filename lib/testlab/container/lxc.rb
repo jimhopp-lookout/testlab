@@ -3,6 +3,31 @@ class TestLab
 
     module LXC
 
+      # Container Bootstrap
+      #
+      # Renders the supplied content into a file on the container and proceeds
+      # to execute it on the container as root.
+      #
+      # @param [String] content The content to render on the container and
+      #   execute.  This is generally a bash script of some sort for example.
+      # @return [String] The output of *lxc-attach*.
+      def bootstrap(content)
+        output = nil
+
+        ZTK::RescueRetry.try(:tries => 3, :on => ContainerError) do
+          tempfile = Tempfile.new("bootstrap")
+          self.node.ssh.file(:target => File.join(self.lxc.fs_root, tempfile.path), :chmod => '0777', :chown => 'root:root') do |file|
+            file.puts(content)
+          end
+          output = self.lxc.attach(%(/bin/bash), tempfile.path)
+          if output =~ /No such file or directory/
+            raise ContainerError, "We could not find the bootstrap file!"
+          end
+        end
+
+        output
+      end
+
       # LXC::Container object
       #
       # Returns a *LXC::Container* class instance configured for this container.
