@@ -30,6 +30,13 @@ node :localhost do
       name       :eth0
       network_id :testnet
       address    '192.168.0.254/16'
+      primary    true
+    end
+
+    interface do
+      name       :eth1
+      network_id :testnet
+      address    '192.168.0.253/16'
     end
   end
 
