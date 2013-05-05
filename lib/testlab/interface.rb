@@ -10,13 +10,13 @@ class TestLab
 
     # Associations and Attributes
     belongs_to  :container, :class_name => 'TestLab::Container'
-    belongs_to  :network, :class_name => 'TestLab::Network'
+    belongs_to  :network,   :class_name => 'TestLab::Network'
 
     attribute   :address
     attribute   :mac
     attribute   :name
 
-    attribute   :primary
+    attribute   :primary,   :default => false
 
     def initialize(*args)
       super(*args)
