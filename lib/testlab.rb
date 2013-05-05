@@ -27,6 +27,7 @@ require 'testlab/monkeys'
 #
 #   node :localhost do
 #     components %w(resolv bind)
+#     route true
 #
 #     provider    TestLab::Provider::Vagrant
 #     config      Hash[
@@ -54,10 +55,7 @@ require 'testlab/monkeys'
 #       release       "precise"
 #
 #       provisioner   TestLab::Provisioner::Shell
-#       config        Hash[
-#         :shell => "/bin/bash",
-#         :setup => shell_provision_script
-#       ]
+#       config        Hash[:setup => shell_provision_script]
 #
 #       interface do
 #         name       :eth0
