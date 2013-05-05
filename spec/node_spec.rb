@@ -94,6 +94,23 @@ describe TestLab::Node do
       end
     end
 
+    describe "setup" do
+      it "should setup the node" do
+        # subject.stub(:dead?) { false }
+        # subject.nodes.each do |node|
+        #   node.stub(:setup) { true }
+        # end
+        subject.ssh.stub(:bootstrap) { true }
+        subject.containers.each do |container|
+          container.stub(:setup) { true }
+        end
+        subject.networks.each do |network|
+          network.stub(:setup) { true }
+        end
+        subject.setup
+      end
+    end
+
   end
 
 end

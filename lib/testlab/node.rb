@@ -41,8 +41,8 @@ class TestLab
 
     attribute  :provider
     attribute  :config
-    attribute  :components
-    attribute  :route
+    attribute  :components, :default => Array.new
+    attribute  :route,      :default => false
 
 
     def initialize(*args)

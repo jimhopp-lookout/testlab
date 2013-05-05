@@ -33,17 +33,21 @@ describe TestLab::Container do
       subject.should be_an_instance_of TestLab::Container
     end
 
+    describe "methods" do
+
+      describe "domains" do
+        it "should return the domains for all defined containers" do
+          subject.class.domains.should be_kind_of(Array)
+          subject.class.domains.should_not be_empty
+          subject.class.domains.should == ["default.zone"]
+        end
+      end
+
+    end
+
   end
 
   describe "methods" do
-
-    describe "domains" do
-      it "should return the domains for all defined containers" do
-        subject.class.domains.should be_kind_of(Array)
-        subject.class.domains.should_not be_empty
-        subject.class.domains.should == ["default.zone"]
-      end
-    end
 
     describe "#status" do
       it "should return a hash of status information about the container" do
@@ -62,7 +66,7 @@ describe TestLab::Container do
 
     describe "#fqdn" do
       it "should return the FQDN for the container" do
-        subject.fqdn.should == "server-1.default.zone"
+        subject.fqdn.should == "server-dual-nic.default.zone"
       end
     end
 
@@ -173,23 +177,50 @@ describe TestLab::Container do
     end
 
     describe "#setup" do
-      it "should create and online the container" do
-        subject.stub(:create) { true }
-        subject.stub(:up) { true }
-        subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:setup) { true }
+      context "with no provisioner" do
+        it "should create and online the container" do
+          subject.stub(:create) { true }
+          subject.stub(:up) { true }
+          subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:setup) { true }
 
-        subject.setup
+          subject.setup
+        end
+      end
+
+      context "with the shell provisioner" do
+        it "should create and online the container" do
+          subject = TestLab::Container.first('server-shell')
+          subject.stub(:create) { true }
+          subject.stub(:up) { true }
+          subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:setup) { true }
+
+          subject.setup
+        end
       end
     end
 
     describe "#teardown" do
-      it "should create and online the container" do
-        subject.stub(:down) { true }
-        subject.stub(:destroy) { true }
-        subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:teardown) { true }
+      context "with no provisioner" do
+        it "should create and online the container" do
+          subject.stub(:down) { true }
+          subject.stub(:destroy) { true }
+          subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:teardown) { true }
 
-        subject.teardown
+          subject.teardown
+        end
       end
+
+      context "with the shell provisioner" do
+        it "should create and online the container" do
+          subject = TestLab::Container.first('server-shell')
+          subject.stub(:down) { true }
+          subject.stub(:destroy) { true }
+          subject.instance_variable_get(:@provisioner) and subject.instance_variable_get(:@provisioner).stub(:teardown) { true }
+
+          subject.teardown
+        end
+      end
+
     end
 
   end

@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
 #^syntax detection
 
+shell_provision_script = <<-EOF
+set -x
+apt-get -y update
+apt-get -y install dnsutils
+EOF
+
 config Hash[
   :domain => "default.zone"
 ]
@@ -20,14 +26,13 @@ node :localhost do
     :repo => File.dirname(__FILE__)
   ]
 
-  route        false
-
   network :testnet do
     address '192.168.255.254/16'
     bridge  :br0
   end
 
-  container "server-1" do
+  # DUAL NICs
+  container "server-dual-nic" do
     distro        "ubuntu"
     release       "precise"
 
@@ -45,7 +50,8 @@ node :localhost do
     end
   end
 
-  container "server-2" do
+  # SINGLE NIC
+  container "server-single-nic" do
     distro        "ubuntu"
     release       "precise"
 
@@ -55,5 +61,24 @@ node :localhost do
       address    '192.168.0.200/16'
     end
   end
+
+  # SHELL PROVISIONER
+  container "server-shell" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioner   TestLab::Provisioner::Shell
+    config        Hash[
+      :shell => "/bin/bash",
+      :setup => shell_provision_script
+    ]
+
+    interface do
+      name       :eth0
+      network_id :testnet
+      address    '192.168.0.200/16'
+    end
+  end
+
 
 end
