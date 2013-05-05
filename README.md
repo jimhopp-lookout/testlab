@@ -17,7 +17,7 @@ Accessing TestLab via code is meant to be fairly easy and straightforward.  To g
     @ui = ZTK::UI.new(:logger => @logger)
     @testlab = TestLab.new(:ui => @ui)
 
-Calling `TestLab.new` without a `:labfile` option will by default attempt to read `Labfile` from the current directory.  This behaviour can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
+Calling `TestLab.new` without a `:labfile` option will, by default, attempt to read `Labfile` from the current directory.  This behaviour can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
 
 For more information see the TestLab Documentation, `testlab-repo`, command-line binary and it never hurts to look at the TestLab source itself.
 
