@@ -37,6 +37,7 @@ describe TestLab::Network do
       it "should return the ips for all defined containers" do
         subject.class.ips.should be_kind_of(Array)
         subject.class.ips.should_not be_empty
+        subject.class.ips.should == ["192.168.255.254"]
       end
     end
 
