@@ -27,11 +27,13 @@ include TestLab::Utility::Misc
 version TestLab::VERSION
 
 program_desc %(A framework for building lightweight virtual infrastructure using LXC)
-program_long_desc %(Program Long Description)
+# program_long_desc %(Program Long Description)
 
 sort_help :manually
 default_command :help
 
+# LAB CREATE
+#############
 desc 'Create the test lab'
 command :create do |create|
   create.action do |global_options,options,args|
@@ -39,6 +41,8 @@ command :create do |create|
   end
 end
 
+# LAB DESTROY
+##############
 desc 'Destroy the test lab'
 command :destroy do |destroy|
   destroy.action do |global_options,options,args|
@@ -46,6 +50,8 @@ command :destroy do |destroy|
   end
 end
 
+# LAB ONLINE
+#############
 desc 'Online the test lab'
 command :up do |up|
   up.action do |global_options,options,args|
@@ -53,6 +59,8 @@ command :up do |up|
   end
 end
 
+# LAB OFFLINE
+##############
 desc 'Offline the test lab'
 command :down do |down|
   down.action do |global_options,options,args|
@@ -60,6 +68,8 @@ command :down do |down|
   end
 end
 
+# LAB SETUP
+############
 desc 'Setup the test lab infrastructure'
 command :setup do |setup|
   setup.action do |global_options,options,args|
@@ -67,6 +77,8 @@ command :setup do |setup|
   end
 end
 
+# LAB TEARDOWN
+###############
 desc 'Teardown the test lab infrastructure'
 command :teardown do |teardown|
   teardown.action do |global_options,options,args|
@@ -74,6 +86,8 @@ command :teardown do |teardown|
   end
 end
 
+# LAB STATUS
+#############
 desc 'Display information on the status of the test lab'
 command :status do |status|
   status.action do |global_options,options,args|
