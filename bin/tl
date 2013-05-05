@@ -129,6 +129,8 @@ command :node do |c|
 
 end
 
+# NETWORKS
+###########
 desc 'Manage networks'
 arg_name 'Describe arguments to network here'
 command :network do |c|
@@ -137,15 +139,24 @@ command :network do |c|
   c.arg_name 'network'
   c.flag [:i, :id]
 
+  # NETWORK STATUS
+  #################
   c.desc 'Display the status of network(s)'
   c.long_desc 'Displays the status of all networks or a single network if supplied via the id parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:id].nil?
-        ZTK::Report.new(:ui => @testlab.ui).spreadsheet(@testlab.networks, TestLab::Network::STATUS_KEYS) do |network|
-          OpenStruct.new(network.status)
+        # No ID supplied; show everything
+        networks = @testlab.networks.delete_if{|n| n.node.dead? }
+        if networks.count == 0
+          @testlab.ui.stderr.puts("You either have no networks defined or dead nodes!".yellow)
+        else
+          ZTK::Report.new(:ui => @testlab.ui).spreadsheet(networks, TestLab::Network::STATUS_KEYS) do |network|
+            OpenStruct.new(network.status)
+          end
         end
       else
+        # ID supplied; show just that item
         network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
@@ -158,6 +169,8 @@ command :network do |c|
 
 end
 
+# CONTAINERS
+#############
 desc 'Manage containers'
 arg_name 'Describe arguments to container here'
 command :container do |c|
@@ -166,6 +179,8 @@ command :container do |c|
   c.arg_name 'container'
   c.flag [:i, :id]
 
+  # CONTAINER SSH
+  ################
   c.desc 'Open an SSH console to a container'
   c.command :ssh do |ssh|
     ssh.action do |global_options, options, args|
@@ -178,15 +193,24 @@ command :container do |c|
     end
   end
 
+  # CONTAINER STATUS
+  ###################
   c.desc 'Display the status of container(s)'
   c.long_desc 'Displays the status of all containers or a single container if supplied via the id parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:id].nil?
-        ZTK::Report.new(:ui => @testlab.ui).spreadsheet(@testlab.containers, TestLab::Container::STATUS_KEYS) do |container|
-          OpenStruct.new(container.status)
+        # No ID supplied; show everything
+        containers = @testlab.containers.delete_if{ |c| c.node.dead? }
+        if containers.count == 0
+          @testlab.ui.stderr.puts("You either have no containers defined or dead nodes!".yellow)
+        else
+          ZTK::Report.new(:ui => @testlab.ui).spreadsheet(containers, TestLab::Container::STATUS_KEYS) do |container|
+            OpenStruct.new(container.status)
+          end
         end
       else
+        # ID supplied; show just that item
         container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
