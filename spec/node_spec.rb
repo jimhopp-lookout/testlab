@@ -47,6 +47,7 @@ describe TestLab::Node do
       it "should setup bind" do
         subject.ssh.stub(:exec) { true }
         subject.ssh.stub(:file).and_yield(StringIO.new)
+        subject.bind_setup
       end
     end
 
