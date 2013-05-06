@@ -129,7 +129,7 @@ command :node do |c|
   # NODE STATUS
   ##############
   c.desc 'Display the status of node(s)'
-  c.long_desc 'Displays the status of all nodes or a single node if supplied via the id parameter.'
+  c.long_desc 'Displays the status of all nodes or a single node if supplied via the ID parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:id].nil?
@@ -164,7 +164,7 @@ command :network do |c|
   # NETWORK STATUS
   #################
   c.desc 'Display the status of network(s)'
-  c.long_desc 'Displays the status of all networks or a single network if supplied via the id parameter.'
+  c.long_desc 'Displays the status of all networks or a single network if supplied via the ID parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:id].nil?
@@ -218,7 +218,9 @@ command :container do |c|
   # CONTAINER STATUS
   ###################
   c.desc 'Display the status of container(s)'
-  c.long_desc 'Displays the status of all containers or a single container if supplied via the id parameter.'
+  c.long_desc <<-EOF
+Displays the status of all containers or a single container if supplied via the ID parameter.
+EOF
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:id].nil?
@@ -239,6 +241,68 @@ command :container do |c|
         ZTK::Report.new(:ui => @testlab.ui).list(container, TestLab::Container::STATUS_KEYS) do |container|
           OpenStruct.new(container.status)
         end
+      end
+    end
+  end
+
+  # CONTAINER RECYCLE
+  ####################
+  c.desc 'Recycles a container'
+  c.long_desc <<-EOF
+Recycles a container.  The container is taken through a series of state changes to ensure it is pristine.
+
+The containers is cycled in this order:
+
+Down -> Destroy -> Create -> Up
+EOF
+  c.command :recycle do |recycle|
+    recycle.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.teardown
+        container.setup
+      end
+    end
+  end
+
+  # CONTAINER SETUP
+  ####################
+  c.desc 'Setup a container'
+  c.long_desc <<-EOF
+Setup a container.  The container is created, started and provisioned.
+EOF
+  c.command :setup do |setup|
+    setup.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.setup
+      end
+    end
+  end
+
+  # CONTAINER TEARDOWN
+  ####################
+  c.desc 'Teardown a container'
+  c.long_desc <<-EOF
+Teardown a container.  The container is offlined and destroyed.
+EOF
+  c.command :teardown do |teardown|
+    teardown.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.teardown
       end
     end
   end
