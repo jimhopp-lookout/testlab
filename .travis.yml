@@ -12,3 +12,4 @@ notifications:
 matrix:
   allow_failures:
     - rvm: ree
+
