@@ -87,16 +87,16 @@ class TestLab
     has_many    :interfaces,  :class_name => 'TestLab::Interface'
 
     attribute   :provisioner
-    attribute   :config
+    attribute   :config,      :default => Hash.new
 
     attribute   :domain
 
-    attribute   :user
-    attribute   :passwd
+    attribute   :user,        :default => 'ubuntu'
+    attribute   :passwd,      :default => 'ubuntu'
     attribute   :keys
 
-    attribute   :distro
-    attribute   :release
+    attribute   :distro,      :default => 'ubuntu'
+    attribute   :release,     :default => 'precise'
     attribute   :arch
 
     attribute   :persist

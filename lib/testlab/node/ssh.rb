@@ -30,9 +30,9 @@ class TestLab
             c.proxy_keys      = @provider.identity
 
             c.host_name       = container.ip
-            c.user            = (container.user || "ubuntu")
+            c.user            = container.user
             if container.keys.nil?
-              c.password      = (container.passwd || "ubuntu")
+              c.password      = container.passwd
             else
               c.keys          = container.keys
             end
