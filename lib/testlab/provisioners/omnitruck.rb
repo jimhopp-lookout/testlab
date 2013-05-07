@@ -40,7 +40,8 @@ class TestLab
           :default_password => "p@ssw01d",
           :user => ENV['USER'],
           :hostname_short => container.id,
-          :hostname_full => container.fqdn
+          :hostname_full => container.fqdn,
+          :omnibus_version => omnibus_version
         }).merge!(@config)
         container.bootstrap(ZTK::Template.render(omnibus_template, config))
       end
@@ -106,6 +107,14 @@ class TestLab
           true
         else
           false
+        end
+      end
+
+      def omnibus_version
+        if (@config[:version].to_f == 0.1)
+          "10.12.0"
+        else
+          @config[:version]
         end
       end
 

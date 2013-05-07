@@ -7,11 +7,11 @@ CHEF_SOLO_ROOT="/tmp/chef-solo"
 KNIFE_CONFIG_EXP_FILE="/tmp/knife-config.exp"
 export DEBIAN_FRONTEND CHEF_SOLO_ROOT KNIFE_CONFIG_EXP_FILE
 
-mkdir -p /tmp/chef-solo/
+mkdir -p ${CHEF_SOLO_ROOT}
 cd ${CHEF_SOLO_ROOT}
 
 apt-get -y --force-yes update
-apt-get -y --force-yes install build-essential expect wget curl
+apt-get -y --force-yes install build-essential expect wget curl libgecode-dev
 
 mkdir -pv /etc/chef /var/log/chef ${HOME}/.chef
 
@@ -25,8 +25,8 @@ cat <<EOF | tee ${CHEF_SOLO_ROOT}/attributes.json
 <%= @chef_solo_attributes.to_json %>
 EOF
 
-curl -L https://www.opscode.com/chef/install.sh | bash
-# bash install.sh -v <%= @version %>
+wget -v https://www.opscode.com/chef/install.sh
+bash install.sh -v <%= @omnibus_version %>
 <% if (@chef_pre_11 == false) -%>
 
 mkdir -pv /var/chef/cache ${CHEF_SOLO_ROOT}/cookbooks/chef-server
@@ -49,11 +49,10 @@ EOF
 
 gem install bundler --no-ri --no-rdoc
 bundle install --standalone --path vendor/bundle --binstubs
-mv -v ${CHEF_SOLO_ROOT}/cookbooks ${CHEF_SOLO_ROOT}/site-cookbooks
 bin/berks install --path ${CHEF_SOLO_ROOT}/cookbooks/
 <% end -%>
 
-chef-solo --config /etc/chef/solo.rb --json-attributes ${CHEF_SOLO_ROOT}/attributes.json --logfile /var/log/chef/chef-solo.log --log_level debug
+PATH=./bin/:$PATH chef-solo --config /etc/chef/solo.rb --json-attributes ${CHEF_SOLO_ROOT}/attributes.json --logfile /var/log/chef/chef-solo.log --log_level debug
 <% if (@chef_pre_11 == false) -%>
 
 cat << EOF | tee /etc/chef-server/chef-server.rb
