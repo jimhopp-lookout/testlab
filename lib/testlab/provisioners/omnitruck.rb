@@ -61,7 +61,8 @@ class TestLab
 
       def build_chef_solo_10_attributes(container)
         {
-          "chef-server" => {
+          "chef_server" => {
+            "url" => "https://#{container.fqdn}",
             "webui_enabled" => true
           },
           "run_list" => %w(recipe[chef-server::rubygems-install] recipe[chef-server::apache-proxy])
