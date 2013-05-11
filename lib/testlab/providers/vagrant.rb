@@ -193,13 +193,8 @@ class TestLab
         vagrantfile_template = File.join(TestLab::Provider.template_dir, "vagrant", "Vagrantfile.erb")
         vagrantfile          = File.join(@config[:repo], "Vagrantfile")
 
-        # UGLY; but it makes it run under 1.9.2
-        if RUBY_VERSION < "1.9.3"
-          File.open(vagrantfile, 'w') do |file|
-            file.puts(ZTK::Template.render(vagrantfile_template, context))
-          end
-        else
-          IO.write(vagrantfile, ZTK::Template.render(vagrantfile_template, context))
+        File.open(vagrantfile, 'w') do |file|
+          file.puts(ZTK::Template.render(vagrantfile_template, context))
         end
       end
 
