@@ -26,22 +26,11 @@ class TestLab
         self.ssh.bootstrap(ZTK::Template.render(node_setup_template))
       end
 
-      def route_setup(action)
-        self.networks.each do |network|
-          command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
-          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.address)} netmask #{TestLab::Utility.netmask(network.address)} gw #{network.node.ip}))
-        end
-      end
-
       # Setup the node.
       def setup
         @ui.logger.debug { "Node Setup: #{self.id} " }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
-
-          if (self.route == true)
-            route_setup(:add)
-          end
 
           node_setup
 
@@ -70,10 +59,7 @@ class TestLab
         call_collections([self.containers, self.networks], :teardown)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
-
-          if (self.route == true)
-            route_setup(:del)
-          end
+          # NOOP
         end
 
         true

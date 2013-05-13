@@ -31,6 +31,7 @@ class TestLab
 
     attribute   :address
     attribute   :bridge
+    attribute   :route,       :default => false
 
     attribute   :config
 
