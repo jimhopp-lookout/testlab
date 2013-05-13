@@ -54,7 +54,7 @@ class TestLab
       def up
         @ui.logger.debug { "Container Up: #{self.id} " }
 
-        (self.lxc.state == :not_created) and raise ContainerError, "We can not online a non-existant container!"
+        (self.lxc.state == :not_created) and return false #raise ContainerError, "We can not online a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           self.lxc.start
@@ -74,7 +74,7 @@ class TestLab
       def down
         @ui.logger.debug { "Container Down: #{self.id} " }
 
-        (self.lxc.state == :not_created) and raise ContainerError, "We can not offline a non-existant container!"
+        (self.lxc.state == :not_created) and return false # raise ContainerError, "We can not offline a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           self.lxc.stop
