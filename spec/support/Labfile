@@ -7,8 +7,11 @@ apt-get -y update
 apt-get -y install dnsutils
 EOF
 
+REPO = File.dirname(__FILE__)
+
 config Hash[
-  :domain => "default.zone"
+  :domain => "default.zone",
+  :repo => REPO
 ]
 
 node :localhost do
@@ -23,9 +26,9 @@ node :localhost do
       :user     => "vagrant",
       :port     => 22,
       :cpus     => 1,
-      :memory   => 512
-    },
-    :repo => File.dirname(__FILE__)
+      :memory   => 512,
+      :file     => REPO
+    }
   ]
 
   network :testnet do
