@@ -40,7 +40,7 @@ class TestLab
     has_many   :networks,   :class_name => 'TestLab::Network'
 
     attribute  :provider
-    attribute  :config
+    attribute  :config,     :default => Hash.new
     attribute  :components, :default => Array.new
 
 
