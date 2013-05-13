@@ -12,6 +12,7 @@ class TestLab
           :instance_id => @provider.instance_id,
           :state => @provider.state,
           :user => @provider.user,
+          :identity => @provider.identity,
           :ip => @provider.ip,
           :port => @provider.port,
           :provider => @provider.class,
