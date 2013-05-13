@@ -174,7 +174,7 @@ class TestLab
         command = TestLab.build_command_line("vagrant", *args)
         @ui.logger.debug { "command == #{command.inspect}" }
 
-        ZTK::Command.new(:ui => @ui).exec(command, :silence => true)
+        ZTK::Command.new(:ui => @ui, :silence => true).exec(command)
       end
 
       def render_vagrantfile
