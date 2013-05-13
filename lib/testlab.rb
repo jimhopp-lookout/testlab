@@ -22,7 +22,8 @@ require 'testlab/monkeys'
 #   EOF
 #
 #   config Hash[
-#     :domain => "default.zone"
+#     :domain => "default.zone",
+#     :repo => File.join(ENV['HOME'], "code", "personal", "testlab-repo")
 #   ]
 #
 #   node :localhost do
@@ -39,8 +40,7 @@ require 'testlab/monkeys'
 #         :cpus     => 8,
 #         :memory   => 16384,
 #         :box      => 'raring64'
-#       },
-#       :repo => File.join(ENV['HOME'], "code", "personal", "testlab-repo")
+#       }
 #     ]
 #
 #     network :east do
@@ -103,6 +103,7 @@ class TestLab
     labfile      = (options[:labfile] || 'Labfile')
     labfile_path = ZTK::Locator.find(labfile)
     @labfile     = TestLab::Labfile.load(labfile_path)
+    @labfile.config.merge!(:testlab => self)
   end
 
   # Test Lab Nodes
