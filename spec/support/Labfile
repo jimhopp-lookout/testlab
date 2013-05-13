@@ -14,7 +14,6 @@ config Hash[
 node :localhost do
 
   components %w(resolv bind)
-  route true
 
   provider    TestLab::Provider::Vagrant
   config      Hash[
@@ -32,6 +31,7 @@ node :localhost do
   network :testnet do
     address '192.168.255.254/16'
     bridge  :br0
+    route   true
   end
 
   # DUAL NICs

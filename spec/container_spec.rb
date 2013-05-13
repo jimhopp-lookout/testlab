@@ -147,6 +147,7 @@ describe TestLab::Container do
         subject.lxc.config.stub(:save) { true }
         subject.stub(:detect_arch) { "amd64" }
         subject.lxc.stub(:create) { true }
+        subject.node.ssh.stub(:exec)
         subject.create
       end
     end
@@ -163,6 +164,7 @@ describe TestLab::Container do
         subject.lxc.stub(:start) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :running }
+        subject.lxc.stub(:attach)
         subject.up
       end
     end
