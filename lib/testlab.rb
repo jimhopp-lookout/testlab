@@ -221,7 +221,7 @@ class TestLab
   #
   # These are special methods that we both include and extend on the parent
   # class.
-  module ClassMethods
+  module DualMethods
 
     @@ui ||= nil
 
@@ -272,7 +272,7 @@ class TestLab
 
   end
 
-  include TestLab::ClassMethods
-  extend  TestLab::ClassMethods
+  include TestLab::DualMethods
+  extend  TestLab::DualMethods
 
 end
