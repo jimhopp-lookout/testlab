@@ -16,10 +16,11 @@ class TestLab
 
         ZTK::RescueRetry.try(:tries => 3, :on => ContainerError) do
           tempfile = Tempfile.new("bootstrap")
-          self.node.ssh.file(:target => File.join(self.lxc.fs_root, tempfile.path), :chmod => '0777', :chown => 'root:root') do |file|
+          remote_tempfile = File.join("/tmp", File.basename(tempfile.path))
+          self.node.ssh.file(:target => File.join(self.lxc.fs_root, remote_tempfile), :chmod => '0777', :chown => 'root:root') do |file|
             file.puts(content)
           end
-          output = self.lxc.attach(%(/bin/bash), tempfile.path)
+          output = self.lxc.attach(%(/bin/bash), remote_tempfile)
           if output =~ /No such file or directory/
             raise ContainerError, "We could not find the bootstrap file!"
           end
