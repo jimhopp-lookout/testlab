@@ -191,7 +191,7 @@ class TestLab
         }
 
         vagrantfile_template = File.join(TestLab::Provider.template_dir, "vagrant", "Vagrantfile.erb")
-        vagrantfile          = File.join(@config[:repo], "Vagrantfile")
+        vagrantfile          = File.join(@config[:vagrant][:file], "Vagrantfile")
 
         File.open(vagrantfile, 'w') do |file|
           file.puts(ZTK::Template.render(vagrantfile_template, context))
