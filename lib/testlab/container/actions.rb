@@ -26,6 +26,18 @@ class TestLab
           self.lxc.config.save
 
           self.lxc.create(*create_args)
+
+          # TODO: This needs to really go somewhere else:
+          home_dir = ((self.node.user == "root") ? %(/root) : %(/home/#{self.node.user}))
+          container_home_dir = File.join(self.lxc.fs_root, "/home/ubuntu")
+
+          home_authkeys = File.join(home_dir, %(.ssh), %(authorized_keys))
+          container_authkeys = File.join(container_home_dir, %(.ssh), %(authorized_keys))
+
+          self.node.ssh.exec(%(mkdir -pv #{File.join(container_home_dir, %(.ssh))}))
+          self.node.ssh.exec(%(sudo cp -v #{home_authkeys} #{container_authkeys}))
+          self.node.ssh.exec(%(sudo chown -v 1000:1000 #{container_authkeys}))
+          self.node.ssh.exec(%(sudo chmod -v 644 #{container_authkeys}))
         end
 
         true
@@ -61,6 +73,9 @@ class TestLab
           self.lxc.wait(:running)
 
           (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
+
+          # TODO: This needs to really go somewhere else:
+          self.lxc.attach(%(/bin/bash -c 'grep "sudo\tALL=\(ALL:ALL\) ALL" /etc/sudoers && sed -i "s/sudo\tALL=\(ALL:ALL\) ALL/sudo\tALL=\(ALL:ALL\) NOPASSWD: ALL/" /etc/sudoers'))
         end
 
         true
