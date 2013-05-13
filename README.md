@@ -34,6 +34,14 @@ For more information see the TestLab Documentation, `testlab-repo`, command-line
 
 * See the `testlab-repo` - https://github.com/zpatten/testlab-repo
 
+# RUBIES TESTED AGAINST
+
+* Ruby 1.8.7 (REE)
+* Ruby 1.8.7 (MBARI)
+* Ruby 1.9.2
+* Ruby 1.9.3
+* Ruby 2.0.0
+
 # RESOURCES
 
 IRC:
