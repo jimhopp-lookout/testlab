@@ -34,7 +34,7 @@ class TestLab
     include TestLab::Utility::Misc
 
     # Associations and Attributes
-    belongs_to :labfile,    :class_name => 'TestLab::Lab'
+    belongs_to :labfile,    :class_name => 'TestLab::Labfile'
 
     has_many   :containers, :class_name => 'TestLab::Container'
     has_many   :networks,   :class_name => 'TestLab::Network'
