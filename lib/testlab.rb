@@ -203,6 +203,17 @@ class TestLab
     true
   end
 
+  # TestLab Configuration Directory
+  #
+  # Returns the path to the test lab configuration directory which is located
+  # off the repo directory under '.testlab'.
+  #
+  # @return [String] The path to the TestLab configuration directory.
+  def config_dir
+    directory = File.join(self.config[:repo], '.testlab')
+    File.expand_path(directory, File.dirname(__FILE__))
+  end
+
   # Provider Method Handler
   #
   # Proxies missing provider method calls to all nodes.
