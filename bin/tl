@@ -161,6 +161,45 @@ command :network do |c|
   c.arg_name 'network'
   c.flag [:i, :id]
 
+
+  # ROUTES
+  #########
+  c.desc 'Manage routes'
+  c.command :route do |route|
+
+    # ROUTE ADD
+    ############
+    route.desc 'Add routes to lab networks'
+    route.command :add do |add|
+      add.action do |global_options,options,args|
+        help_now!('id is required') if options[:id].nil?
+
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.manage_route(:add)
+        @testlab.ui.stdout.puts("Added routes successfully!".green.bold)
+        @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
+      end
+    end
+
+    # ROUTE DEL
+    ############
+    route.desc 'Delete routes to lab networks'
+    route.command :del do |del|
+      del.action do |global_options,options,args|
+        help_now!('id is required') if options[:id].nil?
+
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.manage_route(:del)
+        @testlab.ui.stdout.puts("Deleted routes successfully!".red.bold)
+        @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
+      end
+    end
+  end
+
   # NETWORK STATUS
   #################
   c.desc 'Display the status of network(s)'
@@ -307,38 +346,6 @@ EOF
     end
   end
 
-end
-
-# ROUTES
-#########
-desc 'Manage routes'
-command :route do |c|
-
-  # ROUTE ADD
-  ############
-  c.desc 'Add routes to lab networks'
-  c.command :add do |add|
-    add.action do |global_options,options,args|
-      @testlab.nodes.each do |node|
-        node.route_setup(:add)
-        @testlab.ui.stdout.puts("Added routes successfully!".green.bold)
-        @testlab.ui.stdout.puts %x(netstat -nr | grep '#{node.ip}').strip
-      end
-    end
-  end
-
-  # ROUTE DEL
-  ############
-  c.desc 'Delete routes to lab networks'
-  c.command :del do |del|
-    del.action do |global_options,options,args|
-      @testlab.nodes.each do |node|
-        node.route_setup(:del)
-        @testlab.ui.stdout.puts("Deleted routes successfully!".red.bold)
-        @testlab.ui.stdout.puts %x(netstat -nr | grep '#{node.ip}').strip
-      end
-    end
-  end
 end
 
 pre do |global,command,options,args|

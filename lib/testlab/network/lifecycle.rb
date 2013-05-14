@@ -9,28 +9,26 @@ class TestLab
 
         self.create
         self.up
-        self.route and route(:add)
+        self.route and manage_route(:add)
       end
 
       # Network Teardown
       def teardown
         @ui.logger.debug { "Network Teardown: #{self.id} " }
 
-        self.route and route(:del)
+        self.route and manage_route(:del)
         self.down
         self.destroy
       end
 
-      def route(action)
-        self.networks.each do |network|
-          command = ZTK::Command.new(:ui => @ui, :silence => true, :ignore_exit_status => true)
+      def manage_route(action)
+        command = ZTK::Command.new(:ui => @ui, :silence => true, :ignore_exit_status => true)
 
-          case RUBY_PLATFORM
-          when /darwin/ then
-            command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.address)} #{network.node.ip} #{TestLab::Utility.netmask(network.address)}))
-          when /linux/ then
-            command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.address)} netmask #{TestLab::Utility.netmask(network.address)} gw #{network.node.ip}))
-          end
+        case RUBY_PLATFORM
+        when /darwin/ then
+          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(self.address)} #{self.node.ip} #{TestLab::Utility.netmask(self.address)}))
+        when /linux/ then
+          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(self.address)} netmask #{TestLab::Utility.netmask(self.address)} gw #{self.node.ip}))
         end
       end
 
