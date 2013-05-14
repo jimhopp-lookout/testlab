@@ -16,6 +16,8 @@ class TestLab
 
         @config[:version]     ||= %(latest)
         @config[:omnibus_url] ||= %(https://www.opscode.com/chef/install.sh)
+
+        @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
       # OmniBus Provisioner Container Setup

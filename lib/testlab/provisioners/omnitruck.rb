@@ -18,6 +18,8 @@ class TestLab
         @config[:version]     ||= "latest"
         @config[:prereleases] ||= false
         @config[:nightlies]   ||= false
+
+        @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
       # OmniTruck Provisioner Container Setup
