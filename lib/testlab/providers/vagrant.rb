@@ -38,8 +38,6 @@ class TestLab
 
         # ensure our vagrant key is there
         @config[:vagrant] ||= Hash.new
-
-        render_vagrantfile
       end
 
 ################################################################################
@@ -174,6 +172,7 @@ class TestLab
         command = TestLab.build_command_line("vagrant", *args)
         @ui.logger.debug { "command == #{command.inspect}" }
 
+        render_vagrantfile
         ZTK::Command.new(:ui => @ui, :silence => true).exec(command)
       end
 
