@@ -26,6 +26,7 @@ class TestLab
 
         case RUBY_PLATFORM
         when /darwin/ then
+          action = ((action == :del) ? :delete : :add)
           command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(self.address)} #{self.node.ip} #{TestLab::Utility.netmask(self.address)}))
         when /linux/ then
           command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(self.address)} netmask #{TestLab::Utility.netmask(self.address)} gw #{self.node.ip}))
