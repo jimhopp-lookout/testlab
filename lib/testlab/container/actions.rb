@@ -31,13 +31,22 @@ class TestLab
           home_dir = ((self.node.user == "root") ? %(/root) : %(/home/#{self.node.user}))
           container_home_dir = File.join(self.lxc.fs_root, "/home/ubuntu")
 
-          home_authkeys = File.join(home_dir, %(.ssh), %(authorized_keys))
-          container_authkeys = File.join(container_home_dir, %(.ssh), %(authorized_keys))
+          home_authkeys = File.join(home_dir, ".ssh", "authorized_keys")
+          container_authkeys = File.join(container_home_dir, ".ssh", "authorized_keys")
+          container_authkeys2 = File.join(container_home_dir, ".ssh", "authorized_keys2")
+
+          authkeys = {
+            home_authkeys => container_authkeys,
+            home_authkeys => container_authkeys2
+          }
 
           self.node.ssh.exec(%(mkdir -pv #{File.join(container_home_dir, %(.ssh))}))
-          self.node.ssh.exec(%(sudo cp -v #{home_authkeys} #{container_authkeys}))
-          self.node.ssh.exec(%(sudo chown -v 1000:1000 #{container_authkeys}))
-          self.node.ssh.exec(%(sudo chmod -v 644 #{container_authkeys}))
+          authkeys.each do |source, destination|
+            self.node.ssh.exec(%(sudo cp -v #{source} #{destination}))
+            self.node.ssh.exec(%(sudo chown -v 1000:1000 #{destination}))
+            self.node.ssh.exec(%(sudo chmod -v 644 #{destination}))
+          end
+
         end
 
         true
