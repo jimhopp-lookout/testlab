@@ -20,7 +20,7 @@ class TestLab
           self.arch    ||= detect_arch
 
           self.lxc.config.clear
-          self.lxc.config['lxc.utsname'] = self.id
+          self.lxc.config['lxc.utsname'] = self.fqdn
           self.lxc.config['lxc.arch'] = self.arch
           self.lxc.config.networks = build_lxc_network_conf(self.interfaces)
           self.lxc.config.save
