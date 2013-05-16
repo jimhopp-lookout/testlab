@@ -20,7 +20,7 @@ class TestLab
           self.node.ssh.file(:target => File.join(self.lxc.fs_root, remote_tempfile), :chmod => '0777', :chown => 'root:root') do |file|
             file.puts(content)
           end
-          output = self.lxc.attach(%(/bin/bash), remote_tempfile)
+          output = self.lxc.attach(%(--), %(/bin/bash), remote_tempfile)
           if output =~ /No such file or directory/
             raise ContainerError, "We could not find the bootstrap file!"
           end
