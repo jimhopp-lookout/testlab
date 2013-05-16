@@ -244,13 +244,21 @@ command :container do |c|
   ################
   c.desc 'Open an SSH console to a container'
   c.command :ssh do |ssh|
+
+    ssh.desc 'Username'
+    ssh.arg_name 'username'
+    ssh.flag [:u, :user]
+
     ssh.action do |global_options, options, args|
       help_now!('id is required') if options[:id].nil?
 
       container = @testlab.containers.select{ |n| n.id.to_sym == options[:id].to_sym }.first
       container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
-      container.ssh.console
+      ssh_options = Hash.new
+      ssh_options[:user] = options[:user]
+
+      container.ssh(ssh_options).console
     end
   end
 

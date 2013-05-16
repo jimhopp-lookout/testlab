@@ -30,11 +30,11 @@ class TestLab
             c.proxy_keys      = @provider.identity
 
             c.host_name       = container.ip
-            c.user            = container.user
+            c.user            = (options[:user] || container.user)
             if container.keys.nil?
-              c.password      = container.passwd
+              c.password      = (options[:passwd] || container.passwd)
             else
-              c.keys          = container.keys
+              c.keys          = (options[:keys] || container.keys)
             end
           end
         end
