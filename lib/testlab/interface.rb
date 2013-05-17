@@ -9,14 +9,14 @@ class TestLab
   class Interface < ZTK::DSL::Base
 
     # Associations and Attributes
-    belongs_to  :container, :class_name => 'TestLab::Container'
-    belongs_to  :network,   :class_name => 'TestLab::Network'
+    belongs_to  :container,  :class_name => 'TestLab::Container'
+    belongs_to  :network,    :class_name => 'TestLab::Network'
 
     attribute   :address
     attribute   :mac
     attribute   :name
 
-    attribute   :primary,   :default => false
+    attribute   :primary,    :default => false
 
     def initialize(*args)
       super(*args)
