@@ -284,7 +284,7 @@ class TestLab
 
   end
 
-  include TestLab::DualMethods
   extend  TestLab::DualMethods
+  include TestLab::DualMethods
 
 end
