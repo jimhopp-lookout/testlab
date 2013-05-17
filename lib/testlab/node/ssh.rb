@@ -30,12 +30,9 @@ class TestLab
             c.proxy_keys      = @provider.identity
 
             c.host_name       = container.ip
-            c.user            = (options[:user] || container.user)
-            if container.keys.nil?
-              c.password      = (options[:passwd] || container.passwd)
-            else
-              c.keys          = (options[:keys] || container.keys)
-            end
+            c.user            = (options[:user]   || container.user)
+            c.password        = (options[:passwd] || container.passwd)
+            c.keys            = (options[:keys]   || container.keys)
           end
         end
         @container_ssh[name]
