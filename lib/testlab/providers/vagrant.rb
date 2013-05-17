@@ -9,6 +9,7 @@ class TestLab
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class Vagrant
+      require 'zlib'
 
       # States which indicate the VM is running
       RUNNING_STATES  = %w(running).map(&:to_sym)
@@ -138,9 +139,8 @@ class TestLab
       end
 
       def last_octet
-        hash = instance_id.hash
-        hash = (hash < 0 ? (hash * -1) : hash)
-        (hash.modulo(254) + 1)
+        crc32 = Zlib.crc32(self.instance_id)
+        (crc32.modulo(254) + 1)
       end
 
       def port
