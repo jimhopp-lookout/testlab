@@ -235,7 +235,7 @@ class TestLab
   # class.
   module DualMethods
 
-    @@ui ||= nil
+    @@ui = nil
 
     # Get Test Lab User Interface
     #
