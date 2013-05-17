@@ -198,6 +198,26 @@ command :network do |c|
         @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
       end
     end
+
+    # ROUTE SHOW
+    #############
+    route.desc 'Show routes to lab networks'
+    route.command :show do |show|
+      show.action do |global_options,options,args|
+        help_now!('id is required') if options[:id].nil?
+
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        @testlab.ui.stdout.puts("TestLab routes:".green.bold)
+        case RUBY_PLATFORM
+        when /darwin/ then
+          @testlab.ui.stdout.puts %x(netstat -nrf inet | grep '#{network.node.ip}').strip
+        when /linux/ then
+          @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
+        end
+      end
+    end
   end
 
   # NETWORK STATUS
