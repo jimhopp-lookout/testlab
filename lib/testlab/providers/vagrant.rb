@@ -134,7 +134,13 @@ class TestLab
       end
 
       def ip
-        (@config[:vagrant][:ip] || "192.168.33.10")
+        (@config[:vagrant][:ip] || "192.168.33.#{last_octet}")
+      end
+
+      def last_octet
+        hash = instance_id.hash
+        hash = (hash < 0 ? (hash * -1) : hash)
+        (hash.modulo(254) + 1)
       end
 
       def port
