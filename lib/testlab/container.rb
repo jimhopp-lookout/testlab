@@ -15,7 +15,7 @@ class TestLab
   #     release       "precise"
   #
   #     interface do
-  #       network_id :west
+  #       network_id 'west'
   #       name       :eth0
   #       address    '10.11.0.254/16'
   #       mac        '00:00:5e:48:e9:6f'
@@ -28,14 +28,14 @@ class TestLab
   #     release       "precise"
   #
   #     interface do
-  #       network_id :east
+  #       network_id 'east'
   #       name       :eth0
   #       address    '10.10.0.200/16'
   #       mac        '00:00:5e:63:b5:9f'
   #     end
   #
   #     interface do
-  #       network_id :west
+  #       network_id 'west'
   #       primary    true
   #       name       :eth1
   #       address    '10.11.0.200/16'
