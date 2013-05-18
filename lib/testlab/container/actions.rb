@@ -75,6 +75,7 @@ class TestLab
         (self.lxc.state == :not_created) and return false #raise ContainerError, "We can not online a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
+          self.lxc.lxc.exec(%(lxc-stop), %(-n #{self.id}-clone))
           self.lxc.start
           self.lxc.wait(:running)
 
@@ -98,6 +99,7 @@ class TestLab
         (self.lxc.state == :not_created) and return false # raise ContainerError, "We can not offline a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
+          self.lxc.lxc.exec(%(lxc-stop), %(-n #{self.id}-clone))
           self.lxc.stop
           self.lxc.wait(:stopped)
 
@@ -105,6 +107,17 @@ class TestLab
         end
 
         true
+      end
+
+      def clone
+        @ui.logger.debug { "Container Clone: #{self.id}" }
+
+        self.down
+
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Clone', :yellow)) do
+          self.lxc.start_ephemeral(%(-o #{self.id} -n #{self.id}-clone), %(-d))
+        end
+
       end
 
     end

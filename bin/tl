@@ -374,6 +374,25 @@ EOF
     end
   end
 
+  # CONTAINER CLONE
+  ##################
+  c.desc 'Clone a container'
+  c.long_desc <<-EOF
+Clone a container.  The container is offlined and an ephemeral copy of it is started.
+EOF
+  c.command :clone do |clone|
+    clone.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.clone
+      end
+    end
+  end
+
 end
 
 pre do |global,command,options,args|
