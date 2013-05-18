@@ -14,9 +14,6 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
           self.domain  ||= self.node.labfile.config[:domain]
-          self.distro  ||= "ubuntu"
-          self.release ||= "precise"
-
           self.arch    ||= detect_arch
 
           self.lxc.config.clear
