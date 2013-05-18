@@ -336,6 +336,44 @@ EOF
     end
   end
 
+  # CONTAINER UP
+  ###############
+  c.desc 'Up a container'
+  c.long_desc <<-EOF
+Up a container.  The container is started and brought online.
+EOF
+  c.command :up do |up|
+    up.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.up
+      end
+    end
+  end
+
+  # CONTAINER DOWN
+  #################
+  c.desc 'Down a container'
+  c.long_desc <<-EOF
+Down a container.  The container is stopped taking it offline.
+EOF
+  c.command :down do |down|
+    down.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.down
+      end
+    end
+  end
+
   # CONTAINER SETUP
   ####################
   c.desc 'Setup a container'
