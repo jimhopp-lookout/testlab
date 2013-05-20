@@ -39,6 +39,17 @@ class TestLab
         @lxc ||= self.node.lxc.container(self.id)
       end
 
+      # LXC::Container object
+      #
+      # Returns a *LXC::Container* class instance configured for the clone of
+      # this container.
+      #
+      # @return [LXC] An instance of LXC::Container configured for the clone of
+      #   this container.
+      def lxc_clone
+        @lxc_clone ||= self.node.lxc.container("#{self.id}-master")
+      end
+
       # ZTK:SSH object
       #
       # Returns a *ZTK:SSH* class instance configured for this container.
@@ -82,6 +93,21 @@ class TestLab
         when "fedora" then
           ((self.node.arch =~ /x86_64/) ? "amd64" : "i686")
         end
+      end
+
+      # LXC Container Configuration
+      #
+      # Builds the LXC container configuration data.
+      #
+      # @return [Boolean] True if successful.
+      def build_lxc_config(lxc_config)
+        lxc_config.clear
+        lxc_config['lxc.utsname'] = self.fqdn
+        lxc_config['lxc.arch'] = self.arch
+        lxc_config.networks = build_lxc_network_conf(self.interfaces)
+        lxc_config.save
+
+        true
       end
 
       # LXC Network Configuration

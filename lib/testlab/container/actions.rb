@@ -16,11 +16,7 @@ class TestLab
           self.domain  ||= self.node.labfile.config[:domain]
           self.arch    ||= detect_arch
 
-          self.lxc.config.clear
-          self.lxc.config['lxc.utsname'] = self.fqdn
-          self.lxc.config['lxc.arch'] = self.arch
-          self.lxc.config.networks = build_lxc_network_conf(self.interfaces)
-          self.lxc.config.save
+          build_lxc_config(self.lxc.config)
 
           self.lxc.create(*create_args)
 
@@ -75,7 +71,14 @@ class TestLab
         (self.lxc.state == :not_created) and return false #raise ContainerError, "We can not online a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
-          self.lxc.lxc.exec(%(lxc-stop), %(-n #{self.id}-clone))
+          if self.lxc_clone.exists?
+            self.lxc.stop
+            self.lxc_clone.stop
+            self.lxc_clone.clone(%(-o #{self.id}-master), %(-n #{self.id}))
+            build_lxc_config(self.lxc.config)
+            self.lxc_clone.destroy(%(-f))
+          end
+
           self.lxc.start
           self.lxc.wait(:running)
 
@@ -99,25 +102,37 @@ class TestLab
         (self.lxc.state == :not_created) and return false # raise ContainerError, "We can not offline a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
-          self.lxc.lxc.exec(%(lxc-stop), %(-n #{self.id}-clone))
           self.lxc.stop
           self.lxc.wait(:stopped)
 
-          (self.lxc.state != :stopped) and raise ContainerError, "The container failed to offline!"
+          (self.lxc.state == :running) and raise ContainerError, "The container failed to offline!"
         end
 
         true
       end
 
+      # Clone the contaienr
+      #
+      # Prepares the container, if needed, for ephemeral cloning and clones it.
+      #
+      # @return [Boolean] True if successful.
       def clone
         @ui.logger.debug { "Container Clone: #{self.id}" }
 
         self.down
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Clone', :yellow)) do
-          self.lxc.start_ephemeral(%(-o #{self.id} -n #{self.id}-clone), %(-d))
+          if self.lxc.exists?
+            self.lxc.stop
+            self.lxc.clone(%(-o #{self.id}), %(-n #{self.id}-master))
+            build_lxc_config(self.lxc_clone.config)
+            self.lxc.destroy(%(-f))
+          end
+
+          self.lxc_clone.start_ephemeral(%(-o #{self.id}-master -n #{self.id}), %(-d))
         end
 
+        true
       end
 
     end

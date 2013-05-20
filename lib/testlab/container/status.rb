@@ -53,6 +53,7 @@ class TestLab
 
         {
           :id => self.id,
+          :clone => self.lxc_clone.exists?,
           :fqdn => self.fqdn,
           :state => self.state,
           :distro => self.distro,
