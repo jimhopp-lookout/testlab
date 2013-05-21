@@ -156,6 +156,7 @@ describe TestLab::Container do
     describe "#destroy" do
       it "should destroy the container" do
         subject.lxc.stub(:destroy) { true }
+        subject.lxc_clone.stub(:destroy) { true }
         subject.destroy
       end
     end
