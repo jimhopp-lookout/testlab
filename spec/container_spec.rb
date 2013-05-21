@@ -52,6 +52,7 @@ describe TestLab::Container do
     describe "#status" do
       it "should return a hash of status information about the container" do
         subject.lxc.stub(:state) { :not_created }
+        subject.lxc_clone.stub(:exists?) { false }
         subject.status.should be_kind_of(Hash)
         subject.status.should_not be_empty
       end
@@ -165,6 +166,9 @@ describe TestLab::Container do
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :running }
         subject.lxc.stub(:attach)
+
+        subject.lxc_clone.stub(:exists?) { false }
+
         subject.up
       end
     end
