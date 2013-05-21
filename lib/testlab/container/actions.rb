@@ -71,13 +71,9 @@ class TestLab
         (self.lxc.state == :not_created) and return false #raise ContainerError, "We can not online a non-existant container!"
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
-          if self.lxc_clone.exists?
-            self.lxc.stop
-            self.lxc_clone.stop
-            self.lxc_clone.clone(%(-o #{self.id}-master), %(-n #{self.id}))
-            build_lxc_config(self.lxc.config)
-            self.lxc_clone.destroy(%(-f))
-          end
+
+          # ensure our container is in "static" mode
+          self.to_static
 
           self.lxc.start
           self.lxc.wait(:running)
@@ -122,14 +118,11 @@ class TestLab
         self.down
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Clone', :yellow)) do
-          if self.lxc.exists?
-            self.lxc.stop
-            self.lxc.clone(%(-o #{self.id}), %(-n #{self.id}-master))
-            build_lxc_config(self.lxc_clone.config)
-            self.lxc.destroy(%(-f))
-          end
 
-          self.lxc_clone.start_ephemeral(%(-o #{self.id}-master -n #{self.id}), %(-d))
+          # ensure our container is in "ephemeral" mode
+          self.to_ephemeral
+
+          self.lxc_clone.start_ephemeral(%(-o #{self.id}-master), %(-n #{self.id}), %(-d))
         end
 
         true

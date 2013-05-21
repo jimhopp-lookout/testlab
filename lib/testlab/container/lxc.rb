@@ -50,6 +50,42 @@ class TestLab
         @lxc_clone ||= self.node.lxc.container("#{self.id}-master")
       end
 
+      # Convert to Static Container
+      #
+      # If the current container is operating as an ephemeral container, this
+      # will convert it back to a static container, otherwise no changes will
+      # occur.
+      #
+      # @return [Boolean] Returns true if successful.
+      def to_static
+        if self.lxc_clone.exists?
+          self.lxc.stop
+          self.lxc_clone.stop
+          self.lxc_clone.clone(%(-o #{self.lxc_clone.name}), %(-n #{self.lxc.name}))
+          build_lxc_config(self.lxc.config)
+          self.lxc_clone.destroy(%(-f))
+        end
+
+        true
+      end
+
+      # Convert to Ephemeral Container
+      #
+      # If the current container is operating as a static ocntainer, this will
+      # convert it to a ephemeral container, otherwise no changes will occur.
+      #
+      # @return [Boolean] Returns true if successful.
+      def to_ephemeral
+        if (self.lxc.exists? && !self.lxc_clone.exists?)
+          self.lxc.stop
+          self.lxc.clone(%(-o #{self.lxc.name}), %(-n #{self.lxc_clone.name}))
+          build_lxc_config(self.lxc_clone.config)
+          self.lxc.destroy(%(-f))
+        end
+
+        true
+      end
+
       # ZTK:SSH object
       #
       # Returns a *ZTK:SSH* class instance configured for this container.
