@@ -54,7 +54,8 @@ class TestLab
         @ui.logger.debug { "Container Destroy: #{self.id} " }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
-          self.lxc.destroy
+          self.lxc.destroy(%(-f))
+          self.lxc_clone.destroy(%(-f))
         end
 
         true
@@ -115,14 +116,13 @@ class TestLab
       def clone
         @ui.logger.debug { "Container Clone: #{self.id}" }
 
-        self.down
-
         please_wait(:ui => @ui, :message => format_object_action(self, 'Clone', :yellow)) do
 
           # ensure our container is in "ephemeral" mode
           self.to_ephemeral
 
-          self.lxc_clone.start_ephemeral(%(-o #{self.id}-master), %(-n #{self.id}), %(-d))
+          self.node.ssh.exec(%(sudo arp --verbose --delete #{self.ip}), :ignore_exit_status => true)
+          self.lxc_clone.start_ephemeral(%W(-o #{self.lxc_clone.name} -n #{self.lxc.name} -d))
         end
 
         true
