@@ -25,10 +25,9 @@ For more information see the TestLab Documentation, `testlab-repo`, command-line
 
 * Latest VirtualBox Package
 * Latest Vagrant Package (non-gem version)
-* Ubuntu 13.04 Recommended; 12.10 Minimum
+* Ubuntu 13.04 Base Box Recommended
 
 * Ubuntu 13.04 Server 64-bit (Raring) Base Box - https://github.com/zpatten/raring64
-* Ubuntu 12.10 Server 64-bit (Quantal) Base Box - https://github.com/zpatten/quantal64
 
 # EXAMPLE USE
 
