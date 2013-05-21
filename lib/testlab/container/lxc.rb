@@ -95,16 +95,6 @@ class TestLab
         true
       end
 
-      # ZTK:SSH object
-      #
-      # Returns a *ZTK:SSH* class instance configured for this container.
-      #
-      # @return [ZTK::SSH] An instance of ZTK::SSH configured for this
-      #   container.
-      def ssh(options={})
-        self.node.container_ssh(self, options)
-      end
-
       # Does the container exist?
       #
       # @return [Boolean] True if the containers exists, false otherwise.
