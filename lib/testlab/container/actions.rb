@@ -76,7 +76,7 @@ class TestLab
           # ensure our container is in "static" mode
           self.to_static
 
-          self.lxc.start
+          self.lxc.start(%(--daemon))
           self.lxc.wait(:running)
 
           (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
