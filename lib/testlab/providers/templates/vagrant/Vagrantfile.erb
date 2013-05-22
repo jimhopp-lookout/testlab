@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
     end
 
     testlab.ssh.username = <%= @user.inspect %>
-    testlab.ssh.port = <%= @port.inspect %>
+    testlab.ssh.guest_port = <%= @port.inspect %>
     testlab.ssh.forward_agent = true
   end
 end
