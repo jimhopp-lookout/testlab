@@ -32,7 +32,7 @@ class TestLab
             c.host_name       = container.ip
             c.user            = (options[:user]   || container.user)
             c.password        = (options[:passwd] || container.passwd)
-            c.keys            = (options[:keys]   || container.keys)
+            c.keys            = (options[:keys]   || container.keys || @provider.identity)
           end
         end
         @container_ssh[name]
