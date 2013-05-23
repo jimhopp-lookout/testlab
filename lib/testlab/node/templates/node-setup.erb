@@ -2,7 +2,7 @@ set -x
 
 # Update APT and ensure our required packages are installed
 apt-get -y update
-apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp sshpass
+apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp
 
 # Ensure the default lxc networking services are off
 service lxc-net stop
