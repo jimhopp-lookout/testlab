@@ -248,6 +248,82 @@ command :network do |c|
     end
   end
 
+  # NETWORK UP
+  ###############
+  c.desc 'Up a network'
+  c.long_desc <<-EOF
+Up a network.  The network is started and brought online.
+EOF
+  c.command :up do |up|
+    up.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.up
+      end
+    end
+  end
+
+  # NETWORK DOWN
+  #################
+  c.desc 'Down a network'
+  c.long_desc <<-EOF
+Down a network.  The network is stopped taking it offline.
+EOF
+  c.command :down do |down|
+    down.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.down
+      end
+    end
+  end
+
+  # NETWORK SETUP
+  ####################
+  c.desc 'Setup a network'
+  c.long_desc <<-EOF
+Setup a network.  The network is created, started and provisioned.
+EOF
+  c.command :setup do |setup|
+    setup.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.setup
+      end
+    end
+  end
+
+  # NETWORK TEARDOWN
+  ####################
+  c.desc 'Teardown a network'
+  c.long_desc <<-EOF
+Teardown a network.  The network is offlined and destroyed.
+EOF
+  c.command :teardown do |teardown|
+    teardown.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.teardown
+      end
+    end
+  end
+
 end
 
 # CONTAINERS
