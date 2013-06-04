@@ -56,7 +56,7 @@ class TestLab
       def teardown
         @ui.logger.debug { "Node Teardown: #{self.id} " }
 
-        call_collections([self.containers, self.networks], :teardown)
+        call_collections([self.containers.reverse, self.networks.reverse], :teardown)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
           # NOOP
