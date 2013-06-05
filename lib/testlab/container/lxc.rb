@@ -90,6 +90,7 @@ class TestLab
           build_lxc_config(self.lxc_clone.config)
         else
           self.lxc.stop
+          self.lxc.destroy(%(-f)) if self.persist
         end
 
         true
