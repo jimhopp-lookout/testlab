@@ -101,7 +101,10 @@ class TestLab
     attribute   :release,     :default => 'precise'
     attribute   :arch
 
-    attribute   :persist
+    # Instructs ephemeral containers to persist; otherwise tmpfs will be used
+    # as the backend store for ephemeral containers.
+    # NOTE: tmpfs is very memory intensive and is disabled by default.
+    attribute   :persist,     :default => true
 
 
     def initialize(*args)
