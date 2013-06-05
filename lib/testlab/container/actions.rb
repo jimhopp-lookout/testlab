@@ -108,7 +108,7 @@ class TestLab
         true
       end
 
-      # Clone the contaienr
+      # Clone the container
       #
       # Prepares the container, if needed, for ephemeral cloning and clones it.
       #
