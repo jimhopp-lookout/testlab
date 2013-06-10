@@ -341,9 +341,13 @@ command :container do |c|
   c.desc 'Open an SSH console to a container'
   c.command :ssh do |ssh|
 
-    ssh.desc 'Username'
+    ssh.desc 'Specify an SSH Username to use'
     ssh.arg_name 'username'
     ssh.flag [:u, :user]
+
+    ssh.desc 'Specify an SSH Identity Key to use'
+    ssh.arg_name 'key'
+    ssh.flag [:k, :key]
 
     ssh.action do |global_options, options, args|
       help_now!('id is required') if options[:id].nil?
@@ -353,6 +357,7 @@ command :container do |c|
 
       ssh_options = Hash.new
       ssh_options[:user] = options[:user]
+      ssh_options[:keys] = options[:key]
 
       container.ssh(ssh_options).console
     end
