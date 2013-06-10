@@ -2,10 +2,20 @@ set -x
 
 # Update APT and ensure our required packages are installed
 apt-get -y update
-apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp
+apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp apt-cacher-ng
+
+# Ensure APT Cache-NG is running
+service apt-cacher-ng restart || service apt-cacher-ng start
+cat <<EOF | tee /etc/apt/apt.conf.d/02proxy
+Acquire::http { Proxy "http://127.0.0.1:3142"; };
+EOF
 
 # Ensure the default lxc networking services are off
 service lxc-net stop
+
+# Ensure that we use APT Cacher-NG for building containers
+grep "^MIRROR" /etc/default/lxc || echo "MIRROR=\"http://127.0.0.1:3142/archive.ubuntu.com/ubuntu\"" | tee -a /etc/default/lxc
+service lxc restart || service lxc start
 
 # Ensure NTP services are enabled and running
 service ntp restart || service ntp start
