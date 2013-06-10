@@ -93,6 +93,7 @@ class TestLab
   autoload :Node,        'testlab/node'
   autoload :Provider,    'testlab/provider'
   autoload :Provisioner, 'testlab/provisioner'
+  autoload :User,        'testlab/user'
   autoload :Utility,     'testlab/utility'
 
   include TestLab::Utility::Misc

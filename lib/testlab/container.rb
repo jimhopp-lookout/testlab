@@ -70,6 +70,7 @@ class TestLab
     autoload :MethodMissing, 'testlab/container/method_missing'
     autoload :SSH,           'testlab/container/ssh'
     autoload :Status,        'testlab/container/status'
+    autoload :User,          'testlab/container/user'
 
     include TestLab::Container::Actions
     include TestLab::Container::Generators
@@ -79,6 +80,7 @@ class TestLab
     include TestLab::Container::MethodMissing
     include TestLab::Container::SSH
     include TestLab::Container::Status
+    include TestLab::Container::User
 
     extend  TestLab::Container::ClassMethods
 
@@ -87,15 +89,12 @@ class TestLab
     # Associations and Attributes
     belongs_to  :node,        :class_name => 'TestLab::Node'
     has_many    :interfaces,  :class_name => 'TestLab::Interface'
+    has_many    :users,       :class_name => 'TestLab::User'
 
     attribute   :provisioner
     attribute   :config,      :default => Hash.new
 
     attribute   :domain
-
-    attribute   :user,        :default => 'ubuntu'
-    attribute   :passwd,      :default => 'ubuntu'
-    attribute   :keys
 
     attribute   :distro,      :default => 'ubuntu'
     attribute   :release,     :default => 'precise'

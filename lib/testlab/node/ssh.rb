@@ -30,9 +30,10 @@ class TestLab
             c.proxy_keys      = @provider.identity
 
             c.host_name       = container.ip
-            c.user            = (options[:user]   || container.user)
-            c.password        = (options[:passwd] || container.passwd)
-            c.keys            = (options[:keys]   || container.keys || @provider.identity)
+
+            c.user            = (options[:user]   || container.primary_user.id)
+            c.password        = (options[:passwd] || container.primary_user.password)
+            c.keys            = (options[:keys]   || container.primary_user.keys || @provider.identity)
           end
         end
         @container_ssh[name]
