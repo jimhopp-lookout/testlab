@@ -12,7 +12,14 @@ class TestLab
       #
       # @return [TestLab::User] The primary user for the container.
       def primary_user
-        if self.users.any?{ |u| u.primary == true }
+        if self.users.count == 0
+          case self.distro.downcase
+          when 'ubuntu' then
+            TestLab::User.new "ubuntu" do
+              password 'ubuntu'
+            end
+          end
+        elsif self.users.any?{ |u| u.primary == true }
           self.users.find{ |u| u.primary == true }
         else
           self.users.first
