@@ -19,7 +19,7 @@ class TestLab
     attribute   :user
     attribute   :password
 
-    attribute   :keys
+    attribute   :identity
 
     attribute   :uid
     attribute   :gid
