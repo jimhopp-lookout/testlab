@@ -25,8 +25,8 @@ class TestLab
       #   provision.
       # @return [Boolean] True if successful.
       def setup(container)
-        if !@config[:setup].nil?
-          container.bootstrap(@config[:setup])
+        if !@config[:script].nil?
+          container.bootstrap(@config[:script])
         end
 
         true
