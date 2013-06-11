@@ -117,6 +117,8 @@ describe TestLab::Node do
         subject.stub(:build_resolv_conf) { true }
         subject.stub(:bind_setup) { true }
         subject.stub(:bind_reload) { true }
+        subject.stub(:create) { true }
+        subject.stub(:up) { true }
         subject.containers.each do |container|
           container.stub(:setup) { true }
         end
@@ -130,6 +132,8 @@ describe TestLab::Node do
     describe "teardown" do
       it "should teardown the node" do
         subject.stub(:route_setup) { true }
+        subject.stub(:down) { true }
+        subject.stub(:destroy) { true }
         subject.containers.each do |container|
           container.stub(:teardown) { true }
         end
