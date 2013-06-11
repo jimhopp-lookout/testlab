@@ -169,8 +169,6 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def setup
-    self.dead? and raise TestLabError, "You must have a running node in order to setup your infrastructure!"
-
     node_method_proxy(:setup)
 
     true
@@ -183,8 +181,6 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def teardown
-    self.dead? and raise TestLabError, "You must have a running node in order to teardown your infrastructure!"
-
     node_method_proxy(:teardown)
 
     true
