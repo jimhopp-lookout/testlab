@@ -30,6 +30,9 @@ class TestLab
       def setup
         @ui.logger.debug { "Node Setup: #{self.id} " }
 
+        self.create
+        self.up
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           node_setup
@@ -69,6 +72,9 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
           # NOOP
         end
+
+        self.down
+        self.destroy
 
         true
       end
