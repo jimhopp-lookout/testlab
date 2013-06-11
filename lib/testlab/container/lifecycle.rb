@@ -16,29 +16,17 @@ class TestLab
         self.create
         self.up
 
-        if (!@provisioner.nil? && @provisioner.respond_to?(:setup))
-          please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
-            # Ensure the container APT calls use apt-cacher-ng on the node
-            gateway_ip = self.primary_interface.network.ip
-            apt_conf_d_proxy_file = File.join(self.lxc.fs_root, "etc", "apt", "apt.conf.d", "00proxy")
-            self.node.ssh.exec(%(sudo mkdir -pv #{File.dirname(apt_conf_d_proxy_file)}))
-            self.node.ssh.exec(%(echo 'Acquire::HTTP { Proxy "http://#{gateway_ip}:3142"; };' | sudo tee #{apt_conf_d_proxy_file}))
-            self.config.has_key?(:apt_cacher_exclude_hosts) and self.config[:apt_cacher_exclude_hosts].each do |host|
-              self.node.ssh.exec(%(echo 'Acquire::HTTP::Proxy::#{host} "DIRECT";' | sudo tee -a #{apt_conf_d_proxy_file}))
-            end
-
-            # Fix the APT sources since LXC mudges them when using apt-cacher-ng
-            apt_conf_sources_file = File.join(self.lxc.fs_root, "etc", "apt", "sources.list")
-            self.node.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}))
-
-            self.users.each do |user|
-              user.setup
-            end
-
-            @provisioner.setup(self)
-
+          self.users.each do |user|
+            user.setup
           end
+
+          self.provisioners.each do |provisioner|
+            @ui.logger.info { ">>>>> PROVISIONER SETUP #{provisioner} <<<<<" }
+            provisioner.new(self.config, @ui).setup(self)
+          end
+
         end
 
         true
@@ -54,10 +42,13 @@ class TestLab
       def teardown
         @ui.logger.debug { "Container Teardown: #{self.id} " }
 
-        if (!@provisioner.nil? && @provisioner.respond_to?(:teardown))
-          please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
-            @provisioner.teardown(self)
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
+
+          self.provisioners.each do |provisioner|
+            @ui.logger.info { ">>>>> PROVISIONER TEARDOWN #{provisioner} <<<<<" }
+            provisioner.new(self.config, @ui).teardown(self)
           end
+
         end
 
         self.down

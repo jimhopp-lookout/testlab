@@ -7,9 +7,10 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Provisioner
-    autoload :Shell,     'testlab/provisioners/shell'
-    autoload :OmniBus,   'testlab/provisioners/omnibus'
-    autoload :OmniTruck, 'testlab/provisioners/omnitruck'
+    autoload :Shell,       'testlab/provisioners/shell'
+    autoload :OmniBus,     'testlab/provisioners/omnibus'
+    autoload :OmniTruck,   'testlab/provisioners/omnitruck'
+    autoload :AptCacherNG, 'testlab/provisioners/apt_cacher_ng'
 
     class << self
 

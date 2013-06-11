@@ -87,30 +87,29 @@ class TestLab
     include TestLab::Utility::Misc
 
     # Associations and Attributes
-    belongs_to  :node,        :class_name => 'TestLab::Node'
-    has_many    :interfaces,  :class_name => 'TestLab::Interface'
-    has_many    :users,       :class_name => 'TestLab::User'
+    belongs_to  :node,          :class_name => 'TestLab::Node'
+    has_many    :interfaces,    :class_name => 'TestLab::Interface'
+    has_many    :users,         :class_name => 'TestLab::User'
 
-    attribute   :provisioner
-    attribute   :config,      :default => Hash.new
+    attribute   :provisioners,  :default => Array.new
+    attribute   :config,        :default => Hash.new
 
     attribute   :domain
 
-    attribute   :distro,      :default => 'ubuntu'
-    attribute   :release,     :default => 'precise'
+    attribute   :distro,        :default => 'ubuntu'
+    attribute   :release,       :default => 'precise'
     attribute   :arch
 
     # Instructs ephemeral containers to persist; otherwise tmpfs will be used
     # as the backend store for ephemeral containers.
     # NOTE: tmpfs is very memory intensive and is disabled by default.
-    attribute   :persist,     :default => true
+    attribute   :persist,       :default => true
 
 
     def initialize(*args)
       super(*args)
 
       @ui          = TestLab.ui
-      @provisioner = self.provisioner.new(self.config, @ui) if !self.provisioner.nil?
     end
 
   end

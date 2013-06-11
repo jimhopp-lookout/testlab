@@ -15,9 +15,10 @@ class TestLab
         if self.users.count == 0
           case self.distro.downcase
           when 'ubuntu' then
-            TestLab::User.new "ubuntu" do
+            u = TestLab::User.new "ubuntu" do
               password 'ubuntu'
             end
+            u.container = self
           end
         elsif self.users.any?{ |u| u.primary == true }
           self.users.find{ |u| u.primary == true }
