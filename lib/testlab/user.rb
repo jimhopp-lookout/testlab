@@ -9,16 +9,18 @@ class TestLab
   class User < ZTK::DSL::Base
 
     # Sub-Modules
-    autoload :Actions,       'testlab/user/actions'
+    autoload :Lifecycle,     'testlab/user/lifecycle'
 
-    include TestLab::User::Actions
+    include TestLab::User::Lifecycle
 
     # Associations and Attributes
     belongs_to  :container,  :class_name => 'TestLab::Container'
 
     attribute   :user
     attribute   :password
+
     attribute   :keys
+
     attribute   :uid
     attribute   :gid
 

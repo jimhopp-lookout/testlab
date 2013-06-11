@@ -19,21 +19,6 @@ class TestLab
           build_lxc_config(self.lxc.config)
 
           self.lxc.create(*create_args)
-
-          # Ensure the container APT calls use apt-cacher-ng on the node
-          gateway_ip = self.primary_interface.network.ip
-          apt_conf_d_proxy_file = File.join(self.lxc.fs_root, "etc", "apt", "apt.conf.d", "02proxy")
-          self.node.ssh.exec(%(sudo mkdir -pv #{File.dirname(apt_conf_d_proxy_file)}))
-          self.node.ssh.exec(%(echo 'Acquire::http { Proxy "http://#{gateway_ip}:3142"; };' | sudo tee #{apt_conf_d_proxy_file}))
-
-          # Fix the APT sources since LXC mudges them when using apt-cacher-ng
-          apt_conf_sources_file = File.join(self.lxc.fs_root, "etc", "apt", "sources.list")
-          self.node.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}))
-
-          self.users.each do |u|
-            u.create
-          end
-
         end
 
         true
@@ -74,10 +59,6 @@ class TestLab
           self.lxc.wait(:running)
 
           (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
-
-          self.users.each do |u|
-            u.up
-          end
 
         end
 

@@ -1,12 +1,12 @@
 class TestLab
   class User
 
-    module Actions
+    module Lifecycle
 
-      # Create the user
+      # Setup the user
       #
       # @return [Boolean] True if successful.
-      def create
+      def setup
         @ui.logger.debug { "User Create: #{self.id} " }
 
         node_home_dir = ((self.container.node.user == "root") ? %(/root) : %(/home/#{self.container.node.user}))
@@ -46,21 +46,14 @@ class TestLab
           self.container.node.ssh.exec(%(sudo chmod -v 644 #{destination}))
         end
 
-        true
-      end
-
-      # Up the user
-      #
-      # @return [Boolean] True if successful.
-      def up
-        @ui.logger.debug { "User Up: #{self.id}" }
-
         # ensure the container user home directory is owned by them
         home_dir = self.container.lxc.attach(%(-- /bin/bash -c 'grep #{self.id} /etc/passwd | cut -d ":" -f6')).strip
         self.container.lxc.attach(%(-- /bin/bash -c 'sudo chown -Rv $(id -u #{self.id}):$(id -g #{self.id}) #{home_dir}'))
 
         # ensure the sudo user group can do passwordless sudo
         self.container.lxc.attach(%(-- /bin/bash -c 'grep "sudo\tALL=\(ALL:ALL\) ALL" /etc/sudoers && sed -i "s/sudo\tALL=\(ALL:ALL\) ALL/sudo\tALL=\(ALL:ALL\) NOPASSWD: ALL/" /etc/sudoers'))
+
+        true
       end
 
     end
