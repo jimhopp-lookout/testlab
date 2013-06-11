@@ -41,6 +41,14 @@ class TestLab
           if self.components.include?('bind')
             bind_setup
           end
+
+          self.containers.each do |container|
+            container.provisioners.each do |provisioner|
+              p = provisioner.new(container.config, @ui)
+              p.respond_to?(:node) and p.node(self)
+            end
+          end
+
         end
 
         call_collections([self.networks, self.containers], :setup)

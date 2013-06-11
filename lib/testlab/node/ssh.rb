@@ -6,7 +6,7 @@ class TestLab
       # SSH to the Node
       def ssh(options={})
         if (!defined?(@ssh) || @ssh.nil?)
-          @ssh ||= ZTK::SSH.new({:ui => @ui, :timeout => 1200, :silence => true}.merge(options))
+          @ssh ||= ZTK::SSH.new({:ui => @ui, :timeout => 1800, :silence => true}.merge(options))
           @ssh.config do |c|
             c.host_name = @provider.ip
             c.port      = @provider.port
@@ -22,7 +22,7 @@ class TestLab
         name = container.id
         @container_ssh ||= Hash.new
         if @container_ssh[name].nil?
-          @container_ssh[name] ||= ZTK::SSH.new({:ui => @ui, :timeout => 1200, :silence => true}.merge(options))
+          @container_ssh[name] ||= ZTK::SSH.new({:ui => @ui, :timeout => 1800, :silence => true}.merge(options))
           @container_ssh[name].config do |c|
             c.proxy_host_name = @provider.ip
             c.proxy_port      = @provider.port

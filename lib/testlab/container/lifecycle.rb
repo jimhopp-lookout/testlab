@@ -24,7 +24,8 @@ class TestLab
 
           self.provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> PROVISIONER SETUP #{provisioner} <<<<<" }
-            provisioner.new(self.config, @ui).setup(self)
+            p = provisioner.new(self.config, @ui)
+            p.respond_to?(:setup) and p.setup(self)
           end
 
         end
@@ -46,7 +47,8 @@ class TestLab
 
           self.provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> PROVISIONER TEARDOWN #{provisioner} <<<<<" }
-            provisioner.new(self.config, @ui).teardown(self)
+            p = provisioner.new(self.config, @ui)
+            p.respond_to?(:teardown) and p.teardown(self)
           end
 
         end

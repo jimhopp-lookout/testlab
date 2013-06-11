@@ -17,12 +17,30 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
+      # AptCacherNG Provisioner Node Setup
+      #
+      # @param [TestLab::Node] node The node which we want to provision.
+      # @return [Boolean] True if successful.
+      def node(node)
+        @ui.logger.debug { "AptCacherNG Provisioner: Node #{node.id}" }
+
+        node.ssh.exec(%(sudo apt-get -y install apt-cacher-ng))
+        node.ssh.exec(%(sudo service apt-cacher-ng restart || sudo service apt-cacher-ng start))
+        node.ssh.exec(%(echo 'Acquire::HTTP { Proxy "http://127.0.0.1:3142"; };' | sudo tee /etc/apt/apt.conf.d/00proxy))
+        node.ssh.exec(%(sudo grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.ubuntu.com/ubuntu"' | sudo tee -a /etc/default/lxc))
+        node.ssh.exec(%(sudo service lxc restart || sudo service lxc start))
+
+        true
+      end
+
       # AptCacherNG Provisioner Container Setup
       #
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
       def setup(container)
+        @ui.logger.debug { "AptCacherNG Provisioner: Container #{container.id}" }
+
         # Ensure the container APT calls use apt-cacher-ng on the node
         gateway_ip            = container.primary_interface.network.ip
         apt_conf_d_proxy_file = File.join(container.lxc.fs_root, "etc", "apt", "apt.conf.d", "00proxy")
