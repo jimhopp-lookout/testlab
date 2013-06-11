@@ -30,7 +30,7 @@ describe TestLab::Provisioner::Shell do
   describe "class" do
 
     it "should be an instance of TestLab::Provisioner::Shell" do
-      subject.instance_variable_get(:@provisioner).should be_an_instance_of TestLab::Provisioner::Shell
+      subject.provisioners.first.new(subject.config, @ui).should be_an_instance_of TestLab::Provisioner::Shell
     end
 
   end
@@ -42,7 +42,7 @@ describe TestLab::Provisioner::Shell do
         it "should provision the container" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
           subject.lxc.stub(:attach) { "" }
-          subject.instance_variable_get(:@provisioner).setup(subject)
+          subject.provisioners.first.new(subject.config, @ui).setup(subject)
         end
       end
 
@@ -50,14 +50,14 @@ describe TestLab::Provisioner::Shell do
         it "should raise an exception" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
           subject.lxc.stub(:attach) { "No such file or directory" }
-          lambda{ subject.instance_variable_get(:@provisioner).setup(subject) }.should raise_error TestLab::ContainerError
+          lambda{ subject.provisioners.first.new(subject.config, @ui).setup(subject) }.should raise_error TestLab::ContainerError
         end
       end
     end
 
     describe "teardown" do
       it "should decomission the container" do
-        subject.instance_variable_get(:@provisioner).teardown(subject)
+        subject.provisioners.first.new(subject.config, @ui).teardown(subject)
       end
     end
 

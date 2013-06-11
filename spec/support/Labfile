@@ -31,7 +31,7 @@ node :localhost do
     }
   ]
 
-  network :testnet do
+  network 'testnet' do
     address '192.168.255.254/16'
     bridge  :br0
     route   true
@@ -44,14 +44,14 @@ node :localhost do
 
     interface do
       name       :eth0
-      network_id :testnet
+      network_id 'testnet'
       address    '192.168.0.254/16'
       primary    true
     end
 
     interface do
       name       :eth1
-      network_id :testnet
+      network_id 'testnet'
       address    '192.168.0.253/16'
     end
   end
@@ -63,7 +63,7 @@ node :localhost do
 
     interface do
       name       :eth0
-      network_id :testnet
+      network_id 'testnet'
       address    '192.168.0.200/16'
     end
   end
@@ -73,15 +73,15 @@ node :localhost do
     distro        "ubuntu"
     release       "precise"
 
-    provisioner   TestLab::Provisioner::Shell
+    provisioners  [TestLab::Provisioner::Shell]
     config        Hash[
       :shell => "/bin/bash",
-      :setup => shell_provision_script
+      :script => shell_provision_script
     ]
 
     interface do
       name       :eth0
-      network_id :testnet
+      network_id 'testnet'
       address    '192.168.0.200/16'
     end
   end
