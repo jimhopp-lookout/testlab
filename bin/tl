@@ -149,6 +149,82 @@ command :node do |c|
     end
   end
 
+  # NODE UP
+  ##########
+  c.desc 'Up a node'
+  c.long_desc <<-EOF
+Up a node.  The node is started and brought online.
+EOF
+  c.command :up do |up|
+    up.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.up
+      end
+    end
+  end
+
+  # NODE DOWN
+  ############
+  c.desc 'Down a node'
+  c.long_desc <<-EOF
+Down a node.  The node is stopped taking it offline.
+EOF
+  c.command :down do |down|
+    down.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.down
+      end
+    end
+  end
+
+  # NODE SETUP
+  #############
+  c.desc 'Setup a node'
+  c.long_desc <<-EOF
+Setup a node.  The node is created, started and provisioned.
+EOF
+  c.command :setup do |setup|
+    setup.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.setup
+      end
+    end
+  end
+
+  # NODE TEARDOWN
+  ################
+  c.desc 'Teardown a node'
+  c.long_desc <<-EOF
+Teardown a node.  The node is offlined and destroyed.
+EOF
+  c.command :teardown do |teardown|
+    teardown.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.teardown
+      end
+    end
+  end
+
 end
 
 # NETWORKS
