@@ -47,6 +47,8 @@ class TestLab
     def initialize(*args)
       super(*args)
 
+      raise NodeError, "You must specify a provider class!" if self.provider.nil?
+
       @ui       = TestLab.ui
       @provider = self.provider.new(self.config, @ui)
     end
