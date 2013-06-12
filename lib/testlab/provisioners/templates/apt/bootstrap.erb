@@ -1,0 +1,8 @@
+apt-get -y --force-yes update
+<% if !@apt[:install].nil? -%>
+apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
+<% end -%>
+<% if !@apt[:remove].nil? -%>
+apt-get -y remove <%= @apt[:remove].flatten.compact.join(' ') %>
+<% end -%>
+

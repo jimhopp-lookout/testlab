@@ -7,6 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Provisioner
+    autoload :Apt,         'testlab/provisioners/apt'
     autoload :AptCacherNG, 'testlab/provisioners/apt_cacher_ng'
     autoload :ChefGem,     'testlab/provisioners/chef_gem'
     autoload :OmniBus,     'testlab/provisioners/omnibus'

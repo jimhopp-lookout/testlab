@@ -14,8 +14,9 @@ class TestLab
         @config = (config || Hash.new)
         @ui     = (ui     || TestLab.ui)
 
-        @config[:apt_cacher_ng] ||= Hash.new
-        @config[:apt_cacher_ng][:exclude_hosts] ||= Array.new
+        @config[:apt] ||= Hash.new
+        @config[:apt][:cache] ||= Hash.new
+        @config[:apt][:cache][:exclude_hosts] ||= Array.new
 
         @apt_conf_d_proxy_file_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
 
@@ -60,7 +61,7 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
 
         context = {
           :proxy_url => "http://#{gateway_ip}:3142",
-          :exclude_hosts => @config[:apt_cacher_ng][:exclude_hosts]
+          :exclude_hosts => @config[:apt][:cache][:exclude_hosts]
         }
 
         container.node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
