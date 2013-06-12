@@ -10,8 +10,6 @@ class TestLab
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class Local
 
-################################################################################
-
       def initialize(config={}, ui=nil)
         @config = (config || Hash.new)
         @ui     = (ui     || TestLab.ui)
@@ -19,8 +17,6 @@ class TestLab
         # ensure our local key is there
         @config[:local] ||= Hash.new
       end
-
-################################################################################
 
       # This is a NO-OP
       def create
@@ -32,8 +28,6 @@ class TestLab
         true
       end
 
-################################################################################
-
       # This is a NO-OP
       def up
         self.state
@@ -44,8 +38,6 @@ class TestLab
         self.state
       end
 
-################################################################################
-
       # This is a NO-OP
       def reload
         self.down
@@ -54,26 +46,22 @@ class TestLab
         self.state
       end
 
-################################################################################
-
-      # Inquire the state of the Local-controlled VM
+      # This is a NO-OP
       def state
         :running
       end
 
-################################################################################
-
-      # Does the Local-controlled VM exist?
+      # This is a NO-OP
       def exists?
         true
       end
 
-      # Is the Local-controlled VM alive?
+      # This is a NO-OP
       def alive?
         true
       end
 
-      # Is the Local-controlled VM dead?
+      # This is a NO-OP
       def dead?
         false
       end
@@ -97,8 +85,6 @@ class TestLab
       def port
         (@config[:local][:port] || 22)
       end
-
-################################################################################
 
     end
 
