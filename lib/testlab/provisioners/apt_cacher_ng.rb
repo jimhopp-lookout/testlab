@@ -14,6 +14,11 @@ class TestLab
         @config = (config || Hash.new)
         @ui     = (ui     || TestLab.ui)
 
+        @config[:apt_cacher_ng] ||= Hash.new
+        @config[:apt_cacher_ng][:exclude_hosts] ||= Array.new
+
+        @apt_conf_d_proxy_file_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
+
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
@@ -24,14 +29,19 @@ class TestLab
       def node(node)
         @ui.logger.debug { "AptCacherNG Provisioner: Node #{node.id}" }
 
-        script = <<-EOF
+        node.ssh.bootstrap(<<-EOF
 apt-get -y install apt-cacher-ng
 service apt-cacher-ng restart || service apt-cacher-ng start
-echo 'Acquire::HTTP { Proxy "http://127.0.0.1:3142"; };' | tee /etc/apt/apt.conf.d/00proxy
 grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.ubuntu.com/ubuntu"' | tee -a /etc/default/lxc && service lxc restart || service lxc start
         EOF
+        )
 
-        node.ssh.bootstrap(script)
+        apt_conf_d_proxy_file = File.join("/etc", "apt", "apt.conf.d", "00proxy")
+        context = { :proxy_url => "http://127.0.0.1:3142" }
+
+        node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
+          file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
+        end
 
         true
       end
@@ -45,23 +55,21 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
         @ui.logger.debug { "AptCacherNG Provisioner: Container #{container.id}" }
 
         # Ensure the container APT calls use apt-cacher-ng on the node
-        gateway_ip            = container.primary_interface.network.ip
-        apt_conf_d_proxy_file = File.join(container.lxc.fs_root, "etc", "apt", "apt.conf.d", "00proxy")
+        gateway_ip                     = container.primary_interface.network.ip
+        apt_conf_d_proxy_file          = File.join(container.lxc.fs_root, "etc", "apt", "apt.conf.d", "00proxy")
 
-        script = <<-EOF
-mkdir -pv #{File.dirname(apt_conf_d_proxy_file)}
-echo 'Acquire::HTTP { Proxy "http://#{gateway_ip}:3142"; };' | tee #{apt_conf_d_proxy_file}
-        EOF
+        context = {
+          :proxy_url => "http://#{gateway_ip}:3142",
+          :exclude_hosts => @config[:apt_cacher_ng][:exclude_hosts]
+        }
 
-        container.config[:apt_cacher_exclude_hosts].nil? or container.config[:apt_cacher_exclude_hosts].each do |host|
-          script << %(echo 'Acquire::HTTP::Proxy::#{host} "DIRECT";' | tee -a #{apt_conf_d_proxy_file}\n)
+        container.node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
+          file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
         end
 
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng
         apt_conf_sources_file = File.join(container.lxc.fs_root, "etc", "apt", "sources.list")
-        script << %(sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}\n)
-
-        container.node.ssh.bootstrap(script)
+        container.node.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}))
       end
 
       # AptCacherNG Provisioner Container Teardown
