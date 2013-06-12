@@ -14,6 +14,12 @@ class TestLab
   #     distro        "ubuntu"
   #     release       "precise"
   #
+  #     user "deployer" do
+  #       uid 2600
+  #       gid 2600
+  #       password "deployer"
+  #     end
+  #
   #     interface do
   #       network_id 'west'
   #       name       :eth0
@@ -26,6 +32,12 @@ class TestLab
   #   container "dual-nic" do
   #     distro        "ubuntu"
   #     release       "precise"
+  #
+  #     user "deployer" do
+  #       uid 2600
+  #       gid 2600
+  #       password "deployer"
+  #     end
   #
   #     interface do
   #       network_id 'east'
