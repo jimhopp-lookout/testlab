@@ -53,7 +53,7 @@ mkdir -pv #{File.dirname(apt_conf_d_proxy_file)}
 echo 'Acquire::HTTP { Proxy "http://#{gateway_ip}:3142"; };' | tee #{apt_conf_d_proxy_file}
         EOF
 
-        container.config[:apt_cacher_exclude_hosts].each do |host|
+        container.config[:apt_cacher_exclude_hosts].nil? or container.config[:apt_cacher_exclude_hosts].each do |host|
           script << %(echo 'Acquire::HTTP::Proxy::#{host} "DIRECT";' | tee -a #{apt_conf_d_proxy_file}\n)
         end
 
