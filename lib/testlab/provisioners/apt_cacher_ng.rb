@@ -24,21 +24,15 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # AptCacherNG Provisioner Node Setup
+      # APT-CacherNG Provisioner Node Setup
       #
       # @param [TestLab::Node] node The node which we want to provision.
       # @return [Boolean] True if successful.
       def node(node)
-        @ui.logger.debug { "AptCacherNG Provisioner: Node #{node.id}" }
+        @ui.logger.debug { "APT-CacherNG Provisioner: Node #{node.id}" }
 
-        node.ssh.bootstrap(<<-EOF
-apt-get -y install apt-cacher-ng
-service apt-cacher-ng restart || service apt-cacher-ng start
-grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.ubuntu.com/ubuntu"' | tee -a /etc/default/lxc && service lxc restart || service lxc start
-        EOF
-        )
-
-        apt_conf_d_proxy_file = File.join("/etc", "apt", "apt.conf.d", "00proxy")
+        bootstrap_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "bootstrap.erb")
+        node.ssh.bootstrap(ZTK::Template.render(bootstrap_template, @config))
 
         context = {
           :apt => {
@@ -49,6 +43,7 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
           }
         }
 
+        apt_conf_d_proxy_file = File.join("/etc", "apt", "apt.conf.d", "00proxy")
         node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
         end
@@ -56,13 +51,13 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
         true
       end
 
-      # AptCacherNG Provisioner Container Setup
+      # APT-CacherNG Provisioner Container Setup
       #
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
       def setup(container)
-        @ui.logger.debug { "AptCacherNG Provisioner: Container #{container.id}" }
+        @ui.logger.debug { "APT-CacherNG Provisioner: Container #{container.id}" }
 
         # Ensure the container APT calls use apt-cacher-ng on the node
         gateway_ip                     = container.primary_interface.network.ip
@@ -77,17 +72,6 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng
         apt_conf_sources_file = File.join(container.lxc.fs_root, "etc", "apt", "sources.list")
         container.node.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}))
-      end
-
-      # AptCacherNG Provisioner Container Teardown
-      #
-      # This is a NO-OP currently.
-      #
-      # @return [Boolean] True if successful.
-      def teardown(container)
-        # NOOP
-
-        true
       end
 
     end

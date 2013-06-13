@@ -1,0 +1,5 @@
+set -x
+
+apt-get -y install apt-cacher-ng
+service apt-cacher-ng restart || service apt-cacher-ng start
+grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.ubuntu.com/ubuntu"' | tee -a /etc/default/lxc && service lxc restart || service lxc start
