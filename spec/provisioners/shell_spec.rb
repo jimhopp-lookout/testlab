@@ -55,12 +55,6 @@ describe TestLab::Provisioner::Shell do
       end
     end
 
-    describe "teardown" do
-      it "should decomission the container" do
-        subject.provisioners.first.new(subject.config, @ui).teardown(subject)
-      end
-    end
-
   end
 
 end

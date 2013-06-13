@@ -51,14 +51,6 @@ describe TestLab::Node do
       end
     end
 
-    describe "#build_resolv_conf" do
-      it "should build resolv.conf" do
-        subject.ssh.stub(:exec) { true }
-        subject.ssh.stub(:file).and_yield(StringIO.new)
-        subject.build_resolv_conf
-      end
-    end
-
     describe "#status" do
       it "should return a hash of status information about the node" do
         subject.instance_variable_get(:@provider).stub(:state) { :not_created }
