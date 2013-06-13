@@ -96,6 +96,7 @@ describe TestLab::Node do
 
     describe "setup" do
       it "should setup the node" do
+        subject.provisioners = Array.new
         subject.containers.each { |c| c.provisioners = Array.new }
         subject.ssh.stub(:bootstrap) { true }
         subject.stub(:route_setup) { true }
@@ -113,6 +114,7 @@ describe TestLab::Node do
 
     describe "teardown" do
       it "should teardown the node" do
+        subject.provisioners = Array.new
         subject.containers.each { |c| c.provisioners = Array.new }
         subject.stub(:route_setup) { true }
         subject.stub(:down) { true }

@@ -16,8 +16,11 @@ config ({
 
 node :localhost do
 
-  provider    TestLab::Provider::Vagrant
-  config      ({
+  provider      TestLab::Provider::Vagrant
+  provisioners  [
+    TestLab::Provisioner::Bind
+  ]
+  config        ({
     :vagrant => {
       :id       => "mytestlab-#{ENV['USER']}".downcase,
       :ip       => "192.168.255.1",
@@ -41,7 +44,6 @@ node :localhost do
     release       "precise"
 
     provisioners  [
-      TestLab::Provisioner::Bind,
       TestLab::Provisioner::Resolv,
       TestLab::Provisioner::AptCacherNG,
       TestLab::Provisioner::Apt
@@ -67,7 +69,6 @@ node :localhost do
     release       "precise"
 
     provisioners  [
-      TestLab::Provisioner::Bind,
       TestLab::Provisioner::Resolv,
       TestLab::Provisioner::AptCacherNG,
       TestLab::Provisioner::Apt
@@ -86,7 +87,6 @@ node :localhost do
     release       "precise"
 
     provisioners  [
-      TestLab::Provisioner::Bind,
       TestLab::Provisioner::Resolv,
       TestLab::Provisioner::AptCacherNG,
       TestLab::Provisioner::Apt,

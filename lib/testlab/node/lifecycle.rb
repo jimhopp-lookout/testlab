@@ -37,6 +37,12 @@ class TestLab
 
           node_setup
 
+          self.provisioners.each do |provisioner|
+            @ui.logger.info { ">>>>> NODE PROVISIONER: #{provisioner} <<<<<" }
+            p = provisioner.new(container.config, @ui)
+            p.respond_to?(:node) and p.node(self)
+          end
+
           self.containers.each do |container|
             container.provisioners.each do |provisioner|
               @ui.logger.info { ">>>>> NODE PROVISIONER: #{provisioner} <<<<<" }
