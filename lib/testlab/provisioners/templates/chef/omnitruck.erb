@@ -2,7 +2,7 @@
 <%= ZTK::Template.do_not_edit_notice(:message => "OmniTruck Bootstrap") %>
 set -x
 
-DEBIAN_FRONTEND="noninteractive"
+export DEBIAN_FRONTEND="noninteractive"
 CHEF_SOLO_ROOT="/tmp/chef-solo"
 KNIFE_CONFIG_EXP_FILE="/tmp/knife-config.exp"
 export DEBIAN_FRONTEND CHEF_SOLO_ROOT KNIFE_CONFIG_EXP_FILE

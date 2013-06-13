@@ -1,3 +1,7 @@
+set -x
+
+export DEBIAN_FRONTEND="noninteractive"
+
 apt-get -y --force-yes update
 <% if !@apt[:install].nil? -%>
 apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
@@ -5,4 +9,3 @@ apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
 <% if !@apt[:remove].nil? -%>
 apt-get -y remove <%= @apt[:remove].flatten.compact.join(' ') %>
 <% end -%>
-
