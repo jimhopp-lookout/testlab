@@ -16,7 +16,6 @@ class TestLab
 
         @config[:apt] ||= Hash.new
         @config[:apt][:cacher_ng] ||= Hash.new
-        @config[:apt][:cacher_ng][:proxy_url]     ||= "http://127.0.0.1:3142"
         @config[:apt][:cacher_ng][:exclude_hosts] ||= Array.new
 
         @apt_conf_d_proxy_file_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
@@ -63,7 +62,7 @@ class TestLab
         gateway_ip                     = container.primary_interface.network.ip
         apt_conf_d_proxy_file          = File.join(container.lxc.fs_root, "etc", "apt", "apt.conf.d", "00proxy")
 
-        @config[:apt][:cacher_ng].merge!(:proxy_url => "http://#{gateway_ip}:3142").merge!(@config[:apt][:cacher_ng])
+        @config[:apt][:cacher_ng] = { :proxy_url => "http://#{gateway_ip}:3142" }.merge(@config[:apt][:cacher_ng])
 
         container.node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, @config))
