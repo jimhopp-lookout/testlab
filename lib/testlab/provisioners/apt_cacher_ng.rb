@@ -15,8 +15,9 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:apt] ||= Hash.new
-        @config[:apt][:cache] ||= Hash.new
-        @config[:apt][:cache][:exclude_hosts] ||= Array.new
+        @config[:apt][:cacher_ng] ||= Hash.new
+        @config[:apt][:cacher_ng][:proxy_url]     ||= "http://127.0.0.1:3142"
+        @config[:apt][:cacher_ng][:exclude_hosts] ||= Array.new
 
         @apt_conf_d_proxy_file_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
 
@@ -38,7 +39,15 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
         )
 
         apt_conf_d_proxy_file = File.join("/etc", "apt", "apt.conf.d", "00proxy")
-        context = { :proxy_url => "http://127.0.0.1:3142" }
+
+        context = {
+          :apt => {
+            :cacher_ng => {
+              :proxy_url => "http://127.0.0.1:3142",
+              :exclude_hosts => Array.new
+            }
+          }
+        }
 
         node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
@@ -59,13 +68,10 @@ grep "^MIRROR" /etc/default/lxc || echo 'MIRROR="http://127.0.0.1:3142/archive.u
         gateway_ip                     = container.primary_interface.network.ip
         apt_conf_d_proxy_file          = File.join(container.lxc.fs_root, "etc", "apt", "apt.conf.d", "00proxy")
 
-        context = {
-          :proxy_url => "http://#{gateway_ip}:3142",
-          :exclude_hosts => @config[:apt][:cache][:exclude_hosts]
-        }
+        @config[:apt][:cacher_ng].merge!(:proxy_url => "http://#{gateway_ip}:3142").merge!(@config[:apt][:cacher_ng])
 
         container.node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
-          file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
+          file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, @config))
         end
 
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng

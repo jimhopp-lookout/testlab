@@ -1,4 +1,4 @@
-Acquire::HTTP::Proxy "<%= @proxy_url %>";
-<% [@exclude_hosts].flatten.compact.each do |exclude_host| -%>
+Acquire::HTTP::Proxy "<%= @apt[:cacher_ng][:proxy_url] %>";
+<% [@apt[:cacher_ng][:exclude_hosts]].flatten.compact.each do |exclude_host| -%>
 Acquire::HTTP::Proxy::<%= exclude_host %> "DIRECT";
 <% end -%>
