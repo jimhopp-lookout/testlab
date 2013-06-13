@@ -21,6 +21,157 @@ Calling `TestLab.new` without a `:labfile` option will, by default, attempt to r
 
 For more information see the TestLab Documentation, `testlab-repo`, command-line binary and it never hurts to look at the TestLab source itself.
 
+# Using TestLab
+
+The TestLab command-line program `tl` follows in the style of git (using the GLI RubyGem).
+
+    $ tl help
+    NAME
+        tl - A framework for building lightweight virtual infrastructure using LXC
+
+    SYNOPSIS
+        tl [global options] command [command options] [arguments...]
+
+    VERSION
+        0.6.1
+
+    GLOBAL OPTIONS
+        --version -
+        --help    - Show this message
+
+    COMMANDS
+        help      - Shows a list of commands or help for one command
+        create    - Create the test lab
+        destroy   - Destroy the test lab
+        up        - Online the test lab
+        down      - Offline the test lab
+        setup     - Setup the test lab infrastructure
+        teardown  - Teardown the test lab infrastructure
+        status    - Display information on the status of the test lab
+        node      - Manage nodes
+        network   - Manage networks
+        container - Manage containers
+
+You stand up your lab with the following command:
+
+    tl setup
+
+You can down the entire lab:
+
+    tl down
+
+You can also destroy it (only works for VM backed providers; this would be a NO-OP on the Local provider for example):
+
+    tl destroy
+
+# Interacting with Containers
+
+You can interact with containers via SSH:
+
+    tl container ssh -i <container ID>
+
+You can pass an optional alternate username and/or identity to use.  By default TestLab will attempt to SSH as the user defined in the `Labfile` for that container, otherwise the default user for the containers distro is used.
+
+    $ tl help container ssh
+    NAME
+        ssh - Open an SSH console to a container
+
+    SYNOPSIS
+        tl [global options] container ssh [command options]
+
+    COMMAND OPTIONS
+        -u, --user=username - Specify an SSH Username to use (default: none)
+        -k, --key=key       - Specify an SSH Identity Key to use (default: none)
+
+You can individually online, offline, create or destroy containers:
+
+    tl container down -i server-www-1
+    tl container up -i server-www-1
+    tl container setup -i server-www-1
+    tl container teardown -i server-www-1
+
+You can recycle a container, effectively destroying then creating it again, provisioning it back to a "pristine" condition.
+
+    tl container recycle -i server-www-1
+
+# Ephemeral Container Cloning
+
+As it stands attempting to iterate infrastructure while developing with Vagrant is a slow and painful process.  Enter LXC and it's ephemeral feature.  The idea here is you have a container that is provisioned to a "pristine" state acording to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook and re-run it against the container.  As we all know running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
+
+Here we are cloning the container for the first time.  It takes a bit longer than normal because TestLab is actually shutting down the container so it can be retained as the "pristine" copy of it, and starting up a ephemeral container in its place.  Subsequent calls to clone are very fast.
+
+    $ tl container clone -i server-www-1
+    [TL] TestLab v0.6.1 Loaded
+    [TL] container server-www-1 clone                            # Completed in 13.0116 seconds!
+    $ tl container clone -i server-www-1
+    [TL] TestLab v0.6.1 Loaded
+    [TL] container server-www-1 clone                            # Completed in 0.9169 seconds!
+    $ tl container clone -i server-www-1
+    [TL] TestLab v0.6.1 Loaded
+    [TL] container server-www-1 clone                            # Completed in 1.0794 seconds!
+    $ tl container clone -i server-www-1
+    [TL] TestLab v0.6.1 Loaded
+    [TL] container server-www-1 clone                            # Completed in 1.0281 seconds!
+
+We can also see the containers status reflects that it is a clone currently:
+
+    $ tl container status -i server-www-1
+    [TL] TestLab v0.6.1 Loaded
+    +----------------------------------------------+
+    |       NODE_ID: vagrant                       |
+    |            ID: server-www-1                  |
+    |         CLONE: true                          |
+    |          FQDN: server-www-1.default.zone     |
+    |         STATE: running                       |
+    |        DISTRO: ubuntu                        |
+    |       RELEASE: precise                       |
+    |    INTERFACES: labnet:eth0:10.10.0.21/16     |
+    |  PROVISIONERS: Resolv/AptCacherNG/Apt/Shell  |
+    +----------------------------------------------+
+
+We can easily revert it back to a full container if we want to make changes to it:
+
+    $ tl container up -i server-www-1
+
+We can even recycle it while it is in a cloned state:
+
+    $ tl container recycle -i server-www-1
+
+# Network Routes
+
+TestLab will add network routes for any networks defined in the `Labfile` with the route flag set to true.  This will allow you to directly interact with containers.  Here is an example of the routes added with the multi-network `Labfile`.
+
+    $ tl network route show -i labnet
+    [TL] TestLab v0.6.1 Loaded
+    TestLab routes:
+    10.10.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0
+    10.11.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0
+
+These routes can be manually manipulated as well:
+
+    $ tl help network route
+    NAME
+        route - Manage routes
+
+    SYNOPSIS
+        tl [global options] network route [command options]  add
+        tl [global options] network route [command options]  del
+        tl [global options] network route [command options]  show
+
+    COMMANDS
+        add  - Add routes to lab networks
+        del  - Delete routes to lab networks
+        show - Show routes to lab networks
+
+# Getting Help
+
+TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Therefore help is easy to get:
+
+    tl help
+    tl help node
+    tl help container
+    tl help network
+
 # REQUIREMENTS
 
 * Latest VirtualBox Package
