@@ -14,6 +14,7 @@ class TestLab
     autoload :OmniBus,     'testlab/provisioners/omnibus'
     autoload :OmniTruck,   'testlab/provisioners/omnitruck'
     autoload :Resolv,      'testlab/provisioners/resolv'
+    autoload :Raring,      'testlab/provisioners/raring'
     autoload :Shell,       'testlab/provisioners/shell'
 
     class << self
