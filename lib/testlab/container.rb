@@ -15,9 +15,9 @@ class TestLab
   #     release       "precise"
   #
   #     user "deployer" do
+  #       password "deployer"
   #       uid 2600
   #       gid 2600
-  #       password "deployer"
   #     end
   #
   #     interface do
@@ -34,9 +34,9 @@ class TestLab
   #     release       "precise"
   #
   #     user "deployer" do
+  #       password "deployer"
   #       uid 2600
   #       gid 2600
-  #       password "deployer"
   #     end
   #
   #     interface do
