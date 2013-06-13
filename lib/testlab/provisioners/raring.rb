@@ -24,7 +24,7 @@ class TestLab
       # @param [TestLab::Node] node The node which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def setup(node)
+      def node(node)
         @ui.logger.debug { "Ubuntu Raring Provisioner: Node #{node.id}" }
 
         bootstrap_template = File.join(TestLab::Provisioner.template_dir, "raring", "bootstrap.erb")

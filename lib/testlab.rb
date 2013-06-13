@@ -162,6 +162,46 @@ class TestLab
     !alive?
   end
 
+  # Test Lab Up
+  #
+  # Attempts to up our lab topology.  This calls the up method on all of
+  # our nodes.
+  #
+  # @return [Boolean] True if successful.
+  def up
+    @labfile.nodes.map do |node|
+      node.up
+      node.networks.map do |network|
+        network.up
+      end
+      node.containers.map do |container|
+        container.up
+      end
+    end
+
+    true
+  end
+
+  # Test Lab Down
+  #
+  # Attempts to down our lab topology.  This calls the down method on all of
+  # our nodes.
+  #
+  # @return [Boolean] True if successful.
+  def down
+    @labfile.nodes.map do |node|
+      node.containers.map do |container|
+        container.down
+      end
+      node.networks.map do |network|
+        network.down
+      end
+      node.down
+    end
+
+    true
+  end
+
   # Test Lab Setup
   #
   # Attempts to setup our lab topology.  This calls the setup method on all of
@@ -169,7 +209,15 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def setup
-    node_method_proxy(:setup)
+    @labfile.nodes.map do |node|
+      node.setup
+      node.networks.map do |network|
+        network.setup
+      end
+      node.containers.map do |container|
+        container.setup
+      end
+    end
 
     true
   end
@@ -181,7 +229,15 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def teardown
-    node_method_proxy(:teardown)
+    @labfile.nodes.map do |node|
+      node.containers.map do |container|
+        container.teardown
+      end
+      node.networks.map do |network|
+        network.teardown
+      end
+      node.teardown
+    end
 
     true
   end
