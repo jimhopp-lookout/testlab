@@ -10,6 +10,8 @@ What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Usin
 
 TestLab can be run directly on the command-line or can be interfaced with directly via code.  Unlike the trend with some popular open-source software recently, I want you to build off this API interface and hopefully create tools I would of never dreamed up.
 
+# Using TestLab Programmatically
+
 Accessing TestLab via code is meant to be fairly easy and straightforward.  To get an instance of TestLab you only need about four lines of code:
 
     log_file = File.join(Dir.pwd, "testlab.log")
@@ -19,9 +21,22 @@ Accessing TestLab via code is meant to be fairly easy and straightforward.  To g
 
 Calling `TestLab.new` without a `:labfile` option will, by default, attempt to read `Labfile` from the current directory.  This behaviour can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
 
+There are several easy accessors available to grab the first container and execure the command `uptime` on it via and SSH connection:
+
+    container = @testlab.containers.first
+    container.ssh.exec(%(uptime))
+
+We can also execute this command via `lxc-attach`:
+
+    container.lxc.attach(%(-- uptime))
+
+You can access all the nodes for example:
+
+    @testlab.nodes
+
 For more information see the TestLab Documentation, `testlab-repo`, command-line binary and it never hurts to look at the TestLab source itself.
 
-# Using TestLab
+# Using TestLab Interactively
 
 The TestLab command-line program `tl` follows in the style of git (using the GLI RubyGem).
 
