@@ -2,10 +2,10 @@ class TestLab
 
   class Provisioner
 
-    # Apt Provisioner Error Class
+    # APT Provisioner Error Class
     class AptError < ProvisionerError; end
 
-    # Apt Provisioner Class
+    # APT Provisioner Class
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class Apt
@@ -21,7 +21,7 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # Apt Provisioner Container Setup
+      # APT Provisioner Container Setup
       #
       # @param [TestLab::Container] container The container which we want to
       #   provision.
