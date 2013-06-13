@@ -169,12 +169,12 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def up
-    @labfile.nodes.map do |node|
+    @labfile.nodes.each do |node|
       node.up
-      node.networks.map do |network|
+      node.networks.each do |network|
         network.up
       end
-      node.containers.map do |container|
+      node.containers.each do |container|
         container.up
       end
     end
@@ -189,11 +189,11 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def down
-    @labfile.nodes.map do |node|
-      node.containers.map do |container|
+    @labfile.nodes.each do |node|
+      node.containers.reverse.each do |container|
         container.down
       end
-      node.networks.map do |network|
+      node.networks.reverse.each do |network|
         network.down
       end
       node.down
@@ -209,12 +209,12 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def setup
-    @labfile.nodes.map do |node|
+    @labfile.nodes.each do |node|
       node.setup
-      node.networks.map do |network|
+      node.networks.each do |network|
         network.setup
       end
-      node.containers.map do |container|
+      node.containers.each do |container|
         container.setup
       end
     end
@@ -229,11 +229,11 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def teardown
-    @labfile.nodes.map do |node|
-      node.containers.map do |container|
+    @labfile.nodes.each do |node|
+      node.containers.reverse.each do |container|
         container.teardown
       end
-      node.networks.map do |network|
+      node.networks.reverse.each do |network|
         network.teardown
       end
       node.teardown
