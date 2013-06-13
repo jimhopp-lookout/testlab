@@ -43,14 +43,6 @@ describe TestLab::Node do
       end
     end
 
-    describe "#bind_setup" do
-      it "should setup bind" do
-        subject.ssh.stub(:exec) { true }
-        subject.ssh.stub(:file).and_yield(StringIO.new)
-        subject.bind_setup
-      end
-    end
-
     describe "#status" do
       it "should return a hash of status information about the node" do
         subject.instance_variable_get(:@provider).stub(:state) { :not_created }
@@ -104,11 +96,9 @@ describe TestLab::Node do
 
     describe "setup" do
       it "should setup the node" do
+        subject.containers.each { |c| c.provisioners = Array.new }
         subject.ssh.stub(:bootstrap) { true }
         subject.stub(:route_setup) { true }
-        subject.stub(:build_resolv_conf) { true }
-        subject.stub(:bind_setup) { true }
-        subject.stub(:bind_reload) { true }
         subject.stub(:create) { true }
         subject.stub(:up) { true }
         subject.containers.each do |container|
@@ -123,6 +113,7 @@ describe TestLab::Node do
 
     describe "teardown" do
       it "should teardown the node" do
+        subject.containers.each { |c| c.provisioners = Array.new }
         subject.stub(:route_setup) { true }
         subject.stub(:down) { true }
         subject.stub(:destroy) { true }

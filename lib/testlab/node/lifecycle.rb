@@ -37,12 +37,9 @@ class TestLab
 
           node_setup
 
-          if self.components.include?('bind')
-            bind_setup
-          end
-
           self.containers.each do |container|
             container.provisioners.each do |provisioner|
+              @ui.logger.info { ">>>>> NODE PROVISIONER: #{provisioner} <<<<<" }
               p = provisioner.new(container.config, @ui)
               p.respond_to?(:node) and p.node(self)
             end
@@ -51,10 +48,6 @@ class TestLab
         end
 
         call_collections([self.networks, self.containers], :setup)
-
-        if self.components.include?('bind')
-          bind_reload
-        end
 
         true
       end

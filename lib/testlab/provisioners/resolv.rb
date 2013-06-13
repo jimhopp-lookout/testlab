@@ -15,7 +15,7 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:resolv] ||= Hash.new
-        @config[:resolv][:servers] ||= [TestLab::Network.ips, "8.8.8.8", "8.8.4.4" ].flatten.compact
+        @config[:resolv][:servers] ||= [TestLab::Network.ips, "8.8.8.8", "8.8.4.4" ].flatten.compact.uniq
         @config[:resolv][:search]  ||= TestLab::Container.domains.join(' ')
 
         @ui.logger.debug { "config(#{@config.inspect})" }
@@ -54,6 +54,7 @@ class TestLab
           file.puts(ZTK::Template.render(resolv_conf_template, @config))
         end
       end
+
     end
 
   end

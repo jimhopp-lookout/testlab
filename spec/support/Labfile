@@ -9,17 +9,15 @@ EOF
 
 REPO = File.dirname(__FILE__)
 
-config Hash[
+config ({
   :domain => "default.zone",
   :repo => REPO
-]
+})
 
 node :localhost do
 
-  components %w(resolv bind)
-
   provider    TestLab::Provider::Vagrant
-  config      Hash[
+  config      ({
     :vagrant => {
       :id       => "mytestlab-#{ENV['USER']}".downcase,
       :ip       => "192.168.255.1",
@@ -29,7 +27,7 @@ node :localhost do
       :memory   => 512,
       :file     => REPO
     }
-  ]
+  })
 
   network 'testnet' do
     address '192.168.255.254/16'
@@ -41,6 +39,13 @@ node :localhost do
   container "server-dual-nic" do
     distro        "ubuntu"
     release       "precise"
+
+    provisioners  [
+      TestLab::Provisioner::Bind,
+      TestLab::Provisioner::Resolv,
+      TestLab::Provisioner::AptCacherNG,
+      TestLab::Provisioner::Apt
+    ]
 
     interface do
       name       :eth0
@@ -61,6 +66,13 @@ node :localhost do
     distro        "ubuntu"
     release       "precise"
 
+    provisioners  [
+      TestLab::Provisioner::Bind,
+      TestLab::Provisioner::Resolv,
+      TestLab::Provisioner::AptCacherNG,
+      TestLab::Provisioner::Apt
+    ]
+
     interface do
       name       :eth0
       network_id 'testnet'
@@ -73,11 +85,18 @@ node :localhost do
     distro        "ubuntu"
     release       "precise"
 
-    provisioners  [TestLab::Provisioner::Shell]
-    config        Hash[
+    provisioners  [
+      TestLab::Provisioner::Bind,
+      TestLab::Provisioner::Resolv,
+      TestLab::Provisioner::AptCacherNG,
+      TestLab::Provisioner::Apt,
+      TestLab::Provisioner::Shell
+    ]
+
+    config        ({
       :shell => "/bin/bash",
       :script => shell_provision_script
-    ]
+    })
 
     interface do
       name       :eth0

@@ -11,7 +11,6 @@ class TestLab
 
     # Sub-Modules
     autoload :Actions,       'testlab/node/actions'
-    autoload :Bind,          'testlab/node/bind'
     autoload :ClassMethods,  'testlab/node/class_methods'
     autoload :Lifecycle,     'testlab/node/lifecycle'
     autoload :LXC,           'testlab/node/lxc'
@@ -20,7 +19,6 @@ class TestLab
     autoload :Status,        'testlab/node/status'
 
     include TestLab::Node::Actions
-    include TestLab::Node::Bind
     include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::MethodMissing
@@ -39,7 +37,6 @@ class TestLab
 
     attribute  :provider
     attribute  :config,      :default => Hash.new
-    attribute  :components,  :default => Array.new
 
 
     def initialize(*args)

@@ -1,12 +1,39 @@
 class TestLab
-  class Node
 
-    module Bind
-      require 'tempfile'
+  class Provisioner
+
+    # Bind Provisioner Error Class
+    class BindError < ProvisionerError; end
+
+    # Bind Provisioner Class
+    #
+    # @author Zachary Patten <zachary AT jovelabs DOT com>
+    class Bind
+
+      def initialize(config={}, ui=nil)
+        @config = (config || Hash.new)
+        @ui     = (ui     || TestLab.ui)
+
+        @config[:bind] ||= Hash.new
+
+        @ui.logger.debug { "config(#{@config.inspect})" }
+      end
+
+      # Bind Provisioner Node Setup
+      #
+      # @param [TestLab::Node] node The node which we want to provision.
+      # @return [Boolean] True if successful.
+      def node(node)
+        @ui.logger.debug { "BIND Provisioner: Node #{node.id}" }
+
+        bind_setup(node.ssh)
+
+        true
+      end
 
       # Builds the main bind configuration sections
       def build_bind_main_partial(file)
-        bind_conf_template = File.join(self.class.template_dir, "bind.erb")
+        bind_conf_template = File.join(TestLab::Provisioner.template_dir, "bind", "bind.erb")
 
         file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND Configuration", :char => '//'))
         file.puts(ZTK::Template.render(bind_conf_template, {}))
@@ -32,8 +59,8 @@ class TestLab
       end
 
       # Builds the bind configuration sections for our zones
-      def build_bind_zone_partial(file)
-        bind_zone_template = File.join(self.class.template_dir, 'bind-zone.erb')
+      def build_bind_zone_partial(ssh, file)
+        bind_zone_template = File.join(TestLab::Provisioner.template_dir, "bind", 'bind-zone.erb')
 
         bind_records = build_bind_records
         forward_records = bind_records[:forward]
@@ -47,7 +74,7 @@ class TestLab
           file.puts
           file.puts(ZTK::Template.render(bind_zone_template, context))
 
-          build_bind_db(network.arpa, reverse_records[network.id])
+          build_bind_db(ssh, network.arpa, reverse_records[network.id])
         end
 
         TestLab::Container.domains.each do |domain|
@@ -58,41 +85,41 @@ class TestLab
           file.puts
           file.puts(ZTK::Template.render(bind_zone_template, context))
 
-          build_bind_db(domain, forward_records[domain])
+          build_bind_db(ssh, domain, forward_records[domain])
         end
       end
 
-      def build_bind_db(zone, records)
-        bind_db_template = File.join(self.class.template_dir, 'bind-db.erb')
+      def build_bind_db(ssh, zone, records)
+        bind_db_template = File.join(TestLab::Provisioner.template_dir, "bind", 'bind-db.erb')
 
-        self.ssh.file(:target => "/etc/bind/db.#{zone}", :chown => "bind:bind") do |file|
+        ssh.file(:target => "/etc/bind/db.#{zone}", :chown => "bind:bind") do |file|
           file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND DB: #{zone}", :char => ';'))
           file.puts(ZTK::Template.render(bind_db_template, { :zone => zone, :records => records }))
         end
       end
 
       # Builds the BIND configuration
-      def build_bind_conf
-        self.ssh.file(:target => File.join("/etc/bind/named.conf"), :chown => "bind:bind") do |file|
+      def build_bind_conf(ssh)
+        ssh.file(:target => File.join("/etc/bind/named.conf"), :chown => "bind:bind") do |file|
           build_bind_main_partial(file)
-          build_bind_zone_partial(file)
+          build_bind_zone_partial(ssh, file)
         end
       end
 
-      def bind_install
-        self.ssh.exec(%(sudo apt-get -y install bind9))
-        self.ssh.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
+      def bind_install(ssh)
+        ssh.exec(%(sudo apt-get -y install bind9))
+        ssh.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
-      def bind_reload
-        self.ssh.exec(%(sudo chown -Rv bind:bind /etc/bind))
-        self.ssh.exec(%(sudo rndc reload))
+      def bind_reload(ssh)
+        ssh.exec(%(sudo chown -Rv bind:bind /etc/bind))
+        ssh.exec(%(sudo rndc reload))
       end
 
-      def bind_setup
-        bind_install
-        build_bind_conf
-        bind_reload
+      def bind_setup(ssh)
+        bind_install(ssh)
+        build_bind_conf(ssh)
+        bind_reload(ssh)
       end
 
     end
