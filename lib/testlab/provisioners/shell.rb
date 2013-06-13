@@ -32,17 +32,6 @@ class TestLab
         true
       end
 
-      # Shell Provisioner Container Teardown
-      #
-      # This is a NO-OP currently.
-      #
-      # @return [Boolean] True if successful.
-      def teardown(container)
-        # NOOP
-
-        true
-      end
-
     end
 
   end
