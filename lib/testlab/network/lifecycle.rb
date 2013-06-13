@@ -9,16 +9,26 @@ class TestLab
 
         self.create
         self.up
-        self.route and manage_route(:add)
+
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
+          self.route and manage_route(:add)
+        end
+
+        true
       end
 
       # Network Teardown
       def teardown
         @ui.logger.debug { "Network Teardown: #{self.id} " }
 
-        self.route and manage_route(:del)
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
+          self.route and manage_route(:del)
+        end
+
         self.down
         self.destroy
+
+        true
       end
 
       def manage_route(action)
