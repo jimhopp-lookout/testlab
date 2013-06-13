@@ -1,0 +1,9 @@
+<% if !@resolv[:domain].nil? -%>
+domain <%= @resolv[:domain] %>
+<% end -%>
+<% if !@resolv[:search].nil? -%>
+search <%= @resolv[:search] %>
+<% end -%>
+<% @resolv[:servers].each do |server| -%>
+nameserver <%= server %>
+<% end -%>

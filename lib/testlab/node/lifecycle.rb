@@ -37,10 +37,6 @@ class TestLab
 
           node_setup
 
-          if self.components.include?('resolv')
-            build_resolv_conf
-          end
-
           if self.components.include?('bind')
             bind_setup
           end

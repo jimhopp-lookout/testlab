@@ -27,7 +27,7 @@ class TestLab
       #   provision.
       # @return [Boolean] True if successful.
       def setup(container)
-        @ui.logger.debug { "Apt Provisioner: Container #{container.id}" }
+        @ui.logger.debug { "APT Provisioner: Container #{container.id}" }
 
         bootstrap_template = File.join(TestLab::Provisioner.template_dir, "apt", "bootstrap.erb")
         container.ssh.bootstrap(ZTK::Template.render(bootstrap_template, @config))
