@@ -187,6 +187,44 @@ EOF
     end
   end
 
+  # NODE CREATE
+  ##############
+  c.desc 'Create a node'
+  c.long_desc <<-EOF
+Create a node.  The node is created.
+EOF
+  c.command :create do |create|
+    create.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you screateplied!"
+
+        node.create
+      end
+    end
+  end
+
+  # NODE DESTROY
+  ############
+  c.desc 'Destroy a node'
+  c.long_desc <<-EOF
+Destroy a node.  The node is stopped and destroyed.
+EOF
+  c.command :destroy do |destroy|
+    destroy.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.destroy
+      end
+    end
+  end
+
   # NODE SETUP
   #############
   c.desc 'Setup a node'
@@ -529,6 +567,44 @@ EOF
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.down
+      end
+    end
+  end
+
+  # CONTAINER CREATE
+  ###################
+  c.desc 'Create a container'
+  c.long_desc <<-EOF
+Create a container.  The container is created.
+EOF
+  c.command :create do |create|
+    create.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you screateplied!"
+
+        container.create
+      end
+    end
+  end
+
+  # CONTAINER DESTROY
+  ####################
+  c.desc 'Destroy a container'
+  c.long_desc <<-EOF
+Destroy a container.  The container is stopped and destroyed.
+EOF
+  c.command :destroy do |destroy|
+    destroy.action do |global_options, options, args|
+      if options[:id].nil?
+        help_now!('id is required') if options[:id].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.destroy
       end
     end
   end
