@@ -36,13 +36,14 @@ class TestLab
         user_authkeys2 = File.join(user_home_dir, ".ssh", "authorized_keys2")
 
         authkeys = {
-          node_authkeys => user_authkeys,
-          node_authkeys => user_authkeys2
+          user_authkeys  => node_authkeys,
+          user_authkeys2 => node_authkeys
         }
 
-        authkeys.each do |source, destination|
+        authkeys.each do |destination, source|
+          @ui.logger.info { "SOURCE: #{source} >>> #{destination}" }
           self.container.node.ssh.exec(%(sudo mkdir -pv #{File.dirname(destination)}))
-          self.container.node.ssh.exec(%(sudo cp -v #{source} #{destination}))
+          self.container.node.ssh.exec(%(sudo grep "$(cat #{source})" #{destination} || sudo cat #{source} | sudo tee -a #{destination}))
           self.container.node.ssh.exec(%(sudo chmod -v 644 #{destination}))
         end
 
