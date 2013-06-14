@@ -18,10 +18,6 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
-          self.users.each do |user|
-            user.setup
-          end
-
           self.provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> SETUP CONTAINER PROVISIONER: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)

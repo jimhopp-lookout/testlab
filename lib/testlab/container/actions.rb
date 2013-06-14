@@ -60,6 +60,10 @@ class TestLab
 
           (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
 
+          self.users.each do |user|
+            user.setup
+          end
+
         end
 
         true
