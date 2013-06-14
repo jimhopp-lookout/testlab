@@ -169,15 +169,7 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def up
-    @labfile.nodes.each do |node|
-      node.up
-      node.networks.each do |network|
-        network.up
-      end
-      node.containers.each do |container|
-        container.up
-      end
-    end
+    method_proxy(:up)
 
     true
   end
@@ -189,15 +181,7 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def down
-    @labfile.nodes.each do |node|
-      node.containers.reverse.each do |container|
-        container.down
-      end
-      node.networks.reverse.each do |network|
-        network.down
-      end
-      node.down
-    end
+    reverse_method_proxy(:down)
 
     true
   end
@@ -209,15 +193,7 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def setup
-    @labfile.nodes.each do |node|
-      node.setup
-      node.networks.each do |network|
-        network.setup
-      end
-      node.containers.each do |container|
-        container.setup
-      end
-    end
+    method_proxy(:setup)
 
     true
   end
@@ -229,15 +205,7 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def teardown
-    @labfile.nodes.each do |node|
-      node.containers.reverse.each do |container|
-        container.teardown
-      end
-      node.networks.reverse.each do |network|
-        network.teardown
-      end
-      node.teardown
-    end
+    reverse_method_proxy(:teardown)
 
     true
   end
@@ -249,11 +217,47 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def node_method_proxy(method_name, *method_args)
-    nodes.map do |node|
+    nodes.each do |node|
       node.send(method_name.to_sym, *method_args)
     end
 
     true
+  end
+
+  # Method Proxy
+  #
+  # Iterates all of the lab objects sending the supplied method name and
+  # arguments to each object.
+  #
+  # @return [Boolean] True if successful.
+  def method_proxy(method_name, *method_args)
+    nodes.each do |node|
+      node.send(method_name, *method_args)
+      node.networks.each do |network|
+        network.send(method_name, *method_args)
+      end
+      node.containers.each do |container|
+        container.send(method_name, *method_args)
+      end
+    end
+  end
+
+  # Reverse Method Proxy
+  #
+  # Iterates all of the lab objects sending the supplied method name and
+  # arguments to each object.
+  #
+  # @return [Boolean] True if successful.
+  def reverse_method_proxy(method_name, *method_args)
+    nodes.reverse.each do |node|
+      node.containers.reverse.each do |container|
+        container.send(method_name, *method_args)
+      end
+      node.networks.reverse.each do |network|
+        network.send(method_name, *method_args)
+      end
+      node.send(method_name, *method_args)
+    end
   end
 
   # TestLab Configuration Directory
