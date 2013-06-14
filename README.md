@@ -81,9 +81,14 @@ You can also destroy it (only works for VM backed providers; this would be a NO-
 
 # Interacting with Containers
 
+Most commands dealing will containers will take this argument:
+
+    COMMAND OPTIONS
+        -n, --name=container - Container ID or Name (default: none)
+
 You can interact with containers via SSH:
 
-    tl container ssh -i <container ID>
+    tl container ssh -n <container ID>
 
 You can pass an optional alternate username and/or identity to use.  By default TestLab will attempt to SSH as the user defined in the `Labfile` for that container, otherwise the default user for the containers distro is used.
 
@@ -96,18 +101,18 @@ You can pass an optional alternate username and/or identity to use.  By default 
 
     COMMAND OPTIONS
         -u, --user=username - Specify an SSH Username to use (default: none)
-        -k, --key=key       - Specify an SSH Identity Key to use (default: none)
+        -i, --identity=key  - Specify an SSH Identity Key to use (default: none)
 
 You can individually online, offline, create or destroy containers:
 
-    tl container down -i server-www-1
-    tl container up -i server-www-1
-    tl container setup -i server-www-1
-    tl container teardown -i server-www-1
+    tl container down -n server-www-1
+    tl container up -n server-www-1
+    tl container setup -n server-www-1
+    tl container teardown -n server-www-1
 
 You can recycle a container, effectively destroying then creating it again, provisioning it back to a "pristine" condition.
 
-    tl container recycle -i server-www-1
+    tl container recycle -n server-www-1
 
 # Ephemeral Container Cloning
 
@@ -115,22 +120,22 @@ As it stands attempting to iterate infrastructure while developing with Vagrant 
 
 Here we are cloning the container for the first time.  It takes a bit longer than normal because TestLab is actually shutting down the container so it can be retained as the "pristine" copy of it, and starting up a ephemeral container in its place.  Subsequent calls to clone are very fast.
 
-    $ tl container clone -i server-www-1
+    $ tl container clone -n server-www-1
     [TL] TestLab v0.6.1 Loaded
     [TL] container server-www-1 clone                            # Completed in 13.0116 seconds!
-    $ tl container clone -i server-www-1
+    $ tl container clone -n server-www-1
     [TL] TestLab v0.6.1 Loaded
     [TL] container server-www-1 clone                            # Completed in 0.9169 seconds!
-    $ tl container clone -i server-www-1
+    $ tl container clone -n server-www-1
     [TL] TestLab v0.6.1 Loaded
     [TL] container server-www-1 clone                            # Completed in 1.0794 seconds!
-    $ tl container clone -i server-www-1
+    $ tl container clone -n server-www-1
     [TL] TestLab v0.6.1 Loaded
     [TL] container server-www-1 clone                            # Completed in 1.0281 seconds!
 
 We can also see the containers status reflects that it is a clone currently:
 
-    $ tl container status -i server-www-1
+    $ tl container status -n server-www-1
     [TL] TestLab v0.6.1 Loaded
     +----------------------------------------------+
     |       NODE_ID: vagrant                       |
@@ -146,17 +151,17 @@ We can also see the containers status reflects that it is a clone currently:
 
 We can easily revert it back to a full container if we want to make changes to it:
 
-    $ tl container up -i server-www-1
+    $ tl container up -n server-www-1
 
 We can even recycle it while it is in a cloned state:
 
-    $ tl container recycle -i server-www-1
+    $ tl container recycle -n server-www-1
 
 # Network Routes
 
 TestLab will add network routes for any networks defined in the `Labfile` with the route flag set to true.  This will allow you to directly interact with containers.  Here is an example of the routes added with the multi-network `Labfile`.
 
-    $ tl network route show -i labnet
+    $ tl network route show -n labnet
     [TL] TestLab v0.6.1 Loaded
     TestLab routes:
     10.10.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0

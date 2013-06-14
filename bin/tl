@@ -110,16 +110,16 @@ command :node do |c|
 
   c.desc 'Node ID or Name'
   c.arg_name 'node'
-  c.flag [:i, :id]
+  c.flag [:n, :name]
 
   # NODE SSH
   ###########
   c.desc 'Open an SSH console to a node'
   c.command :ssh do |ssh|
     ssh.action do |global_options,options,args|
-      help_now!('id is required') if options[:id].nil?
+      help_now!('name is required') if options[:name].nil?
 
-      node = @testlab.nodes.select{ |n| n.id.to_sym == options[:id].to_sym }.first
+      node = @testlab.nodes.select{ |n| n.id.to_sym == options[:name].to_sym }.first
       node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
       node.ssh.console
@@ -132,14 +132,14 @@ command :node do |c|
   c.long_desc 'Displays the status of all nodes or a single node if supplied via the ID parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
-      if options[:id].nil?
+      if options[:name].nil?
         # No ID supplied; show everything
         ZTK::Report.new(:ui => @testlab.ui).spreadsheet(@testlab.nodes, TestLab::Node::STATUS_KEYS) do |node|
           OpenStruct.new(node.status)
         end
       else
         # ID supplied; show just that item
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         ZTK::Report.new(:ui => @testlab.ui).list(node, TestLab::Node::STATUS_KEYS) do |node|
@@ -157,10 +157,10 @@ Up a node.  The node is started and brought online.
 EOF
   c.command :up do |up|
     up.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.up
@@ -176,10 +176,10 @@ Down a node.  The node is stopped taking it offline.
 EOF
   c.command :down do |down|
     down.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.down
@@ -195,10 +195,10 @@ Create a node.  The node is created.
 EOF
   c.command :create do |create|
     create.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you screateplied!"
 
         node.create
@@ -214,10 +214,10 @@ Destroy a node.  The node is stopped and destroyed.
 EOF
   c.command :destroy do |destroy|
     destroy.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.destroy
@@ -233,10 +233,10 @@ Setup a node.  The node is created, started and provisioned.
 EOF
   c.command :setup do |setup|
     setup.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.setup
@@ -252,10 +252,10 @@ Teardown a node.  The node is offlined and destroyed.
 EOF
   c.command :teardown do |teardown|
     teardown.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.teardown
@@ -273,7 +273,7 @@ command :network do |c|
 
   c.desc 'Network ID or Name'
   c.arg_name 'network'
-  c.flag [:i, :id]
+  c.flag [:n, :name]
 
 
   # ROUTES
@@ -286,9 +286,9 @@ command :network do |c|
     route.desc 'Add routes to lab networks'
     route.command :add do |add|
       add.action do |global_options,options,args|
-        help_now!('id is required') if options[:id].nil?
+        help_now!('name is required') if options[:name].nil?
 
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.manage_route(:add)
@@ -302,9 +302,9 @@ command :network do |c|
     route.desc 'Delete routes to lab networks'
     route.command :del do |del|
       del.action do |global_options,options,args|
-        help_now!('id is required') if options[:id].nil?
+        help_now!('name is required') if options[:name].nil?
 
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.manage_route(:del)
@@ -318,9 +318,9 @@ command :network do |c|
     route.desc 'Show routes to lab networks'
     route.command :show do |show|
       show.action do |global_options,options,args|
-        help_now!('id is required') if options[:id].nil?
+        help_now!('name is required') if options[:name].nil?
 
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         @testlab.ui.stdout.puts("TestLab routes:".green.bold)
@@ -340,7 +340,7 @@ command :network do |c|
   c.long_desc 'Displays the status of all networks or a single network if supplied via the ID parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
-      if options[:id].nil?
+      if options[:name].nil?
         # No ID supplied; show everything
         networks = @testlab.networks.delete_if{|n| n.node.dead? }
         if networks.count == 0
@@ -352,7 +352,7 @@ command :network do |c|
         end
       else
         # ID supplied; show just that item
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         ZTK::Report.new(:ui => @testlab.ui).list(network, TestLab::Network::STATUS_KEYS) do |network|
@@ -370,10 +370,10 @@ Up a network.  The network is started and brought online.
 EOF
   c.command :up do |up|
     up.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.up
@@ -389,10 +389,10 @@ Down a network.  The network is stopped taking it offline.
 EOF
   c.command :down do |down|
     down.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.down
@@ -408,10 +408,10 @@ Setup a network.  The network is created, started and provisioned.
 EOF
   c.command :setup do |setup|
     setup.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.setup
@@ -427,10 +427,10 @@ Teardown a network.  The network is offlined and destroyed.
 EOF
   c.command :teardown do |teardown|
     teardown.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.teardown
@@ -448,7 +448,7 @@ command :container do |c|
 
   c.desc 'Container ID or Name'
   c.arg_name 'container'
-  c.flag [:i, :id]
+  c.flag [:n, :name]
 
   # CONTAINER SSH
   ################
@@ -461,17 +461,17 @@ command :container do |c|
 
     ssh.desc 'Specify an SSH Identity Key to use'
     ssh.arg_name 'key'
-    ssh.flag [:k, :key]
+    ssh.flag [:i, :identity]
 
     ssh.action do |global_options, options, args|
-      help_now!('id is required') if options[:id].nil?
+      help_now!('name is required') if options[:name].nil?
 
-      container = @testlab.containers.select{ |n| n.id.to_sym == options[:id].to_sym }.first
+      container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
       container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
       ssh_options = Hash.new
       ssh_options[:user] = options[:user]
-      ssh_options[:keys] = options[:key]
+      ssh_options[:keys] = options[:identity]
 
       container.ssh(ssh_options).console
     end
@@ -485,7 +485,7 @@ Displays the status of all containers or a single container if supplied via the 
 EOF
   c.command :status do |status|
     status.action do |global_options, options, args|
-      if options[:id].nil?
+      if options[:name].nil?
         # No ID supplied; show everything
         containers = @testlab.containers.delete_if{ |c| c.node.dead? }
         if containers.count == 0
@@ -499,7 +499,7 @@ EOF
         end
       else
         # ID supplied; show just that item
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         ZTK::Report.new(:ui => @testlab.ui).list(container, TestLab::Container::STATUS_KEYS) do |container|
@@ -521,10 +521,10 @@ Down -> Destroy -> Create -> Up
 EOF
   c.command :recycle do |recycle|
     recycle.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.teardown
@@ -541,10 +541,10 @@ Up a container.  The container is started and brought online.
 EOF
   c.command :up do |up|
     up.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.up
@@ -560,10 +560,10 @@ Down a container.  The container is stopped taking it offline.
 EOF
   c.command :down do |down|
     down.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.down
@@ -579,10 +579,10 @@ Create a container.  The container is created.
 EOF
   c.command :create do |create|
     create.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you screateplied!"
 
         container.create
@@ -598,10 +598,10 @@ Destroy a container.  The container is stopped and destroyed.
 EOF
   c.command :destroy do |destroy|
     destroy.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.destroy
@@ -617,10 +617,10 @@ Setup a container.  The container is created, started and provisioned.
 EOF
   c.command :setup do |setup|
     setup.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.setup
@@ -636,10 +636,10 @@ Teardown a container.  The container is offlined and destroyed.
 EOF
   c.command :teardown do |teardown|
     teardown.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.teardown
@@ -655,10 +655,10 @@ Clone a container.  The container is offlined and an ephemeral copy of it is sta
 EOF
   c.command :clone do |clone|
     clone.action do |global_options, options, args|
-      if options[:id].nil?
-        help_now!('id is required') if options[:id].nil?
+      if options[:name].nil?
+        help_now!('name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:id].to_sym }.first
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.clone
