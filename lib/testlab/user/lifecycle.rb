@@ -12,10 +12,6 @@ class TestLab
         node_home_dir = ((self.container.node.user == "root") ? %(/root) : %(/home/#{self.container.node.user}))
         node_authkeys = File.join(node_home_dir, ".ssh", "authorized_keys")
 
-        user_home_dir = File.join(self.container.lxc.fs_root, ((self.id == "root") ? %(/root) : %(/home/#{self.id})))
-        user_authkeys = File.join(user_home_dir, ".ssh", "authorized_keys")
-        user_authkeys2 = File.join(user_home_dir, ".ssh", "authorized_keys2")
-
         # ensure the container user exists
         container_passwd_file = File.join(self.container.lxc.fs_root, "etc", "passwd")
         if self.container.node.ssh.exec(%(sudo grep "#{self.id}" #{container_passwd_file}), :ignore_exit_status => true).exit_code != 0
@@ -35,6 +31,10 @@ class TestLab
         end
 
         # ensure the user user gets our node user key
+        user_home_dir = File.join(self.container.lxc.fs_root, ((self.id == "root") ? %(/root) : %(/home/#{self.id})))
+        user_authkeys = File.join(user_home_dir, ".ssh", "authorized_keys")
+        user_authkeys2 = File.join(user_home_dir, ".ssh", "authorized_keys2")
+
         authkeys = {
           node_authkeys => user_authkeys,
           node_authkeys => user_authkeys2
