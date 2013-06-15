@@ -1,11 +1,16 @@
 set -x
+set -e
+
+[[ -f /.testlab-apt-bootstrap ]] && exit 0
 
 export DEBIAN_FRONTEND="noninteractive"
 
-apt-get -y --force-yes update
+apt-get -y update
 <% if !@apt[:install].nil? -%>
 apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
 <% end -%>
 <% if !@apt[:remove].nil? -%>
 apt-get -y remove <%= @apt[:remove].flatten.compact.join(' ') %>
 <% end -%>
+
+touch /.testlab-apt-bootstrap
