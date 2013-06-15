@@ -13,8 +13,9 @@ class TestLab
     autoload :ChefGem,     'testlab/provisioners/chef_gem'
     autoload :OmniBus,     'testlab/provisioners/omnibus'
     autoload :OmniTruck,   'testlab/provisioners/omnitruck'
-    autoload :Resolv,      'testlab/provisioners/resolv'
     autoload :Raring,      'testlab/provisioners/raring'
+    autoload :Resolv,      'testlab/provisioners/resolv'
+    autoload :Route,       'testlab/provisioners/route'
     autoload :Shell,       'testlab/provisioners/shell'
 
     class << self

@@ -34,7 +34,6 @@ class TestLab
 
     attribute   :address
     attribute   :bridge
-    attribute   :route,         :default => false
 
 
     def initialize(*args)
