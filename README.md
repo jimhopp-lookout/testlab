@@ -6,35 +6,11 @@
 
 # TestLab
 
+A toolkit for building virtual computer labs.
+
 What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then setup and teardown this virtual infrastructure as you have dictated in the `Labfile`.
 
 TestLab can be run directly on the command-line or can be interfaced with directly via code.  Unlike the trend with some popular open-source software recently, I want you to build off this API interface and hopefully create tools I would of never dreamed up.
-
-# Using TestLab Programmatically
-
-Accessing TestLab via code is meant to be fairly easy and straightforward.  To get an instance of TestLab you only need about four lines of code:
-
-    log_file = File.join(Dir.pwd, "testlab.log")
-    @logger = ZTK::Logger.new(log_file)
-    @ui = ZTK::UI.new(:logger => @logger)
-    @testlab = TestLab.new(:ui => @ui)
-
-Calling `TestLab.new` without a `:labfile` option will, by default, attempt to read `Labfile` from the current directory.  This behaviour can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
-
-There are several easy accessors available to grab the first container and execure the command `uptime` on it via and SSH connection:
-
-    container = @testlab.containers.first
-    container.ssh.exec(%(uptime))
-
-We can also execute this command via `lxc-attach`:
-
-    container.lxc.attach(%(-- uptime))
-
-You can access all the nodes for example:
-
-    @testlab.nodes
-
-For more information see the TestLab Documentation, `testlab-repo`, command-line binary and it never hurts to look at the TestLab source itself.
 
 # Using TestLab Interactively
 
@@ -80,7 +56,7 @@ You can also destroy it (only works for VM backed providers; this would be a NO-
 
     tl destroy
 
-# Interacting with Containers
+## Interacting with Containers
 
 Most commands dealing will containers will take this argument:
 
@@ -115,7 +91,7 @@ You can recycle a container, effectively destroying then creating it again, prov
 
     tl container recycle -n server-www-1
 
-# Ephemeral Container Cloning
+## Ephemeral Container Cloning
 
 As it stands attempting to iterate infrastructure while developing with Vagrant is a slow and painful process.  Enter LXC and it's ephemeral feature.  The idea here is you have a container that is provisioned to a "pristine" state acording to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook and re-run it against the container.  As we all know running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
 
@@ -158,7 +134,7 @@ We can even recycle it while it is in a cloned state:
 
     $ tl container recycle -n server-www-1
 
-# Network Routes
+## Network Routes
 
 TestLab will add network routes for any networks defined in the `Labfile` with the route flag set to true.  This will allow you to directly interact with containers.  Here is an example of the routes added with the multi-network `Labfile`.
 
@@ -184,7 +160,7 @@ These routes can be manually manipulated as well:
         del  - Delete routes to lab networks
         show - Show routes to lab networks
 
-# Getting Help
+## Getting Help
 
 TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Therefore help is easy to get:
 
@@ -192,6 +168,32 @@ TestLab uses the GLI RubyGem, which gives us a command line pattern similar to t
     tl help node
     tl help container
     tl help network
+
+# Using TestLab Programmatically
+
+Accessing TestLab via code is meant to be fairly easy and straightforward.  To get an instance of TestLab you only need about four lines of code:
+
+    log_file = File.join(Dir.pwd, "testlab.log")
+    @logger = ZTK::Logger.new(log_file)
+    @ui = ZTK::UI.new(:logger => @logger)
+    @testlab = TestLab.new(:ui => @ui)
+
+Calling `TestLab.new` without a `:labfile` option will, by default, attempt to read `Labfile` from the current directory.  This behaviour can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
+
+There are several easy accessors available to grab the first container and execure the command `uptime` on it via and SSH connection:
+
+    container = @testlab.containers.first
+    container.ssh.exec(%(uptime))
+
+We can also execute this command via `lxc-attach`:
+
+    container.lxc.attach(%(-- uptime))
+
+You can access all the nodes for example:
+
+    @testlab.nodes
+
+For more information see the TestLab Documentation, `testlab-repo`, command-line binary and it never hurts to look at the TestLab source itself.
 
 # REQUIREMENTS
 

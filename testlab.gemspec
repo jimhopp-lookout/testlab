@@ -26,8 +26,8 @@ Gem::Specification.new do |spec|
   spec.version       = TestLab::VERSION
   spec.authors       = ["Zachary Patten"]
   spec.email         = ["zachary AT jovelabs DOT com"]
-  spec.description   = %q{A framework for building lightweight virtual infrastructure using LXC}
-  spec.summary       = %q{A framework for building lightweight virtual infrastructure using LXC}
+  spec.description   = %q{A toolkit for building virtual computer labs}
+  spec.summary       = %q{A toolkit for building virtual computer labs}
   spec.homepage      = "https://github.com/zpatten/testlab"
   spec.license       = "Apache 2.0"
 

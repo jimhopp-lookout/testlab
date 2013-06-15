@@ -6,7 +6,7 @@ export DEBIAN_FRONTEND="noninteractive"
 if [ ! -f /.testlab-raring-bootstrap ]; then
   # Update APT and ensure our required packages are installed
   apt-get -y update
-  apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp
+  apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp pbzip2
 
   touch /.testlab-raring-bootstrap
 fi

@@ -15,10 +15,7 @@ class TestLab
         (self.lxc.state != :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
-          self.domain  ||= self.node.labfile.config[:domain]
-          self.arch    ||= detect_arch
-
-          build_lxc_config(self.lxc.config)
+          configure
 
           self.lxc.create(*create_args)
         end
@@ -55,6 +52,7 @@ class TestLab
         (self.lxc.state == :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
+          configure
 
           # ensure our container is in "static" mode
           self.to_static
@@ -115,6 +113,16 @@ class TestLab
 
           self.lxc_clone.start_ephemeral(ephemeral_arguments)
         end
+
+        true
+      end
+
+      # Configure the container
+      def configure
+        self.domain  ||= self.node.labfile.config[:domain]
+        self.arch    ||= detect_arch
+
+        build_lxc_config(self.lxc.config)
 
         true
       end
