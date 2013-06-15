@@ -156,6 +156,8 @@ describe TestLab::Container do
 
     describe "#destroy" do
       it "should destroy the container" do
+        subject.lxc.stub(:exists?) { true }
+        subject.lxc.stub(:state) { :stopped }
         subject.lxc.stub(:destroy) { true }
         subject.lxc_clone.stub(:destroy) { true }
         subject.destroy
@@ -164,6 +166,7 @@ describe TestLab::Container do
 
     describe "#up" do
       it "should up the container" do
+        subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:start) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :running }
@@ -177,6 +180,7 @@ describe TestLab::Container do
 
     describe "#down" do
       it "should down the container" do
+        subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:stop) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :stopped }
@@ -186,9 +190,9 @@ describe TestLab::Container do
 
     describe "#setup" do
       context "with no provisioner" do
-        it "should create and online the container" do
-          subject.stub(:create) { true }
-          subject.stub(:up) { true }
+        it "should setup the container" do
+          subject.lxc.stub(:exists?) { true }
+          subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
 
           subject.setup
@@ -196,10 +200,11 @@ describe TestLab::Container do
       end
 
       context "with the shell provisioner" do
-        it "should create and online the container" do
+        it "should setup the container" do
           subject = TestLab::Container.first('server-shell')
-          subject.stub(:create) { true }
-          subject.stub(:up) { true }
+
+          subject.lxc.stub(:exists?) { true }
+          subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
 
           subject.setup
@@ -209,9 +214,9 @@ describe TestLab::Container do
 
     describe "#teardown" do
       context "with no provisioner" do
-        it "should create and online the container" do
-          subject.stub(:down) { true }
-          subject.stub(:destroy) { true }
+        it "should teardown the container" do
+          subject.lxc.stub(:exists?) { true }
+          subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
 
           subject.teardown
@@ -219,10 +224,11 @@ describe TestLab::Container do
       end
 
       context "with the shell provisioner" do
-        it "should create and online the container" do
+        it "should teardown the container" do
           subject = TestLab::Container.first('server-shell')
-          subject.stub(:down) { true }
-          subject.stub(:destroy) { true }
+
+          subject.lxc.stub(:exists?) { true }
+          subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
 
           subject.teardown
