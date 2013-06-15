@@ -3,12 +3,16 @@ set -e
 
 export DEBIAN_FRONTEND="noninteractive"
 
-# Update APT and ensure our required packages are installed
-apt-get -y update
-apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp
+if [ ! -f /.testlab-raring-bootstrap ]; then
+  # Update APT and ensure our required packages are installed
+  apt-get -y update
+  apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp
+
+  touch /.testlab-raring-bootstrap
+fi
 
 # Ensure the default lxc networking services are off
-service lxc-net stop
+service lxc-net stop || (service lxc-net start ; service lxc-net stop)
 
 # Ensure NTP services are enabled and running
 service ntp restart || service ntp start

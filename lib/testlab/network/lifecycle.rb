@@ -8,7 +8,15 @@ class TestLab
         @ui.logger.debug { "Network Setup: #{self.id} " }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
+
           self.route and manage_route(:add)
+
+          self.provisioners.each do |provisioner|
+            @ui.logger.info { ">>>>> NETWORK PROVISIONER SETUP: #{provisioner} <<<<<" }
+            p = provisioner.new(self.config, @ui)
+            p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
+          end
+
         end
 
         true
@@ -19,6 +27,13 @@ class TestLab
         @ui.logger.debug { "Network Teardown: #{self.id} " }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
+
+          self.provisioners.each do |provisioner|
+            @ui.logger.info { ">>>>> NETWORK PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
+            p = provisioner.new(self.config, @ui)
+            p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
+          end
+
           self.route and manage_route(:del)
         end
 

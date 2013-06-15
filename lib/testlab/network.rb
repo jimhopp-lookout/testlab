@@ -26,14 +26,15 @@ class TestLab
     include TestLab::Utility::Misc
 
     # Associations and Attributes
-    belongs_to  :node,        :class_name => 'TestLab::Node'
-    has_many    :interfaces,  :class_name => 'TestLab::Interface'
+    belongs_to  :node,          :class_name => 'TestLab::Node'
+    has_many    :interfaces,    :class_name => 'TestLab::Interface'
+
+    attribute   :provisioners,  :default => Array.new
+    attribute   :config,        :default => Hash.new
 
     attribute   :address
     attribute   :bridge
-    attribute   :route,       :default => false
-
-    attribute   :config
+    attribute   :route,         :default => false
 
 
     def initialize(*args)
