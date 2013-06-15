@@ -10,10 +10,12 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   module Utility
-    autoload :CIDR, 'testlab/utility/cidr'
-    autoload :Misc, 'testlab/utility/misc'
+    autoload :CIDR,   'testlab/utility/cidr'
+    autoload :Logger, 'testlab/utility/logger'
+    autoload :Misc,   'testlab/utility/misc'
 
     extend TestLab::Utility::CIDR
+    extend TestLab::Utility::Logger
     extend TestLab::Utility::Misc
 
   end
