@@ -34,6 +34,10 @@ default_command :help
 
 commands_from File.join(File.dirname(__FILE__), 'commands')
 
+desc 'Show verbose output'
+default_value false
+switch [:v, :verbose]
+
 pre do |global,command,options,args|
   # Pre logic here
   # Return true to proceed; false to abort and not call the
@@ -43,6 +47,13 @@ pre do |global,command,options,args|
 
   log_file = File.join(Dir.pwd, "testlab.log")
   @logger = ZTK::Logger.new(log_file)
+
+  TestLab::Utility.log_header.each { |line| @logger.info { line } }
+
+  @logger.debug { "global == #{global.inspect}" }
+  @logger.debug { "options == #{options.inspect}" }
+  @logger.debug { "args == #{args.inspect}" }
+
   @ui = ZTK::UI.new(:logger => @logger)
   @testlab = TestLab.new(:ui => @ui)
 
