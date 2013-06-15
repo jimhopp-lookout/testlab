@@ -86,6 +86,15 @@ command :teardown do |teardown|
   end
 end
 
+# LAB BUILD
+############
+desc 'Build the test lab infrastructure'
+command :build do |build|
+  build.action do |global_options,options,args|
+    @testlab.build
+  end
+end
+
 # LAB STATUS
 #############
 desc 'Display information on the status of the test lab'
@@ -517,7 +526,7 @@ Recycles a container.  The container is taken through a series of state changes 
 
 The containers is cycled in this order:
 
-Down -> Destroy -> Create -> Up
+Teardown -> Down -> Destroy -> Create -> Up -> Setup
 EOF
   c.command :recycle do |recycle|
     recycle.action do |global_options, options, args|
@@ -528,6 +537,11 @@ EOF
         container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
         container.teardown
+        container.down
+        container.destroy
+
+        container.create
+        container.up
         container.setup
       end
     end

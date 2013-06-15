@@ -210,6 +210,34 @@ class TestLab
     true
   end
 
+  # Test Lab Build
+  #
+  # Attempts to build our lab topology.  This calls various methods on
+  # all of our nodes, networks and containers.
+  #
+  # @return [Boolean] True if successful.
+  def build
+    nodes.each do |node|
+      node.create
+      node.up
+      node.setup
+
+      node.networks.each do |network|
+        network.create
+        network.up
+        network.setup
+      end
+
+      node.containers.each do |container|
+        container.create
+        container.up
+        container.setup
+      end
+    end
+
+    true
+  end
+
   # Node Method Proxy
   #
   # Iterates all of the lab nodes, sending the supplied method name and arguments

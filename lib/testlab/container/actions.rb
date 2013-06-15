@@ -34,6 +34,8 @@ class TestLab
       def destroy
         @ui.logger.debug { "Container Destroy: #{self.id} " }
 
+        (self.lxc.state == :not_created) and return false
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           self.lxc.destroy(%(-f))
           self.lxc_clone.destroy(%(-f))
@@ -79,7 +81,7 @@ class TestLab
       def down
         @ui.logger.debug { "Container Down: #{self.id} " }
 
-        (self.lxc.state == :not_created) and return false
+        (self.lxc.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           self.lxc.stop

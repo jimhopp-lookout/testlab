@@ -26,7 +26,7 @@ class TestLab
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def setup(container)
+      def on_container_setup(container)
         # NOOP
 
         true
@@ -37,7 +37,7 @@ class TestLab
       # This is a NO-OP currently.
       #
       # @return [Boolean] True if successful.
-      def teardown(container)
+      def on_container_teardown(container)
         # NOOP
 
         true

@@ -23,7 +23,7 @@ class TestLab
       #
       # @param [TestLab::Node] node The node which we want to provision.
       # @return [Boolean] True if successful.
-      def node(node)
+      def on_node_setup(node)
         @ui.logger.debug { "BIND Provisioner: Node #{node.id}" }
 
         bind_setup(node.ssh)

@@ -25,7 +25,7 @@ class TestLab
       #
       # @param [TestLab::Node] node The node which we want to provision.
       # @return [Boolean] True if successful.
-      def node(node)
+      def on_node_setup(node)
         @ui.logger.debug { "RESOLV Provisioner: Node #{node.id}" }
 
         render_resolv_conf(node)
@@ -38,7 +38,7 @@ class TestLab
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def setup(container)
+      def on_container_setup(container)
         @ui.logger.debug { "RESOLV Provisioner: Container #{container.id}" }
 
         render_resolv_conf(container)

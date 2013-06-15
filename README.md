@@ -48,7 +48,7 @@ The TestLab command-line program `tl` follows in the style of git (using the GLI
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        0.6.1
+        0.6.5
 
     GLOBAL OPTIONS
         --version -
@@ -62,6 +62,7 @@ The TestLab command-line program `tl` follows in the style of git (using the GLI
         down      - Offline the test lab
         setup     - Setup the test lab infrastructure
         teardown  - Teardown the test lab infrastructure
+        build     - Build the test lab infrastructure
         status    - Display information on the status of the test lab
         node      - Manage nodes
         network   - Manage networks
@@ -69,7 +70,7 @@ The TestLab command-line program `tl` follows in the style of git (using the GLI
 
 You stand up your lab with the following command:
 
-    tl setup
+    tl build
 
 You can down the entire lab:
 

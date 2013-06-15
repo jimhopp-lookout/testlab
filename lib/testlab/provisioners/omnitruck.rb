@@ -30,7 +30,7 @@ class TestLab
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def setup(container)
+      def on_container_setup(container)
         omnibus_template = File.join(TestLab::Provisioner.template_dir, 'chef', 'omnitruck.erb')
         config = {}.merge!({
           :server_name => container.fqdn,
@@ -53,7 +53,7 @@ class TestLab
       # This is a NO-OP currently.
       #
       # @return [Boolean] True if successful.
-      def teardown(container)
+      def on_container_teardown(container)
         # NOOP
 
         true

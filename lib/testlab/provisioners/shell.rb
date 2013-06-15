@@ -24,7 +24,7 @@ class TestLab
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def setup(container)
+      def on_container_setup(container)
         if !@config[:script].nil?
           container.bootstrap(@config[:script])
         end

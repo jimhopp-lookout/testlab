@@ -13,15 +13,12 @@ class TestLab
       def setup
         @ui.logger.debug { "Container Setup: #{self.id} " }
 
-        self.create
-        self.up
-
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> SETUP CONTAINER PROVISIONER: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> CONTAINER PROVISIONER SETUP: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:setup) and p.setup(self)
+            p.respond_to?(:on_container_setup) and p.on_container_setup(self)
           end
 
         end
@@ -39,18 +36,17 @@ class TestLab
       def teardown
         @ui.logger.debug { "Container Teardown: #{self.id} " }
 
+        (self.lxc.state == :not_created) and return false
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
           self.provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> TEARDOWN CONTAINER PROVISIONER: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> CONTAINER PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:teardown) and p.teardown(self)
+            p.respond_to?(:on_container_teardown) and p.on_container_teardown(self)
           end
 
         end
-
-        self.down
-        self.destroy
 
         true
       end

@@ -7,9 +7,6 @@ class TestLab
       def setup
         @ui.logger.debug { "Network Setup: #{self.id} " }
 
-        self.create
-        self.up
-
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
           self.route and manage_route(:add)
         end
@@ -24,9 +21,6 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
           self.route and manage_route(:del)
         end
-
-        self.down
-        self.destroy
 
         true
       end
