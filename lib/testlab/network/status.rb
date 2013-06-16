@@ -13,7 +13,8 @@ class TestLab
           :interface => interface,
           :broadcast => self.broadcast,
           :network => self.network,
-          :netmask => self.netmask
+          :netmask => self.netmask,
+          :provisioners => self.provisioners.map(&:to_s).collect{ |p| p.split('::').last }.join(','),
         }
       end
 

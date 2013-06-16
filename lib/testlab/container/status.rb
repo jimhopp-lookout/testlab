@@ -59,7 +59,7 @@ class TestLab
           :distro => self.distro,
           :release => self.release,
           :interfaces => interfaces,
-          :provisioners => self.provisioners.map(&:to_s).collect{ |p| p.split('::').last }.join('/'),
+          :provisioners => self.provisioners.map(&:to_s).collect{ |p| p.split('::').last }.join(','),
           :node_id => self.node.id
         }
       end

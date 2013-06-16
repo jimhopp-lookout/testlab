@@ -7,7 +7,7 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Node < ZTK::DSL::Base
-    STATUS_KEYS   = %w(id instance_id state user ip port provider con net).map(&:to_sym)
+    STATUS_KEYS   = %w(id instance_id state user ip port provider provisioners).map(&:to_sym)
 
     # Sub-Modules
     autoload :Actions,       'testlab/node/actions'

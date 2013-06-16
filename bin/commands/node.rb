@@ -42,29 +42,6 @@ command :node do |c|
     end
   end
 
-  # NODE STATUS
-  ##############
-  c.desc 'Display the status of node(s)'
-  c.long_desc 'Displays the status of all nodes or a single node if supplied via the ID parameter.'
-  c.command :status do |status|
-    status.action do |global_options, options, args|
-      if options[:name].nil?
-        # No ID supplied; show everything
-        ZTK::Report.new(:ui => @testlab.ui).spreadsheet(@testlab.nodes, TestLab::Node::STATUS_KEYS) do |node|
-          OpenStruct.new(node.status)
-        end
-      else
-        # ID supplied; show just that item
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        ZTK::Report.new(:ui => @testlab.ui).list(node, TestLab::Node::STATUS_KEYS) do |node|
-          OpenStruct.new(node.status)
-        end
-      end
-    end
-  end
-
   # NODE UP
   ##########
   c.desc 'Up a node'
@@ -175,6 +152,29 @@ EOF
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.teardown
+      end
+    end
+  end
+
+  # NODE STATUS
+  ##############
+  c.desc 'Display the status of node(s)'
+  c.long_desc 'Displays the status of all nodes or a single node if supplied via the ID parameter.'
+  c.command :status do |status|
+    status.action do |global_options, options, args|
+      if options[:name].nil?
+        # No ID supplied; show everything
+        ZTK::Report.new(:ui => @testlab.ui).list(@testlab.nodes, TestLab::Node::STATUS_KEYS) do |node|
+          OpenStruct.new(node.status)
+        end
+      else
+        # ID supplied; show just that item
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        ZTK::Report.new(:ui => @testlab.ui).list(node, TestLab::Node::STATUS_KEYS) do |node|
+          OpenStruct.new(node.status)
+        end
       end
     end
   end

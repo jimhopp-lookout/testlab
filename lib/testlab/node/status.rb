@@ -16,8 +16,7 @@ class TestLab
           :ip => @provider.ip,
           :port => @provider.port,
           :provider => @provider.class,
-          :con => self.containers.count,
-          :net => self.networks.count
+          :provisioners => self.provisioners.map(&:to_s).collect{ |p| p.split('::').last }.join(',')
         }
       end
 

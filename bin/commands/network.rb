@@ -156,7 +156,7 @@ EOF
         if networks.count == 0
           @testlab.ui.stderr.puts("You either have no networks defined or dead nodes!".yellow)
         else
-          ZTK::Report.new(:ui => @testlab.ui).spreadsheet(networks, TestLab::Network::STATUS_KEYS) do |network|
+          ZTK::Report.new(:ui => @testlab.ui).list(networks, TestLab::Network::STATUS_KEYS) do |network|
             OpenStruct.new(network.status)
           end
         end
