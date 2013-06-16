@@ -45,6 +45,10 @@ pre do |global,command,options,args|
   # Use skips_pre before a command to skip this block
   # on that command only
 
+  if !global[:v].nil?
+    ENV['LOG_LEVEL'] = 'DEBUG'
+  end
+
   log_file = File.join(Dir.pwd, "testlab.log")
   @logger = ZTK::Logger.new(log_file)
 

@@ -69,6 +69,7 @@ describe TestLab::Node do
     describe "#create" do
       it "should create the node" do
         subject.instance_variable_get(:@provider).stub(:create) { true }
+        subject.stub(:state) { :not_created }
         subject.create
       end
     end
@@ -76,6 +77,7 @@ describe TestLab::Node do
     describe "#destroy" do
       it "should destroy the node" do
         subject.instance_variable_get(:@provider).stub(:destroy) { true }
+        subject.stub(:state) { :stopped }
         subject.destroy
       end
     end
@@ -83,6 +85,7 @@ describe TestLab::Node do
     describe "#up" do
       it "should online the node" do
         subject.instance_variable_get(:@provider).stub(:up) { true }
+        subject.stub(:state) { :stopped }
         subject.up
       end
     end
@@ -90,6 +93,7 @@ describe TestLab::Node do
     describe "#down" do
       it "should offline the node" do
         subject.instance_variable_get(:@provider).stub(:down) { true }
+        subject.stub(:state) { :running }
         subject.down
       end
     end
@@ -98,16 +102,7 @@ describe TestLab::Node do
       it "should setup the node" do
         subject.provisioners = Array.new
         subject.containers.each { |c| c.provisioners = Array.new }
-        subject.ssh.stub(:bootstrap) { true }
-        subject.stub(:route_setup) { true }
-        subject.stub(:create) { true }
-        subject.stub(:up) { true }
-        subject.containers.each do |container|
-          container.stub(:setup) { true }
-        end
-        subject.networks.each do |network|
-          network.stub(:setup) { true }
-        end
+        subject.stub(:state) { :running }
         subject.setup
       end
     end
@@ -116,15 +111,7 @@ describe TestLab::Node do
       it "should teardown the node" do
         subject.provisioners = Array.new
         subject.containers.each { |c| c.provisioners = Array.new }
-        subject.stub(:route_setup) { true }
-        subject.stub(:down) { true }
-        subject.stub(:destroy) { true }
-        subject.containers.each do |container|
-          container.stub(:teardown) { true }
-        end
-        subject.networks.each do |network|
-          network.stub(:teardown) { true }
-        end
+        subject.stub(:state) { :running }
         subject.teardown
       end
     end
