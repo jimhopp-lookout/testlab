@@ -54,9 +54,9 @@ pre do |global,command,options,args|
 
   TestLab::Utility.log_header.each { |line| @logger.info { line } }
 
-  @logger.debug { "global == #{global.inspect}" }
-  @logger.debug { "options == #{options.inspect}" }
-  @logger.debug { "args == #{args.inspect}" }
+  @logger.debug { "global(#{global.inspect})" }
+  @logger.debug { "options(#{options.inspect})" }
+  @logger.debug { "args(#{args.inspect})" }
 
   @ui = ZTK::UI.new(:logger => @logger)
   @testlab = TestLab.new(:ui => @ui)
