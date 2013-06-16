@@ -8,6 +8,7 @@ class TestLab
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     module Logger
+      require 'socket'
       require 'active_support/version'
 
       def log_key_value(key, value, max_key_length)
@@ -21,6 +22,7 @@ class TestLab
       def log_details
         @command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
         {
+          "hostname" => Socket.gethostname.inspect,
           "program" => $0.to_s.inspect,
           "vagrant_version" => @command.exec(%(/usr/bin/env vagrant --version)).output.strip.inspect,
           "virtualbox_version" => @command.exec(%(/usr/bin/env vboxmanage --version)).output.strip.inspect

@@ -33,7 +33,7 @@ class TestLab
 
             c.user            = (options[:user]   || container.primary_user.id)
             c.password        = (options[:passwd] || container.primary_user.password)
-            c.keys            = (options[:keys]   || container.primary_user.identity || @provider.identity)
+            c.keys            = (options[:keys]   || [container.primary_user.identity, @provider.identity])
           end
         end
         @container_ssh[name]

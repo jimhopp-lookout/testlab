@@ -187,7 +187,8 @@ EOF
         network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
-        network.manage_route(:add)
+        p = TestLab::Provisioner::Route.new({}, @ui)
+        p.on_network_setup(network)
         @testlab.ui.stdout.puts("Added routes successfully!".green.bold)
         @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
       end
@@ -203,7 +204,8 @@ EOF
         network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
-        network.manage_route(:del)
+        p = TestLab::Provisioner::Route.new({}, @ui)
+        p.on_network_teardown(network)
         @testlab.ui.stdout.puts("Deleted routes successfully!".red.bold)
         @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
       end

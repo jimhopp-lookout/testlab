@@ -18,11 +18,15 @@
 #   limitations under the License.
 #
 ################################################################################
+require 'socket'
+
 require 'gli'
 require 'testlab'
 
 include GLI::App
 include TestLab::Utility::Misc
+
+HOSTNAME = Socket.gethostname.split('.').first.strip
 
 version TestLab::VERSION
 
@@ -41,7 +45,7 @@ switch [:v, :verbose]
 pre do |global,command,options,args|
   global[:v].nil? or (global[:v] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
 
-  log_file = File.join(Dir.pwd, "testlab.log")
+  log_file = File.join(Dir.pwd, "testlab-#{HOSTNAME}.log")
   @logger = ZTK::Logger.new(log_file)
 
   TestLab::Utility.log_header.each { |line| @logger.info { line } }

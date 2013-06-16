@@ -12,7 +12,7 @@ class TestLab
           self.provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> NETWORK PROVISIONER SETUP: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
+            p.respond_to?(:on_network_setup) and p.on_network_setup(self)
           end
 
         end
@@ -29,7 +29,7 @@ class TestLab
           self.provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> NETWORK PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
+            p.respond_to?(:on_network_teardown) and p.on_network_teardown(self)
           end
 
         end

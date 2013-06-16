@@ -16,16 +16,17 @@ class TestLab
         sc_file = File.join("/", "tmp", "#{self.id}.sc")
         local_file = File.join(Dir.pwd, File.basename(sc_file))
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :blue)) do
-          script = <<-EOF
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
+          self.node.ssh.bootstrap(<<-EOF)
 set -x
+set -e
 find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfcz > #{sc_file}
 chown ${SUDO_USER}:${SUDO_USER} #{sc_file}
 EOF
-          self.node.ssh.bootstrap(script)
         end
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Export', :blue)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Export', :cyan)) do
+          File.exists?(local_file) and FileUtils.rm_f(local_file)
           self.node.ssh.download(sc_file, local_file)
         end
 
@@ -45,17 +46,17 @@ EOF
 
         sc_file = File.join("/", "tmp", "#{self.id}.sc")
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :blue)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
           self.node.ssh.exec(%(sudo rm -fv #{sc_file}), :silence => true, :ignore_exit_status => true)
           self.node.ssh.upload(local_file, sc_file)
         end
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :blue)) do
-          script = <<-EOF
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do
+          self.node.ssh.bootstrap(<<-EOF)
 set -x
+set -e
 pbzip2 -vdc #{sc_file} | cpio -uid && rm -fv #{sc_file}
 EOF
-          self.node.ssh.bootstrap(script)
         end
 
         puts("Your shipping container is now imported and available for use!")
