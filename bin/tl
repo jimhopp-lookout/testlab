@@ -32,7 +32,7 @@ program_desc %(TestLab - A toolkit for building virtual computer labs)
 sort_help :manually
 default_command :help
 
-commands_from File.join(File.dirname(__FILE__), 'commands')
+commands_from 'commands'
 
 desc 'Show verbose output'
 default_value false
