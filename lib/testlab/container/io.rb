@@ -16,7 +16,7 @@ class TestLab
         sc_file = File.join("/", "tmp", "#{self.id}.sc")
         local_file = File.join(Dir.pwd, File.basename(sc_file))
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Image', :blue)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :blue)) do
           script = <<-EOF
 set -x
 find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfcz > #{sc_file}

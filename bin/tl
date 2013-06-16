@@ -39,15 +39,7 @@ default_value false
 switch [:v, :verbose]
 
 pre do |global,command,options,args|
-  # Pre logic here
-  # Return true to proceed; false to abort and not call the
-  # chosen command
-  # Use skips_pre before a command to skip this block
-  # on that command only
-
-  if !global[:v].nil?
-    ENV['LOG_LEVEL'] = 'DEBUG'
-  end
+  global[:v].nil? or (global[:v] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
 
   log_file = File.join(Dir.pwd, "testlab.log")
   @logger = ZTK::Logger.new(log_file)
