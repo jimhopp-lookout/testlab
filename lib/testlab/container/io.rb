@@ -29,7 +29,7 @@ EOF
           self.node.ssh.download(sc_file, local_file)
         end
 
-        puts("Your shipping container is now exported and available at '#{local_file}'.")
+        puts("Your shipping container is now exported and available at '#{local_file}'!")
 
         true
       end
@@ -57,6 +57,8 @@ pbzip2 -vdc #{sc_file} | cpio -uid && rm -fv #{sc_file}
 EOF
           self.node.ssh.bootstrap(script)
         end
+
+        puts("Your shipping container is now imported and available for use!")
 
         true
       end
