@@ -48,14 +48,14 @@ pre do |global,command,options,args|
   log_file = File.join(Dir.pwd, "testlab-#{HOSTNAME}.log")
   @logger = ZTK::Logger.new(log_file)
 
-  TestLab::Utility.log_header.each { |line| @logger.info { line } }
-
   @logger.debug { "global(#{global.inspect})" }
   @logger.debug { "options(#{options.inspect})" }
   @logger.debug { "args(#{args.inspect})" }
 
   @ui = ZTK::UI.new(:logger => @logger)
   @testlab = TestLab.new(:ui => @ui)
+
+  TestLab::Utility.log_header(@testlab).each { |line| @logger.info { line } }
 
   message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
   @testlab.ui.stdout.puts(message)

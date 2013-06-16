@@ -1,3 +1,5 @@
+require 'socket'
+
 require 'ztk'
 require 'active_support/inflector'
 
@@ -101,7 +103,7 @@ class TestLab
   def initialize(options={})
     self.ui      = (options[:ui] || ZTK::UI.new)
 
-    labfile      = (options[:labfile] || 'Labfile')
+    labfile      = (options[:labfile] || File.join(Dir.pwd, 'Labfile'))
     labfile_path = ZTK::Locator.find(labfile)
     @labfile     = TestLab::Labfile.load(labfile_path)
     @labfile.config.merge!(:testlab => self)
@@ -295,7 +297,8 @@ class TestLab
   #
   # @return [String] The path to the TestLab configuration directory.
   def config_dir
-    directory = File.join(self.config[:repo], '.testlab')
+    @hostname ||= Socket.gethostname.split('.').first.strip
+    directory = File.join(self.config[:repo], ".testlab-#{@hostname}")
     File.expand_path(directory, File.dirname(__FILE__))
   end
 
