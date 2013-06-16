@@ -28,17 +28,41 @@ command :node do |c|
   c.arg_name 'node'
   c.flag [:n, :name]
 
-  # NODE SSH
-  ###########
-  c.desc 'Open an SSH console to a node'
-  c.command :ssh do |ssh|
-    ssh.action do |global_options,options,args|
-      help_now!('a name is required') if options[:name].nil?
+  # NODE CREATE
+  ##############
+  c.desc 'Create a node'
+  c.long_desc <<-EOF
+Create a node.  The node is created.
+EOF
+  c.command :create do |create|
+    create.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you screateplied!"
 
-      node = @testlab.nodes.select{ |n| n.id.to_sym == options[:name].to_sym }.first
-      node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+        node.create
+      end
+    end
+  end
 
-      node.ssh.console
+  # NODE DESTROY
+  ############
+  c.desc 'Destroy a node'
+  c.long_desc <<-EOF
+Destroy a node.  The node is stopped and destroyed.
+EOF
+  c.command :destroy do |destroy|
+    destroy.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.destroy
+      end
     end
   end
 
@@ -76,44 +100,6 @@ EOF
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.down
-      end
-    end
-  end
-
-  # NODE CREATE
-  ##############
-  c.desc 'Create a node'
-  c.long_desc <<-EOF
-Create a node.  The node is created.
-EOF
-  c.command :create do |create|
-    create.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you screateplied!"
-
-        node.create
-      end
-    end
-  end
-
-  # NODE DESTROY
-  ############
-  c.desc 'Destroy a node'
-  c.long_desc <<-EOF
-Destroy a node.  The node is stopped and destroyed.
-EOF
-  c.command :destroy do |destroy|
-    destroy.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.destroy
       end
     end
   end
@@ -176,6 +162,20 @@ EOF
           OpenStruct.new(node.status)
         end
       end
+    end
+  end
+
+  # NODE SSH
+  ###########
+  c.desc 'Open an SSH console to a node'
+  c.command :ssh do |ssh|
+    ssh.action do |global_options,options,args|
+      help_now!('a name is required') if options[:name].nil?
+
+      node = @testlab.nodes.select{ |n| n.id.to_sym == options[:name].to_sym }.first
+      node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+      node.ssh.console
     end
   end
 
