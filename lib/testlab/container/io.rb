@@ -2,11 +2,12 @@ class TestLab
   class Container
 
     module IO
+      PBZIP2_MEMORY = 256
 
       # Export the container
       #
       # @return [Boolean] True if successful.
-      def export(compression=9)
+      def export(compression=9, local_file=nil)
         @ui.logger.debug { "Container Export: #{self.id} " }
 
         (self.lxc.state == :not_created) and return false
@@ -14,14 +15,17 @@ class TestLab
         self.down
 
         sc_file = File.join("/", "tmp", "#{self.id}.sc")
-        local_file = File.join(Dir.pwd, File.basename(sc_file))
+        local_file ||= File.join(Dir.pwd, File.basename(sc_file))
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
           self.node.ssh.bootstrap(<<-EOF)
 set -x
 set -e
-find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfcz > #{sc_file}
+
+du -sh #{self.lxc.container_root}
+find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{sc_file}
 chown ${SUDO_USER}:${SUDO_USER} #{sc_file}
+ls -lah #{sc_file}
 EOF
         end
 
@@ -55,7 +59,10 @@ EOF
           self.node.ssh.bootstrap(<<-EOF)
 set -x
 set -e
-pbzip2 -vdc #{sc_file} | cpio -uid && rm -fv #{sc_file}
+
+ls -lah #{sc_file}
+pbzip2 -vdcm#{PBZIP2_MEMORY} #{sc_file} | cpio -uid && rm -fv #{sc_file}
+du -sh #{self.lxc.container_root}
 EOF
         end
 

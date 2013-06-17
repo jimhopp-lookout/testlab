@@ -20,14 +20,12 @@ class TestLab
       end
 
       def log_details(testlab)
-        @command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
         {
           "hostname" => Socket.gethostname.inspect,
           "program" => $0.to_s.inspect,
           "config_dir" => testlab.config_dir.inspect,
           "logdev" => testlab.ui.logger.logdev.inspect,
-          "vagrant_version" => @command.exec(%(/usr/bin/env vagrant --version)).output.strip.inspect,
-          "virtualbox_version" => @command.exec(%(/usr/bin/env vboxmanage --version)).output.strip.inspect
+          "version" => TestLab::VERSION
         }
       end
 
@@ -44,11 +42,15 @@ class TestLab
       end
 
       def log_dependencies
+        @command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
+
         {
           "gli_version" => ::GLI::VERSION.inspect,
           "lxc_version" => ::LXC::VERSION.inspect,
           "ztk_version" => ::ZTK::VERSION.inspect,
           "activesupport_version" => ::ActiveSupport::VERSION::STRING.inspect,
+          "vagrant_version" => @command.exec(%(/usr/bin/env vagrant --version)).output.strip.inspect,
+          "virtualbox_version" => @command.exec(%(/usr/bin/env vboxmanage --version)).output.strip.inspect
         }
       end
 

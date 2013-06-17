@@ -259,13 +259,18 @@ EOF
     export.arg_name 'level'
     export.flag [:c, :compression]
 
+    export.desc 'Specify the shipping container file to export to.'
+    # export.default_value nil
+    export.arg_name 'filename'
+    export.flag [:output]
+
     export.action do |global_options, options, args|
       help_now!('a name is required') if options[:name].nil?
 
       container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
       container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
-      container.export(options[:compression])
+      container.export(options[:compression], options[:output])
     end
   end
 
@@ -274,18 +279,18 @@ EOF
   c.desc 'Import a shipping container (file)'
   c.command :import do |import|
 
-    import.desc 'Specify the shipping container file to import.'
+    import.desc 'Specify the shipping container file to import from.'
     import.arg_name 'filename'
-    import.flag [:sc]
+    import.flag [:input]
 
     import.action do |global_options, options, args|
       help_now!('a name is required') if options[:name].nil?
-      help_now!('a filename is required') if options[:sc].nil?
+      help_now!('a filename is required') if options[:input].nil?
 
       container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
       container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
 
-      container.import(options[:sc])
+      container.import(options[:input])
     end
   end
 
