@@ -75,6 +75,17 @@ end
 # LAB BUILD
 ############
 desc 'Build the test lab infrastructure'
+long_desc <<-EOF
+Attempts to build the defined test lab.  TestLab will attempt to create, online and provision the lab components.
+
+The components are built in the following order:
+
+Nodes -> Networks -> Containers
+
+TestLab will then attempt to build the componenets executing the following tasks for each:
+
+Create -> Up -> Setup
+EOF
 command :build do |build|
   build.action do |global_options,options,args|
     @testlab.build

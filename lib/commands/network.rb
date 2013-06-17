@@ -142,6 +142,29 @@ EOF
     end
   end
 
+  # NETWORK BUILD
+  ################
+  c.desc 'Build a network'
+  c.long_desc <<-EOF
+Attempts to build up the network.  TestLab will attempt to create, online and provision the network.
+
+The network is taken through the following phases:
+
+Create -> Up -> Setup
+EOF
+  c.command :build do |build|
+    build.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.build
+      end
+    end
+  end
+
   # NETWORK STATUS
   #################
   c.desc 'Display the status of network(s)'

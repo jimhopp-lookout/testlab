@@ -45,6 +45,15 @@ class TestLab
         true
       end
 
+      # Build the node
+      def build
+        self.create
+        self.up
+        self.setup
+
+        true
+      end
+
       def global_provisioners
         [self.provisioners, self.containers.map(&:provisioners)].flatten.compact.uniq
       end

@@ -142,6 +142,29 @@ EOF
     end
   end
 
+  # NODE BUILD
+  #############
+  c.desc 'Build a node'
+  c.long_desc <<-EOF
+Attempts to build up the node.  TestLab will attempt to create, online and provision the node.
+
+The node is taken through the following phases:
+
+Create -> Up -> Setup
+EOF
+  c.command :build do |build|
+    build.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.build
+      end
+    end
+  end
+
   # NODE STATUS
   ##############
   c.desc 'Display the status of node(s)'

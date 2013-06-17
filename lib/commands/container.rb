@@ -142,6 +142,29 @@ EOF
     end
   end
 
+  # CONTAINER BUILD
+  ##################
+  c.desc 'Build a container'
+  c.long_desc <<-EOF
+Attempts to build up the container.  TestLab will attempt to create, online and provision the container.
+
+The container is taken through the following phases:
+
+  Create -> Up -> Setup
+EOF
+  c.command :build do |build|
+    build.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+        container.build
+      end
+    end
+  end
+
   # CONTAINER STATUS
   ###################
   c.desc 'Display the status of container(s)'
@@ -198,6 +221,24 @@ EOF
       ssh_options[:keys] = options[:identity]
 
       container.ssh(ssh_options).console
+    end
+  end
+
+  # CONTAINER SSH-CONFIG
+  #######################
+  c.desc 'Display the SSH configuration for a container'
+  c.long_desc <<-EOF
+Displays the SSH configuration for the supplied container name.
+EOF
+  c.command :'ssh-config' do |ssh_config|
+
+    ssh_config.action do |global_options, options, args|
+      help_now!('a name is required') if options[:name].nil?
+
+      container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
+      container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+      puts(container.ssh_config)
     end
   end
 

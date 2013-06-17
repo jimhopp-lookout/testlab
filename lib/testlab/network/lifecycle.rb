@@ -37,6 +37,15 @@ class TestLab
         true
       end
 
+      # Build the network
+      def build
+        self.create
+        self.up
+        self.setup
+
+        true
+      end
+
     end
 
   end

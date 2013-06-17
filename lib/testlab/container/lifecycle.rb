@@ -51,6 +51,15 @@ class TestLab
         true
       end
 
+      # Build the container
+      def build
+        self.create
+        self.up
+        self.setup
+
+        true
+      end
+
     end
 
   end

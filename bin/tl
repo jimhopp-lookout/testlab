@@ -42,8 +42,12 @@ desc 'Show verbose output'
 default_value false
 switch [:v, :verbose]
 
+desc 'Quiet mode'
+default_value false
+switch [:q, :quiet]
+
 pre do |global,command,options,args|
-  global[:v].nil? or (global[:v] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
+  (global[:v] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
 
   log_file = File.join(Dir.pwd, "testlab-#{HOSTNAME}.log")
   @logger = ZTK::Logger.new(log_file)
@@ -57,8 +61,10 @@ pre do |global,command,options,args|
 
   TestLab::Utility.log_header(@testlab).each { |line| @logger.info { line } }
 
-  message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
-  @testlab.ui.stdout.puts(message)
+  if (global[:q] == false)
+    message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
+    @testlab.ui.stdout.puts(message)
+  end
 
   true
 end

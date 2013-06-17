@@ -219,23 +219,7 @@ class TestLab
   #
   # @return [Boolean] True if successful.
   def build
-    nodes.each do |node|
-      node.create
-      node.up
-      node.setup
-
-      node.networks.each do |network|
-        network.create
-        network.up
-        network.setup
-      end
-
-      node.containers.each do |container|
-        container.create
-        container.up
-        container.setup
-      end
-    end
+    method_proxy(:build)
 
     true
   end
