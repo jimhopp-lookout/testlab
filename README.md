@@ -18,20 +18,25 @@ The TestLab command-line program `tl` follows in the style of git (using the GLI
 
     $ tl help
     NAME
-        tl - A framework for building lightweight virtual infrastructure using LXC
+        tl - TestLab - A toolkit for building virtual computer labs
 
     SYNOPSIS
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        0.6.5
+        0.6.9
 
     GLOBAL OPTIONS
-        --version -
-        --help    - Show this message
+        --version          -
+        -v, --[no-]verbose - Show verbose output
+        -q, --[no-]quiet   - Quiet mode
+        --help             - Show this message
 
     COMMANDS
         help      - Shows a list of commands or help for one command
+        container - Manage containers
+        network   - Manage networks
+        node      - Manage nodes
         create    - Create the test lab
         destroy   - Destroy the test lab
         up        - Online the test lab
@@ -40,9 +45,6 @@ The TestLab command-line program `tl` follows in the style of git (using the GLI
         teardown  - Teardown the test lab infrastructure
         build     - Build the test lab infrastructure
         status    - Display information on the status of the test lab
-        node      - Manage nodes
-        network   - Manage networks
-        container - Manage containers
 
 You stand up your lab with the following command:
 

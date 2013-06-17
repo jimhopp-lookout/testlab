@@ -17,9 +17,12 @@ class TestLab
         ZTK::RescueRetry.try(:tries => 3, :on => ContainerError) do
           tempfile = Tempfile.new("bootstrap")
           remote_tempfile = File.join("/tmp", File.basename(tempfile.path))
-          self.node.ssh.file(:target => File.join(self.lxc.fs_root, remote_tempfile), :chmod => '0777', :chown => 'root:root') do |file|
+          target_file = File.join(self.fs_root, remote_tempfile)
+
+          self.node.ssh.file(:target => target_file, :chmod => '0777', :chown => 'root:root') do |file|
             file.puts(content)
           end
+
           output = self.lxc.attach(%(--), %(/bin/bash), remote_tempfile)
           if output =~ /No such file or directory/
             raise ContainerError, "We could not find the bootstrap file!"
@@ -105,6 +108,13 @@ class TestLab
         self.lxc.exists?
       end
 
+      # Container root filesystem path
+      #
+      # @return [String] The path to the containers root filesystem.
+      def fs_root
+        self.lxc.fs_root(self.lxc_clone.exists?)
+      end
+
       # Returns arguments for lxc-create based on our distro
       #
       # @return [Array<String>] An array of arguments for lxc-create
@@ -138,9 +148,11 @@ class TestLab
       # @return [Boolean] True if successful.
       def build_lxc_config(lxc_config)
         lxc_config.clear
+
         lxc_config['lxc.utsname'] = self.fqdn
-        lxc_config['lxc.arch'] = self.arch
-        lxc_config.networks = build_lxc_network_conf(self.interfaces)
+        lxc_config['lxc.arch']    = self.arch
+        lxc_config.networks       = build_lxc_network_conf(self.interfaces)
+
         lxc_config.save
 
         true
@@ -158,12 +170,12 @@ class TestLab
 
         interfaces.each do |interface|
           networks << Hash[
-            'lxc.network.type'         => :veth,
-            'lxc.network.flags'        => :up,
-            'lxc.network.link'         => interface.network.bridge,
-            'lxc.network.name'         => interface.name,
-            'lxc.network.hwaddr'       => interface.mac,
-            'lxc.network.ipv4'         => "#{interface.ip}/#{interface.cidr} #{interface.netmask}"
+            'lxc.network.type'   => :veth,
+            'lxc.network.flags'  => :up,
+            'lxc.network.link'   => interface.network.bridge,
+            'lxc.network.name'   => interface.name,
+            'lxc.network.hwaddr' => interface.mac,
+            'lxc.network.ipv4'   => "#{interface.ip}/#{interface.cidr} #{interface.netmask}"
           ]
           if (interface.primary == true) || (interfaces.count == 1)
             networks.last.merge!('lxc.network.ipv4.gateway' => :auto)
