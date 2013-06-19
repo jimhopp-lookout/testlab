@@ -17,9 +17,9 @@ class TestLab
         ZTK::RescueRetry.try(:tries => 3, :on => ContainerError) do
           tempfile = Tempfile.new("bootstrap")
           remote_tempfile = File.join("/tmp", File.basename(tempfile.path))
-          target_file = File.join(self.fs_root, remote_tempfile)
+          target_tempfile = File.join(self.fs_root, remote_tempfile)
 
-          self.node.ssh.file(:target => target_file, :chmod => '0777', :chown => 'root:root') do |file|
+          self.node.ssh.file(:target => target_tempfile, :chmod => '0777', :chown => 'root:root') do |file|
             file.puts(content)
           end
 
