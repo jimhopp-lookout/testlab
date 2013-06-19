@@ -8,15 +8,21 @@ class TestLab
       # Renders the supplied content into a file on the container and proceeds
       # to execute it on the container as root.
       #
+      # On rare occasion it appears that the container will wipe '/tmp' after
+      # the bootstrap script is seeded but before it is executed via lxc-attach.
+      # This results in a 'No such file or directory' bash error when attempting
+      # to execute the script.  We allow 5 retries to seed the bootstrap script
+      # after which time the exception will be thrown and execution halted.
+      #
       # @param [String] content The content to render on the container and
       #   execute.  This is generally a bash script of some sort for example.
       # @return [String] The output of *lxc-attach*.
       def bootstrap(content)
         output = nil
 
-        ZTK::RescueRetry.try(:tries => 3, :on => ContainerError) do
+        ZTK::RescueRetry.try(:tries => 5, :on => ContainerError) do
           tempfile = Tempfile.new("bootstrap")
-          remote_tempfile = File.join("/tmp", File.basename(tempfile.path))
+          remote_tempfile = File.join("/", "tmp", File.basename(tempfile.path))
           target_tempfile = File.join(self.fs_root, remote_tempfile)
 
           self.node.ssh.file(:target => target_tempfile, :chmod => '0777', :chown => 'root:root') do |file|
@@ -24,7 +30,7 @@ class TestLab
           end
 
           output = self.lxc.attach(%(--), %(/bin/bash), remote_tempfile)
-          if (output =~ /No such file or directory/)
+          if !(output =~ /#{remote_tempfile}: No such file or directory/).nil?
             raise ContainerError, "We could not find the bootstrap file!"
           end
         end
