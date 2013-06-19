@@ -41,8 +41,8 @@ describe TestLab::Provisioner::Shell do
       context "bootstrap successful" do
         it "should provision the container" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
-          subject.lxc.stub(:attach) { "" }
           subject.stub(:fs_root) { "/var/lib/lxc/#{subject.id}/rootfs" }
+          subject.lxc.stub(:attach) { "" }
 
           p = TestLab::Provisioner::Shell.new(subject.config, @ui)
           p.on_container_setup(subject)
@@ -52,8 +52,10 @@ describe TestLab::Provisioner::Shell do
       context "bootstrap fails" do
         it "should raise an exception" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
-          subject.lxc.stub(:attach) { "No such file or directory" }
           subject.stub(:fs_root) { "/var/lib/lxc/#{subject.id}/rootfs" }
+          subject.lxc.stub(:attach) do |arg0, arg1, arg2|
+            "#{arg2}: No such file or directory"
+          end
 
           p = TestLab::Provisioner::Shell.new(subject.config, @ui)
           lambda{ p.on_container_setup(subject) }.should raise_error TestLab::ContainerError
