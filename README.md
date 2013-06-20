@@ -8,7 +8,7 @@
 
 A toolkit for building virtual computer labs.
 
-What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then setup and teardown this virtual infrastructure as you have dictated in the `Labfile`.
+What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then setup and tear down this virtual infrastructure as you have dictated in the `Labfile`.
 
 TestLab can be run directly on the command-line or can be interfaced with directly via code.  Unlike the trend with some popular open-source software recently, I want you to build off this API interface and hopefully create tools I would of never dreamed up.
 
@@ -95,7 +95,7 @@ You can recycle a container, effectively destroying then creating it again, prov
 
 ## Ephemeral Container Cloning
 
-As it stands attempting to iterate infrastructure while developing with Vagrant is a slow and painful process.  Enter LXC and it's ephemeral feature.  The idea here is you have a container that is provisioned to a "pristine" state acording to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook and re-run it against the container.  As we all know running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
+As it stands attempting to iterate infrastructure while developing with Vagrant is a slow and painful process.  Enter LXC and it's ephemeral feature.  The idea here is you have a container that is provisioned to a "pristine" state according to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook and re-run it against the container.  As we all know running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
 
 Here we are cloning the container for the first time.  It takes a bit longer than normal because TestLab is actually shutting down the container so it can be retained as the "pristine" copy of it, and starting up a ephemeral container in its place.  Subsequent calls to clone are very fast.
 
@@ -180,9 +180,9 @@ Accessing TestLab via code is meant to be fairly easy and straightforward.  To g
     @ui = ZTK::UI.new(:logger => @logger)
     @testlab = TestLab.new(:ui => @ui)
 
-Calling `TestLab.new` without a `:labfile` option will, by default, attempt to read `Labfile` from the current directory.  This behaviour can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
+Calling `TestLab.new` without a `:labfile` option will, by default, attempt to read `Labfile` from the current directory.  This behavior can be changed by passing the `:labfile` key with a path to your desired "Labfile" as the value to your `TestLab.new`.
 
-There are several easy accessors available to grab the first container and execure the command `uptime` on it via and SSH connection:
+There are several easy accessors available to grab the first container and execute the command `uptime` on it via and SSH connection:
 
     container = @testlab.containers.first
     container.ssh.exec(%(uptime))
