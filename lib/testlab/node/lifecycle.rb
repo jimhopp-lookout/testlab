@@ -55,7 +55,7 @@ class TestLab
       end
 
       def global_provisioners
-        [self.provisioners, self.containers.map(&:provisioners)].flatten.compact.uniq
+        [self.provisioners, self.networks.map(&:provisioners), self.containers.map(&:provisioners)].flatten.compact.uniq
       end
 
     end
