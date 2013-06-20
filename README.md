@@ -10,7 +10,9 @@ A toolkit for building virtual computer labs.
 
 What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then setup and tear down this virtual infrastructure as you have dictated in the `Labfile`.
 
-TestLab can be run directly on the command-line or can be interfaced with directly via code.  Unlike the trend with some popular open-source software recently, I want you to build off this API interface and hopefully create tools I would of never dreamed up.
+TestLab can also import and export containers, making it easy to share them.  TestLab supports the latest LXC versions, allowing for ephemeral cloning operations, furthering your ability to iterate quickly.  TestLab can be used for many other applications, including infrastructure unit and integration testing, allowing for vastly more complex configurations and more effective resource sharing than traditional VM solutions.
+
+TestLab can be run via the command-line or can be interfaced with directly via Ruby code.
 
 # Using TestLab Interactively
 
@@ -50,7 +52,7 @@ You stand up your lab with the following command:
 
     tl build
 
-You can down the entire lab:
+You can down the entire lab (this would only down the containers on the Local provider for example):
 
     tl down
 
@@ -60,16 +62,22 @@ You can also destroy it (only works for VM backed providers; this would be a NO-
 
 ## Interacting with Containers
 
-Most commands dealing will containers will take this argument:
+Almost all commands dealing will containers will take this argument:
 
     COMMAND OPTIONS
         -n, --name=container - Container ID or Name (default: none)
 
 You can interact with containers via SSH:
 
-    tl container ssh -n <container ID>
+    tl container ssh -n <name>
 
-You can pass an optional alternate username and/or identity to use.  By default TestLab will attempt to SSH as the user defined in the `Labfile` for that container, otherwise the default user for the containers distro is used.
+For example:
+
+    tl container ssh -n server-www-1
+
+Would connect to the container defined as 'server-www-1' in our Labfile.
+
+You can pass an optional username and/or identity to use.  By default TestLab will attempt to SSH as the user defined in the `Labfile` for that container, otherwise the default user for the containers distro is used.
 
     $ tl help container ssh
     NAME
@@ -95,7 +103,7 @@ You can recycle a container, effectively destroying then creating it again, prov
 
 ## Ephemeral Container Cloning
 
-As it stands attempting to iterate infrastructure while developing with Vagrant is a slow and painful process.  Enter LXC and it's ephemeral feature.  The idea here is you have a container that is provisioned to a "pristine" state according to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook and re-run it against the container.  As we all know running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
+As it stands attempting to iterate infrastructure with Vagrant is a slow and painful process.  Enter LXC and ephemeral cloning.  The idea here is that you have a container that is provisioned to a "pristine" state according to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook, for example, and re-run it against the container.  Running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
 
 Here we are cloning the container for the first time.  It takes a bit longer than normal because TestLab is actually shutting down the container so it can be retained as the "pristine" copy of it, and starting up a ephemeral container in its place.  Subsequent calls to clone are very fast.
 
@@ -111,6 +119,8 @@ Here we are cloning the container for the first time.  It takes a bit longer tha
     $ tl container clone -n server-www-1
     [TL] TestLab v0.6.1 Loaded
     [TL] container server-www-1 clone                            # Completed in 1.0281 seconds!
+
+The idea in the above example is that you run the initial clone command to put your container into an ephemeral clone state.  You would then modify the container in some fashion, test, etc.  When you where done with that iteration you would run the clone command again, losing all the changes you did to the container, replacing it with a new clean cloned copy of your original container.  RRP (Rinse, Repeat, Profit)
 
 We can also see the containers status reflects that it is a clone currently:
 
@@ -128,13 +138,17 @@ We can also see the containers status reflects that it is a clone currently:
     |  PROVISIONERS: Resolv/AptCacherNG/Apt/Shell  |
     +----------------------------------------------+
 
-We can easily revert it back to a full container if we want to make changes to it:
+We can easily revert it back to a full container if we want to make "permanent" changes to it:
 
     $ tl container up -n server-www-1
 
 We can even recycle it while it is in a cloned state:
 
     $ tl container recycle -n server-www-1
+
+We can run setup against a clone as well (note: running `build`, calls `up`, which would revert us back to a non-cloned container and we would not want this to happen):
+
+    $ tl container setup -n server-www-1
 
 ## Network Routes
 
