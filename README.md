@@ -16,7 +16,7 @@ TestLab can be run via the command-line or can be interfaced with directly via R
 
 # Using TestLab Interactively
 
-The TestLab command-line program `tl` follows in the style of git (using the GLI RubyGem).
+The TestLab command-line program `tl` follows in the style of git:
 
     $ tl help
     NAME
@@ -59,6 +59,15 @@ You can down the entire lab (this would only down the containers on the Local pr
 You can also destroy it (only works for VM backed providers; this would be a NO-OP on the Local provider for example):
 
     tl destroy
+
+## Getting Help
+
+TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Therefore help is easy to get:
+
+    tl help
+    tl help node
+    tl help container
+    tl help network
 
 ## Interacting with Containers
 
@@ -152,7 +161,7 @@ We can run setup against a clone as well (note: running `build`, calls `up`, whi
 
 ## Network Routes
 
-TestLab will add network routes for any networks defined in the `Labfile` with the route flag set to true.  This will allow you to directly interact with containers.  Here is an example of the routes added with the multi-network `Labfile`.
+TestLab will add network routes for any networks defined in the `Labfile` witch have the `TestLab::Provisioner::Route` provisioner class specified for them.  This will allow you to directly interact with containers over the network.  Here is an example of the routes added with the multi-network `Labfile`.
 
     $ tl network route show -n labnet
     [TL] TestLab v0.6.1 Loaded
@@ -160,7 +169,7 @@ TestLab will add network routes for any networks defined in the `Labfile` with t
     10.10.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0
     10.11.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0
 
-These routes can be manually manipulated as well:
+These routes can be manually manipulated as well (regardless of if you have specified the `TestLab::Provisioner::Route` provisioner class for the networks via the `Labfile`):
 
     $ tl help network route
     NAME
@@ -175,15 +184,6 @@ These routes can be manually manipulated as well:
         add  - Add routes to lab networks
         del  - Delete routes to lab networks
         show - Show routes to lab networks
-
-## Getting Help
-
-TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Therefore help is easy to get:
-
-    tl help
-    tl help node
-    tl help container
-    tl help network
 
 # Using TestLab Programmatically
 
