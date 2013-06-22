@@ -15,7 +15,7 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
-          global_provisioners.each do |provisioner|
+          self.all_provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> NODE PROVISIONER SETUP: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_node_setup) and p.on_node_setup(self)
@@ -34,7 +34,7 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
-          global_provisioners.each do |provisioner|
+          self.all_provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> NODE PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
@@ -54,11 +54,11 @@ class TestLab
         true
       end
 
-      def global_provisioners
+      # Returns all defined provisioners for this node and it's networks and containers.
+      def all_provisioners
         [self.provisioners, self.networks.map(&:provisioners), self.containers.map(&:provisioners)].flatten.compact.uniq
       end
 
     end
-
   end
 end

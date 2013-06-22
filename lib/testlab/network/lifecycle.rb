@@ -9,7 +9,7 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
-          self.provisioners.each do |provisioner|
+          self.network_provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> NETWORK PROVISIONER SETUP: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_network_setup) and p.on_network_setup(self)
@@ -26,7 +26,7 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
-          self.provisioners.each do |provisioner|
+          self.network_provisioners.each do |provisioner|
             @ui.logger.info { ">>>>> NETWORK PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_network_teardown) and p.on_network_teardown(self)
@@ -44,6 +44,11 @@ class TestLab
         self.setup
 
         true
+      end
+
+      # Returns all defined provisioners for this network's containers and the network iteself.
+      def network_provisioners
+        [self.provisioners, self.interfaces.map(&:container).map(&:provisioners)].flatten.compact.uniq
       end
 
     end
