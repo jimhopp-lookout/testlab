@@ -248,7 +248,7 @@ EOF
   c.long_desc <<-EOF
 Recycles a container.  The container is taken through a series of state changes to ensure it is pristine.
 
-The containers is cycled in this order:
+The container is cycled in this order:
 
 Teardown -> Down -> Destroy -> Create -> Up -> Setup
 EOF
