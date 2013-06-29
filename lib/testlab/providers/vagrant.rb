@@ -91,7 +91,7 @@ class TestLab
 
       # Inquire the state of the Vagrant-controlled VM
       def state
-        output = self.vagrant_cli("status").output.grep(/#{self.instance_id}/).first
+        output = self.vagrant_cli("status").output.split("\n").select{ |line| (line =~ /#{self.instance_id}/) }.first
         result = UNKNOWN_STATE
         ALL_STATES.map{ |s| s.to_s.gsub('_', ' ') }.each do |state|
           if output =~ /#{state}/
