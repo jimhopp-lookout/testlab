@@ -11,7 +11,7 @@ class TestLab
             c.host_name = @provider.ip
             c.port      = @provider.port
             c.user      = @provider.user
-            c.keys      = @provider.identity
+            c.keys      = [@provider.identity].flatten.compact
           end
         end
         @ssh
@@ -33,7 +33,7 @@ class TestLab
 
             c.user            = (options[:user]   || container.primary_user.id)
             c.password        = (options[:passwd] || container.primary_user.password)
-            c.keys            = (options[:keys]   || [container.primary_user.identity, @provider.identity])
+            c.keys            = (options[:keys]   || [container.primary_user.identity, @provider.identity].flatten.compact)
           end
         end
         @container_ssh[name]
