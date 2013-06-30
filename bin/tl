@@ -46,8 +46,13 @@ desc 'Quiet mode'
 default_value false
 switch [:q, :quiet]
 
+desc 'Path to Labfile'
+arg_name 'path/to/file'
+default_value File.join(Dir.pwd, 'Labfile')
+flag [:l, :labfile]
+
 pre do |global,command,options,args|
-  (global[:v] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
+  (global[:verbose] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
 
   log_file = File.join(Dir.pwd, "testlab-#{HOSTNAME}.log")
   @logger = ZTK::Logger.new(log_file)
@@ -57,11 +62,11 @@ pre do |global,command,options,args|
   @logger.debug { "args(#{args.inspect})" }
 
   @ui = ZTK::UI.new(:logger => @logger)
-  @testlab = TestLab.new(:ui => @ui)
+  @testlab = TestLab.new(:ui => @ui, :labfile => global[:labfile])
 
   TestLab::Utility.log_header(@testlab).each { |line| @logger.info { line } }
 
-  if (global[:q] == false)
+  if (global[:quiet] == false)
     message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
     @testlab.ui.stdout.puts(message)
   end
