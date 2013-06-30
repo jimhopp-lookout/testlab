@@ -179,9 +179,7 @@ EOF
         if containers.count == 0
           @testlab.ui.stderr.puts("You either have no containers defined or dead nodes!".yellow)
         else
-          # ZTK::Report.new(:ui => @testlab.ui).spreadsheet(containers, TestLab::Container::STATUS_KEYS.reject{|k| k == :fqdn}) do |container|
           ZTK::Report.new(:ui => @testlab.ui).list(containers, TestLab::Container::STATUS_KEYS) do |container|
-            # OpenStruct.new(container.status.reject{|k,v| k == :fqdn})
             OpenStruct.new(container.status)
           end
         end
