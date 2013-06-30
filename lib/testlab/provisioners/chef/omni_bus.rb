@@ -84,7 +84,7 @@ class TestLab
 
         def chef_client_rb(container)
           <<-EOF
-#{ZTK::Template.do_not_edit_notice(:message => "Lookout TestLab Chef-Client Configuration")}
+#{ZTK::Template.do_not_edit_notice(:message => "OmniBus TestLab Chef-Client Configuration")}
 log_level               #{@config[:chef][:client][:log_level].inspect}
 log_location            STDOUT
 chef_server_url         #{@config[:chef][:client][:server_url].inspect}
