@@ -21,17 +21,18 @@ class TestLab
             self.container.node.ssh.exec(%(sudo chroot #{self.container.fs_root} /bin/bash -c '#{groupadd_command}'))
           end
 
-          useradd_command = %W(useradd --create-home --shell /bin/bash --groups sudo --password #{self.password})
+          useradd_command = %W(useradd --create-home --shell /bin/bash --groups sudo)
           useradd_command << "--uid #{self.uid}" if !self.uid.nil?
           useradd_command << "--gid #{self.gid}" if !self.gid.nil?
           useradd_command << self.id
           useradd_command = useradd_command.flatten.compact.join(' ')
 
-          self.container.node.ssh.exec(%(sudo chroot #{self.container.fs_root} /bin/bash -c '#{useradd_command}'))
+          self.container.lxc.attach(%(-- /bin/bash -c '#{useradd_command}'))
+          self.container.lxc.attach(%(-- /bin/bash -c 'echo "#{self.id}:#{self.password}" | chpasswd'))
         end
 
         # ensure the user user gets our node user key
-        user_home_dir = File.join(self.container.fs_root, ((self.id == "root") ? %(/root) : %(/home/#{self.id})))
+        user_home_dir = File.join(self.container.fs_root, self.home_dir)
         user_authkeys = File.join(user_home_dir, ".ssh", "authorized_keys")
         user_authkeys2 = File.join(user_home_dir, ".ssh", "authorized_keys2")
 
@@ -40,10 +41,23 @@ class TestLab
           user_authkeys2 => node_authkeys
         }
 
+        public_identities = Array.new
+        !self.public_identity.nil? and [self.public_identity].flatten.compact.each do |pi|
+          if File.exists?(pi)
+            public_identities << ::IO.read(pi).strip
+          end
+        end
+
         authkeys.each do |destination, source|
           @ui.logger.info { "SOURCE: #{source} >>> #{destination}" }
           self.container.node.ssh.exec(%(sudo mkdir -pv #{File.dirname(destination)}))
+
           self.container.node.ssh.exec(%(sudo grep "$(cat #{source})" #{destination} || sudo cat #{source} | sudo tee -a #{destination}))
+
+          public_identities.each do |pi|
+            self.container.node.ssh.exec(%(sudo grep "#{pi}" #{destination} || sudo echo "#{pi}" | sudo tee -a #{destination}))
+          end
+
           self.container.node.ssh.exec(%(sudo chmod -v 644 #{destination}))
         end
 

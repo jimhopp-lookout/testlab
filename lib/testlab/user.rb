@@ -19,6 +19,7 @@ class TestLab
     attribute   :password
 
     attribute   :identity
+    attribute   :public_identity
 
     attribute   :uid
     attribute   :gid
