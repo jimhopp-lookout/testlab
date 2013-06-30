@@ -19,9 +19,9 @@ class TestLab
     attribute   :primary,    :default => false
 
     def initialize(*args)
-      super(*args)
-
       @ui = TestLab.ui
+
+      super(*args)
     end
 
     def ip

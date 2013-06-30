@@ -37,9 +37,9 @@ class TestLab
 
 
     def initialize(*args)
-      super(*args)
-
       @ui     = TestLab.ui
+
+      super(*args)
     end
 
   end
