@@ -9,9 +9,10 @@ class TestLab
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class Chef
 
-      autoload :ChefGem,    'testlab/provisioners/chef/ruby_gem'
-      autoload :OmniBus,    'testlab/provisioners/chef/omni_bus'
-      autoload :OmniTruck,  'testlab/provisioners/chef/omni_truck'
+      autoload :RubyGemClient,  'testlab/provisioners/chef/ruby_gem_client'
+      autoload :RubyGemServer,  'testlab/provisioners/chef/ruby_gem_server'
+      autoload :OmniBus,        'testlab/provisioners/chef/omni_bus'
+      autoload :OmniTruck,      'testlab/provisioners/chef/omni_truck'
 
       class << self
 

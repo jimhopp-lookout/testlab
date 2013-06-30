@@ -2,13 +2,13 @@ class TestLab
   class Provisioner
     class Chef
 
-      # OmniBus Provisioner Error Class
-      class OmniBusError < ChefError; end
+      # RubyGemClient Provisioner Error Class
+      class RubyGemClientError < ChefError; end
 
-      # OmniBus Provisioner Class
+      # RubyGemClient Provisioner Class
       #
       # @author Zachary Patten <zachary AT jovelabs DOT com>
-      class OmniBus
+      class RubyGemClient
 
         def initialize(config={}, ui=nil)
           @config = (config || Hash.new)
@@ -18,7 +18,7 @@ class TestLab
 
           @config[:chef] ||= Hash.new
           @config[:chef][:client] ||= Hash.new
-          @config[:chef][:client][:version]    ||= %(latest)
+          @config[:chef][:client][:version]    ||= %(10.24.0)
           @config[:chef][:client][:log_level]  ||= :info
           @config[:chef][:client][:server_url] ||= "https://#{@chef_server.ip}"
           @config[:chef][:client][:attributes] ||= Hash.new
@@ -26,7 +26,7 @@ class TestLab
           @ui.logger.debug { "config(#{@config.inspect})" }
         end
 
-        # OmniBus Provisioner Container Setup
+        # RubyGemClient Provisioner Container Setup
         #
         # Renders the defined script to a temporary file on the target container
         # and proceeds to execute said script as root via *lxc-attach*.
@@ -37,7 +37,7 @@ class TestLab
         def on_container_setup(container)
           @config[:chef][:client][:node_name] ||= container.id
 
-          omnibus_template = File.join(TestLab::Provisioner::Chef.template_dir, 'omni_bus.erb')
+          rubygem_client_template = File.join(TestLab::Provisioner::Chef.template_dir, 'ruby_gem_client.erb')
 
           config = {}.merge!({
             :chef_client_cli => chef_client_cli(container),
@@ -49,12 +49,12 @@ class TestLab
             :home_dir => container.primary_user.home_dir
           }).merge!(@config)
 
-          container.bootstrap(ZTK::Template.render(omnibus_template, config))
+          container.bootstrap(ZTK::Template.render(rubygem_client_template, config))
 
           true
         end
 
-        # OmniBus Provisioner Container Teardown
+        # RubyGemClient Provisioner Container Teardown
         #
         # @return [Boolean] True if successful.
         def on_container_teardown(container)
@@ -84,7 +84,7 @@ class TestLab
 
         def chef_client_rb(container)
           <<-EOF
-#{ZTK::Template.do_not_edit_notice(:message => "Lookout TestLab Chef-Client Configuration")}
+#{ZTK::Template.do_not_edit_notice(:message => "TestLab Chef-Client Configuration")}
 log_level               #{@config[:chef][:client][:log_level].inspect}
 log_location            STDOUT
 chef_server_url         #{@config[:chef][:client][:server_url].inspect}

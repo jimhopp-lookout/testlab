@@ -1,0 +1,79 @@
+#!/bin/env bash
+<%= ZTK::Template.do_not_edit_notice(:message => "Chef RubyGem Bootstrap") %>
+set -x
+set -e
+
+export DEBIAN_FRONTEND="noninteractive"
+export CHEF_SOLO_ROOT="/tmp/chef-solo"
+export SUDO_USER="<%= @sudo_user %>"
+export SUDO_UID="<%= @sudo_uid %>"
+export SUDO_GID="<%= @sudo_gid %>"
+export HOME="<%= @home_dir %>"
+export
+
+mkdir -pv ${CHEF_SOLO_ROOT}
+cd ${CHEF_SOLO_ROOT}
+
+apt-get -y --force-yes update
+apt-get -y --force-yes install build-essential expect wget curl libgecode-dev ca-certificates ruby1.8 rubygems
+
+mkdir -pv /etc/chef /var/log/chef ${HOME}/.chef
+
+cat <<EOF | tee /etc/chef/solo.rb
+file_cache_path "${CHEF_SOLO_ROOT}/"
+cookbook_path %w(${CHEF_SOLO_ROOT}/cookbooks/)
+role_path "${CHEF_SOLO_ROOT}/roles/"
+EOF
+
+cat <<EOF | tee ${CHEF_SOLO_ROOT}/attributes.json
+<%= @chef_solo_attributes.to_json %>
+EOF
+
+cat <<EOF | tee ${CHEF_SOLO_ROOT}/Gemfile
+source 'https://rubygems.org'
+<% @chef_gems.each do |chef_gem| -%>
+gem '<%= chef_gem %>', '<%= @chef[:server][:version] %>'
+<% end -%>
+gem 'haml', '< 4.0.0'
+gem 'moneta', '< 0.7.0'
+gem 'librarian-chef'
+EOF
+
+gem install bundler --no-ri --no-rdoc
+bundle install
+
+update-alternatives --install /usr/bin/chef-client chef-client /usr/local/bin/chef-client 500
+update-alternatives --install /usr/bin/chef-server chef-server /usr/local/bin/chef-server 500
+update-alternatives --install /usr/bin/chef-server-webui chef-server-webui /usr/local/bin/chef-server-webui 500
+update-alternatives --install /usr/bin/chef-expander chef-expander /usr/local/bin/chef-expander 500
+update-alternatives --install /usr/bin/chef-expanderctl chef-expanderctl /usr/local/bin/chef-expanderctl 500
+update-alternatives --install /usr/bin/chef-expander-vnode chef-expander-vnode /usr/local/bin/chef-expander-vnode 500
+update-alternatives --install /usr/bin/chef-solr chef-solr /usr/local/bin/chef-solr 500
+update-alternatives --install /usr/bin/chef-solr-installer chef-solr-installer /usr/local/bin/chef-solr-installer 500
+update-alternatives --install /usr/bin/chef-solo chef-solo /usr/local/bin/chef-solo 500
+update-alternatives --install /usr/bin/knife knife /usr/local/bin/knife 500
+
+cat <<EOF | tee ${CHEF_SOLO_ROOT}/Cheffile
+site 'http://community.opscode.com/api/v1'
+cookbook 'chef-server', '< 2.0.0'
+cookbook 'apt', '< 2.0.0'
+EOF
+librarian-chef install
+
+chef-solo --config /etc/chef/solo.rb --json-attributes ${CHEF_SOLO_ROOT}/attributes.json --logfile /var/log/chef/chef-solo.log --log_level debug
+
+echo -n "Waiting on <%= File.basename(@chef_validator) %> and <%= File.basename(@chef_webui) %> to appear..."
+until [ -f <%= @chef_validator %> ] && [ -f <%= @chef_webui %> ]; do
+  echo -n "."
+  sleep 1
+done
+echo "done."
+
+cp -v <%= @chef_validator %> <%= @chef_webui %> ~/.chef
+
+[ -f <%= @home_dir %>/.chef/<%= @sudo_user %>.pem ] || knife configure --initial --server-url <%= @chef[:server][:server_url] %> --user <%= @sudo_user %> --repository '' --defaults --yes -VV
+[ -f <%= @home_dir %>/.chef/<%= @local_user %>.pem ] || knife client create <%= @local_user %> --server-url <%= @chef[:server][:server_url] %> --user <%= @sudo_user %> --key <%= @home_dir %>/.chef/<%= @sudo_user %>.pem --admin --file <%= @home_dir %>/.chef/<%= @local_user %>.pem --editor echo --disable-editing --defaults --yes -VV
+
+chown -Rv ${SUDO_USER}:${SUDO_USER} ${HOME}
+
+touch /.ruby-gem-server-bootstrap

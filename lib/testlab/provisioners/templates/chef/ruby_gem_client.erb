@@ -12,12 +12,22 @@ export HOME="<%= @home_dir %>"
 export
 
 cd /tmp
-apt-get -y install wget ca-certificates || yum -y install wget ca-certificates
-rm -fv /tmp/install.sh
-wget -v https://www.opscode.com/chef/install.sh -O /tmp/install.sh
-/bin/bash /tmp/install.sh -v <%= @chef[:client][:version] %>
+
+apt-get -y --force-yes update
+apt-get -y --force-yes install ca-certificates ruby1.8 rubygems
 
 mkdir -pv /etc/chef/
+
+cat <<EOF | tee /tmp/Gemfile
+source 'https://rubygems.org'
+gem 'chef', '<%= @chef[:client][:version] %>'
+gem 'moneta', '< 0.7.0'
+EOF
+
+gem install bundler --no-ri --no-rdoc
+bundle install
+
+update-alternatives --install /usr/bin/chef-client chef-client /usr/local/bin/chef-client 500
 
 cat <<EOF | tee /etc/chef/attributes.json
 <%= @chef[:client][:attributes].to_json %>
@@ -33,4 +43,4 @@ EOF
 
 <%= @chef_client_cli %>
 
-touch /.omni-bus-bootstrap
+touch /.ruby-gem-client-bootstrap

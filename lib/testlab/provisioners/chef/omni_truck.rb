@@ -16,10 +16,6 @@ class TestLab
           @ui     = (ui || TestLab.ui)
 
           @config[:chef] ||= Hash.new
-
-          @config[:chef][:client] ||= Hash.new
-          @config[:chef][:client][:version]     ||= %(latest)
-
           @config[:chef][:server] ||= Hash.new
           @config[:chef][:server][:version]     ||= %(latest)
           @config[:chef][:server][:prereleases] ||= false
@@ -39,7 +35,6 @@ class TestLab
         # @return [Boolean] True if successful.
         def on_container_setup(container)
           omnitruck_template = File.join(TestLab::Provisioner::Chef.template_dir, 'omni_truck.erb')
-          home_dir           = (container.primary_user.id == "root" ? "/root" : "/home/#{container.primary_user.id}")
 
           config = {}.merge!({
             :server_name => container.ip,
@@ -52,11 +47,12 @@ class TestLab
             :sudo_user => container.primary_user.id,
             :sudo_uid => container.primary_user.uid,
             :sudo_gid => container.primary_user.gid,
-            :home_dir => home_dir,
-            :omnibus_version => @config[:chef][:client][:version]
+            :home_dir => container.primary_user.home_dir
           }).merge!(@config)
 
           container.bootstrap(ZTK::Template.render(omnitruck_template, config))
+
+          true
         end
 
       private

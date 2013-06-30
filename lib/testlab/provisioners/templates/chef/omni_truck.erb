@@ -1,5 +1,5 @@
 #!/bin/env bash
-<%= ZTK::Template.do_not_edit_notice(:message => "OmniTruck Bootstrap") %>
+<%= ZTK::Template.do_not_edit_notice(:message => "Chef OmniTruck Bootstrap") %>
 set -x
 set -e
 
@@ -9,7 +9,7 @@ export SUDO_USER="<%= @sudo_user %>"
 export SUDO_UID="<%= @sudo_uid %>"
 export SUDO_GID="<%= @sudo_gid %>"
 export HOME="<%= @home_dir %>"
-export KNIFE_CONFIG_EXP_FILE="/tmp/knife-config.exp"
+export KNIFE_CONFIG_EXP_FILE="/tmp/knife.exp"
 export
 
 mkdir -p ${CHEF_SOLO_ROOT}
@@ -32,7 +32,7 @@ EOF
 
 rm -fv ${CHEF_SOLO_ROOT}/install.sh
 wget -v https://www.opscode.com/chef/install.sh -O ${CHEF_SOLO_ROOT}/install.sh
-bash ${CHEF_SOLO_ROOT}/install.sh -v <%= @omnibus_version %>
+bash ${CHEF_SOLO_ROOT}/install.sh -v <%= @chef[:server][:version] %>
 mkdir -pv /var/chef/cache ${CHEF_SOLO_ROOT}/cookbooks/chef-server
 wget -qO- https://github.com/opscode-cookbooks/chef-server/archive/master.tar.gz | tar xvzC ${CHEF_SOLO_ROOT}/cookbooks/chef-server --strip-components=1
 
