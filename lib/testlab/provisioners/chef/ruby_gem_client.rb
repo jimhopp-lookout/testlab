@@ -9,6 +9,7 @@ class TestLab
       #
       # @author Zachary Patten <zachary AT jovelabs DOT com>
       class RubyGemClient
+        require 'json'
 
         def initialize(config={}, ui=nil)
           @config = (config || Hash.new)
