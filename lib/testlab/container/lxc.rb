@@ -18,24 +18,7 @@ class TestLab
       #   execute.  This is generally a bash script of some sort for example.
       # @return [String] The output of *lxc-attach*.
       def bootstrap(content)
-        output = nil
-
-        ZTK::RescueRetry.try(:tries => 5, :on => ContainerError) do
-          tempfile = Tempfile.new("bootstrap")
-          remote_tempfile = File.join("/", "tmp", File.basename(tempfile.path))
-          target_tempfile = File.join(self.fs_root, remote_tempfile)
-
-          self.node.ssh.file(:target => target_tempfile, :chmod => '0777', :chown => 'root:root') do |file|
-            file.puts(content)
-          end
-
-          output = self.lxc.attach(%(--), %(/bin/bash), remote_tempfile)
-          if !(output =~ /#{remote_tempfile}: No such file or directory/).nil?
-            raise ContainerError, "We could not find the bootstrap file!"
-          end
-        end
-
-        output
+        self.lxc.bootstrap(content)
       end
 
       # LXC::Container object
