@@ -1,8 +1,36 @@
+#!/bin/env bash
+<%= ZTK::Template.do_not_edit_notice(:message => "OmniBus Bootstrap") %>
 set -x
+set -e
 
 export DEBIAN_FRONTEND="noninteractive"
+export SUDO_USER="<%= @sudo_user %>"
+export SUDO_UID="<%= @sudo_uid %>"
+export SUDO_GID="<%= @sudo_gid %>"
+export HOME="<%= @home_dir %>"
+
+export
+
 cd /tmp
-apt-get -y install wget || yum -y install wget
+apt-get -y install wget ca-certificates || yum -y install wget ca-certificates
 rm -fv /tmp/install.sh
-wget -v --no-check-certificate <%= @omnibus_url %> -O /tmp/install.sh
-/bin/bash /tmp/install.sh -v <%= @version %>
+wget -v https://www.opscode.com/chef/install.sh -O /tmp/install.sh
+/bin/bash /tmp/install.sh -v <%= @chef[:client][:version] %>
+
+mkdir -pv /etc/chef/
+
+cat <<EOF | tee /etc/chef/attributes.json
+<%= @chef[:client][:attributes].to_json %>
+EOF
+
+cat <<EOF | tee /etc/chef/validation.pem
+<%= @validation_pem %>
+EOF
+
+cat <<EOF | tee /etc/chef/client.rb
+<%= @chef_client_rb %>
+EOF
+
+<%= @chef_client_cli %>
+
+touch /.omni-bus-bootstrap

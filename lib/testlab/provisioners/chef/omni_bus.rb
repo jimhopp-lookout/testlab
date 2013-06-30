@@ -14,8 +14,14 @@ class TestLab
           @config = (config || Hash.new)
           @ui     = (ui || TestLab.ui)
 
-          @config[:version]     ||= %(latest)
-          @config[:omnibus_url] ||= %(https://www.opscode.com/chef/install.sh)
+          @chef_server = TestLab::Container.first('chef-server')
+
+          @config[:chef] ||= Hash.new
+          @config[:chef][:client] ||= Hash.new
+          @config[:chef][:client][:version]    ||= %(latest)
+          @config[:chef][:client][:log_level]  ||= :info
+          @config[:chef][:client][:server_url] ||= "https://#{@chef_server.ip}"
+          @config[:chef][:client][:attributes] ||= Hash.new
 
           @ui.logger.debug { "config(#{@config.inspect})" }
         end
@@ -29,19 +35,67 @@ class TestLab
         #   provision.
         # @return [Boolean] True if successful.
         def on_container_setup(container)
-          omnibus_template = File.join(TestLab::Provisioner.template_dir, 'chef', 'omnibus.erb')
-          container.bootstrap(ZTK::Template.render(omnibus_template, @config))
+          @config[:chef][:client][:node_name] ||= container.id
+
+          omnibus_template = File.join(TestLab::Provisioner::Chef.template_dir, 'omni_bus.erb')
+          home_dir         = (container.primary_user.id == "root" ? "/root" : "/home/#{container.primary_user.id}")
+
+          config = {}.merge!({
+            :chef_client_cli => chef_client_cli(container),
+            :chef_client_rb => chef_client_rb(container),
+            :validation_pem => validation_pem,
+            :sudo_user => container.primary_user.id,
+            :sudo_uid => container.primary_user.uid,
+            :sudo_gid => container.primary_user.gid,
+            :home_dir => home_dir
+          }).merge!(@config)
+
+          container.bootstrap(ZTK::Template.render(omnibus_template, config))
+
+          true
         end
 
         # OmniBus Provisioner Container Teardown
         #
-        # This is a NO-OP currently.
-        #
         # @return [Boolean] True if successful.
         def on_container_teardown(container)
-          # NOOP
+          if @chef_server.state == :running
+            @chef_server.ssh.exec(%(knife node delete #{container.id} --yes), :ignore_exit_status => true)
+            @chef_server.ssh.exec(%(knife client delete #{container.id} --yes), :ignore_exit_status => true)
+          end
 
           true
+        end
+
+      private
+
+        def chef_client_cli(container, *args)
+          arguments = Array.new
+
+          arguments << %(chef-client)
+          arguments << [args]
+          arguments << %(--node-name #{container.id})
+          arguments << %(--environment #{@config[:chef][:client][:environment]}) if !@config[:chef][:client][:environment].nil?
+          arguments << %(--json-attributes /etc/chef/attributes.json)
+          arguments << %(--server #{@config[:chef][:client][:server_url]})
+          arguments << %(--once)
+
+          arguments.flatten.compact.join(' ')
+        end
+
+        def chef_client_rb(container)
+          <<-EOF
+#{ZTK::Template.do_not_edit_notice(:message => "Lookout TestLab Chef-Client Configuration")}
+log_level               #{@config[:chef][:client][:log_level].inspect}
+log_location            STDOUT
+chef_server_url         #{@config[:chef][:client][:server_url].inspect}
+validation_client_name  "chef-validator"
+node_name               #{@config[:chef][:client][:node_name].inspect}
+          EOF
+        end
+
+        def validation_pem
+          @chef_server.ssh.exec(%((cat ~/.chef/validation.pem || cat ~/.chef/chef-validator.pem) 2> /dev/null)).output.strip
         end
 
       end
