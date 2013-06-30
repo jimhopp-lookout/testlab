@@ -11,9 +11,8 @@ class TestLab
       # @return [LXC] An instance of LXC configured for this node.
       def lxc(options={})
         if (!defined?(@lxc) || @lxc.nil?)
-          @lxc ||= ::LXC.new
-          @lxc.use_sudo = true
-          @lxc.use_ssh = self.ssh
+          @lxc_runner ||= ::LXC::Runner::SSH.new(:ui => @ui, :ssh => self.ssh)
+          @lxc        ||= ::LXC.new(:ui => @ui, :runner => @lxc_runner)
         end
         @lxc
       end
