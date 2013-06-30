@@ -12,8 +12,8 @@ class TestLab
       require 'tempfile'
 
       def initialize(config={}, ui=nil)
+        @ui     = (ui     || TestLab.ui)
         @config = (config || Hash.new)
-        @ui     = (ui || TestLab.ui)
       end
 
       # Shell Provisioner Container Setup
@@ -25,9 +25,9 @@ class TestLab
       #   provision.
       # @return [Boolean] True if successful.
       def on_container_setup(container)
-        if !@config[:script].nil?
-          container.bootstrap(@config[:script])
-        end
+        @config[:script].nil? and raise ShellError, "You must supply a script to bootstrap!"
+
+        container.bootstrap(@config[:script])
 
         true
       end
