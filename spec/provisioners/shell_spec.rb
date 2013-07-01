@@ -23,7 +23,7 @@ describe TestLab::Provisioner::Shell do
 
   subject {
     @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
-    @testlab = TestLab.new(:labfile => LABFILE, :ui => @ui)
+    @testlab = TestLab.new(:labfile_path => LABFILE, :ui => @ui)
     TestLab::Container.first('server-shell')
   }
 
