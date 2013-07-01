@@ -44,9 +44,9 @@ desc 'Quiet mode'
 default_value false
 switch [:q, :quiet]
 
-desc 'Path to Labfile: ${PWD}/Labfile'
+desc 'Path to Labfile: ${REPO}/Labfile'
 arg_name 'path/to/file'
-default_value File.join(Dir.pwd, 'Labfile')
+# default_value File.join(Dir.pwd, 'Labfile')
 flag [:l, :labfile]
 
 desc 'Path to Repository directory: ${PWD}'
@@ -54,15 +54,15 @@ arg_name 'path/to/directory'
 default_value Dir.pwd
 flag [:r, :repo]
 
-desc 'Path to Configuration directory: ${PWD}/.testlab-$(hostname -s)'
+desc 'Path to Configuration directory: ${REPO}/.testlab-$(hostname -s)'
 arg_name 'path/to/directory'
-default_value File.join(Dir.pwd, ".testlab-#{TestLab.hostname}")
+# default_value File.join(Dir.pwd, ".testlab-#{TestLab.hostname}")
 flag [:c, :config]
 
 pre do |global,command,options,args|
   (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
-  log_file = File.join(Dir.pwd, "testlab-#{TestLab.hostname}.log")
+  log_file = File.join(global[:repo], "testlab-#{TestLab.hostname}.log")
   @logger = ZTK::Logger.new(log_file)
 
   @ui = ZTK::UI.new(
