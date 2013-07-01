@@ -32,17 +32,20 @@ command :container do |c|
   ###################
   c.desc 'Create a container'
   c.long_desc <<-EOF
-Create a container.  The container is created.
+Creates a container on the node the container belongs to.
 EOF
   c.command :create do |create|
     create.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you screateplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.create
+        containers.each do |container|
+          container.create
+        end
       end
     end
   end
@@ -51,17 +54,20 @@ EOF
   ####################
   c.desc 'Destroy a container'
   c.long_desc <<-EOF
-Destroy a container.  The container is stopped and destroyed.
+Destroys the container, force stopping it if necessary.  The containers file system is purged from disk.  This is a destructive operation, there is no way to recover from it.
 EOF
   c.command :destroy do |destroy|
     destroy.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.destroy
+        containers.each do |container|
+          container.destroy
+        end
       end
     end
   end
@@ -70,17 +76,20 @@ EOF
   ###############
   c.desc 'Up a container'
   c.long_desc <<-EOF
-Up a container.  The container is started and brought online.
+The container is started and brought online.
 EOF
   c.command :up do |up|
     up.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.up
+        containers.each do |container|
+          container.up
+        end
       end
     end
   end
@@ -89,17 +98,20 @@ EOF
   #################
   c.desc 'Down a container'
   c.long_desc <<-EOF
-Down a container.  The container is stopped taking it offline.
+The container is stopped taking it offline.
 EOF
   c.command :down do |down|
     down.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.down
+        containers.each do |container|
+          container.down
+        end
       end
     end
   end
@@ -108,17 +120,20 @@ EOF
   ####################
   c.desc 'Setup a container'
   c.long_desc <<-EOF
-Setup a container.  The container is created, started and provisioned.
+The container is provisioned.
 EOF
   c.command :setup do |setup|
     setup.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.setup
+        containers.each do |container|
+          container.setup
+        end
       end
     end
   end
@@ -127,17 +142,20 @@ EOF
   ####################
   c.desc 'Teardown a container'
   c.long_desc <<-EOF
-Teardown a container.  The container is offlined and destroyed.
+The container is deprovisioned.
 EOF
   c.command :teardown do |teardown|
     teardown.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.teardown
+        containers.each do |container|
+          container.teardown
+        end
       end
     end
   end
@@ -157,10 +175,13 @@ EOF
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.build
+        containers.each do |container|
+          container.build
+        end
       end
     end
   end
@@ -169,29 +190,32 @@ EOF
   ###################
   c.desc 'Display the status of container(s)'
   c.long_desc <<-EOF
-Displays the status of all containers or a single container if supplied via the ID parameter.
+Displays the status of all containers or single/multiple containers if supplied via the ID parameter.
 EOF
   c.command :status do |status|
     status.action do |global_options, options, args|
+      containers = Array.new
+
       if options[:name].nil?
         # No ID supplied; show everything
-        containers = @testlab.containers.delete_if{ |c| c.node.dead? }
-        if containers.count == 0
-          @testlab.ui.stderr.puts("You either have no containers defined or dead nodes!".yellow)
-        else
-          ZTK::Report.new(:ui => @testlab.ui).list(containers, TestLab::Container::STATUS_KEYS) do |container|
-            OpenStruct.new(container.status)
-          end
-        end
+        containers = TestLab::Container.all
       else
-        # ID supplied; show just that item
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        # ID supplied; show just those items
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
+      end
 
-        ZTK::Report.new(:ui => @testlab.ui).list(container, TestLab::Container::STATUS_KEYS) do |container|
+      containers = containers.delete_if{ |container| container.node.dead? }
+
+      if (containers.count == 0)
+        @testlab.ui.stderr.puts("You either have no containers defined or dead nodes!".yellow)
+      else
+        ZTK::Report.new(:ui => @testlab.ui).list(containers, TestLab::Container::STATUS_KEYS) do |container|
           OpenStruct.new(container.status)
         end
       end
+
     end
   end
 
@@ -231,12 +255,17 @@ EOF
   c.command :'ssh-config' do |ssh_config|
 
     ssh_config.action do |global_options, options, args|
-      help_now!('a name is required') if options[:name].nil?
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-      container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
-      container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
-
-      puts(container.ssh_config)
+        containers.each do |container|
+          puts(container.ssh_config)
+        end
+      end
     end
   end
 
@@ -255,16 +284,19 @@ EOF
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.teardown
-        container.down
-        container.destroy
+        containers.each do |container|
+          container.teardown
+          container.down
+          container.destroy
 
-        container.create
-        container.up
-        container.setup
+          container.create
+          container.up
+          container.setup
+        end
       end
     end
   end
@@ -273,17 +305,20 @@ EOF
   ##################
   c.desc 'Clone a container'
   c.long_desc <<-EOF
-Clone a container.  The container is offlined and an ephemeral copy of it is started.
+An ephemeral copy of the container is started.  There is a small delay incured during the first clone operation.
 EOF
   c.command :clone do |clone|
     clone.action do |global_options, options, args|
       if options[:name].nil?
         help_now!('a name is required') if options[:name].nil?
       else
-        container = @testlab.containers.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-        container.clone
+        containers.each do |container|
+          container.clone
+        end
       end
     end
   end
@@ -304,12 +339,17 @@ EOF
     export.flag [:output]
 
     export.action do |global_options, options, args|
-      help_now!('a name is required') if options[:name].nil?
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-      container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
-      container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
-
-      container.export(options[:compression], options[:output])
+        containers.each do |container|
+          container.export(options[:compression], options[:output])
+        end
+      end
     end
   end
 
@@ -323,13 +363,18 @@ EOF
     import.flag [:input]
 
     import.action do |global_options, options, args|
-      help_now!('a name is required') if options[:name].nil?
-      help_now!('a filename is required') if options[:input].nil?
+      if (options[:name].nil? || options[:input].nil?)
+        help_now!('a name is required') if options[:name].nil?
+        help_now!('a filename is required') if options[:input].nil?
+      else
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
-      container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
-      container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
-
-      container.import(options[:input])
+        containers.each do |container|
+          container.import(options[:input])
+        end
+      end
     end
   end
 
