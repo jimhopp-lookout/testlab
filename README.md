@@ -26,11 +26,12 @@ The TestLab command-line program `tl` follows in the style of git:
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        0.7.1
+        0.7.2
 
     GLOBAL OPTIONS
-        -l, --labfile=path/to/file     - Path to Labfile (default: /home/zpatten/code/personal/testlab-repo/Labfile)
-        -c, --config=path/to/directory - Path to configuration directory (default: /home/zpatten/code/personal/testlab-repo/.testlab-zsp-desktop)
+        -l, --labfile=path/to/file     - Path to Labfile: ${PWD}/Labfile (default: /home/zpatten/code/personal/testlab-repo/Labfile)
+        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/personal/testlab-repo)
+        -c, --config=path/to/directory - Path to Configuration directory: ${PWD}/.testlab-$(hostname -s) (default: /home/zpatten/code/personal/testlab-repo/.testlab-zsp-desktop)
         --version                      - Display the program version
         -v, --[no-]verbose             - Show verbose output
         -q, --[no-]quiet               - Quiet mode
