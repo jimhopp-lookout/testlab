@@ -24,6 +24,8 @@ class TestLab
           "hostname" => Socket.gethostname.inspect,
           "program" => $0.to_s.inspect,
           "config_dir" => testlab.config_dir.inspect,
+          "repo_dir" => testlab.repo_dir.inspect,
+          "labfile_path" => testlab.labfile_path.inspect,
           "logdev" => testlab.ui.logger.logdev.inspect,
           "version" => TestLab::VERSION
         }

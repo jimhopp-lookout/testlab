@@ -106,6 +106,7 @@ class TestLab
 
   attr_accessor :config_dir
   attr_accessor :repo_dir
+  attr_accessor :labfile_path
 
   def initialize(options={})
     self.ui          = (options[:ui] || ZTK::UI.new)
@@ -115,7 +116,7 @@ class TestLab
     @repo_dir        = (options[:repo_dir]   || Dir.pwd)
 
     labfile          = (options[:labfile] || File.join(Dir.pwd, 'Labfile'))
-    labfile_path     = ZTK::Locator.find(labfile)
+    @labfile_path    = ZTK::Locator.find(labfile)
     @labfile         = TestLab::Labfile.load(labfile_path)
     @labfile.testlab = self
   end
