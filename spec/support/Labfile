@@ -9,12 +9,7 @@ EOF
 
 REPO = File.dirname(__FILE__)
 
-config ({
-  :domain => "default.zone",
-  :repo => REPO
-})
-
-node :localhost do
+node :vagrant do
 
   provider      TestLab::Provider::Vagrant
   provisioners  [
@@ -28,7 +23,10 @@ node :localhost do
       :port     => 22,
       :cpus     => 1,
       :memory   => 512,
-      :file     => REPO
+      :file     => Dir.pwd
+    },
+    :bind => {
+      :domain => "default.zone"
     }
   })
 
