@@ -73,9 +73,9 @@ pre do |global,command,options,args|
 
   @testlab = TestLab.new(
     :ui => @ui,
-    :labfile    => global[:labfile],
-    :config_dir => global[:config],
-    :repo_dir   => global[:repo]
+    :labfile_path => global[:labfile],
+    :config_dir   => global[:config],
+    :repo_dir     => global[:repo]
   )
 
   @ui.logger.debug { "global(#{global.inspect})" }
