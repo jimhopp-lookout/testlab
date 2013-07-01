@@ -42,7 +42,7 @@ class TestLab
           }
         }
 
-        apt_conf_d_proxy_file = File.join("/", "etc", "apt", "apt.conf.d", "00proxy")
+        apt_conf_d_proxy_file = %(/etc/apt/apt.conf.d/00proxy)
         node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
         end
@@ -60,7 +60,7 @@ class TestLab
 
         # Ensure the container APT calls use apt-cacher-ng on the node
         gateway_ip                     = container.primary_interface.network.ip
-        apt_conf_d_proxy_file          = File.join("/", "etc", "apt", "apt.conf.d", "00proxy")
+        apt_conf_d_proxy_file          = %(/etc/apt/apt.conf.d/00proxy)
 
         @config[:apt][:cacher_ng] = { :proxy_url => "http://#{gateway_ip}:3142" }.merge(@config[:apt][:cacher_ng])
 
@@ -69,7 +69,7 @@ class TestLab
         end
 
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng
-        apt_conf_sources_file = File.join("/", "etc", "apt", "sources.list")
+        apt_conf_sources_file = %(/etc/apt/sources.list)
         container.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}))
       end
 

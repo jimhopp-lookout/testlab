@@ -131,7 +131,7 @@ class TestLab
       end
 
       def identity
-        (@config[:vagrant][:identity] || File.join(ENV['HOME'], ".vagrant.d", "insecure_private_key"))
+        (@config[:vagrant][:identity] || File.join(Dir.home, ".vagrant.d", "insecure_private_key"))
       end
 
       def ip

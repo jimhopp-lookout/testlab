@@ -14,7 +14,7 @@ class TestLab
 
         self.down
 
-        sc_file = File.join("/", "tmp", "#{self.id}.sc")
+        sc_file = %(/tmp/#{self.id}.sc)
         local_file ||= File.join(Dir.pwd, File.basename(sc_file))
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
@@ -48,7 +48,7 @@ EOF
         self.down
         self.destroy
 
-        sc_file = File.join("/", "tmp", "#{self.id}.sc")
+        sc_file = %(/tmp/#{self.id}.sc)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
           self.node.ssh.exec(%(sudo rm -fv #{sc_file}), :silence => true, :ignore_exit_status => true)

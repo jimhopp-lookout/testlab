@@ -92,7 +92,7 @@ class TestLab
       def build_bind_db(ssh, zone, records)
         bind_db_template = File.join(TestLab::Provisioner.template_dir, "bind", 'bind-db.erb')
 
-        ssh.file(:target => "/etc/bind/db.#{zone}", :chown => "bind:bind") do |file|
+        ssh.file(:target => %(/etc/bind/db.#{zone}), :chown => "bind:bind") do |file|
           file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND DB: #{zone}", :char => ';'))
           file.puts(ZTK::Template.render(bind_db_template, { :zone => zone, :records => records }))
         end
@@ -100,7 +100,7 @@ class TestLab
 
       # Builds the BIND configuration
       def build_bind_conf(ssh)
-        ssh.file(:target => File.join("/etc/bind/named.conf"), :chown => "bind:bind") do |file|
+        ssh.file(:target => %(/etc/bind/named.conf), :chown => "bind:bind") do |file|
           build_bind_main_partial(file)
           build_bind_zone_partial(ssh, file)
         end

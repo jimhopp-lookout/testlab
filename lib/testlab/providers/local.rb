@@ -75,7 +75,7 @@ class TestLab
       end
 
       def identity
-        File.join(ENV['HOME'], ".ssh", "id_rsa")
+        File.join(Dir.home, ".ssh", "id_rsa")
       end
 
       def ip
