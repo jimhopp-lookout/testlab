@@ -18,6 +18,7 @@
 #
 ################################################################################
 
+require 'rake/clean'
 require 'bundler/gem_tasks'
 
 ################################################################################
@@ -26,6 +27,17 @@ require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 task :default => [:spec]
 task :test => [:spec]
+
+################################################################################
+
+require 'cucumber/rake/task'
+desc 'Run features'
+Cucumber::Rake::Task.new(:features) do |t|
+  opts = "features --format pretty -x"
+  opts += " --tags #{ENV['TAGS']}" if ENV['TAGS']
+  t.cucumber_opts =  opts
+  t.fork = false
+end
 
 ################################################################################
 
