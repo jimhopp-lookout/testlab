@@ -84,6 +84,8 @@ require 'testlab/monkeys'
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
 
+  HOSTNAME ||= Socket.gethostname.split('.').first.strip
+
   # TestLab Error Class
   class TestLabError < StandardError; end
 
@@ -100,13 +102,18 @@ class TestLab
 
   include TestLab::Utility::Misc
 
-  def initialize(options={})
-    self.ui      = (options[:ui] || ZTK::UI.new)
+  attr_accessor :config_dir
 
-    labfile      = (options[:labfile] || File.join(Dir.pwd, 'Labfile'))
-    labfile_path = ZTK::Locator.find(labfile)
-    @labfile     = TestLab::Labfile.load(labfile_path)
-    @labfile.config.merge!(:testlab => self)
+  def initialize(options={})
+    self.ui          = (options[:ui] || ZTK::UI.new)
+    self.class.ui    = self.ui
+
+    @config_dir      = (options[:config_dir] || File.join(Dir.pwd, ".testlab-#{HOSTNAME}"))
+
+    labfile          = (options[:labfile] || File.join(Dir.pwd, 'Labfile'))
+    labfile_path     = ZTK::Locator.find(labfile)
+    @labfile         = TestLab::Labfile.load(labfile_path)
+    @labfile.testlab = self
   end
 
   # Test Lab Nodes
@@ -134,6 +141,15 @@ class TestLab
   # @return [Array<TestLab::Network>] An array of all defined networks.
   def networks
     TestLab::Network.all
+  end
+
+  # Test Lab Labfile
+  #
+  # Returns our top-level Labfile instance.
+  #
+  # @return [TestLab::Labfile] The top-level Labfile instance.
+  def labfile
+    @labfile
   end
 
   # Test Lab Configuration
@@ -272,18 +288,6 @@ class TestLab
       end
       node.send(method_name, *method_args)
     end
-  end
-
-  # TestLab Configuration Directory
-  #
-  # Returns the path to the test lab configuration directory which is located
-  # off the repo directory under '.testlab'.
-  #
-  # @return [String] The path to the TestLab configuration directory.
-  def config_dir
-    @hostname ||= Socket.gethostname.split('.').first.strip
-    directory = File.join(self.config[:repo], ".testlab-#{@hostname}")
-    File.expand_path(directory, File.dirname(__FILE__))
   end
 
   # Provider Method Handler

@@ -51,22 +51,36 @@ arg_name 'path/to/file'
 default_value File.join(Dir.pwd, 'Labfile')
 flag [:l, :labfile]
 
+desc 'Path to configuration directory'
+arg_name 'path/to/directory'
+default_value File.join(Dir.pwd, ".testlab-#{HOSTNAME}")
+flag [:c, :config]
+
 pre do |global,command,options,args|
-  (global[:verbose] == true) and ENV['LOG_LEVEL'] = 'DEBUG'
+  (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
   log_file = File.join(Dir.pwd, "testlab-#{HOSTNAME}.log")
   @logger = ZTK::Logger.new(log_file)
 
-  @logger.debug { "global(#{global.inspect})" }
-  @logger.debug { "options(#{options.inspect})" }
-  @logger.debug { "args(#{args.inspect})" }
+  @ui = ZTK::UI.new(
+    :logger  => @logger,
+    :verbose => global[:verbose],
+    :quiet   => global[:quiet]
+  )
 
-  @ui = ZTK::UI.new(:logger => @logger)
-  @testlab = TestLab.new(:ui => @ui, :labfile => global[:labfile])
+  @testlab = TestLab.new(
+    :ui => @ui,
+    :labfile    => global[:labfile],
+    :config_dir => global[:config]
+  )
+
+  @ui.logger.debug { "global(#{global.inspect})" }
+  @ui.logger.debug { "options(#{options.inspect})" }
+  @ui.logger.debug { "args(#{args.inspect})" }
 
   TestLab::Utility.log_header(@testlab).each { |line| @logger.info { line } }
 
-  if (global[:quiet] == false)
+  if !@ui.quiet?
     message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
     @testlab.ui.stdout.puts(message)
   end

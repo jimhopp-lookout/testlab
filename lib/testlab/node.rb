@@ -50,6 +50,10 @@ class TestLab
       raise NodeError, "You must specify a provider class!" if self.provider.nil?
     end
 
+    def config_dir
+      self.labfile.config_dir
+    end
+
   end
 
 end
