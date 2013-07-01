@@ -11,7 +11,7 @@ class TestLab
       # @return [Array<String>] A unique array of all defined domain names.
       def domains
         self.all.map do |container|
-          container.domain ||= container.node.labfile.config[:domain]
+          container.domain ||= container.node.domain
           container.domain
         end.compact.uniq
       end

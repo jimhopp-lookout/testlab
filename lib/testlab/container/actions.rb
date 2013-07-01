@@ -119,8 +119,8 @@ class TestLab
 
       # Configure the container
       def configure
-        self.domain  ||= self.node.labfile.config[:domain]
-        self.arch    ||= detect_arch
+        self.domain ||= self.node.domain
+        self.arch   ||= detect_arch
 
         build_lxc_config(self.lxc.config)
 

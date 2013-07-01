@@ -58,6 +58,11 @@ class TestLab
       self.labfile.repo_dir
     end
 
+    def domain
+      self.config[:bind] ||= Hash.new
+      self.config[:bind][:domain]
+    end
+
   end
 
 end

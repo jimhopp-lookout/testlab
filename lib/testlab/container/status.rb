@@ -36,7 +36,7 @@ class TestLab
       #
       # @return [String] The containers FQDN.
       def fqdn
-        self.domain ||= self.node.labfile.config[:domain]
+        self.domain ||= self.node.domain
 
         [self.id, self.domain].join('.')
       end
