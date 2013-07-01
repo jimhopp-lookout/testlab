@@ -126,6 +126,14 @@ class TestLab
       super(*args)
     end
 
+    def config_dir
+      self.node.config_dir
+    end
+
+    def repo_dir
+      self.node.repo_dir
+    end
+
   end
 
 end

@@ -105,12 +105,14 @@ class TestLab
   include TestLab::Utility::Misc
 
   attr_accessor :config_dir
+  attr_accessor :repo_dir
 
   def initialize(options={})
     self.ui          = (options[:ui] || ZTK::UI.new)
     self.class.ui    = self.ui
 
     @config_dir      = (options[:config_dir] || File.join(Dir.pwd, ".testlab-#{HOSTNAME}"))
+    @repo_dir        = (options[:repo_dir]   || Dir.pwd)
 
     labfile          = (options[:labfile] || File.join(Dir.pwd, 'Labfile'))
     labfile_path     = ZTK::Locator.find(labfile)

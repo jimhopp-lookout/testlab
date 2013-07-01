@@ -46,12 +46,17 @@ desc 'Quiet mode'
 default_value false
 switch [:q, :quiet]
 
-desc 'Path to Labfile'
+desc 'Path to Labfile: ${PWD}/Labfile'
 arg_name 'path/to/file'
 default_value File.join(Dir.pwd, 'Labfile')
 flag [:l, :labfile]
 
-desc 'Path to configuration directory'
+desc 'Path to Repository directory: ${PWD}'
+arg_name 'path/to/directory'
+default_value Dir.pwd
+flag [:r, :repo]
+
+desc 'Path to Configuration directory: ${PWD}/.testlab-$(hostname -s)'
 arg_name 'path/to/directory'
 default_value File.join(Dir.pwd, ".testlab-#{HOSTNAME}")
 flag [:c, :config]
@@ -71,7 +76,8 @@ pre do |global,command,options,args|
   @testlab = TestLab.new(
     :ui => @ui,
     :labfile    => global[:labfile],
-    :config_dir => global[:config]
+    :config_dir => global[:config],
+    :repo_dir   => global[:repo]
   )
 
   @ui.logger.debug { "global(#{global.inspect})" }

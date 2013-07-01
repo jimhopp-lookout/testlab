@@ -16,6 +16,10 @@ class TestLab
       self.testlab.config_dir
     end
 
+    def repo_dir
+      self.testlab.repo_dir
+    end
+
   end
 
 end

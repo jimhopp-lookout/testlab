@@ -54,6 +54,10 @@ class TestLab
       self.labfile.config_dir
     end
 
+    def repo_dir
+      self.labfile.repo_dir
+    end
+
   end
 
 end
