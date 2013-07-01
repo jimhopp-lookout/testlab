@@ -84,10 +84,6 @@ require 'testlab/monkeys'
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
 
-  unless const_defined?(:HOSTNAME)
-    HOSTNAME = Socket.gethostname.split('.').first.strip
-  end
-
   # TestLab Error Class
   class TestLabError < StandardError; end
 
@@ -112,7 +108,7 @@ class TestLab
     self.ui          = (options[:ui] || ZTK::UI.new)
     self.class.ui    = self.ui
 
-    @config_dir      = (options[:config_dir] || File.join(Dir.pwd, ".testlab-#{HOSTNAME}"))
+    @config_dir      = (options[:config_dir] || File.join(Dir.pwd, ".testlab-#{TestLab.hostname}"))
     @repo_dir        = (options[:repo_dir]   || Dir.pwd)
 
     labfile          = (options[:labfile] || File.join(Dir.pwd, 'Labfile'))
@@ -338,6 +334,15 @@ class TestLab
     def ui=(value)
       @@ui = value
       value
+    end
+
+    # TestLab Hostname
+    #
+    # Gets the hostname portion of the fqdn for the current host.
+    #
+    # @return [String] The hostname for the current host.
+    def hostname
+      Socket.gethostname.split('.').first.strip
     end
 
     # Test Lab Gem Directory

@@ -21,7 +21,7 @@ class TestLab
 
       def log_details(testlab)
         {
-          "hostname" => Socket.gethostname.inspect,
+          "hostname" => "%s (%s)" % [Socket.gethostname.inspect, TestLab.hostname.inspect],
           "program" => $0.to_s.inspect,
           "config_dir" => testlab.config_dir.inspect,
           "repo_dir" => testlab.repo_dir.inspect,

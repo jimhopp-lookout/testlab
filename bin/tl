@@ -26,8 +26,6 @@ require 'testlab'
 include GLI::App
 include TestLab::Utility::Misc
 
-HOSTNAME = Socket.gethostname.split('.').first.strip
-
 version TestLab::VERSION
 
 program_desc %(TestLab - A toolkit for building virtual computer labs)
@@ -58,13 +56,13 @@ flag [:r, :repo]
 
 desc 'Path to Configuration directory: ${PWD}/.testlab-$(hostname -s)'
 arg_name 'path/to/directory'
-default_value File.join(Dir.pwd, ".testlab-#{HOSTNAME}")
+default_value File.join(Dir.pwd, ".testlab-#{TestLab.hostname}")
 flag [:c, :config]
 
 pre do |global,command,options,args|
   (global[:verbose] == true) and (ENV['LOG_LEVEL'] = 'DEBUG')
 
-  log_file = File.join(Dir.pwd, "testlab-#{HOSTNAME}.log")
+  log_file = File.join(Dir.pwd, "testlab-#{TestLab.hostname}.log")
   @logger = ZTK::Logger.new(log_file)
 
   @ui = ZTK::UI.new(
