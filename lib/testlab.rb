@@ -84,7 +84,9 @@ require 'testlab/monkeys'
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
 
-  HOSTNAME ||= Socket.gethostname.split('.').first.strip
+  unless const_defined?(:HOSTNAME)
+    HOSTNAME = Socket.gethostname.split('.').first.strip
+  end
 
   # TestLab Error Class
   class TestLabError < StandardError; end
