@@ -15,6 +15,7 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:bind] ||= Hash.new
+        @config[:bind][:domain] ||= "default.zone"
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
@@ -44,7 +45,7 @@ class TestLab
         reverse_records = Hash.new
 
         TestLab::Container.all.each do |container|
-          container.domain ||= container.node.labfile.config[:domain]
+          container.domain ||= @config[:bind][:domain]
 
           container.interfaces.each do |interface|
             forward_records[container.domain] ||= Array.new
