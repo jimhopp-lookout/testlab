@@ -25,7 +25,7 @@ require 'testlab/monkeys'
 #
 #   config Hash[
 #     :domain => "default.zone",
-#     :repo => File.join(Dir.home, "code", "personal", "testlab-repo")
+#     :repo => File.join(ENV['HOME'], "code", "personal", "testlab-repo")
 #   ]
 #
 #   node :localhost do
