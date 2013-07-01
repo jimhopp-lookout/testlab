@@ -24,8 +24,8 @@ desc 'Manage containers'
 arg_name 'Describe arguments to container here'
 command :container do |c|
 
-  c.desc 'Container ID or Name'
-  c.arg_name 'container'
+  c.desc 'Single or comma separated list of container IDs'
+  c.arg_name 'container[,container,...]'
   c.flag [:n, :name]
 
   # CONTAINER CREATE
