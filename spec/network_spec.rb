@@ -108,6 +108,7 @@ describe TestLab::Network do
 
     describe "#create" do
       it "should create the network bridge" do
+        subject.node.stub(:state) { :running }
         subject.stub(:state) { :not_created }
         subject.node.ssh.stub(:exec) { true }
         subject.create
@@ -116,6 +117,7 @@ describe TestLab::Network do
 
     describe "#destroy" do
       it "should destroy the network bridge" do
+        subject.node.stub(:state) { :running }
         subject.stub(:state) { :stopped }
         subject.node.ssh.stub(:exec) { true }
         subject.destroy
@@ -124,6 +126,7 @@ describe TestLab::Network do
 
     describe "#up" do
       it "should online the network bridge" do
+        subject.node.stub(:state) { :running }
         subject.stub(:state) { :stopped }
         subject.node.ssh.stub(:exec) { true }
         subject.up
@@ -132,6 +135,7 @@ describe TestLab::Network do
 
     describe "#down" do
       it "should offline the network bridge" do
+        subject.node.stub(:state) { :running }
         subject.stub(:state) { :running }
         subject.node.ssh.stub(:exec) { true }
         subject.down
