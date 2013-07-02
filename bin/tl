@@ -18,8 +18,6 @@
 #   limitations under the License.
 #
 ################################################################################
-require 'socket'
-
 require 'gli'
 require 'testlab'
 
@@ -33,6 +31,8 @@ program_desc %(TestLab - A toolkit for building virtual computer labs)
 
 sort_help :manually
 default_command :help
+
+preserve_argv true
 
 commands_from 'commands'
 

@@ -27,7 +27,8 @@ class TestLab
           "repo_dir" => testlab.repo_dir.inspect,
           "labfile_path" => testlab.labfile_path.inspect,
           "logdev" => testlab.ui.logger.logdev.inspect,
-          "version" => TestLab::VERSION
+          "version" => TestLab::VERSION.inspect,
+          "argv" => ARGV.inspect
         }
       end
 
