@@ -42,7 +42,9 @@ describe TestLab::Provisioner::Shell do
         it "should provision the container" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
           subject.stub(:fs_root) { "/var/lib/lxc/#{subject.id}/rootfs" }
+          subject.ssh.stub(:bootstrap) { "" }
           subject.lxc.stub(:bootstrap) { "" }
+          subject.lxc_clone.stub(:exists?) { false }
 
           p = TestLab::Provisioner::Shell.new(subject.config, @ui)
           p.on_container_setup(subject)
@@ -53,7 +55,9 @@ describe TestLab::Provisioner::Shell do
         it "should raise an exception" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
           subject.stub(:fs_root) { "/var/lib/lxc/#{subject.id}/rootfs" }
+          subject.ssh.stub(:bootstrap) { "" }
           subject.lxc.stub(:bootstrap) { "" }
+          subject.lxc_clone.stub(:exists?) { false }
 
           p = TestLab::Provisioner::Shell.new(Hash.new, @ui)
           lambda{ p.on_container_setup(subject) }.should raise_error TestLab::Provisioner::ShellError
