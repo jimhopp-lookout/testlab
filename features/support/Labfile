@@ -47,17 +47,16 @@ node :vagrant do
     bridge        :br0
   end
 
-  # chef-server.default.zone
+  # test-server.default.zone
   ###########################
-  container "chef-server" do
+  container "test-server" do
     distro        "ubuntu"
     release       "precise"
 
     provisioners   [
       TestLab::Provisioner::Resolv,
       TestLab::Provisioner::AptCacherNG,
-      TestLab::Provisioner::Apt,
-      TestLab::Provisioner::Chef::RubyGemServer
+      TestLab::Provisioner::Apt
     ]
 
     # Here we define a default user to seed onto the box.  This user will be
@@ -80,35 +79,6 @@ node :vagrant do
       name        :eth0
       address     '10.128.0.254/16'
       mac         '00:00:5e:63:b5:9f'
-    end
-  end
-
-  # chef-client.default.zone
-  ###########################
-  container "chef-client" do
-    distro        "ubuntu"
-    release       "precise"
-
-    provisioners  [
-      TestLab::Provisioner::Resolv,
-      TestLab::Provisioner::AptCacherNG,
-      TestLab::Provisioner::Apt,
-      TestLab::Provisioner::Chef::RubyGemClient
-    ]
-
-    user 'deployer' do
-      password         'deployer'
-      identity         File.join(ENV['HOME'], '.ssh', 'id_rsa')
-      public_identity  File.join(ENV['HOME'], '.ssh', 'id_rsa.pub')
-      uid              2600
-      gid              2600
-    end
-
-    interface do
-      network_id  'labnet'
-      name        :eth0
-      address     '10.128.0.20/16'
-      mac         '00:00:5e:b7:e5:15'
     end
   end
 
