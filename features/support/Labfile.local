@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+node :vagrant do
+
+  provider      TestLab::Provider::Local
+
+  provisioners  [TestLab::Provisioner::Raring]
+
+  config      ({
+    :bind => {
+      :domain => "default.zone"
+    }
+  })
+
+  network 'labnet' do
+    address       '10.128.0.1/16'
+    bridge        :br0
+  end
+
+  container "test-server" do
+    distro        "ubuntu"
+    release       "precise"
+
+    provisioners   [
+      TestLab::Provisioner::AptCacherNG,
+      TestLab::Provisioner::Apt
+    ]
+
+    user 'deployer' do
+      password         'deployer'
+      identity         File.join(ENV['HOME'], '.ssh', 'id_rsa')
+      public_identity  File.join(ENV['HOME'], '.ssh', 'id_rsa.pub')
+      uid              2600
+      gid              2600
+    end
+
+    interface do
+      network_id  'labnet'
+      name        :eth0
+      address     '10.128.0.254/16'
+      mac         '00:00:5e:63:b5:9f'
+    end
+  end
+
+end
