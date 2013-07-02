@@ -46,6 +46,8 @@ class TestLab
       # Create the Vagrant instance
       def create
         self.up
+
+        true
       end
 
       # Destroy Vagrant-controlled VM
@@ -55,7 +57,7 @@ class TestLab
         self.down
         self.vagrant_cli("destroy", "--force", self.instance_id)
 
-        self.state
+        true
       end
 
 ################################################################################
@@ -65,7 +67,7 @@ class TestLab
         self.vagrant_cli("up", self.instance_id)
         ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120, :ui => @ui).wait
 
-        self.state
+        true
       end
 
       # Halt Vagrant-controlled VM
@@ -74,7 +76,7 @@ class TestLab
 
         self.vagrant_cli("halt", self.instance_id)
 
-        self.state
+        true
       end
 
 ################################################################################
@@ -84,7 +86,7 @@ class TestLab
         self.down
         self.up
 
-        self.state
+        true
       end
 
 ################################################################################
