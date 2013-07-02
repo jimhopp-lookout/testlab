@@ -46,6 +46,7 @@ class TestLab
       def down
         @ui.logger.debug { "Network Down: #{self.id} " }
 
+        (self.node.state != :running) and return false
         (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do

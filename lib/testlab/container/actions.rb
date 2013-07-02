@@ -79,6 +79,7 @@ class TestLab
       def down
         @ui.logger.debug { "Container Down: #{self.id} " }
 
+        (self.node.state != :running) and return false
         (self.lxc.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
