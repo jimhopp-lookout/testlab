@@ -1,7 +1,4 @@
-Feature: My bootstrapped app kinda works
-  In order to get going on coding my awesome app
-  I want to have aruba and cucumber setup
-  So I don't have to do it myself
+Feature: TestLab command-line
 
   Scenario: TestLab help
     When I get help for "tl"
@@ -11,7 +8,7 @@ Feature: My bootstrapped app kinda works
     When I get status for "tl"
     Then the exit status should be 0
 
-  Scenario: TestLab build
+  Scenario: TestLab build from scratch
     When I trigger a lab build with "tl"
     Then the exit status should be 0
 
@@ -23,3 +20,10 @@ Feature: My bootstrapped app kinda works
     When I trigger an import of containers with "tl"
     Then the exit status should be 0
 
+  Scenario: TestLab build after import
+    When I trigger a lab build with "tl"
+    Then the exit status should be 0
+
+  Scenario: TestLab destroy
+    When I trigger a lab destroy with "tl"
+    Then the exit status should be 0
