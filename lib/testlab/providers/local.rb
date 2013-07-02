@@ -30,12 +30,12 @@ class TestLab
 
       # This is a NO-OP
       def up
-        self.state
+        true
       end
 
       # This is a NO-OP
       def down
-        self.state
+        true
       end
 
       # This is a NO-OP
@@ -43,7 +43,7 @@ class TestLab
         self.down
         self.up
 
-        self.state
+        true
       end
 
       # This is a NO-OP
@@ -67,7 +67,7 @@ class TestLab
       end
 
       def instance_id
-        %x(hostname).strip
+        TestLab.hostname
       end
 
       def user
