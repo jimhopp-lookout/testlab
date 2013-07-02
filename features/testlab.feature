@@ -21,7 +21,7 @@ Feature: TestLab command-line
   Scenario: TestLab import
     When I down the lab with "tl"
     Then the exit status should be 0
-    When I up the nodes with "tl"
+    When I build the nodes with "tl"
     Then the exit status should be 0
     When I import the containers with "tl"
     Then the exit status should be 0
