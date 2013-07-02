@@ -4,6 +4,18 @@ When /^I trigger an export of containers with "([^"]*)"$/ do |app_name|
   step %(I run `#{app_name} --repo=#{@repo} container export -n chef-server,chef-client`)
 end
 
+When /^I get container status for "([^"]*)"$/ do |app_name|
+  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
+  @app_name = app_name
+  step %(I run `#{app_name} --repo=#{@repo} container status -n chef-server,chef-client`)
+end
+
+When /^I get container ssh-config for "([^"]*)"$/ do |app_name|
+  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
+  @app_name = app_name
+  step %(I run `#{app_name} --repo=#{@repo} container ssh-config -n chef-server,chef-client`)
+end
+
 When /^I trigger an import of containers with "([^"]*)"$/ do |app_name|
   @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
   @app_name = app_name
