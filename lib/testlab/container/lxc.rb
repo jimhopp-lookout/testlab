@@ -18,7 +18,11 @@ class TestLab
       #   execute.  This is generally a bash script of some sort for example.
       # @return [String] The output of *lxc-attach*.
       def bootstrap(content)
-        self.lxc.bootstrap(content)
+        if self.lxc_clone.exists?
+          self.ssh.bootstrap(content)
+        else
+          self.lxc.bootstrap(content)
+        end
       end
 
       # LXC::Container object
