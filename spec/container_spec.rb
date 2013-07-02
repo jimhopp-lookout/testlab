@@ -145,6 +145,7 @@ describe TestLab::Container do
 
     describe "#create" do
       it "should create the container" do
+        subject.node.stub(:state) { :running }
         subject.lxc.config.stub(:save) { true }
         subject.stub(:detect_arch) { "amd64" }
         subject.lxc.stub(:create) { true }
@@ -156,6 +157,7 @@ describe TestLab::Container do
 
     describe "#destroy" do
       it "should destroy the container" do
+        subject.node.stub(:state) { :running }
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:state) { :stopped }
         subject.lxc.stub(:destroy) { true }
@@ -166,6 +168,7 @@ describe TestLab::Container do
 
     describe "#up" do
       it "should up the container" do
+        subject.node.stub(:state) { :running }
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:start) { true }
         subject.lxc.stub(:wait) { true }
@@ -180,6 +183,7 @@ describe TestLab::Container do
 
     describe "#down" do
       it "should down the container" do
+        subject.node.stub(:state) { :running }
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:stop) { true }
         subject.lxc.stub(:wait) { true }
