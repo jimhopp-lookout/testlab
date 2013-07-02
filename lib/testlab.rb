@@ -108,16 +108,18 @@ class TestLab
     self.ui          = (options[:ui] || ZTK::UI.new)
     self.class.ui    = self.ui
 
-    @repo_dir        = (options[:repo_dir]   || Dir.pwd)
+    @repo_dir        = File.expand_path(options[:repo_dir]   || Dir.pwd)
 
-    @config_dir      = (options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
+    @config_dir      = File.expand_path(options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
     File.exists?(@config_dir) or FileUtils.mkdir_p(@config_dir)
 
     labfile_path     = (options[:labfile_path] || File.join(@repo_dir, 'Labfile'))
-    @labfile_path    = ZTK::Locator.find(labfile_path)
+    @labfile_path    = File.expand_path(ZTK::Locator.find(labfile_path))
 
     @labfile         = TestLab::Labfile.load(labfile_path)
     @labfile.testlab = self
+
+    Dir.chdir(@repo_dir)
   end
 
   # Test Lab Nodes
