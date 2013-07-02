@@ -1,35 +1,28 @@
 When /^I get help for "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} help`)
+  testlab_cmd(app_name, %W(help))
 end
 
-When /^I get status with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} status`)
+When /^I get the status with "([^"]*)"$/ do |app_name|
+  testlab_cmd(app_name, %W(status))
 end
 
 When /^I build the lab with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} build`)
+  testlab_cmd(app_name, %W(build))
 end
 
 When /^I up the lab with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} up`)
+  testlab_cmd(app_name, %W(up))
 end
 
 When /^I down the lab with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} down`)
+  testlab_cmd(app_name, %W(down))
 end
 
 When /^I destroy the lab with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} destroy`)
+  testlab_cmd(app_name, %W(destroy))
+end
+
+def testlab_cmd(app_name, *args)
+  args = args.join(' ')
+  step %(I run `#{app_name} --repo=#{TEST_REPO} #{args}`)
 end

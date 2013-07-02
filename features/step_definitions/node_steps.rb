@@ -1,5 +1,19 @@
-When /^I get nodes status with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} node status -n vagrant`)
+When /^I get the nodes status with "([^"]*)"$/ do |app_name|
+  node_cmd(app_name, %W(status -n vagrant))
+end
+
+When /^I up the nodes with "([^"]*)"$/ do |app_name|
+  node_cmd(app_name, %W(up -n vagrant))
+end
+
+When /^I down the nodes with "([^"]*)"$/ do |app_name|
+  node_cmd(app_name, %W(down -n vagrant))
+end
+
+When /^I build the nodes with "([^"]*)"$/ do |app_name|
+  node_cmd(app_name, %W(build -n vagrant))
+end
+
+def node_cmd(app_name, *args)
+  testlab_cmd(app_name, [%(node), args].flatten)
 end

@@ -42,7 +42,8 @@ node :vagrant do
   # Here we define our network segments; these will manifest into network
   # bridges on the target LXC node.
   network 'labnet' do
-    address       '10.10.0.1/16'
+    # provisioners  [TestLab::Provisioner::Route]
+    address       '10.128.0.1/16'
     bridge        :br0
   end
 
@@ -77,7 +78,7 @@ node :vagrant do
     interface do
       network_id  'labnet'
       name        :eth0
-      address     '10.10.0.254/16'
+      address     '10.128.0.254/16'
       mac         '00:00:5e:63:b5:9f'
     end
   end
@@ -106,7 +107,7 @@ node :vagrant do
     interface do
       network_id  'labnet'
       name        :eth0
-      address     '10.10.0.20/16'
+      address     '10.128.0.20/16'
       mac         '00:00:5e:b7:e5:15'
     end
   end

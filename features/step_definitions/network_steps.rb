@@ -1,5 +1,7 @@
-When /^I get networks status with "([^"]*)"$/ do |app_name|
-  @repo = File.expand_path(File.join(File.dirname(__FILE__), "..", "", "support"))
-  @app_name = app_name
-  step %(I run `#{app_name} --repo=#{@repo} network status -n labnet`)
+When /^I get the networks status with "([^"]*)"$/ do |app_name|
+  network_cmd(app_name, %W(status -n labnet))
+end
+
+def network_cmd(app_name, *args)
+  testlab_cmd(app_name, [%(network), args].flatten)
 end
