@@ -188,7 +188,7 @@ EOF
 
   # CONTAINER STATUS
   ###################
-  c.desc 'Display the status of container(s)'
+  c.desc 'Display the status of containers'
   c.long_desc <<-EOF
 Displays the status of all containers or single/multiple containers if supplied via the ID parameter.
 EOF

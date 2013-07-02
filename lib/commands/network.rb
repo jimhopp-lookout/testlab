@@ -167,29 +167,33 @@ EOF
 
   # NETWORK STATUS
   #################
-  c.desc 'Display the status of network(s)'
+  c.desc 'Display the status of networks'
   c.long_desc <<-EOF
-Displays the status of all networks or a single network if supplied via the ID parameter.
+Displays the status of all networks or single/multiple networks if supplied via the ID parameter.
 EOF
   c.command :status do |status|
     status.action do |global_options, options, args|
       if options[:name].nil?
-        # No ID supplied; show everything
-        networks = @testlab.networks.delete_if{|n| n.node.dead? }
-        if networks.count == 0
+        networks = Array.new
+
+        if options[:name].nil?
+          # No ID supplied; show everything
+          networks = TestLab::Network.all
+        else
+          # ID supplied; show just those items
+          names = options[:name].split(',')
+          networks = TestLab::Network.find(names)
+          (networks.nil? || (networks.count == 0)) and raise TestLab::TestLabError, "We could not find any of the networks you supplied!"
+        end
+
+        networks = networks.delete_if{ |network| network.node.dead? }
+
+        if (networks.count == 0)
           @testlab.ui.stderr.puts("You either have no networks defined or dead nodes!".yellow)
         else
           ZTK::Report.new(:ui => @testlab.ui).list(networks, TestLab::Network::STATUS_KEYS) do |network|
             OpenStruct.new(network.status)
           end
-        end
-      else
-        # ID supplied; show just that item
-        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
-
-        ZTK::Report.new(:ui => @testlab.ui).list(network, TestLab::Network::STATUS_KEYS) do |network|
-          OpenStruct.new(network.status)
         end
       end
     end

@@ -9,6 +9,7 @@ Before do
   @puts = true
   @original_rubylib = ENV['RUBYLIB']
   ENV['RUBYLIB'] = LIB_DIR + File::PATH_SEPARATOR + ENV['RUBYLIB'].to_s
+  # ENV['VAGRANT_HOME'] = File.join("", "tmp", ".vagrant.d")
 end
 
 After do

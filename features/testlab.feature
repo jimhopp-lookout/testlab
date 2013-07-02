@@ -1,15 +1,15 @@
 Feature: TestLab command-line
 
   Background: TestLab status
-    When I get status for "tl"
+    When I get status with "tl"
     Then the exit status should be 0
-    When I get node status for "tl"
+    When I get nodes status with "tl"
     Then the exit status should be 0
-    When I get network status for "tl"
+    When I get networks status with "tl"
     Then the exit status should be 0
-    When I get container status for "tl"
+    When I get containers status with "tl"
     Then the exit status should be 0
-    When I get container ssh-config for "tl"
+    When I get containers ssh-config with "tl"
     Then the exit status should be 0
 
 
@@ -18,20 +18,50 @@ Feature: TestLab command-line
     Then the exit status should be 0
 
 
-  Scenario: TestLab export
-    When I trigger a lab build with "tl"
+  Scenario: TestLab build
+    When I build the lab with "tl"
     Then the exit status should be 0
-    When I trigger an export of containers with "tl"
+
+
+  Scenario: TestLab export
+    When I build the lab with "tl"
+    Then the exit status should be 0
+    When I export containers with "tl"
     Then the exit status should be 0
 
 
   Scenario: TestLab import
-    When I trigger an import of containers with "tl"
+    When I import containers with "tl"
     Then the exit status should be 0
-    When I trigger a lab build with "tl"
+    When I build the lab with "tl"
+    Then the exit status should be 0
+
+
+  Scenario: TestLab clone
+    When I import containers with "tl"
+    Then the exit status should be 0
+    When I build the lab with "tl"
+    Then the exit status should be 0
+    When I clone containers with "tl"
+    Then the exit status should be 0
+    When I build containers with "tl"
+    Then the exit status should be 0
+    When I clone containers with "tl"
+    Then the exit status should be 0
+    When I build containers with "tl"
+    Then the exit status should be 0
+    When I down containers with "tl"
+    Then the exit status should be 0
+    When I up containers with "tl"
+    Then the exit status should be 0
+    When I build containers with "tl"
     Then the exit status should be 0
 
 
   Scenario: TestLab destroy
-    When I trigger a lab destroy with "tl"
+    When I import containers with "tl"
+    Then the exit status should be 0
+    When I build the lab with "tl"
+    Then the exit status should be 0
+    When I destroy the lab with "tl"
     Then the exit status should be 0
