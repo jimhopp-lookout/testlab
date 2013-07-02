@@ -7,6 +7,7 @@ class TestLab
       def create
         @ui.logger.debug { "Network Create: #{self.id} " }
 
+        (self.node.state == :not_created) and return false
         (self.state != :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
@@ -20,6 +21,7 @@ class TestLab
       def destroy
         @ui.logger.debug { "Network Destroy: #{self.id} " }
 
+        (self.node.state == :not_created) and return false
         (self.state == :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
@@ -33,6 +35,7 @@ class TestLab
       def up
         @ui.logger.debug { "Network Up: #{self.id} " }
 
+        (self.node.state != :running) and return false
         (self.state == :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
