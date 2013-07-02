@@ -347,7 +347,7 @@ EOF
         (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
         containers.each do |container|
-          container.export(options[:compression], options[:output])
+          container.export(options[:compression], File.expand_path(options[:output]))
         end
       end
     end
@@ -372,7 +372,7 @@ EOF
         (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
 
         containers.each do |container|
-          container.import(options[:input])
+          container.import(File.expand_path(options[:input]))
         end
       end
     end
