@@ -18,6 +18,13 @@ Feature: TestLab command-line
     Then the exit status should be 0
 
 
+  Scenario: TestLab export
+    When I build the lab with "tl"
+    Then the exit status should be 0
+    When I export the containers with "tl"
+    Then the exit status should be 0
+
+
   Scenario: TestLab import
     When I down the lab with "tl"
     Then the exit status should be 0
