@@ -111,6 +111,7 @@ class TestLab
     @repo_dir        = (options[:repo_dir]   || Dir.pwd)
 
     @config_dir      = (options[:config_dir] || File.join(@repo_dir, ".testlab-#{TestLab.hostname}"))
+    File.exists?(@config_dir) or FileUtils.mkdir_p(@config_dir)
 
     labfile_path     = (options[:labfile_path] || File.join(@repo_dir, 'Labfile'))
     @labfile_path    = ZTK::Locator.find(labfile_path)
