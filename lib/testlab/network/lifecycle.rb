@@ -7,6 +7,9 @@ class TestLab
       def setup
         @ui.logger.debug { "Network Setup: #{self.id} " }
 
+        (self.node.state != :running) and return false
+        (self.state == :not_created) and return false
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.network_provisioners.each do |provisioner|
@@ -23,6 +26,9 @@ class TestLab
       # Network Teardown
       def teardown
         @ui.logger.debug { "Network Teardown: #{self.id} " }
+
+        (self.node.state != :running) and return false
+        (self.state == :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 

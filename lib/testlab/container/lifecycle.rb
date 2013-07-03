@@ -13,6 +13,9 @@ class TestLab
       def setup
         @ui.logger.debug { "Container Setup: #{self.id} " }
 
+        (self.node.state != :running) and return false
+        (self.lxc.state == :not_created) and return false
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.container_provisioners.each do |provisioner|
@@ -36,6 +39,7 @@ class TestLab
       def teardown
         @ui.logger.debug { "Container Teardown: #{self.id} " }
 
+        (self.node.state != :running) and return false
         (self.lxc.state == :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
