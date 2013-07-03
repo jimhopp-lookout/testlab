@@ -2,6 +2,7 @@ class TestLab
   class Container
 
     module IO
+      require 'tempfile'
       PBZIP2_MEMORY = 256
 
       # Export the container
@@ -14,8 +15,12 @@ class TestLab
 
         self.down
 
-        sc_file      = %(/tmp/#{self.id}.sc)
-        local_file ||= File.join(Dir.pwd, File.basename(sc_file))
+        export_tempfile = Tempfile.new('export')
+        remote_filename = File.basename(export_tempfile.path.dup)
+        export_tempfile.close!
+
+        remote_file = File.join("", "tmp", remote_filename)
+        local_file ||= File.join(Dir.pwd, File.basename(remote_file))
         local_file   = File.expand_path(local_file)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
@@ -24,15 +29,15 @@ set -x
 set -e
 
 du -sh #{self.lxc.container_root}
-find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{sc_file}
-chown ${SUDO_USER}:${SUDO_USER} #{sc_file}
-ls -lah #{sc_file}
+find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
+chown ${SUDO_USER}:${SUDO_USER} #{remote_file}
+ls -lah #{remote_file}
 EOF
         end
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Export', :cyan)) do
           File.exists?(local_file) and FileUtils.rm_f(local_file)
-          self.node.ssh.download(sc_file, local_file)
+          self.node.ssh.download(remote_file, local_file)
         end
 
         puts("Your shipping container is now exported and available at '#{local_file}'!")
@@ -49,12 +54,16 @@ EOF
         self.down
         self.destroy
 
-        sc_file    = %(/tmp/#{self.id}.sc)
-        local_file = File.expand_path(local_file)
+        import_tempfile = Tempfile.new('import')
+        remote_filename = File.basename(import_tempfile.path.dup)
+        import_tempfile.close!
+
+        remote_file = File.join("", "tmp", remote_filename)
+        local_file  = File.expand_path(local_file)
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
-          self.node.ssh.exec(%(sudo rm -fv #{sc_file}), :silence => true, :ignore_exit_status => true)
-          self.node.ssh.upload(local_file, sc_file)
+          self.node.ssh.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
+          self.node.ssh.upload(local_file, remote_file)
         end
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do
@@ -62,8 +71,8 @@ EOF
 set -x
 set -e
 
-ls -lah #{sc_file}
-pbzip2 -vdcm#{PBZIP2_MEMORY} #{sc_file} | cpio -uid && rm -fv #{sc_file}
+ls -lah #{remote_file}
+pbzip2 -vdcm#{PBZIP2_MEMORY} #{remote_file} | cpio -uid && rm -fv #{remote_file}
 du -sh #{self.lxc.container_root}
 EOF
         end
