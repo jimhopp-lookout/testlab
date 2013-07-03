@@ -90,7 +90,7 @@ pre do |global,command,options,args|
   if !@ui.quiet?
     message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
     @testlab.ui.stdout.puts(message)
-    @testlab.ui.logger.info { message.uncolor }
+    @testlab.ui.logger.info { message }
   end
 
   true
