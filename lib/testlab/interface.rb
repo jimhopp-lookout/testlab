@@ -22,6 +22,8 @@ class TestLab
       @ui = TestLab.ui
 
       super(*args)
+
+      @ui.logger.info { "Interface '#{self.id}' Loaded" }
     end
 
     def ip

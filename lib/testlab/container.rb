@@ -124,6 +124,8 @@ class TestLab
       @ui          = TestLab.ui
 
       super(*args)
+
+      @ui.logger.info { "Container '#{self.id}' Loaded" }
     end
 
     def config_dir

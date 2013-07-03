@@ -48,6 +48,8 @@ class TestLab
       @provider = self.provider.new(self.config, @ui)
 
       raise NodeError, "You must specify a provider class!" if self.provider.nil?
+
+      @ui.logger.info { "Node '#{self.id}' Loaded" }
     end
 
     def config_dir

@@ -40,6 +40,8 @@ class TestLab
       @ui     = TestLab.ui
 
       super(*args)
+
+      @ui.logger.info { "Network '#{self.id}' Loaded" }
     end
 
   end

@@ -30,6 +30,8 @@ class TestLab
       @ui = TestLab.ui
 
       super(*args)
+
+      @ui.logger.info { "User '#{self.id}' Loaded" }
     end
 
   end
