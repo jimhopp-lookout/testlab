@@ -9,12 +9,10 @@ EOF
 
 REPO = File.dirname(__FILE__)
 
-node :vagrant do
+node 'vagrant' do
 
   provider      TestLab::Provider::Vagrant
-  provisioners  [
-    TestLab::Provisioner::Bind
-  ]
+  provisioners  [TestLab::Provisioner::Bind]
   config        ({
     :vagrant => {
       :id       => "mytestlab-#{ENV['USER']}".downcase,
