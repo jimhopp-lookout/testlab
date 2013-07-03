@@ -186,6 +186,30 @@ class TestLab
     !alive?
   end
 
+  # Test Lab Create
+  #
+  # Attempts to create our lab topology.  This calls the create method on all of
+  # our nodes.
+  #
+  # @return [Boolean] True if successful.
+  def create
+    method_proxy(:create)
+
+    true
+  end
+
+  # Test Lab Destroy
+  #
+  # Attempts to destroy our lab topology.  This calls the destroy method on all of
+  # our nodes.
+  #
+  # @return [Boolean] True if successful.
+  def destroy
+    reverse_method_proxy(:destroy)
+
+    true
+  end
+
   # Test Lab Up
   #
   # Attempts to up our lab topology.  This calls the up method on all of
