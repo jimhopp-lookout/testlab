@@ -11,6 +11,8 @@ Feature: TestLab command-line
     Then the exit status should be 0
     When I get the containers ssh-config with "tl"
     Then the exit status should be 0
+    When I destroy the lab with "tl"
+    Then the exit status should be 0
 
 
   Scenario: TestLab help
@@ -26,8 +28,6 @@ Feature: TestLab command-line
 
 
   Scenario: TestLab import
-    When I down the lab with "tl"
-    Then the exit status should be 0
     When I build the nodes with "tl"
     Then the exit status should be 0
     When I import the containers with "tl"
@@ -37,8 +37,6 @@ Feature: TestLab command-line
 
 
   Scenario: TestLab clone
-    When I down the lab with "tl"
-    Then the exit status should be 0
     When I build the lab with "tl"
     Then the exit status should be 0
     When I clone the containers with "tl"
@@ -57,8 +55,6 @@ Feature: TestLab command-line
     Then the exit status should be 0
 
 
-  Scenario: TestLab destroy
-    When I down the lab with "tl"
-    Then the exit status should be 0
+  Scenario: TestLab Destroy
     When I destroy the lab with "tl"
     Then the exit status should be 0
