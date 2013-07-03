@@ -26,7 +26,7 @@ The TestLab command-line program `tl` follows in the style of git:
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        0.7.5
+        0.7.6
 
     GLOBAL OPTIONS
         -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
@@ -49,6 +49,7 @@ The TestLab command-line program `tl` follows in the style of git:
         setup     - Setup the test lab infrastructure
         teardown  - Teardown the test lab infrastructure
         build     - Build the test lab infrastructure
+        demolish  - Demolish the test lab infrastructure
         status    - Display information on the status of the test lab
 
 You stand up your lab with the following command:
