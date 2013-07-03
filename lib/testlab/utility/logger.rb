@@ -46,9 +46,9 @@ class TestLab
           "ruby_platform" => RUBY_PLATFORM.inspect
         }
 
-        defined?(RUBY_ENGINE)       and dependencies.merge!("ruby_engine" => RUBY_ENGINE)
-        defined?(RUBY_DESCRIPTION)  and dependencies.merge!("ruby_description" => RUBY_DESCRIPTION)
-        defined?(RUBY_RELEASE_DATE) and dependencies.merge!("ruby_release_date" => RUBY_RELEASE_DATE)
+        defined?(RUBY_ENGINE)       and dependencies.merge!("ruby_engine" => RUBY_ENGINE.inspect)
+        defined?(RUBY_DESCRIPTION)  and dependencies.merge!("ruby_description" => RUBY_DESCRIPTION.inspect)
+        defined?(RUBY_RELEASE_DATE) and dependencies.merge!("ruby_release_date" => RUBY_RELEASE_DATE.inspect)
 
         dependencies
       end
