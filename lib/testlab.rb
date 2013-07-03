@@ -270,6 +270,18 @@ class TestLab
     true
   end
 
+  # Test Lab Demolish
+  #
+  # Attempts to demolish our lab topology.  This calls various methods on
+  # all of our nodes, networks and containers.
+  #
+  # @return [Boolean] True if successful.
+  def demolish
+    reverse_method_proxy(:demolish)
+
+    true
+  end
+
   # Node Method Proxy
   #
   # Iterates all of the lab nodes, sending the supplied method name and arguments

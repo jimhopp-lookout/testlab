@@ -82,13 +82,33 @@ The components are built in the following order:
 
 Nodes -> Networks -> Containers
 
-TestLab will then attempt to build the componenets executing the following tasks for each:
+TestLab will then attempt to build the components, executing the following tasks for each:
 
 Create -> Up -> Setup
 EOF
 command :build do |build|
   build.action do |global_options,options,args|
     @testlab.build
+  end
+end
+
+# LAB DEMOLISH
+###############
+desc 'Demolish the test lab infrastructure'
+long_desc <<-EOF
+Attempts to demolish the defined test lab.  TestLab will attempt to deprovision, offline and destroy the lab components.
+
+The components are demolished in the following order:
+
+Containers -> Networks -> Nodes
+
+TestLab will then attempt to demolish the components, executing the following tasks for each:
+
+Teardown -> Down -> Destroy
+EOF
+command :demolish do |demolish|
+  demolish.action do |global_options,options,args|
+    @testlab.demolish
   end
 end
 

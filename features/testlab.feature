@@ -11,7 +11,7 @@ Feature: TestLab command-line
     Then the exit status should be 0
     When I get the containers ssh-config with "tl"
     Then the exit status should be 0
-    When I destroy the lab with "tl"
+    When I demolish the lab with "tl"
     Then the exit status should be 0
 
 
@@ -55,6 +55,6 @@ Feature: TestLab command-line
     Then the exit status should be 0
 
 
-  Scenario: TestLab Destroy
-    When I destroy the lab with "tl"
+  Scenario: TestLab Demolish
+    When I demolish the lab with "tl"
     Then the exit status should be 0

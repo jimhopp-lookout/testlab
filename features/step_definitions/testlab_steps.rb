@@ -10,6 +10,10 @@ When /^I build the lab with "([^"]*)"$/ do |app_name|
   testlab_cmd(app_name, %W(build))
 end
 
+When /^I demolish the lab with "([^"]*)"$/ do |app_name|
+  testlab_cmd(app_name, %W(demolish))
+end
+
 When /^I up the lab with "([^"]*)"$/ do |app_name|
   testlab_cmd(app_name, %W(up))
 end

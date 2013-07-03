@@ -48,7 +48,7 @@ class TestLab
           :not_created
         else
           output = self.node.ssh.exec(%(sudo ifconfig #{self.bridge} 2>&1 | grep 'MTU'), :silence => true, :ignore_exit_status => true).output.strip
-          if ((output =~ /UP/) && (output =~ /RUNNING/))
+          if ((output =~ /UP/) || (output =~ /RUNNING/))
             :running
           else
             :stopped

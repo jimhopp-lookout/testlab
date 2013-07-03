@@ -52,6 +52,15 @@ class TestLab
         true
       end
 
+      # Demolish the network
+      def demolish
+        self.teardown
+        self.down
+        self.destroy
+
+        true
+      end
+
       # Returns all defined provisioners for this network's containers and the network iteself.
       def network_provisioners
         [self.provisioners, self.interfaces.map(&:container).map(&:provisioners)].flatten.compact.uniq
