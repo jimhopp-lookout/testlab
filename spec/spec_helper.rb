@@ -22,4 +22,15 @@ Coveralls.wear!
 ################################################################################
 require 'testlab'
 
-LABFILE = File.join(File.dirname(__FILE__), 'support', 'Labfile')
+REPO_DIR     = File.join(File.dirname(__FILE__), 'support')
+LABFILE_PATH = File.join(REPO_DIR, 'Labfile')
+
+RSpec.configure do |config|
+  config.before(:each) do
+    TestLab::Node.purge
+    TestLab::Container.purge
+    TestLab::Network.purge
+    TestLab::Interface.purge
+    TestLab::User.purge
+  end
+end

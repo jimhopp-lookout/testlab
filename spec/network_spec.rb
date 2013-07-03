@@ -23,7 +23,7 @@ describe TestLab::Network do
 
   subject {
     @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
-    @testlab = TestLab.new(:labfile_path => LABFILE, :ui => @ui)
+    @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
     @testlab.boot
     @testlab.networks.first
   }

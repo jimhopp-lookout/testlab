@@ -23,7 +23,7 @@ describe TestLab::Container do
 
   subject {
     @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
-    @testlab = TestLab.new(:labfile_path => LABFILE, :ui => @ui)
+    @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
     @testlab.boot
     @testlab.containers.first
   }
@@ -207,7 +207,7 @@ describe TestLab::Container do
 
       context "with the shell provisioner" do
         it "should setup the container" do
-          subject = TestLab::Container.first('server-shell')
+          subject and (subject = TestLab::Container.first('server-shell'))
 
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
@@ -233,7 +233,7 @@ describe TestLab::Container do
 
       context "with the shell provisioner" do
         it "should teardown the container" do
-          subject = TestLab::Container.first('server-shell')
+          subject and (subject = TestLab::Container.first('server-shell'))
 
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
