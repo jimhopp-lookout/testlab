@@ -145,6 +145,7 @@ describe TestLab::Network do
     describe "#setup" do
       it "should create and online the network" do
         subject.node.stub(:state) { :running }
+        subject.stub(:state) { :running }
         subject.stub(:create) { true }
         subject.stub(:up) { true }
 
@@ -155,6 +156,7 @@ describe TestLab::Network do
     describe "#teardown" do
       it "should create and online the network" do
         subject.node.stub(:state) { :running }
+        subject.stub(:state) { :running }
         subject.stub(:down) { true }
         subject.stub(:destroy) { true }
 
