@@ -115,11 +115,16 @@ class TestLab
 
     labfile_path     = (options[:labfile_path] || File.join(@repo_dir, 'Labfile'))
     @labfile_path    = File.expand_path(ZTK::Locator.find(labfile_path))
+  end
 
+  # Boot TestLab
+  #
+  # Change to the defined repository directory and load the *Labfile*.
+  #
+  # @return [Boolean] True if successful.
+  def boot
     @labfile         = TestLab::Labfile.load(labfile_path)
     @labfile.testlab = self
-
-    Dir.chdir(@repo_dir)
   end
 
   # Test Lab Nodes

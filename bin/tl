@@ -85,6 +85,8 @@ pre do |global,command,options,args|
 
   TestLab::Utility.log_header(@testlab).each { |line| @logger.info { line } }
 
+  @testlab.boot
+
   if !@ui.quiet?
     message = format_message("TestLab v#{TestLab::VERSION} Loaded".black.bold)
     @testlab.ui.stdout.puts(message)
