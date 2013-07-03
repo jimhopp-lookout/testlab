@@ -17,53 +17,85 @@ require 'testlab/monkeys'
 # to accomplish this.
 #
 # @example Sample Labfile:
-#   shell_provision_script = <<-EOF
-#   set -x
-#   apt-get -y update
-#   apt-get -y install dnsutils
-#   EOF
+#   node 'vagrant' do
 #
-#   config Hash[
-#     :domain => "default.zone",
-#     :repo => File.join(ENV['HOME'], "code", "personal", "testlab-repo")
-#   ]
-#
-#   node :localhost do
-#     components %w(resolv bind)
-#     route true
-#
-#     provider    TestLab::Provider::Vagrant
-#     config      Hash[
-#       :vagrant => {
-#         :id       => "mytestlab-#{ENV['USER']}".downcase,
-#         :ip       => "192.168.13.37",
-#         :user     => "vagrant",
-#         :port     => 22,
-#         :cpus     => 8,
-#         :memory   => 16384,
-#         :box      => 'raring64'
-#       }
+#     provider      TestLab::Provider::Vagrant
+#     provisioners  [
+#       TestLab::Provisioner::Raring,
+#       TestLab::Provisioner::Bind
 #     ]
 #
-#     network :east do
-#       address '10.10.0.1/16'
-#       bridge  :br0
+#     config      ({
+#       :vagrant => {
+#         :id       => "chef-rubygem-#{TestLab.hostname}".downcase,
+#         :cpus     => ZTK::Parallel::MAX_FORKS.div(2),                    # use half of the available processors
+#         :memory   => ZTK::Parallel::MAX_MEMORY.div(3).div(1024 * 1024),  # use a third of available RAM
+#         :box      => 'raring64',
+#         :box_url  => 'https://dl.dropboxusercontent.com/u/22904185/boxes/raring64.box',
+#         :file     => File.dirname(__FILE__)
+#       },
+#       :bind => {
+#         :domain => "default.zone"
+#       }
+#     })
+#
+#     network 'labnet' do
+#       provisioners  [TestLab::Provisioner::Route]
+#       address       '10.10.0.1/16'
+#       bridge        :br0
 #     end
 #
-#     container "server-east-1" do
-#       domain        "east.zone"
-#
+#     container "chef-server" do
 #       distro        "ubuntu"
 #       release       "precise"
 #
-#       provisioner   TestLab::Provisioner::Shell
-#       config        Hash[:setup => shell_provision_script]
+#       provisioners   [
+#         TestLab::Provisioner::Resolv,
+#         TestLab::Provisioner::AptCacherNG,
+#         TestLab::Provisioner::Apt,
+#         TestLab::Provisioner::Chef::RubyGemServer
+#       ]
+#
+#       user 'deployer' do
+#         password         'deployer'
+#         identity         File.join(ENV['HOME'], '.ssh', 'id_rsa')
+#         public_identity  File.join(ENV['HOME'], '.ssh', 'id_rsa.pub')
+#         uid              2600
+#         gid              2600
+#       end
 #
 #       interface do
-#         name       :eth0
-#         network_id :east
-#         address    '10.10.0.254/16'
-#         mac        '00:00:5e:b7:e5:15'
+#         network_id  'labnet'
+#         name        :eth0
+#         address     '10.10.0.254/16'
+#         mac         '00:00:5e:63:b5:9f'
+#       end
+#     end
+#
+#     container "chef-client" do
+#       distro        "ubuntu"
+#       release       "precise"
+#
+#       provisioners  [
+#         TestLab::Provisioner::Resolv,
+#         TestLab::Provisioner::AptCacherNG,
+#         TestLab::Provisioner::Apt,
+#         TestLab::Provisioner::Chef::RubyGemClient
+#       ]
+#
+#       user 'deployer' do
+#         password         'deployer'
+#         identity         File.join(ENV['HOME'], '.ssh', 'id_rsa')
+#         public_identity  File.join(ENV['HOME'], '.ssh', 'id_rsa.pub')
+#         uid              2600
+#         gid              2600
+#       end
+#
+#       interface do
+#         network_id  'labnet'
+#         name        :eth0
+#         address     '10.10.0.20/16'
+#         mac         '00:00:5e:b7:e5:15'
 #       end
 #     end
 #
@@ -78,8 +110,8 @@ require 'testlab/monkeys'
 # @example We can control things via code easily as well:
 #   testlab.create   # creates the lab
 #   testlab.up       # ensures the lab is up and running
-#   testlab.setup    # setup the lab, creating all networks and containers
-#   testlab.teardown # teardown the lab, destroy all networks and containers
+#   testlab.build    # build the lab, creating all networks and containers
+#   testlab.demolish # demolish the lab, destroy all networks and containers
 #
 # @author Zachary Patten <zachary AT jovelabs DOT com>
 class TestLab
