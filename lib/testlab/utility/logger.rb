@@ -28,7 +28,7 @@ class TestLab
           "labfile_path" => testlab.labfile_path.inspect,
           "logdev" => testlab.ui.logger.logdev.inspect,
           "version" => TestLab::VERSION.inspect,
-          "argv" => ARGV.inspect
+          "argv" => ARGV.join(' ').inspect
         }
       end
 
@@ -44,28 +44,35 @@ class TestLab
         dependencies
       end
 
-      def log_dependencies
+      def log_gem_dependencies
+        {
+          "gli_gem_version" => ::GLI::VERSION.inspect,
+          "lxc_gem_version" => ::LXC::VERSION.inspect,
+          "ztk_gem_version" => ::ZTK::VERSION.inspect,
+          "as_gem_version" => ::ActiveSupport::VERSION::STRING.inspect
+        }
+      end
+
+      def log_external_dependencies
         @command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
 
         {
-          "gli_version" => ::GLI::VERSION.inspect,
-          "lxc_version" => ::LXC::VERSION.inspect,
-          "ztk_version" => ::ZTK::VERSION.inspect,
-          "activesupport_version" => ::ActiveSupport::VERSION::STRING.inspect,
           "vagrant_version" => @command.exec(%(/usr/bin/env vagrant --version)).output.strip.inspect,
-          "virtualbox_version" => @command.exec(%(/usr/bin/env vboxmanage --version)).output.strip.inspect
+          "virtualbox_version" => @command.exec(%(/usr/bin/env vboxmanage --version)).output.strip.inspect,
+          "lxc_version" => @command.exec(%(/usr/bin/env lxc-version)).output.strip.inspect
         }
       end
 
       def log_header(testlab)
         log_lines = Array.new
 
-        details_hash       = log_details(testlab)
-        ruby_hash          = log_ruby
-        dependencies_hash  = log_dependencies
+        details_hash               = log_details(testlab)
+        ruby_hash                  = log_ruby
+        gem_dependencies_hash      = log_gem_dependencies
+        external_dependencies_hash = log_external_dependencies
 
-        max_key_length = [details_hash.keys, ruby_hash.keys, dependencies_hash.keys].flatten.compact.map(&:length).max + 2
-        max_value_length = [details_hash.values, ruby_hash.values, dependencies_hash.values].flatten.compact.map(&:length).max + 2
+        max_key_length = [details_hash.keys, ruby_hash.keys, gem_dependencies_hash.keys, external_dependencies_hash.keys].flatten.compact.map(&:length).max + 2
+        max_value_length = [details_hash.values, ruby_hash.values, gem_dependencies_hash.values, external_dependencies_hash.values].flatten.compact.map(&:length).max + 2
 
         max_length = (max_key_length + max_value_length + 2)
 
@@ -80,7 +87,12 @@ class TestLab
         end
 
         log_lines << log_page_break(max_length)
-        dependencies_hash.sort.each do |key, value|
+        gem_dependencies_hash.sort.each do |key, value|
+          log_lines << log_key_value(key, value, max_key_length)
+        end
+
+        log_lines << log_page_break(max_length)
+        external_dependencies_hash.sort.each do |key, value|
           log_lines << log_key_value(key, value, max_key_length)
         end
 
