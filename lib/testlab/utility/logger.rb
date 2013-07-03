@@ -16,6 +16,7 @@ class TestLab
       end
 
       def log_page_break(max_key_length, char='-')
+        (max_key_length > 80) and (max_key_length = 80)
         (char * max_key_length)
       end
 
