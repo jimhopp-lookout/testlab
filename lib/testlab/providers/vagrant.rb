@@ -54,8 +54,8 @@ class TestLab
       def destroy
         !self.exists? and raise VagrantError, MSG_NO_LAB
 
-        self.down
-        self.vagrant_cli("destroy", "--force", self.instance_id)
+        self.alive? and self.down
+        self.exists? and self.vagrant_cli("destroy", "--force", self.instance_id)
 
         true
       end
