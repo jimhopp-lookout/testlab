@@ -15,7 +15,7 @@ node :vagrant do
 
   network 'labnet' do
     address       '10.128.0.1/16'
-    bridge        :br0
+    bridge        :br_test
   end
 
   container "test-server" do
