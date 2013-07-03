@@ -157,6 +157,8 @@ class TestLab
   def boot
     @labfile         = TestLab::Labfile.load(labfile_path)
     @labfile.testlab = self
+
+    Dir.chdir(@repo_dir)
   end
 
   # Test Lab Nodes
