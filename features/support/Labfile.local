@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 #^syntax detection
 
-node :vagrant do
+node 'vagrant' do
 
   provider      TestLab::Provider::Local
 

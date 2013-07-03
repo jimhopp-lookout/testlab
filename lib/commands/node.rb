@@ -20,191 +20,20 @@
 
 # NODES
 ########
-desc 'Manage lab nodes'
-arg_name 'Describe arguments to node here'
-command :node do |c|
-
-  c.desc 'Node ID or Name'
-  c.arg_name 'node'
-  c.flag [:n, :name]
-
-  # NODE CREATE
-  ##############
-  c.desc 'Create a node'
-  c.long_desc <<-EOF
-Create a node.  The node is created.
-EOF
-  c.command :create do |create|
-    create.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you screateplied!"
-
-        node.create
-      end
-    end
-  end
-
-  # NODE DESTROY
-  ############
-  c.desc 'Destroy a node'
-  c.long_desc <<-EOF
-Destroy a node.  The node is stopped and destroyed.
-EOF
-  c.command :destroy do |destroy|
-    destroy.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.destroy
-      end
-    end
-  end
-
-  # NODE UP
-  ##########
-  c.desc 'Up a node'
-  c.long_desc <<-EOF
-Up a node.  The node is started and brought online.
-EOF
-  c.command :up do |up|
-    up.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.up
-      end
-    end
-  end
-
-  # NODE DOWN
-  ############
-  c.desc 'Down a node'
-  c.long_desc <<-EOF
-Down a node.  The node is stopped taking it offline.
-EOF
-  c.command :down do |down|
-    down.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.down
-      end
-    end
-  end
-
-  # NODE SETUP
-  #############
-  c.desc 'Setup a node'
-  c.long_desc <<-EOF
-Setup a node.  The node is created, started and provisioned.
-EOF
-  c.command :setup do |setup|
-    setup.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.setup
-      end
-    end
-  end
-
-  # NODE TEARDOWN
-  ################
-  c.desc 'Teardown a node'
-  c.long_desc <<-EOF
-Teardown a node.  The node is offlined and destroyed.
-EOF
-  c.command :teardown do |teardown|
-    teardown.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.teardown
-      end
-    end
-  end
-
-  # NODE BUILD
-  #############
-  c.desc 'Build a node'
-  c.long_desc <<-EOF
-Attempts to build the node.  TestLab will attempt to create, online and provision the node.
-
-The node is taken through the following phases:
-
-Create -> Up -> Setup
-EOF
-  c.command :build do |build|
-    build.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.build
-      end
-    end
-  end
-
-  # NODE DEMOLISH
-  #############
-  c.desc 'Demolish a node'
-  c.long_desc <<-EOF
-Attempts to demolish the node.  TestLab will attempt to deprovision, offline and destroy the node.
-
-The node is taken through the following phases:
-
-Teardown -> Down -> Destroy
-EOF
-  c.command :demolish do |demolish|
-    demolish.action do |global_options, options, args|
-      if options[:name].nil?
-        help_now!('a name is required') if options[:name].nil?
-      else
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
-
-        node.demolish
-      end
-    end
-  end
+build_lab_commands(:node, TestLab::Node) do |c|
 
   # NODE STATUS
   ##############
-  c.desc 'Display the status of node(s)'
+  c.desc 'Display nodes status'
   c.long_desc 'Displays the status of all nodes or a single node if supplied via the ID parameter.'
   c.command :status do |status|
     status.action do |global_options, options, args|
-      if options[:name].nil?
-        # No ID supplied; show everything
-        ZTK::Report.new(:ui => @testlab.ui).list(@testlab.nodes, TestLab::Node::STATUS_KEYS) do |node|
-          OpenStruct.new(node.status)
-        end
-      else
-        # ID supplied; show just that item
-        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
-        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+      nodes = iterate_objects_by_name(options[:name], TestLab::Node)
 
-        ZTK::Report.new(:ui => @testlab.ui).list(node, TestLab::Node::STATUS_KEYS) do |node|
+      if (nodes.count == 0)
+        @testlab.ui.stderr.puts("You either have no nodes defined or dead nodes!".yellow)
+      else
+        ZTK::Report.new(:ui => @testlab.ui).list(nodes, TestLab::Node::STATUS_KEYS) do |node|
           OpenStruct.new(node.status)
         end
       end
@@ -213,13 +42,10 @@ EOF
 
   # NODE SSH
   ###########
-  c.desc 'Open an SSH console to a node'
+  c.desc 'Node SSH console'
   c.command :ssh do |ssh|
     ssh.action do |global_options,options,args|
-      help_now!('a name is required') if options[:name].nil?
-
-      node = @testlab.nodes.select{ |n| n.id.to_sym == options[:name].to_sym }.first
-      node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+      node = iterate_objects_by_name(options[:name], TestLab::Node).first
 
       node.ssh.console
     end
