@@ -7,28 +7,28 @@ class TestLab
       #
       # @return [Boolean] True if successful.
       def setup
-        @ui.logger.debug { "User Create: #{self.id} " }
+        @ui.logger.debug { "User Create: #{self.username} " }
 
         node_home_dir = ((self.container.node.user == "root") ? %(/root) : %(/home/#{self.container.node.user}))
         node_authkeys = File.join(node_home_dir, ".ssh", "authorized_keys")
 
         # ensure the container user exists
         container_passwd_file = File.join(self.container.fs_root, "etc", "passwd")
-        if self.container.node.ssh.exec(%(sudo grep "#{self.id}" #{container_passwd_file}), :ignore_exit_status => true).exit_code != 0
+        if self.container.node.ssh.exec(%(sudo grep "#{self.username}" #{container_passwd_file}), :ignore_exit_status => true).exit_code != 0
 
           if !self.gid.nil?
-            groupadd_command = %(groupadd --gid #{self.gid} #{self.id})
+            groupadd_command = %(groupadd --gid #{self.gid} #{self.username})
             self.container.node.ssh.exec(%(sudo chroot #{self.container.fs_root} /bin/bash -c '#{groupadd_command}'))
           end
 
           useradd_command = %W(useradd --create-home --shell /bin/bash --groups sudo)
           useradd_command << "--uid #{self.uid}" if !self.uid.nil?
           useradd_command << "--gid #{self.gid}" if !self.gid.nil?
-          useradd_command << self.id
+          useradd_command << self.username
           useradd_command = useradd_command.flatten.compact.join(' ')
 
           self.container.lxc.attach(%(-- /bin/bash -c '#{useradd_command}'))
-          self.container.lxc.attach(%(-- /bin/bash -c 'echo "#{self.id}:#{self.password}" | chpasswd'))
+          self.container.lxc.attach(%(-- /bin/bash -c 'echo "#{self.username}:#{self.password}" | chpasswd'))
         end
 
         # ensure the user user gets our node user key
@@ -62,8 +62,8 @@ class TestLab
         end
 
         # ensure the container user home directory is owned by them
-        home_dir = self.container.lxc.attach(%(-- /bin/bash -c 'grep #{self.id} /etc/passwd | cut -d ":" -f6')).strip
-        self.container.lxc.attach(%(-- /bin/bash -c 'sudo chown -Rv $(id -u #{self.id}):$(id -g #{self.id}) #{home_dir}'))
+        home_dir = self.container.lxc.attach(%(-- /bin/bash -c 'grep #{self.username} /etc/passwd | cut -d ":" -f6')).strip
+        self.container.lxc.attach(%(-- /bin/bash -c 'sudo chown -Rv $(id -u #{self.username}):$(id -g #{self.username}) #{home_dir}'))
 
         # ensure the sudo user group can do passwordless sudo
         self.container.lxc.attach(%(-- /bin/bash -c 'grep "sudo\tALL=\(ALL:ALL\) ALL" /etc/sudoers && sed -i "s/sudo\tALL=\(ALL:ALL\) ALL/sudo\tALL=\(ALL:ALL\) NOPASSWD: ALL/" /etc/sudoers'))
@@ -77,7 +77,7 @@ class TestLab
       #
       # @return [String] The users home directory.
       def home_dir(name=nil)
-        username = (name || self.id)
+        username = (name || self.username)
         if (username == "root")
           "/root"
         else

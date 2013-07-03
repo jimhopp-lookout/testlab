@@ -44,7 +44,7 @@ class TestLab
             :chef_admin => '/etc/chef-server/admin.pem',
             :local_user => ENV['USER'],
             :default_password => "p@ssw01d",
-            :sudo_user => container.primary_user.id,
+            :sudo_user => container.primary_user.username,
             :sudo_uid => container.primary_user.uid,
             :sudo_gid => container.primary_user.gid,
             :home_dir => container.primary_user.home_dir

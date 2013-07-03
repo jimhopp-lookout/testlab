@@ -16,6 +16,7 @@ class TestLab
     # Associations and Attributes
     belongs_to  :container,  :class_name => 'TestLab::Container'
 
+    attribute   :username
     attribute   :password
 
     attribute   :identity

@@ -31,7 +31,7 @@ class TestLab
 
             c.host_name       = container.ip
 
-            c.user            = (options[:user]   || container.primary_user.id)
+            c.user            = (options[:user]   || container.primary_user.username)
             c.password        = (options[:passwd] || container.primary_user.password)
             c.keys            = (options[:keys]   || [container.primary_user.identity, @provider.identity].flatten.compact)
           end

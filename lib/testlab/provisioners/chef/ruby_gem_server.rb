@@ -42,7 +42,7 @@ class TestLab
             :chef_admin => '/etc/chef/admin.pem',
             :default_password => "p@ssw01d",
             :local_user => ENV['USER'],
-            :sudo_user => container.primary_user.id,
+            :sudo_user => container.primary_user.username,
             :sudo_uid => container.primary_user.uid,
             :sudo_gid => container.primary_user.gid,
             :home_dir => container.primary_user.home_dir,

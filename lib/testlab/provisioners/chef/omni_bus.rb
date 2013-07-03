@@ -43,7 +43,7 @@ class TestLab
             :chef_client_cli => chef_client_cli(container),
             :chef_client_rb => chef_client_rb(container),
             :validation_pem => validation_pem,
-            :sudo_user => container.primary_user.id,
+            :sudo_user => container.primary_user.username,
             :sudo_uid => container.primary_user.uid,
             :sudo_gid => container.primary_user.gid,
             :home_dir => container.primary_user.home_dir
