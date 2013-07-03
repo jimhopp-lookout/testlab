@@ -21,6 +21,13 @@
 # LAB CREATE
 #############
 desc 'Create the lab components'
+long_desc <<-EOF
+Attempts to create the defined lab components.
+
+The components are created in the following order:
+
+Nodes -> Networks -> Containers
+EOF
 command :create do |create|
   create.action do |global_options,options,args|
     @testlab.create
@@ -30,6 +37,13 @@ end
 # LAB DESTROY
 ##############
 desc 'Destroy the lab components'
+long_desc <<-EOF
+Attempts to destroy the defined lab components.
+
+The components are destroyed in the following order:
+
+Nodes -> Networks -> Containers
+EOF
 command :destroy do |destroy|
   destroy.action do |global_options,options,args|
     @testlab.destroy
@@ -38,7 +52,14 @@ end
 
 # LAB ONLINE
 #############
-desc 'Online the lab components'
+desc 'On-line the lab components'
+long_desc <<-EOF
+Attempts to online the defined lab components.
+
+The components are onlined in the following order:
+
+Nodes -> Networks -> Containers
+EOF
 command :up do |up|
   up.action do |global_options,options,args|
     @testlab.up
@@ -47,7 +68,14 @@ end
 
 # LAB OFFLINE
 ##############
-desc 'Offline the lab components'
+desc 'Off-line the lab components'
+long_desc <<-EOF
+Attempts to offline the defined lab components.
+
+The components are offlined in the following order:
+
+Containers -> Networks -> Nodes
+EOF
 command :down do |down|
   down.action do |global_options,options,args|
     @testlab.down
@@ -57,6 +85,13 @@ end
 # LAB SETUP
 ############
 desc 'Provision the lab components'
+long_desc <<-EOF
+Attempts to setup the defined lab components.
+
+The components are set up in the following order:
+
+Nodes -> Networks -> Containers
+EOF
 command :setup do |setup|
   setup.action do |global_options,options,args|
     @testlab.setup
@@ -65,7 +100,14 @@ end
 
 # LAB TEARDOWN
 ###############
-desc 'Deprovision the lab components'
+desc 'De-provision the lab components'
+long_desc <<-EOF
+Attempts to teardown the defined lab components.
+
+The components are torndown in the following order:
+
+Containers -> Networks -> Nodes
+EOF
 command :teardown do |teardown|
   teardown.action do |global_options,options,args|
     @testlab.teardown
@@ -76,7 +118,7 @@ end
 ############
 desc 'Build the lab'
 long_desc <<-EOF
-Attempts to build the defined test lab.  TestLab will attempt to create, online and provision the lab components.
+Attempts to build the defined lab.  TestLab will attempt to create, online and provision the lab components.
 
 The components are built in the following order:
 
@@ -96,7 +138,7 @@ end
 ###############
 desc 'Demolish the lab'
 long_desc <<-EOF
-Attempts to demolish the defined test lab.  TestLab will attempt to deprovision, offline and destroy the lab components.
+Attempts to demolish the defined lab.  TestLab will attempt to deprovision, offline and destroy the lab components.
 
 The components are demolished in the following order:
 
