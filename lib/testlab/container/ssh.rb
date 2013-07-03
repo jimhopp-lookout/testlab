@@ -20,14 +20,14 @@ class TestLab
         identities = [self.users.map(&:identity), self.node.identity].flatten.compact.uniq
 
         output = <<-EOF
-#{ZTK::Template.do_not_edit_notice(:message => %(TestLab "#{self.fqdn}" SSH Configuration))}
+#{ZTK::Template.do_not_edit_notice(:message => %(TestLab "#{self.id}" SSH Configuration))}
 Host #{self.id}
   HostName #{self.ip}
   Port 22
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  ForwardAgent no
+  ForwardAgent yes
   IdentitiesOnly yes
 EOF
 
