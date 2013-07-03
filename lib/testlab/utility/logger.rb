@@ -19,41 +19,49 @@ class TestLab
         (char * max_key_length)
       end
 
-      def log_details(testlab)
+      def log_config(testlab)
         {
-          "hostname" => "%s (%s)" % [Socket.gethostname.inspect, TestLab.hostname.inspect],
-          "program" => $0.to_s.inspect,
           "config_dir" => testlab.config_dir.inspect,
           "repo_dir" => testlab.repo_dir.inspect,
           "labfile_path" => testlab.labfile_path.inspect,
           "logdev" => testlab.ui.logger.logdev.inspect,
           "version" => TestLab::VERSION.inspect,
-          "argv" => ARGV.join(' ').inspect
         }
       end
 
-      def log_ruby
+      def log_details(testlab)
+        {
+          "hostname" => "%s (%s)" % [Socket.gethostname.inspect, TestLab.hostname.inspect],
+          "program" => $0.to_s.inspect,
+          "argv" => ARGV.join(' ').inspect,
+          "timezone" => Time.now.zone.inspect
+        }
+      end
+
+      def log_ruby(testlab)
         dependencies = {
           "ruby_version" => RUBY_VERSION.inspect,
           "ruby_patchlevel" => RUBY_PATCHLEVEL.inspect,
           "ruby_platform" => RUBY_PLATFORM.inspect
         }
 
-        defined?(RUBY_ENGINE) and dependencies.merge!("ruby_engine" => RUBY_ENGINE)
+        defined?(RUBY_ENGINE)       and dependencies.merge!("ruby_engine" => RUBY_ENGINE)
+        defined?(RUBY_DESCRIPTION)  and dependencies.merge!("ruby_description" => RUBY_DESCRIPTION)
+        defined?(RUBY_RELEASE_DATE) and dependencies.merge!("ruby_release_date" => RUBY_RELEASE_DATE)
 
         dependencies
       end
 
-      def log_gem_dependencies
+      def log_gem_dependencies(testlab)
         {
-          "gli_gem_version" => ::GLI::VERSION.inspect,
-          "lxc_gem_version" => ::LXC::VERSION.inspect,
-          "ztk_gem_version" => ::ZTK::VERSION.inspect,
-          "as_gem_version" => ::ActiveSupport::VERSION::STRING.inspect
+          "gli_version" => ::GLI::VERSION.inspect,
+          "lxc_version" => ::LXC::VERSION.inspect,
+          "ztk_version" => ::ZTK::VERSION.inspect,
+          "activesupport_version" => ::ActiveSupport::VERSION::STRING.inspect
         }
       end
 
-      def log_external_dependencies
+      def log_external_dependencies(testlab)
         @command = ZTK::Command.new(:silence => true, :ignore_exit_status => true)
 
         {
@@ -66,37 +74,21 @@ class TestLab
       def log_header(testlab)
         log_lines = Array.new
 
-        details_hash               = log_details(testlab)
-        ruby_hash                  = log_ruby
-        gem_dependencies_hash      = log_gem_dependencies
-        external_dependencies_hash = log_external_dependencies
+        log_methods = [:log_details, :log_config, :log_ruby, :log_gem_dependencies, :log_external_dependencies]
+        log_hashes = log_methods.collect{ |log_method| self.send(log_method, testlab) }
 
-        max_key_length = [details_hash.keys, ruby_hash.keys, gem_dependencies_hash.keys, external_dependencies_hash.keys].flatten.compact.map(&:length).max + 2
-        max_value_length = [details_hash.values, ruby_hash.values, gem_dependencies_hash.values, external_dependencies_hash.values].flatten.compact.map(&:length).max + 2
+        max_key_length = log_hashes.collect{ |log_hash| log_hash.keys }.flatten.compact.map(&:length).max + 2
+        max_value_length = log_hashes.collect{ |log_hash| log_hash.values }.flatten.compact.map(&:length).max + 2
 
         max_length = (max_key_length + max_value_length + 2)
 
         log_lines << log_page_break(max_length, '=')
-        details_hash.sort.each do |key, value|
-          log_lines << log_key_value(key, value, max_key_length)
+        log_hashes.each do |log_hash|
+          log_hash.sort.each do |key, value|
+            log_lines << log_key_value(key, value, max_key_length)
+          end
+          log_lines << log_page_break(max_length, '=')
         end
-
-        log_lines << log_page_break(max_length)
-        ruby_hash.sort.each do |key, value|
-          log_lines << log_key_value(key, value, max_key_length)
-        end
-
-        log_lines << log_page_break(max_length)
-        gem_dependencies_hash.sort.each do |key, value|
-          log_lines << log_key_value(key, value, max_key_length)
-        end
-
-        log_lines << log_page_break(max_length)
-        external_dependencies_hash.sort.each do |key, value|
-          log_lines << log_key_value(key, value, max_key_length)
-        end
-
-        log_lines << log_page_break(max_length, '=')
 
         log_lines.flatten.compact
       end
