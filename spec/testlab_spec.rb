@@ -25,6 +25,7 @@ describe TestLab do
     @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
     @testlab = TestLab.new(:labfile_path => LABFILE, :ui => @ui)
     @testlab.boot
+    @testlab
   }
 
   describe "class" do
