@@ -195,6 +195,7 @@ describe TestLab::Container do
     describe "#setup" do
       context "with no provisioner" do
         it "should setup the container" do
+          subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
@@ -207,6 +208,7 @@ describe TestLab::Container do
         it "should setup the container" do
           subject = TestLab::Container.first('server-shell')
 
+          subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
@@ -219,6 +221,7 @@ describe TestLab::Container do
     describe "#teardown" do
       context "with no provisioner" do
         it "should teardown the container" do
+          subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
@@ -231,6 +234,7 @@ describe TestLab::Container do
         it "should teardown the container" do
           subject = TestLab::Container.first('server-shell')
 
+          subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
           subject.provisioners = Array.new
