@@ -20,7 +20,7 @@
 
 # LAB CREATE
 #############
-desc 'Create the test lab'
+desc 'Create the lab components'
 command :create do |create|
   create.action do |global_options,options,args|
     @testlab.create
@@ -29,7 +29,7 @@ end
 
 # LAB DESTROY
 ##############
-desc 'Destroy the test lab'
+desc 'Destroy the lab components'
 command :destroy do |destroy|
   destroy.action do |global_options,options,args|
     @testlab.destroy
@@ -38,7 +38,7 @@ end
 
 # LAB ONLINE
 #############
-desc 'Online the test lab'
+desc 'Online the lab components'
 command :up do |up|
   up.action do |global_options,options,args|
     @testlab.up
@@ -47,7 +47,7 @@ end
 
 # LAB OFFLINE
 ##############
-desc 'Offline the test lab'
+desc 'Offline the lab components'
 command :down do |down|
   down.action do |global_options,options,args|
     @testlab.down
@@ -56,7 +56,7 @@ end
 
 # LAB SETUP
 ############
-desc 'Setup the test lab infrastructure'
+desc 'Provision the lab components'
 command :setup do |setup|
   setup.action do |global_options,options,args|
     @testlab.setup
@@ -65,7 +65,7 @@ end
 
 # LAB TEARDOWN
 ###############
-desc 'Teardown the test lab infrastructure'
+desc 'Deprovision the lab components'
 command :teardown do |teardown|
   teardown.action do |global_options,options,args|
     @testlab.teardown
@@ -74,7 +74,7 @@ end
 
 # LAB BUILD
 ############
-desc 'Build the test lab infrastructure'
+desc 'Build the lab'
 long_desc <<-EOF
 Attempts to build the defined test lab.  TestLab will attempt to create, online and provision the lab components.
 
@@ -94,7 +94,7 @@ end
 
 # LAB DEMOLISH
 ###############
-desc 'Demolish the test lab infrastructure'
+desc 'Demolish the lab'
 long_desc <<-EOF
 Attempts to demolish the defined test lab.  TestLab will attempt to deprovision, offline and destroy the lab components.
 
@@ -114,7 +114,7 @@ end
 
 # LAB STATUS
 #############
-desc 'Display information on the status of the test lab'
+desc 'Display the lab status'
 command :status do |status|
   status.action do |global_options,options,args|
     @testlab.ui.stdout.puts("\nNODES:".green.bold)

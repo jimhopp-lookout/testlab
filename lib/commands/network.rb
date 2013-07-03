@@ -20,7 +20,7 @@
 
 # NETWORKS
 ###########
-desc 'Manage networks'
+desc 'Manage lab networks'
 arg_name 'Describe arguments to network here'
 command :network do |c|
 
@@ -146,7 +146,7 @@ EOF
   ################
   c.desc 'Build a network'
   c.long_desc <<-EOF
-Attempts to build up the network.  TestLab will attempt to create, online and provision the network.
+Attempts to build the network.  TestLab will attempt to create, online and provision the network.
 
 The network is taken through the following phases:
 
@@ -161,6 +161,29 @@ EOF
         network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
 
         network.build
+      end
+    end
+  end
+
+  # NETWORK DEMOLISH
+  ###################
+  c.desc 'Demolish a network'
+  c.long_desc <<-EOF
+Attempts to demolish the network.  TestLab will attempt to deprovision, offline and destroy the network.
+
+The network is taken through the following phases:
+
+Teardown -> Down -> Destroy
+EOF
+  c.command :demolish do |demolish|
+    demolish.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        network = @testlab.networks.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        network.nil? and raise TestLab::TestLabError, "We could not find the network you supplied!"
+
+        network.demolish
       end
     end
   end

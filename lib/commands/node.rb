@@ -20,7 +20,7 @@
 
 # NODES
 ########
-desc 'Manage nodes'
+desc 'Manage lab nodes'
 arg_name 'Describe arguments to node here'
 command :node do |c|
 
@@ -146,7 +146,7 @@ EOF
   #############
   c.desc 'Build a node'
   c.long_desc <<-EOF
-Attempts to build up the node.  TestLab will attempt to create, online and provision the node.
+Attempts to build the node.  TestLab will attempt to create, online and provision the node.
 
 The node is taken through the following phases:
 
@@ -161,6 +161,29 @@ EOF
         node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
 
         node.build
+      end
+    end
+  end
+
+  # NODE DEMOLISH
+  #############
+  c.desc 'Demolish a node'
+  c.long_desc <<-EOF
+Attempts to demolish the node.  TestLab will attempt to deprovision, offline and destroy the node.
+
+The node is taken through the following phases:
+
+Teardown -> Down -> Destroy
+EOF
+  c.command :demolish do |demolish|
+    demolish.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        node = @testlab.nodes.select{ |c| c.id.to_sym == options[:name].to_sym }.first
+        node.nil? and raise TestLab::TestLabError, "We could not find the node you supplied!"
+
+        node.demolish
       end
     end
   end

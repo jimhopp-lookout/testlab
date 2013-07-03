@@ -20,7 +20,7 @@
 
 # CONTAINERS
 #############
-desc 'Manage containers'
+desc 'Manage lab containers'
 arg_name 'Describe arguments to container here'
 command :container do |c|
 
@@ -164,7 +164,7 @@ EOF
   ##################
   c.desc 'Build a container'
   c.long_desc <<-EOF
-Attempts to build up the container.  TestLab will attempt to create, online and provision the container.
+Attempts to build the container.  TestLab will attempt to create, online and provision the container.
 
 The container is taken through the following phases:
 
@@ -181,6 +181,32 @@ EOF
 
         containers.each do |container|
           container.build
+        end
+      end
+    end
+  end
+
+  # CONTAINER DEMOLISH
+  #####################
+  c.desc 'Demolish a container'
+  c.long_desc <<-EOF
+Attempts to demolish the container.  TestLab will attempt to deprovision, offline and destroy the container.
+
+The container is taken through the following phases:
+
+  Teardown -> Down -> Destroy
+EOF
+  c.command :demolish do |demolish|
+    demolish.action do |global_options, options, args|
+      if options[:name].nil?
+        help_now!('a name is required') if options[:name].nil?
+      else
+        names = options[:name].split(',')
+        containers = TestLab::Container.find(names)
+        (containers.nil? || (containers.count == 0)) and raise TestLab::TestLabError, "We could not find any of the containers you supplied!"
+
+        containers.each do |container|
+          container.demolish
         end
       end
     end
