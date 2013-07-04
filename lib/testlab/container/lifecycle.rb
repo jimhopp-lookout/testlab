@@ -19,7 +19,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.container_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> CONTAINER PROVISIONER SETUP: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> CONTAINER PROVISIONER SETUP: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_container_setup) and p.on_container_setup(self)
           end
@@ -45,7 +45,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
           self.container_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> CONTAINER PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> CONTAINER PROVISIONER TEARDOWN: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_container_teardown) and p.on_container_teardown(self)
           end

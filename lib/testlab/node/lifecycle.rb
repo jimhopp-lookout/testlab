@@ -16,7 +16,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.all_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NODE PROVISIONER SETUP: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> NODE PROVISIONER SETUP: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_node_setup) and p.on_node_setup(self)
           end
@@ -35,7 +35,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
           self.all_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NODE PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> NODE PROVISIONER TEARDOWN: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
           end

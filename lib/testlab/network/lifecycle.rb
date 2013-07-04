@@ -13,7 +13,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.network_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NETWORK PROVISIONER SETUP: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> NETWORK PROVISIONER SETUP: #{provisioner} (#{self.bridge}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_network_setup) and p.on_network_setup(self)
           end
@@ -33,7 +33,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
           self.network_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NETWORK PROVISIONER TEARDOWN: #{provisioner} <<<<<" }
+            @ui.logger.info { ">>>>> NETWORK PROVISIONER TEARDOWN: #{provisioner} (#{self.bridge}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_network_teardown) and p.on_network_teardown(self)
           end
