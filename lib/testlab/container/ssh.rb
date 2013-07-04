@@ -27,7 +27,7 @@ Host #{self.id}
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
   PasswordAuthentication no
-  ForwardAgent yes
+  ForwardAgent no
   IdentitiesOnly yes
 EOF
 
