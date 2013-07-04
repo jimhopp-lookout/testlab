@@ -181,7 +181,17 @@ class TestLab
         @ui.logger.debug { "command == #{command.inspect}" }
 
         render_vagrantfile
-        ZTK::Command.new(:ui => @ui, :silence => true).exec(command)
+        result = ZTK::Command.new(:ui => @ui, :silence => true, :ignore_exit_status => true).exec(command)
+
+        if result.exit_code != 0
+          @ui.stderr.puts
+          @ui.stderr.puts
+          @ui.stderr.puts(result.output)
+
+          raise VagrantError, "Vagrant failed to execute!"
+        end
+
+        result
       end
 
       def render_vagrantfile
