@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'bundler/setup'
+require 'pry'
+require 'testlab'
+
+ENV['LOG_LEVEL'] = 'DEBUG'
+logger = ZTK::Logger.new(STDOUT)
+
+ui = ZTK::UI.new(:logger => logger)
+l  = TestLab.new(:ui => ui, :repo_dir => Dir.pwd)
+binding.pry
