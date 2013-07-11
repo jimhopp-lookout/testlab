@@ -9,4 +9,6 @@ logger = ZTK::Logger.new(STDOUT)
 
 ui = ZTK::UI.new(:logger => logger)
 l  = TestLab.new(:ui => ui, :repo_dir => Dir.pwd)
+l.boot
+
 binding.pry
