@@ -19,9 +19,10 @@ class TestLab
         remote_filename = File.basename(export_tempfile.path.dup)
         export_tempfile.close!
 
-        remote_file = File.join("", "tmp", remote_filename)
+        remote_file  = File.join("", "tmp", remote_filename)
         local_file ||= File.join(Dir.pwd, File.basename(remote_file))
         local_file   = File.expand_path(local_file)
+        root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
           self.node.ssh.bootstrap(<<-EOF)
@@ -29,7 +30,8 @@ set -x
 set -e
 
 du -sh #{self.lxc.container_root}
-find #{self.lxc.container_root} -print0 -depth | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
+cd #{self.lxc.container_root}
+find #{root_fs_path} -depth -print0 | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
 chown ${SUDO_USER}:${SUDO_USER} #{remote_file}
 ls -lah #{remote_file}
 EOF
@@ -53,13 +55,15 @@ EOF
 
         self.down
         self.destroy
+        self.create
 
         import_tempfile = Tempfile.new('import')
         remote_filename = File.basename(import_tempfile.path.dup)
         import_tempfile.close!
 
-        remote_file = File.join("", "tmp", remote_filename)
-        local_file  = File.expand_path(local_file)
+        remote_file  = File.join("", "tmp", remote_filename)
+        local_file   = File.expand_path(local_file)
+        root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
           self.node.ssh.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
@@ -72,6 +76,8 @@ set -x
 set -e
 
 ls -lah #{remote_file}
+cd #{self.lxc.container_root}
+rm -rf #{root_fs_path}
 pbzip2 -vdcm#{PBZIP2_MEMORY} #{remote_file} | cpio -uid && rm -fv #{remote_file}
 du -sh #{self.lxc.container_root}
 EOF
