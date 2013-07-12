@@ -142,8 +142,8 @@ class TestLab
       def build_lxc_config(lxc_config)
         lxc_config.clear
 
-        lxc_config['lxc.utsname'] = self.fqdn
         lxc_config['lxc.arch']    = self.arch
+        lxc_config['lxc.utsname'] = self.fqdn
         lxc_config.networks       = build_lxc_network_conf(self.interfaces)
 
         lxc_config.save
