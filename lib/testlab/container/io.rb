@@ -42,7 +42,9 @@ EOF
           self.node.ssh.download(remote_file, local_file)
         end
 
-        puts("Your shipping container is now exported and available at '#{local_file}'!")
+        @ui.stdout.puts
+        @ui.stdout.puts("Your shipping container is now exported and available at '#{local_file}'!".green.bold)
+        @ui.stdout.puts
 
         true
       end
@@ -83,7 +85,9 @@ du -sh #{self.lxc.container_root}
 EOF
         end
 
-        puts("Your shipping container is now imported and available for use!")
+        @ui.stdout.puts
+        @ui.stdout.puts("Your shipping container is now imported and available for use!".green.bold)
+        @ui.stdout.puts
 
         true
       end
