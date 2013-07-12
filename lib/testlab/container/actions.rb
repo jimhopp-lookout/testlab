@@ -121,6 +121,10 @@ class TestLab
       end
 
       # Configure the container
+      #
+      # Configures the LXC subsystem for the container.
+      #
+      # @return [Boolean] True if successful.
       def configure
         self.domain ||= self.node.domain
         self.arch   ||= detect_arch
