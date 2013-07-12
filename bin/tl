@@ -97,14 +97,16 @@ pre do |global,command,options,args|
 end
 
 post do |global,command,options,args|
-  # Post logic here
-  # Use skips_post before a command to skip this
-  # block on that command only
+  message = format_message("TestLab v#{TestLab::VERSION} Finished".black.bold)
+  @testlab.ui.stdout.puts(message)
+  @testlab.ui.logger.info { message }
+
+  true
 end
 
 on_error do |exception|
   @ui.stderr.puts
-  @ui.stderr.puts(format_message(["ERROR:".red, exception.message.red.bold].join(' ')))
+  @ui.stderr.puts(format_message(["ERROR:".red, exception.inspect.red.bold].join(' ')))
 
   case exception
   when GLI::BadCommandLine, GLI::UnknownCommand, GLI::UnknownCommandArgument, GLI::UnknownGlobalArgument then
@@ -120,6 +122,10 @@ on_error do |exception|
     exception.backtrace.each do |line|
       @logger.logdev.write("#{line}\n")
     end
+
+    message = format_message("TestLab v#{TestLab::VERSION} Aborted".black.bold)
+    @testlab.ui.stderr.puts(message)
+    @testlab.ui.logger.info { message }
 
     false
   end
