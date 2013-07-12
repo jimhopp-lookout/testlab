@@ -30,9 +30,11 @@ set -x
 set -e
 
 du -sh #{self.lxc.container_root}
+
 cd #{self.lxc.container_root}
 find #{root_fs_path} -depth -print0 | cpio -o0 | pbzip2 -#{compression} -vfczm#{PBZIP2_MEMORY} > #{remote_file}
 chown ${SUDO_USER}:${SUDO_USER} #{remote_file}
+
 ls -lah #{remote_file}
 EOF
         end
@@ -78,9 +80,11 @@ set -x
 set -e
 
 ls -lah #{remote_file}
+
+rm -rf #{self.lxc.fs_root}
 cd #{self.lxc.container_root}
-rm -rf #{root_fs_path}
 pbzip2 -vdcm#{PBZIP2_MEMORY} #{remote_file} | cpio -uid && rm -fv #{remote_file}
+
 du -sh #{self.lxc.container_root}
 EOF
         end
