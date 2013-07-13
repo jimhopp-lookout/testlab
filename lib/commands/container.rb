@@ -124,6 +124,27 @@ EOF
     end
   end
 
+  # CONTAINER COPY
+  #################
+  c.desc 'Copy containers'
+  c.long_desc <<-EOF
+Creates a copy of a container.
+
+NOTE: This will result in the source container being stopped before the copy operation commences.
+EOF
+  c.command :copy do |copy|
+
+    copy.desc %(The ID of the target container.)
+    copy.arg_name %(ID)
+    copy.flag [:t, :to]
+
+    copy.action do |global_options, options, args|
+      iterate_objects_by_name(options[:name], TestLab::Container) do |container|
+        container.copy(options[:to])
+      end
+    end
+  end
+
   # CONTAINER EXPORT
   ###################
   c.desc 'Export containers'

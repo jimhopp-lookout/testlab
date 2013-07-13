@@ -120,6 +120,31 @@ class TestLab
         true
       end
 
+      # Copy the container
+      #
+      # Duplicates this container under another container definition.
+      #
+      # @return [Boolean] True if successful.
+      def copy(to_name)
+        @ui.logger.debug { "Container Copy: #{self.id}" }
+
+        to_container = self.node.containers.select{ |c| c.id.to_sym == to_name.to_sym }.first
+        to_container.nil? and raise ContainerError, "We could not locate the target container!"
+
+        to_container.demolish
+
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Copy', :yellow)) do
+          arguments = Array.new
+          arguments << %W(-o #{self.lxc.name})
+          arguments << %W(-n #{to_name})
+          arguments.flatten!.compact!
+
+          self.lxc.clone(arguments)
+        end
+
+        true
+      end
+
       # Configure the container
       #
       # Configures the LXC subsystem for the container.
