@@ -25,6 +25,18 @@ class TestLab
         end
       end
 
+      # Container Console
+      #
+      # Opens an LXC console into the container.
+      #
+      # This command will replace the current process with an SSH session that
+      # will execute the appropriate LXC console command on the parent node of
+      # this container.
+      def console
+        @ui.stdout.puts("Press CTRL-A Q to exit the console.  (CTRL-A CTRL-A to enter a CTRL-A itself)".red.bold)
+        self.node.ssh.console(%(-t 'sudo lxc-console -n #{self.id}'))
+      end
+
       # LXC::Container object
       #
       # Returns a *LXC::Container* class instance configured for this container.

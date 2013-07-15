@@ -84,6 +84,21 @@ EOF
     end
   end
 
+  # CONTAINER CONSOLE
+  ####################
+  c.desc 'Container console'
+  c.command :console do |console|
+
+    console.action do |global_options, options, args|
+      help_now!('a name is required') if options[:name].nil?
+
+      container = @testlab.containers.select{ |n| n.id.to_sym == options[:name].to_sym }.first
+      container.nil? and raise TestLab::TestLabError, "We could not find the container you supplied!"
+
+      container.console
+    end
+  end
+
   # CONTAINER RECYCLE
   ####################
   c.desc 'Recycle containers'
