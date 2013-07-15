@@ -134,8 +134,8 @@ NOTE: This will result in the source container being stopped before the copy ope
 EOF
   c.command :copy do |copy|
 
-    copy.desc %(The ID of the target container.)
-    copy.arg_name %(ID)
+    copy.desc %(The container ID we wish to copy the original container to.)
+    copy.arg_name %(container)
     copy.flag [:t, :to]
 
     copy.action do |global_options, options, args|
