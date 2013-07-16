@@ -14,7 +14,8 @@ class TestLab
   #     distro        "ubuntu"
   #     release       "precise"
   #
-  #     user "deployer" do
+  #     user do
+  #       username "deployer"
   #       password "deployer"
   #       uid 2600
   #       gid 2600
@@ -33,7 +34,8 @@ class TestLab
   #     distro        "ubuntu"
   #     release       "precise"
   #
-  #     user "deployer" do
+  #     user do
+  #       username "deployer"
   #       password "deployer"
   #       uid 2600
   #       gid 2600
