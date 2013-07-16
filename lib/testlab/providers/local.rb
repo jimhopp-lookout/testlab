@@ -71,11 +71,11 @@ class TestLab
       end
 
       def user
-        ENV['USER']
+        (@config[:local][:user] || ENV['USER'])
       end
 
       def identity
-        File.join(ENV['HOME'], ".ssh", "id_rsa")
+        (@config[:local][:identity] || File.join(ENV['HOME'], ".ssh", "id_rsa"))
       end
 
       def ip
