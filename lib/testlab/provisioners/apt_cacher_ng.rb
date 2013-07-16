@@ -19,6 +19,7 @@ class TestLab
         @config[:apt][:cacher_ng][:exclude_hosts] ||= Array.new
 
         @apt_conf_d_proxy_file_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
+        @apt_cacher_ng_security_conf_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "security.conf.erb")
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
@@ -46,6 +47,13 @@ class TestLab
         node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
         end
+
+        apt_cacher_ng_security_conf_file = %(/etc/apt-cacher-ng/security.conf)
+        node.ssh.file(:target => apt_cacher_ng_security_conf_file, :chown => "root:root", :chmod => "0644") do |file|
+          file.puts(ZTK::Template.render(@apt_cacher_ng_security_conf_template, context))
+        end
+
+        node.ssh.exec(%(sudo service apt-cacher-ng restart))
 
         true
       end
