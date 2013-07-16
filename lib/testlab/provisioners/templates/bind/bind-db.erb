@@ -1,6 +1,6 @@
 $TTL 1d
 @ IN  SOA localhost. root.localhost. (
-   <%= Time.now.to_i %>   ; Serial
+   <%= Time.now.utc.to_i %>   ; Serial
            1w   ; Refresh
            1d   ; Retry
            4w   ; Expire
