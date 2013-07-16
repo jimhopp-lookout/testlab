@@ -109,8 +109,6 @@ post do |global,command,options,args|
 end
 
 on_error do |exception|
-  testlab_run_time = (Time.now.utc - @testlab_start_time)
-
   @ui.stderr.puts(format_message(["ERROR:".red, exception.inspect.red.bold].join(' ')))
 
   case exception
@@ -123,6 +121,8 @@ on_error do |exception|
 
     false
   else
+    testlab_run_time = (Time.now.utc - @testlab_start_time)
+
     @logger.fatal { exception.inspect }
     exception.backtrace.each do |line|
       @logger.logdev.write("#{line}\n")
