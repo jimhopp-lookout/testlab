@@ -68,6 +68,7 @@ class TestLab
             user.setup
           end
 
+          self.ssh.exec(%(sudo hostname #{self.fqdn}))
         end
 
         true
