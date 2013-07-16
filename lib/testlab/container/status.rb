@@ -18,7 +18,7 @@ class TestLab
       #
       # @return [Integer] The containers CIDR address.
       def cidr
-        TestLab::Utility.cidr(self.primary_interface.address).to_i
+        TestLab::Utility.cidr(self.primary_interface.address)
       end
 
       # Container BIND PTR Record
