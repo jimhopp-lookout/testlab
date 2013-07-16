@@ -104,7 +104,7 @@ EOF
       def copy(target_name)
         @ui.logger.debug { "Container Copy: #{self.id}" }
 
-        to_container.nil? and raise ContainerError, "We could not locate the target container!"
+        target_name.nil? and raise ContainerError, "You must supply a destination container!"
 
         target_container = self.node.containers.select{ |c| c.id.to_sym == target_name.to_sym }.first
         target_container.nil? and raise ContainerError, "We could not locate the target container!"
