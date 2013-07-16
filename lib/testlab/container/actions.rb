@@ -10,7 +10,7 @@ class TestLab
       #
       # @return [Boolean] True if successful.
       def create
-        @ui.logger.debug { "Container Create: #{self.id} " }
+        @ui.logger.debug { "Container Create: #{self.id}" }
 
         (self.node.state != :running) and return false
         (self.lxc.state != :not_created) and return false
@@ -30,7 +30,7 @@ class TestLab
       #
       # @return [Boolean] True if successful.
       def destroy
-        @ui.logger.debug { "Container Destroy: #{self.id} " }
+        @ui.logger.debug { "Container Destroy: #{self.id}" }
 
         (self.node.state != :running) and return false
         (self.lxc.state == :not_created) and return false
@@ -49,7 +49,7 @@ class TestLab
       #
       # @return [Boolean] True if successful.
       def up
-        @ui.logger.debug { "Container Up: #{self.id} " }
+        @ui.logger.debug { "Container Up: #{self.id}" }
 
         (self.node.state != :running) and return false
         (self.lxc.state == :running) and return false
@@ -80,7 +80,7 @@ class TestLab
       #
       # @return [Boolean] True if successful.
       def down
-        @ui.logger.debug { "Container Down: #{self.id} " }
+        @ui.logger.debug { "Container Down: #{self.id}" }
 
         (self.node.state != :running) and return false
         (self.lxc.state != :running) and return false
