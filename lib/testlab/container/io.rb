@@ -115,6 +115,7 @@ EOF
         please_wait(:ui => @ui, :message => format_object_action(self, 'Copy', :yellow)) do
           self.node.ssh.exec(%(sudo rm -rf #{target_container.lxc.fs_root}))
           self.node.ssh.exec(%(sudo rsync -a #{self.lxc.fs_root} #{target_container.lxc.container_root}))
+          self.node.ssh.exec(%(sudo rm -f #{File.join(self.lxc.fs_root, '.*bootstrap')}))
         end
 
         true
