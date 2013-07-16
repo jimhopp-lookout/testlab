@@ -111,7 +111,6 @@ end
 on_error do |exception|
   testlab_run_time = (Time.now.utc - @testlab_start_time)
 
-  @ui.stderr.puts
   @ui.stderr.puts(format_message(["ERROR:".red, exception.inspect.red.bold].join(' ')))
 
   case exception
