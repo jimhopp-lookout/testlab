@@ -101,18 +101,20 @@ EOF
       # Duplicates this container under another container definition.
       #
       # @return [Boolean] True if successful.
-      def copy(to_name)
+      def copy(target_name)
         @ui.logger.debug { "Container Copy: #{self.id}" }
 
-        to_container = self.node.containers.select{ |c| c.id.to_sym == to_name.to_sym }.first
         to_container.nil? and raise ContainerError, "We could not locate the target container!"
 
-        to_container.demolish
-        to_container.create
+        target_container = self.node.containers.select{ |c| c.id.to_sym == target_name.to_sym }.first
+        target_container.nil? and raise ContainerError, "We could not locate the target container!"
+
+        target_container.demolish
+        target_container.create
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Copy', :yellow)) do
-          self.node.ssh.exec(%(sudo rm -rf #{to_container.lxc.fs_root}))
-          self.node.ssh.exec(%(sudo rsync -a #{self.lxc.fs_root} #{to_container.lxc.container_root}))
+          self.node.ssh.exec(%(sudo rm -rf #{target_container.lxc.fs_root}))
+          self.node.ssh.exec(%(sudo rsync -a #{self.lxc.fs_root} #{target_container.lxc.container_root}))
         end
 
         true
