@@ -18,10 +18,20 @@ class TestLab
         }
       end
 
+      # Network IP
+      #
+      # Returns the IP of the network bridge.
+      #
+      # @return [String] The network bridge IP address.
       def ip
         TestLab::Utility.ip(self.address)
       end
 
+      # Network CIDR
+      #
+      # Returns the CIDR of the network bridge.
+      #
+      # @return [Integer] The network bridge CIDR address.
       def cidr
         TestLab::Utility.cidr(self.address)
       end

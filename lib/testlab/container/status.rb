@@ -14,7 +14,7 @@ class TestLab
 
       # Container CIDR
       #
-      # Returns the CIDR of the container
+      # Returns the CIDR of the container.
       #
       # @return [Integer] The containers CIDR address.
       def cidr
