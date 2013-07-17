@@ -4,6 +4,12 @@
 [![Coverage Status](https://coveralls.io/repos/zpatten/testlab/badge.png?branch=master)](https://coveralls.io/r/zpatten/testlab)
 [![Code Climate](https://codeclimate.com/github/zpatten/testlab.png)](https://codeclimate.com/github/zpatten/testlab)
 
+# A Quick Note on Versioning
+
+I attempt to keep TestLab in line with Semantic Versioning when incrementing version numbers.  I am human so I may screw this up on, hopefully rare, occasion.  Semantic Versioning is delicious and everyone should be following this schema, especially when it comes to Ruby Gems which have a habit of pushing your projects into "dependency hell".
+
+* http://semver.org/
+
 # TestLab
 
 A toolkit for building virtual computer labs.
