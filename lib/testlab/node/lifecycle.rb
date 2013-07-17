@@ -13,6 +13,8 @@ class TestLab
       def setup
         @ui.logger.debug { "Node Setup: #{self.id} " }
 
+        (self.state != :running) and return false
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
 
           self.all_provisioners.each do |provisioner|
@@ -30,7 +32,7 @@ class TestLab
       def teardown
         @ui.logger.debug { "Node Teardown: #{self.id} " }
 
-        (self.state == :not_created) and return false
+        (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
 
