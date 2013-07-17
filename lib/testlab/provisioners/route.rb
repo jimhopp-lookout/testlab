@@ -26,8 +26,8 @@ class TestLab
         true
       end
 
-      # Route Provisioner Network Teardown
-      def on_network_teardown(network)
+      # Route: Network Deprovision
+      def on_network_deprovision(network)
         manage_route(:del, network)
 
         true

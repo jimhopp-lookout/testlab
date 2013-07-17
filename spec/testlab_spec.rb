@@ -54,19 +54,19 @@ describe TestLab do
       end
     end
 
-    describe "teardown" do
-      it "should teardown the test lab" do
+    describe "deprovision" do
+      it "should deprovision the test lab" do
         subject.stub(:dead?) { false }
         subject.nodes.each do |node|
-          node.stub(:teardown) { true }
+          node.stub(:deprovision) { true }
         end
         subject.containers.each do |container|
-          container.stub(:teardown) { true }
+          container.stub(:deprovision) { true }
         end
         subject.networks.each do |network|
-          network.stub(:teardown) { true }
+          network.stub(:deprovision) { true }
         end
-        subject.teardown
+        subject.deprovision
       end
     end
 

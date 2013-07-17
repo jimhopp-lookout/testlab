@@ -7,16 +7,16 @@ class TestLab
     module GLI
       require 'ztk'
 
-      LAB_ACTION_ORDER = %W(create destroy up down provision teardown build demolish).map(&:to_sym)
+      LAB_ACTION_ORDER = %W(create destroy up down provision deprovision build demolish).map(&:to_sym)
 
       LAB_ACTIONS = {
-        :create    => ["Construct %s",    "Attempts to create the <%= @component %>."],
-        :destroy   => ["Destruct %s",     "Attempts to destroy the <%= @component %>."],
-        :up        => ["On-line %s",      "Attempts to online the <%= @component %>."],
-        :down      => ["Off-line %s",     "Attempts to offline the <%= @component %>."],
-        :provision => ["Provision %s",    "Attempts to provision the <%= @component %>."],
-        :teardown  => ["De-provision %s", "Attempts to deprovision the <%= @component %>."],
-        :build     => ["Build %s", <<-EOF],
+        :create      => ["Construct %s",    "Attempts to create the <%= @component %>."],
+        :destroy     => ["Destruct %s",     "Attempts to destroy the <%= @component %>."],
+        :up          => ["On-line %s",      "Attempts to online the <%= @component %>."],
+        :down        => ["Off-line %s",     "Attempts to offline the <%= @component %>."],
+        :provision   => ["Provision %s",    "Attempts to provision the <%= @component %>."],
+        :deprovision => ["De-provision %s", "Attempts to deprovision the <%= @component %>."],
+        :build       => ["Build %s", <<-EOF],
           Attempts to build the <%= @component %>.  TestLab will attempt to create, online and provision the <%= @component %>.
 
           The <%= @component %> are taken through the following states:
@@ -28,7 +28,7 @@ class TestLab
 
           The <%= @component %> are taken through the following states:
 
-          Teardown -> Down -> Destroy
+          Deprovision -> Down -> Destroy
           EOF
       }
 

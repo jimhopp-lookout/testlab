@@ -98,19 +98,19 @@ command :provision do |provision|
   end
 end
 
-# LAB TEARDOWN
-###############
+# LAB DEPROVISION
+##################
 desc 'De-provision the lab components'
 long_desc <<-EOF
-Attempts to teardown the defined lab components.
+Attempts to deprovision the defined lab components.
 
 The components are torndown in the following order:
 
 Containers -> Networks -> Nodes
 EOF
-command :teardown do |teardown|
-  teardown.action do |global_options,options,args|
-    @testlab.teardown
+command :deprovision do |deprovision|
+  deprovision.action do |global_options,options,args|
+    @testlab.deprovision
   end
 end
 
@@ -146,7 +146,7 @@ Containers -> Networks -> Nodes
 
 TestLab will then attempt to demolish the components, executing the following tasks for each:
 
-Teardown -> Down -> Destroy
+Deprovision -> Down -> Destroy
 EOF
 command :demolish do |demolish|
   demolish.action do |global_options,options,args|

@@ -155,7 +155,7 @@ describe TestLab::Network do
       end
     end
 
-    describe "#teardown" do
+    describe "#deprovision" do
       it "should create and online the network" do
         subject.node.stub(:state) { :running }
         subject.stub(:state) { :running }
@@ -163,7 +163,7 @@ describe TestLab::Network do
         subject.stub(:destroy) { true }
         subject.stub(:network_provisioners) { Array.new }
 
-        subject.teardown
+        subject.deprovision
       end
     end
 

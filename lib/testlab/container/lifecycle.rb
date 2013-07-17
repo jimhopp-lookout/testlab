@@ -19,7 +19,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Provision', :green)) do
 
           self.container_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> CONTAINER PROVISIONER: #{provisioner} (#{self.id}) <<<<<" }
+            @ui.logger.info { ">>>>> CONTAINER PROVISION: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_container_provision) and p.on_container_provision(self)
           end
@@ -29,25 +29,25 @@ class TestLab
         true
       end
 
-      # Teardown the container
+      # Deprovision the container
       #
-      # Attempts to teardown the container.  We first call the provisioner
-      # teardown method defined for the container, if any.  Next we attempt to
-      # offline the container.  Afterwards the container is destroy.
+      # Attempts to deprovision the container.  We first call the provisioner
+      # deprovision method defined for the container, if any.  Next we attempt
+      # to offline the container.  Afterwards the container is destroy.
       #
       # @return [Boolean] True if successful.
-      def teardown
-        @ui.logger.debug { "Container Teardown: #{self.id} " }
+      def deprovision
+        @ui.logger.debug { "Container Deprovision: #{self.id} " }
 
         (self.node.state != :running) and return false
         (self.state != :running) and return false
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Deprovision', :red)) do
 
           self.container_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> CONTAINER PROVISIONER TEARDOWN: #{provisioner} (#{self.id}) <<<<<" }
+            @ui.logger.info { ">>>>> CONTAINER DEPROVISION: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_container_teardown) and p.on_container_teardown(self)
+            p.respond_to?(:on_container_deprovision) and p.on_container_deprovision(self)
           end
 
         end
@@ -66,7 +66,7 @@ class TestLab
 
       # Demolish the container
       def demolish
-        self.teardown
+        self.deprovision
         self.down
         self.destroy
 

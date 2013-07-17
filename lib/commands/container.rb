@@ -107,12 +107,12 @@ Recycles a container.  The container is taken through a series of state changes 
 
 The container is cycled in this order:
 
-Teardown -> Down -> Destroy -> Create -> Up -> Provision
+Deprovision -> Down -> Destroy -> Create -> Up -> Provision
 EOF
   c.command :recycle do |recycle|
     recycle.action do |global_options, options, args|
       iterate_objects_by_name(options[:name], TestLab::Container) do |container|
-        container.teardown
+        container.deprovision
         container.down
         container.destroy
 

@@ -22,18 +22,18 @@ class TestLab
         true
       end
 
-      # Teardown the node.
-      def teardown
-        @ui.logger.debug { "Node Teardown: #{self.id} " }
+      # Deprovision the node.
+      def deprovision
+        @ui.logger.debug { "Node Deprovision: #{self.id} " }
 
         (self.state != :running) and return false
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Teardown', :red)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Deprovision', :red)) do
 
           self.all_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NODE PROVISIONER TEARDOWN: #{provisioner} (#{self.id}) <<<<<" }
+            @ui.logger.info { ">>>>> NODE DEPROVISION: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_node_teardown) and p.on_node_teardown(self)
+            p.respond_to?(:on_node_deprovision) and p.on_node_deprovision(self)
           end
 
         end
@@ -52,7 +52,7 @@ class TestLab
 
       # Demolish the node
       def demolish
-        self.teardown
+        self.deprovision
         self.down
         self.destroy
 

@@ -219,20 +219,20 @@ describe TestLab::Container do
       end
     end
 
-    describe "#teardown" do
+    describe "#deprovision" do
       context "with no provisioner" do
-        it "should teardown the container" do
+        it "should deprovision the container" do
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
           subject.stub(:container_provisioners) { Array.new }
 
-          subject.teardown
+          subject.deprovision
         end
       end
 
       context "with the shell provisioner" do
-        it "should teardown the container" do
+        it "should deprovision the container" do
           subject and (subject = TestLab::Container.first('server-shell'))
 
           subject.node.stub(:state) { :running }
@@ -240,7 +240,7 @@ describe TestLab::Container do
           subject.lxc.stub(:state) { :stopped }
           subject.stub(:container_provisioners) { Array.new }
 
-          subject.teardown
+          subject.deprovision
         end
       end
 

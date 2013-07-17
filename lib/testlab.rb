@@ -285,14 +285,14 @@ class TestLab
     true
   end
 
-  # Test Lab Teardown
+  # Test Lab Deprovision
   #
-  # Attempts to tearddown our lab topology.  This calls the teardown method on
-  # all of our nodes.
+  # Attempts to tearddown our lab topology.  This calls the deprovision method
+  # on all of our nodes.
   #
   # @return [Boolean] True if successful.
-  def teardown
-    reverse_method_proxy(:teardown)
+  def deprovision
+    reverse_method_proxy(:deprovision)
 
     true
   end

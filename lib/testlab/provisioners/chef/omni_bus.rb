@@ -54,10 +54,10 @@ class TestLab
           true
         end
 
-        # OmniBus Provisioner Container Teardown
+        # OmniBus: Container Deprovision
         #
         # @return [Boolean] True if successful.
-        def on_container_teardown(container)
+        def on_container_deprovision(container)
           if @chef_server.state == :running
             @chef_server.ssh.exec(%(knife node delete #{container.id} --yes), :ignore_exit_status => true)
             @chef_server.ssh.exec(%(knife client delete #{container.id} --yes), :ignore_exit_status => true)

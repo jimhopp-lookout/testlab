@@ -30,7 +30,7 @@ The TestLab command-line program `tl` follows in the style of git:
 
     GLOBAL OPTIONS
         -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
-        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/personal/chef-repo)
+        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/chef-repo)
         -c, --config=path/to/directory - Path to Configuration directory: ${REPO}/.testlab-$(hostname -s) (default: none)
         --version                      - Display the program version
         -v, --[no-]verbose             - Show verbose output
@@ -38,19 +38,19 @@ The TestLab command-line program `tl` follows in the style of git:
         --help                         - Show this message
 
     COMMANDS
-        help      - Shows a list of commands or help for one command
-        container - Manage lab containers
-        network   - Manage lab networks
-        node      - Manage lab nodes
-        create    - Create the lab components
-        destroy   - Destroy the lab components
-        up        - On-line the lab components
-        down      - Off-line the lab components
-        provision - Provision the lab components
-        teardown  - De-provision the lab components
-        build     - Build the lab
-        demolish  - Demolish the lab
-        status    - Display the lab status
+        help        - Shows a list of commands or help for one command
+        container   - Manage lab containers
+        network     - Manage lab networks
+        node        - Manage lab nodes
+        create      - Create the lab components
+        destroy     - Destroy the lab components
+        up          - On-line the lab components
+        down        - Off-line the lab components
+        provision   - Provision the lab components
+        deprovision - De-provision the lab components
+        build       - Build the lab
+        demolish    - Demolish the lab
+        status      - Display the lab status
 
 You stand up your lab with the following command:
 
@@ -108,7 +108,7 @@ You can individually online, offline, create or destroy containers:
     tl container down -n server-www-1
     tl container up -n server-www-1
     tl container provision -n server-www-1
-    tl container teardown -n server-www-1
+    tl container deprovision -n server-www-1
 
 You can recycle a container, effectively destroying then creating it again, provisioning it back to a "pristine" condition.
 

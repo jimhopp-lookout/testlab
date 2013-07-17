@@ -108,12 +108,12 @@ describe TestLab::Node do
       end
     end
 
-    describe "teardown" do
-      it "should teardown the node" do
+    describe "deprovision" do
+      it "should deprovision the node" do
         subject.stub(:state) { :running }
         subject.stub(:all_provisioners) { Array.new }
 
-        subject.teardown
+        subject.deprovision
       end
     end
 
