@@ -22,12 +22,24 @@ class TestLab
 
       # Bind Provisioner Node Setup
       #
-      # @param [TestLab::Node] node The node which we want to provision.
+      # @param [TestLab::Node] node The node that is being provisioned.
       # @return [Boolean] True if successful.
       def on_node_setup(node)
         @ui.logger.debug { "BIND Provisioner: Node #{node.id}" }
 
-        bind_setup(node.ssh)
+        bind_setup(node)
+
+        true
+      end
+
+      # Bind Provisioner Network Setup
+      #
+      # @param [TestLab::Network] network The network that is being provisioned.
+      # @return [Boolean] True if successful.
+      def on_network_setup(network)
+        @ui.logger.debug { "BIND Provisioner: Network #{network.id}" }
+
+        bind_reload(network.node)
 
         true
       end
@@ -112,15 +124,15 @@ class TestLab
         ssh.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
-      def bind_reload(ssh)
-        ssh.exec(%(sudo chown -Rv bind:bind /etc/bind))
-        ssh.exec(%(sudo rndc reload))
+      def bind_reload(node)
+        node.ssh.exec(%(sudo chown -Rv bind:bind /etc/bind))
+        node.ssh.exec(%(sudo rndc reload))
       end
 
-      def bind_setup(ssh)
-        bind_install(ssh)
-        build_bind_conf(ssh)
-        bind_reload(ssh)
+      def bind_setup(node)
+        bind_install(node.ssh)
+        build_bind_conf(node.ssh)
+        bind_reload(node)
       end
 
     end

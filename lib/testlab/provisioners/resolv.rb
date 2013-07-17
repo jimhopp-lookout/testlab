@@ -15,7 +15,7 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:resolv] ||= Hash.new
-        @config[:resolv][:servers] ||= [TestLab::Network.ips, "8.8.8.8", "8.8.4.4" ].flatten.compact.uniq
+        @config[:resolv][:servers] ||= [TestLab::Network.ips, '8.8.8.8', '8.8.4.4'].flatten.compact.uniq
         @config[:resolv][:search]  ||= TestLab::Container.domains.join(' ')
 
         @ui.logger.debug { "config(#{@config.inspect})" }
@@ -27,6 +27,8 @@ class TestLab
       # @return [Boolean] True if successful.
       def on_node_setup(node)
         @ui.logger.debug { "RESOLV Provisioner: Node #{node.id}" }
+
+        @config[:resolv][:servers] = ['127.0.0.1', '8.8.8.8', '8.8.4.4']
 
         render_resolv_conf(node)
 
