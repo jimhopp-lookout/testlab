@@ -12,7 +12,7 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Provision', :green)) do
 
           self.all_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NODE PROVISIONER PROVISION: #{provisioner} (#{self.id}) <<<<<" }
+            @ui.logger.info { ">>>>> NODE PROVISION: #{provisioner} (#{self.id}) <<<<<" }
             p = provisioner.new(self.config, @ui)
             p.respond_to?(:on_node_provision) and p.on_node_provision(self)
           end
