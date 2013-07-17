@@ -101,18 +101,18 @@ describe TestLab::Node do
 
     describe "setup" do
       it "should setup the node" do
-        subject.provisioners = Array.new
-        subject.containers.each { |c| c.provisioners = Array.new }
         subject.stub(:state) { :running }
+        subject.stub(:all_provisioners) { Array.new }
+
         subject.setup
       end
     end
 
     describe "teardown" do
       it "should teardown the node" do
-        subject.provisioners = Array.new
-        subject.containers.each { |c| c.provisioners = Array.new }
         subject.stub(:state) { :running }
+        subject.stub(:all_provisioners) { Array.new }
+
         subject.teardown
       end
     end

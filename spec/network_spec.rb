@@ -149,6 +149,7 @@ describe TestLab::Network do
         subject.stub(:state) { :running }
         subject.stub(:create) { true }
         subject.stub(:up) { true }
+        subject.stub(:network_provisioners) { Array.new }
 
         subject.setup
       end
@@ -160,6 +161,7 @@ describe TestLab::Network do
         subject.stub(:state) { :running }
         subject.stub(:down) { true }
         subject.stub(:destroy) { true }
+        subject.stub(:network_provisioners) { Array.new }
 
         subject.teardown
       end
