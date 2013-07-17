@@ -21,12 +21,12 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # APT Provisioner Container Setup
+      # APT: Container Provision
       #
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def on_container_setup(container)
+      def on_container_provision(container)
         @ui.logger.debug { "APT Provisioner: Container #{container.id}" }
 
         bootstrap_template = File.join(TestLab::Provisioner.template_dir, "apt", "bootstrap.erb")

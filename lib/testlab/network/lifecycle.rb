@@ -3,19 +3,19 @@ class TestLab
 
     module Lifecycle
 
-      # Network Setup
-      def setup
-        @ui.logger.debug { "Network Setup: #{self.id} " }
+      # Network Provision
+      def provision
+        @ui.logger.debug { "Network Provision: #{self.id} " }
 
         (self.node.state != :running) and return false
         (self.state != :running) and return false
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Setup', :green)) do
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Provision', :green)) do
 
           self.network_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NETWORK PROVISIONER SETUP: #{provisioner} (#{self.bridge}) <<<<<" }
+            @ui.logger.info { ">>>>> NETWORK PROVISIONER: #{provisioner} (#{self.bridge}) <<<<<" }
             p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_network_setup) and p.on_network_setup(self)
+            p.respond_to?(:on_network_provision) and p.on_network_provision(self)
           end
 
         end
@@ -47,7 +47,7 @@ class TestLab
       def build
         self.create
         self.up
-        self.setup
+        self.provision
 
         true
       end

@@ -38,19 +38,19 @@ describe TestLab do
 
   describe "methods" do
 
-    describe "setup" do
-      it "should setup the test lab" do
+    describe "provision" do
+      it "should provision the test lab" do
         subject.stub(:dead?) { false }
         subject.nodes.each do |node|
-          node.stub(:setup) { true }
+          node.stub(:provision) { true }
         end
         subject.containers.each do |container|
-          container.stub(:setup) { true }
+          container.stub(:provision) { true }
         end
         subject.networks.each do |network|
-          network.stub(:setup) { true }
+          network.stub(:provision) { true }
         end
-        subject.setup
+        subject.provision
       end
     end
 

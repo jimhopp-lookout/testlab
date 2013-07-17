@@ -21,11 +21,11 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # Resolv Provisioner Node Setup
+      # Resolv: Node Provision
       #
       # @param [TestLab::Node] node The node which we want to provision.
       # @return [Boolean] True if successful.
-      def on_node_setup(node)
+      def on_node_provision(node)
         @ui.logger.debug { "RESOLV Provisioner: Node #{node.id}" }
 
         @config[:resolv][:servers] = ['127.0.0.1', '8.8.8.8', '8.8.4.4']
@@ -35,12 +35,12 @@ class TestLab
         true
       end
 
-      # Resolv Provisioner Container Setup
+      # Resolv: Container Provision
       #
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def on_container_setup(container)
+      def on_container_provision(container)
         @ui.logger.debug { "RESOLV Provisioner: Container #{container.id}" }
 
         render_resolv_conf(container)

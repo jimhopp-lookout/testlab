@@ -25,7 +25,7 @@ class TestLab
           @ui.logger.debug { "config(#{@config.inspect})" }
         end
 
-        # OmniTruck Provisioner Container Setup
+        # OmniTruck: Container Provision
         #
         # Renders the defined script to a temporary file on the target container
         # and proceeds to execute said script as root via *lxc-attach*.
@@ -33,7 +33,7 @@ class TestLab
         # @param [TestLab::Container] container The container which we want to
         #   provision.
         # @return [Boolean] True if successful.
-        def on_container_setup(container)
+        def on_container_provision(container)
           omnitruck_template = File.join(TestLab::Provisioner::Chef.template_dir, 'omni_truck.erb')
 
           config = {}.merge!({

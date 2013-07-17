@@ -20,23 +20,23 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # Bind Provisioner Node Setup
+      # Bind: Node Provision
       #
       # @param [TestLab::Node] node The node that is being provisioned.
       # @return [Boolean] True if successful.
-      def on_node_setup(node)
+      def on_node_provision(node)
         @ui.logger.debug { "BIND Provisioner: Node #{node.id}" }
 
-        bind_setup(node)
+        bind_provision(node)
 
         true
       end
 
-      # Bind Provisioner Network Setup
+      # Bind: Network Provision
       #
       # @param [TestLab::Network] network The network that is being provisioned.
       # @return [Boolean] True if successful.
-      def on_network_setup(network)
+      def on_network_provision(network)
         @ui.logger.debug { "BIND Provisioner: Network #{network.id}" }
 
         bind_reload(network.node)
@@ -129,7 +129,7 @@ class TestLab
         node.ssh.exec(%(sudo rndc reload))
       end
 
-      def bind_setup(node)
+      def bind_provision(node)
         bind_install(node.ssh)
         build_bind_conf(node.ssh)
         bind_reload(node)

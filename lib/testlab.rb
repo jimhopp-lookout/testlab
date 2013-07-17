@@ -9,8 +9,8 @@ require 'testlab/monkeys'
 # TestLab - A framework for building lightweight virtual infrastructure using LXC
 #
 # The core concept with the TestLab is the *Labfile*.  This file dictates the
-# topology of your virtual infrastructure.  With simple commands you can setup
-# and teardown this infrastructure on the fly for all sorts of purposes from
+# topology of your virtual infrastructure.  With simple commands you can build
+# and demolish this infrastructure on the fly for all sorts of purposes from
 # automating infrastructure testing to testing new software to experimenting
 # in general where you want to spin up alot of servers but do not want the
 # overhead of virtualization.  At it's core TestLab uses Linux Containers (LXC)
@@ -273,14 +273,14 @@ class TestLab
     true
   end
 
-  # Test Lab Setup
+  # Test Lab Provision
   #
-  # Attempts to setup our lab topology.  This calls the setup method on all of
-  # our nodes.
+  # Attempts to provision our lab topology.  This calls the provision method on
+  # all of our nodes.
   #
   # @return [Boolean] True if successful.
-  def setup
-    method_proxy(:setup)
+  def provision
+    method_proxy(:provision)
 
     true
   end

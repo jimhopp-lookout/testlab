@@ -27,7 +27,7 @@ class TestLab
           @ui.logger.debug { "config(#{@config.inspect})" }
         end
 
-        # RubyGemClient Provisioner Container Setup
+        # RubyGemClient: Container Provision
         #
         # Renders the defined script to a temporary file on the target container
         # and proceeds to execute said script as root via *lxc-attach*.
@@ -35,7 +35,7 @@ class TestLab
         # @param [TestLab::Container] container The container which we want to
         #   provision.
         # @return [Boolean] True if successful.
-        def on_container_setup(container)
+        def on_container_provision(container)
           @config[:chef][:client][:node_name] ||= container.id
 
           rubygem_client_template = File.join(TestLab::Provisioner::Chef.template_dir, 'ruby_gem_client.erb')

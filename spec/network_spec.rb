@@ -143,7 +143,7 @@ describe TestLab::Network do
       end
     end
 
-    describe "#setup" do
+    describe "#provision" do
       it "should create and online the network" do
         subject.node.stub(:state) { :running }
         subject.stub(:state) { :running }
@@ -151,7 +151,7 @@ describe TestLab::Network do
         subject.stub(:up) { true }
         subject.stub(:network_provisioners) { Array.new }
 
-        subject.setup
+        subject.provision
       end
     end
 

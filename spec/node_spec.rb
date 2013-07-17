@@ -99,12 +99,12 @@ describe TestLab::Node do
       end
     end
 
-    describe "setup" do
-      it "should setup the node" do
+    describe "provision" do
+      it "should provision the node" do
         subject.stub(:state) { :running }
         subject.stub(:all_provisioners) { Array.new }
 
-        subject.setup
+        subject.provision
       end
     end
 

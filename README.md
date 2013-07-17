@@ -8,7 +8,7 @@
 
 A toolkit for building virtual computer labs.
 
-What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then setup and tear down this virtual infrastructure as you have dictated in the `Labfile`.
+What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a `Labfile` you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then build and demolish this virtual infrastructure as you have dictated in the `Labfile`.
 
 TestLab can also import and export containers, making it easy to share them.  TestLab supports the latest LXC versions, allowing for ephemeral cloning operations, furthering your ability to iterate quickly.  TestLab can be used for many other applications, including infrastructure unit and integration testing, allowing for vastly more complex configurations and more effective resource sharing than traditional VM solutions.
 
@@ -26,11 +26,11 @@ The TestLab command-line program `tl` follows in the style of git:
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        0.8.1
+        0.9.1
 
     GLOBAL OPTIONS
         -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
-        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/personal/testlab-repo)
+        -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/personal/chef-repo)
         -c, --config=path/to/directory - Path to Configuration directory: ${REPO}/.testlab-$(hostname -s) (default: none)
         --version                      - Display the program version
         -v, --[no-]verbose             - Show verbose output
@@ -46,7 +46,7 @@ The TestLab command-line program `tl` follows in the style of git:
         destroy   - Destroy the lab components
         up        - On-line the lab components
         down      - Off-line the lab components
-        setup     - Provision the lab components
+        provision - Provision the lab components
         teardown  - De-provision the lab components
         build     - Build the lab
         demolish  - Demolish the lab
@@ -107,7 +107,7 @@ You can individually online, offline, create or destroy containers:
 
     tl container down -n server-www-1
     tl container up -n server-www-1
-    tl container setup -n server-www-1
+    tl container provision -n server-www-1
     tl container teardown -n server-www-1
 
 You can recycle a container, effectively destroying then creating it again, provisioning it back to a "pristine" condition.
@@ -159,9 +159,9 @@ We can even recycle it while it is in a cloned state:
 
     $ tl container recycle -n server-www-1
 
-We can run setup against a clone as well (note: running `build`, calls `up`, which would revert us back to a non-cloned container and we would not want this to happen):
+We can run provision against a clone as well (note: running `build`, calls `up`, which would revert us back to a non-cloned container and we would not want this to happen):
 
-    $ tl container setup -n server-www-1
+    $ tl container provision -n server-www-1
 
 ## Network Routes
 

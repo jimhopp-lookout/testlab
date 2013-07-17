@@ -24,11 +24,11 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # APT-CacherNG Provisioner Node Setup
+      # APT-CacherNG: Node Provision
       #
       # @param [TestLab::Node] node The node which we want to provision.
       # @return [Boolean] True if successful.
-      def on_node_setup(node)
+      def on_node_provision(node)
         @ui.logger.debug { "APT-CacherNG Provisioner: Node #{node.id}" }
 
         bootstrap_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "bootstrap.erb")
@@ -58,12 +58,12 @@ class TestLab
         true
       end
 
-      # APT-CacherNG Provisioner Container Setup
+      # APT-CacherNG: Container Provision
       #
       # @param [TestLab::Container] container The container which we want to
       #   provision.
       # @return [Boolean] True if successful.
-      def on_container_setup(container)
+      def on_container_provision(container)
         @ui.logger.debug { "APT-CacherNG Provisioner: Container #{container.id}" }
 
         # Ensure the container APT calls use apt-cacher-ng on the node

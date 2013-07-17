@@ -3,10 +3,10 @@ class TestLab
 
     module Lifecycle
 
-      # Setup the user
+      # Provision the user
       #
       # @return [Boolean] True if successful.
-      def setup
+      def provision
         @ui.logger.debug { "User Create: #{self.username} " }
 
         node_home_dir = ((self.container.node.user == "root") ? %(/root) : %(/home/#{self.container.node.user}))

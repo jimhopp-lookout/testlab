@@ -38,7 +38,7 @@ describe TestLab::Provisioner::Shell do
 
   describe "methods" do
 
-    describe "setup" do
+    describe "provision" do
       context "bootstrap successful" do
         it "should provision the container" do
           subject.node.ssh.stub(:file).and_yield(StringIO.new)
@@ -48,7 +48,7 @@ describe TestLab::Provisioner::Shell do
           subject.lxc_clone.stub(:exists?) { false }
 
           p = TestLab::Provisioner::Shell.new(subject.config, @ui)
-          p.on_container_setup(subject)
+          p.on_container_provision(subject)
         end
       end
 
@@ -61,7 +61,7 @@ describe TestLab::Provisioner::Shell do
           subject.lxc_clone.stub(:exists?) { false }
 
           p = TestLab::Provisioner::Shell.new(Hash.new, @ui)
-          lambda{ p.on_container_setup(subject) }.should raise_error TestLab::Provisioner::ShellError
+          lambda{ p.on_container_provision(subject) }.should raise_error TestLab::Provisioner::ShellError
         end
       end
     end

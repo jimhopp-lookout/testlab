@@ -107,7 +107,7 @@ Recycles a container.  The container is taken through a series of state changes 
 
 The container is cycled in this order:
 
-Teardown -> Down -> Destroy -> Create -> Up -> Setup
+Teardown -> Down -> Destroy -> Create -> Up -> Provision
 EOF
   c.command :recycle do |recycle|
     recycle.action do |global_options, options, args|
@@ -118,7 +118,7 @@ EOF
 
         container.create
         container.up
-        container.setup
+        container.provision
       end
     end
   end

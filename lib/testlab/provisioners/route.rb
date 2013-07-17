@@ -19,8 +19,8 @@ class TestLab
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
-      # Route Provisioner Network Setup
-      def on_network_setup(network)
+      # Route: Network Provision
+      def on_network_provision(network)
         manage_route(:add, network)
 
         true

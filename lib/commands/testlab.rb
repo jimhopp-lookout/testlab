@@ -82,19 +82,19 @@ command :down do |down|
   end
 end
 
-# LAB SETUP
-############
+# LAB PROVISION
+################
 desc 'Provision the lab components'
 long_desc <<-EOF
-Attempts to setup the defined lab components.
+Attempts to provision the defined lab components.
 
-The components are set up in the following order:
+The components are provisioned in the following order:
 
 Nodes -> Networks -> Containers
 EOF
-command :setup do |setup|
-  setup.action do |global_options,options,args|
-    @testlab.setup
+command :provision do |provision|
+  provision.action do |global_options,options,args|
+    @testlab.provision
   end
 end
 
@@ -126,7 +126,7 @@ Nodes -> Networks -> Containers
 
 TestLab will then attempt to build the components, executing the following tasks for each:
 
-Create -> Up -> Setup
+Create -> Up -> Provision
 EOF
 command :build do |build|
   build.action do |global_options,options,args|
