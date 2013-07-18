@@ -11,7 +11,25 @@ class TestLab
         (self.state != :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
-          self.node.ssh.exec(%(sudo brctl addbr #{self.bridge}), :silence => true, :ignore_exit_status => true)
+          self.node.ssh.bootstrap(<<-EOF)
+set -x
+grep '#{def_tag}' /etc/network/interfaces && exit 0
+cat <<EOI | tee -a /etc/network/interfaces
+#{def_tag}
+auto br0
+iface #{self.bridge} inet static
+      bridge_ports none
+      bridge_stp off
+      bridge_fd 0
+      address #{self.ip}
+      broadcast #{self.broadcast}
+      netmask #{self.netmask}
+#{end_tag}
+EOI
+brctl addbr #{self.bridge}
+brctl stp #{self.bridge} off
+brctl setfd #{self.bridge} 0
+          EOF
         end
 
         true
@@ -25,7 +43,11 @@ class TestLab
         (self.state == :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
-          self.node.ssh.exec(%(sudo brctl delbr #{self.bridge}), :silence => true, :ignore_exit_status => true)
+          self.node.ssh.bootstrap(<<-EOF)
+set -x
+sed -i '/#{def_tag}/,/#{end_tag}/d' /etc/network/interfaces
+brctl delbr #{self.bridge}
+          EOF
         end
 
         true
@@ -39,7 +61,10 @@ class TestLab
         (self.state == :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
-          self.node.ssh.exec(%(sudo ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} up), :silence => true, :ignore_exit_status => true)
+          self.node.ssh.bootstrap(<<-EOF)
+set -x
+ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broadcast} up
+          EOF
         end
 
         true
@@ -53,7 +78,10 @@ class TestLab
         (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
-          self.node.ssh.exec(%(sudo ifconfig #{self.bridge} down), :silence => true, :ignore_exit_status => true)
+          self.node.ssh.bootstrap(<<-EOF)
+set -x
+ifconfig #{self.bridge} down
+          EOF
         end
 
         true

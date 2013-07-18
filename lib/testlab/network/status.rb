@@ -18,6 +18,16 @@ class TestLab
         }
       end
 
+      # Debian Network 'interfaces' Start Definition Tag
+      def def_tag
+        "#TESTLAB-DEF-#{self.bridge.to_s.upcase}"
+      end
+
+      # Debian Network 'interfaces' End Definition Tag
+      def end_tag
+        "#TESTLAB-END-#{self.bridge.to_s.upcase}"
+      end
+
       # Network IP
       #
       # Returns the IP of the network bridge.
