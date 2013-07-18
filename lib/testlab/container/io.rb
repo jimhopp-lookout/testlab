@@ -109,14 +109,24 @@ EOF
         target_container = self.node.containers.select{ |c| c.id.to_sym == target_name.to_sym }.first
         target_container.nil? and raise ContainerError, "We could not locate the target container!"
 
+        source_state = self.state
+        target_state = target_container.state
+
         target_container.demolish
         target_container.create
 
+        self.down
         please_wait(:ui => @ui, :message => format_object_action(self, 'Copy', :yellow)) do
           self.node.ssh.exec(%(sudo rm -rf #{target_container.lxc.fs_root}))
           self.node.ssh.exec(%(sudo rsync -a #{self.lxc.fs_root} #{target_container.lxc.container_root}))
           self.node.ssh.exec(%(sudo rm -fv #{File.join(self.lxc.fs_root, '.*bootstrap')}))
         end
+
+        # bring the source container back online if it was running before the copy operation
+        (source_state == :running) and self.up
+
+        # bring the target container back online if it was running before the copy operation
+        (target_state == :running) and target_container.up
 
         true
       end
