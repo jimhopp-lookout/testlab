@@ -45,8 +45,6 @@ class TestLab
 
       # Create the Vagrant instance
       def create
-        self.up
-
         true
       end
 
