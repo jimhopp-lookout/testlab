@@ -25,6 +25,7 @@ class TestLab
 
         true
       end
+      alias :on_network_up :on_network_provision
 
       # Route: Network Deprovision
       def on_network_deprovision(network)
@@ -32,6 +33,7 @@ class TestLab
 
         true
       end
+      alias :on_network_down :on_network_deprovision
 
       def manage_route(action, network)
         command = ZTK::Command.new(:ui => @ui, :silence => true, :ignore_exit_status => true)
