@@ -29,7 +29,7 @@ class TestLab
       def on_container_provision(container)
         @ui.logger.debug { "APT Provisioner: Container #{container.id}" }
 
-        container.ssh.bootstrap(ZTK::Template.render(provision_template, @config))
+        container.bootstrap(ZTK::Template.render(provision_template, @config))
       end
 
     private

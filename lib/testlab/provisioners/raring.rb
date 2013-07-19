@@ -27,7 +27,7 @@ class TestLab
       def on_node_provision(node)
         @ui.logger.debug { "Ubuntu Raring Provisioner: Node #{node.id}" }
 
-        node.ssh.bootstrap(ZTK::Template.render(provision_template, @config))
+        node.bootstrap(ZTK::Template.render(provision_template, @config))
       end
       alias :on_node_up :on_node_provision
 
