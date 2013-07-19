@@ -18,9 +18,6 @@ class TestLab
         @config[:apt][:cacher_ng] ||= Hash.new
         @config[:apt][:cacher_ng][:exclude_hosts] ||= Array.new
 
-        @apt_conf_d_proxy_file_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
-        @apt_cacher_ng_security_conf_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "security.conf.erb")
-
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
@@ -31,7 +28,6 @@ class TestLab
       def on_node_provision(node)
         @ui.logger.debug { "APT-CacherNG Provisioner: Node #{node.id}" }
 
-        provision_template = File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'provision.erb')
         node.bootstrap(ZTK::Template.render(provision_template, @config))
 
         context = {
@@ -43,14 +39,12 @@ class TestLab
           }
         }
 
-        apt_conf_d_proxy_file = %(/etc/apt/apt.conf.d/00proxy)
         node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
-          file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, context))
+          file.puts(ZTK::Template.render(apt_conf_d_proxy_file_template, context))
         end
 
-        apt_cacher_ng_security_conf_file = %(/etc/apt-cacher-ng/security.conf)
         node.ssh.file(:target => apt_cacher_ng_security_conf_file, :chown => "root:root", :chmod => "0644") do |file|
-          file.puts(ZTK::Template.render(@apt_cacher_ng_security_conf_template, context))
+          file.puts(ZTK::Template.render(apt_cacher_ng_security_conf_template, context))
         end
 
         node.ssh.exec(%(sudo service apt-cacher-ng restart))
@@ -63,7 +57,6 @@ class TestLab
       # @param [TestLab::Node] node The node which we want to deprovision.
       # @return [Boolean] True if successful.
       def on_node_deprovision(node)
-        deprovision_template = File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'deprovision.erb')
         node.bootstrap(ZTK::Template.render(deprovision_template, @config))
 
         true
@@ -79,16 +72,41 @@ class TestLab
 
         # Ensure the container APT calls use apt-cacher-ng on the node
         gateway_ip                     = container.primary_interface.network.ip
-        apt_conf_d_proxy_file          = %(/etc/apt/apt.conf.d/00proxy)
 
         @config[:apt][:cacher_ng] = { :proxy_url => "http://#{gateway_ip}:3142" }.merge(@config[:apt][:cacher_ng])
 
         container.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
-          file.puts(ZTK::Template.render(@apt_conf_d_proxy_file_template, @config))
+          file.puts(ZTK::Template.render(apt_conf_d_proxy_file_template, @config))
         end
 
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng
         container.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' /etc/apt/sources.list))
+      end
+
+    private
+
+      def apt_conf_d_proxy_file
+        %(/etc/apt/apt.conf.d/00proxy)
+      end
+
+      def apt_cacher_ng_security_conf_file
+        %(/etc/apt-cacher-ng/security.conf)
+      end
+
+      def apt_conf_d_proxy_file_template
+        File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
+      end
+
+      def apt_cacher_ng_security_conf_template
+        File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "security.conf.erb")
+      end
+
+      def provision_template
+        File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'provision.erb')
+      end
+
+      def deprovision_template
+        File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'deprovision.erb')
       end
 
     end
