@@ -16,14 +16,8 @@ class TestLab
         (self.node.state != :running) and return false
         (self.state != :running) and return false
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Provision', :green)) do
-
-          self.container_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> CONTAINER PROVISION: #{provisioner} (#{self.id}) <<<<<" }
-            p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_container_provision) and p.on_container_provision(self)
-          end
-
+        please_wait(:ui => @ui, :message => format_object_action(self, :provision, :green)) do
+          do_provisioner_callbacks(self, :provision, @ui)
         end
 
         true
@@ -42,14 +36,8 @@ class TestLab
         (self.node.state != :running) and return false
         (self.state != :running) and return false
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Deprovision', :red)) do
-
-          self.container_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> CONTAINER DEPROVISION: #{provisioner} (#{self.id}) <<<<<" }
-            p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_container_deprovision) and p.on_container_deprovision(self)
-          end
-
+        please_wait(:ui => @ui, :message => format_object_action(self, :deprovision, :red)) do
+          do_provisioner_callbacks(self, :deprovision, @ui)
         end
 
         true
@@ -74,7 +62,7 @@ class TestLab
       end
 
       # Returns all defined provisioners for this container's networks and the container iteself.
-      def container_provisioners
+      def all_provisioners
         [self.node.provisioners, self.interfaces.map(&:network).map(&:provisioners), self.provisioners].flatten.compact.uniq
       end
 

@@ -11,6 +11,8 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
           @provider.create
+
+          do_provisioner_callbacks(self, :create, @ui)
         end
 
         true
@@ -24,6 +26,8 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           @provider.destroy
+
+          do_provisioner_callbacks(self, :destroy, @ui)
         end
 
         true
@@ -37,6 +41,8 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           @provider.up
+
+          do_provisioner_callbacks(self, :up, @ui)
         end
 
         true
@@ -50,6 +56,8 @@ class TestLab
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           @provider.down
+
+          do_provisioner_callbacks(self, :down, @ui)
         end
 
         true

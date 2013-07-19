@@ -44,6 +44,17 @@ class TestLab
         end
       end
 
+      def do_provisioner_callbacks(object, action, ui)
+        klass       = object.class.to_s.split('::').last
+        method_name = %(on_#{klass.downcase}_#{action.to_s.downcase}).to_sym
+
+        object.all_provisioners.each do |provisioner|
+          ui.logger.info { ">>>>> #{object.id.to_s.upcase} #{klass.upcase} #{action.to_s.upcase} [#{method_name}] (#{provisioner}) <<<<<" }
+          p = provisioner.new(object.config, ui)
+          p.respond_to?(method_name) and p.send(method_name, object)
+        end
+      end
+
     end
 
   end

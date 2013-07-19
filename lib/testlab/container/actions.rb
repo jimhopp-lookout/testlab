@@ -19,6 +19,8 @@ class TestLab
           configure
 
           self.lxc.create(*create_args)
+
+          do_provisioner_callbacks(self, :create, @ui)
         end
 
         true
@@ -38,6 +40,8 @@ class TestLab
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           self.lxc.destroy(%(-f))
           self.lxc_clone.destroy(%(-f))
+
+          do_provisioner_callbacks(self, :destroy, @ui)
         end
 
         true
@@ -69,6 +73,8 @@ class TestLab
           end
 
           self.ssh.exec(%(sudo hostname #{self.fqdn}))
+
+          do_provisioner_callbacks(self, :up, @ui)
         end
 
         true
@@ -89,6 +95,8 @@ class TestLab
           self.lxc.stop
 
           (self.lxc.state == :running) and raise ContainerError, "The container failed to offline!"
+
+          do_provisioner_callbacks(self, :down, @ui)
         end
 
         true

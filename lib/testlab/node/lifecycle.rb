@@ -10,13 +10,7 @@ class TestLab
         (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Provision', :green)) do
-
-          self.all_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NODE PROVISION: #{provisioner} (#{self.id}) <<<<<" }
-            p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_node_provision) and p.on_node_provision(self)
-          end
-
+          do_provisioner_callbacks(self, :provision, @ui)
         end
 
         true
@@ -29,13 +23,7 @@ class TestLab
         (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Deprovision', :red)) do
-
-          self.all_provisioners.each do |provisioner|
-            @ui.logger.info { ">>>>> NODE DEPROVISION: #{provisioner} (#{self.id}) <<<<<" }
-            p = provisioner.new(self.config, @ui)
-            p.respond_to?(:on_node_deprovision) and p.on_node_deprovision(self)
-          end
-
+          do_provisioner_callbacks(self, :deprovision, @ui)
         end
 
         true

@@ -30,6 +30,8 @@ brctl addbr #{self.bridge}
 brctl stp #{self.bridge} off
 brctl setfd #{self.bridge} 0
           EOF
+
+          do_provisioner_callbacks(self, :create, @ui)
         end
 
         true
@@ -48,6 +50,8 @@ set -x
 sed -i '/#{def_tag}/,/#{end_tag}/d' /etc/network/interfaces
 brctl delbr #{self.bridge}
           EOF
+
+          do_provisioner_callbacks(self, :destroy, @ui)
         end
 
         true
@@ -65,6 +69,8 @@ brctl delbr #{self.bridge}
 set -x
 ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broadcast} up
           EOF
+
+          do_provisioner_callbacks(self, :up, @ui)
         end
 
         true
@@ -82,6 +88,8 @@ ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broa
 set -x
 ifconfig #{self.bridge} down
           EOF
+
+          do_provisioner_callbacks(self, :down, @ui)
         end
 
         true
