@@ -130,7 +130,7 @@ class TestLab
       end
 
       def bind_install(ssh)
-        ssh.exec(%(sudo apt-get -y install bind9))
+        ssh.exec(%(DEBIAN_FRONTEND="noninteractive" sudo apt-get -y install bind9))
         ssh.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
