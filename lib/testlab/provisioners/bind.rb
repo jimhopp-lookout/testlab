@@ -32,11 +32,11 @@ class TestLab
         true
       end
 
-      # Bind: Network Provision
+      # Bind: Network Up
       #
-      # @param [TestLab::Network] network The network that is being provisioned.
+      # @param [TestLab::Network] network The network that is being onlined.
       # @return [Boolean] True if successful.
-      def on_network_provision(network)
+      def on_network_up(network)
         @ui.logger.debug { "BIND Provisioner: Network #{network.id}" }
 
         bind_reload(network.node)
