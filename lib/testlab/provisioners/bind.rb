@@ -32,6 +32,16 @@ class TestLab
         true
       end
 
+      # Bind: Node Deprovision
+      #
+      # @param [TestLab::Node] node The node which we want to deprovision.
+      # @return [Boolean] True if successful.
+      def on_node_deprovision(node)
+        node.ssh.exec(%(DEBIAN_FRONTEND="noninteractive" sudo apt-get -y purge bind9))
+
+        true
+      end
+
       # Bind: Network Up
       #
       # @param [TestLab::Network] network The network that is being onlined.
