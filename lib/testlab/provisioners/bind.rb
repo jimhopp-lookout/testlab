@@ -37,7 +37,7 @@ class TestLab
       # @param [TestLab::Node] node The node which we want to deprovision.
       # @return [Boolean] True if successful.
       def on_node_deprovision(node)
-        node.ssh.exec(%(DEBIAN_FRONTEND="noninteractive" sudo apt-get -y purge bind9))
+        node.ssh.exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y purge bind9))
 
         true
       end
@@ -130,7 +130,7 @@ class TestLab
       end
 
       def bind_install(ssh)
-        ssh.exec(%(DEBIAN_FRONTEND="noninteractive" sudo apt-get -y install bind9))
+        ssh.exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install bind9))
         ssh.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
