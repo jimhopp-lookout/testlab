@@ -3,12 +3,12 @@ set -e
 
 export DEBIAN_FRONTEND="noninteractive"
 
-if [ ! -f /.testlab-raring-bootstrap ]; then
+if [ ! -f /.testlab-raring-provision ]; then
   # Update APT and ensure our required packages are installed
   apt-get -y update
   apt-get -y install lxc bridge-utils debootstrap yum iptables ntpdate ntp pbzip2
 
-  touch /.testlab-raring-bootstrap
+  touch /.testlab-raring-provision
 fi
 
 # Ensure the default lxc networking services are off

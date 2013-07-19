@@ -1,7 +1,7 @@
 set -x
 set -e
 
-[[ -f /.testlab-apt-bootstrap ]] && exit 0
+[[ -f /.testlab-apt-provision ]] && exit 0
 
 export DEBIAN_FRONTEND="noninteractive"
 
@@ -13,4 +13,4 @@ apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
 apt-get -y remove <%= @apt[:remove].flatten.compact.join(' ') %>
 <% end -%>
 
-touch /.testlab-apt-bootstrap
+touch /.testlab-apt-provision
