@@ -7,7 +7,9 @@ node 'vagrant' do
 
   provisioners  [
     TestLab::Provisioner::Raring,
-    TestLab::Provisioner::Bind
+    TestLab::Provisioner::AptCacherNG,
+    TestLab::Provisioner::Bind,
+    TestLab::Provisioner::Resolv
   ]
 
   config      ({
@@ -25,6 +27,10 @@ node 'vagrant' do
   })
 
   network 'labnet' do
+    provisioners  [
+      TestLab::Provisioner::Bind
+    ]
+
     address       '10.128.0.1/16'
     bridge        :br0
   end

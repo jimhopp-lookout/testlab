@@ -5,7 +5,12 @@ node 'vagrant' do
 
   provider      TestLab::Provider::Local
 
-  provisioners  [TestLab::Provisioner::Raring]
+  provisioners  [
+    TestLab::Provisioner::Raring,
+    TestLab::Provisioner::AptCacherNG,
+    TestLab::Provisioner::Bind,
+    TestLab::Provisioner::Resolv
+  ]
 
   config      ({
     :bind => {
@@ -14,6 +19,10 @@ node 'vagrant' do
   })
 
   network 'labnet' do
+    provisioners  [
+      TestLab::Provisioner::Bind
+    ]
+
     address       '10.128.0.1/16'
     bridge        :br_test
   end
@@ -23,6 +32,7 @@ node 'vagrant' do
     release       "precise"
 
     provisioners   [
+      TestLab::Provisioner::Resolv,
       TestLab::Provisioner::AptCacherNG,
       TestLab::Provisioner::Apt
     ]
