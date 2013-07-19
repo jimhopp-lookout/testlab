@@ -199,7 +199,7 @@ describe TestLab::Container do
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
-          subject.stub(:all_provisioners) { Array.new }
+          subject.stub(:provisioners) { Array.new }
 
           subject.provision
         end
@@ -212,7 +212,7 @@ describe TestLab::Container do
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
-          subject.stub(:all_provisioners) { Array.new }
+          subject.stub(:provisioners) { Array.new }
 
           subject.provision
         end
@@ -225,7 +225,7 @@ describe TestLab::Container do
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
-          subject.stub(:all_provisioners) { Array.new }
+          subject.stub(:provisioners) { Array.new }
 
           subject.deprovision
         end
@@ -238,7 +238,7 @@ describe TestLab::Container do
           subject.node.stub(:state) { :running }
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
-          subject.stub(:all_provisioners) { Array.new }
+          subject.stub(:provisioners) { Array.new }
 
           subject.deprovision
         end

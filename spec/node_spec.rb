@@ -102,7 +102,7 @@ describe TestLab::Node do
     describe "provision" do
       it "should provision the node" do
         subject.stub(:state) { :running }
-        subject.stub(:all_provisioners) { Array.new }
+        subject.stub(:provisioners) { Array.new }
 
         subject.provision
       end
@@ -111,7 +111,7 @@ describe TestLab::Node do
     describe "deprovision" do
       it "should deprovision the node" do
         subject.stub(:state) { :running }
-        subject.stub(:all_provisioners) { Array.new }
+        subject.stub(:provisioners) { Array.new }
 
         subject.deprovision
       end

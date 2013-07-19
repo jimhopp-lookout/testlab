@@ -149,7 +149,7 @@ describe TestLab::Network do
         subject.stub(:state) { :running }
         subject.stub(:create) { true }
         subject.stub(:up) { true }
-        subject.stub(:all_provisioners) { Array.new }
+        subject.stub(:provisioners) { Array.new }
 
         subject.provision
       end
@@ -161,7 +161,7 @@ describe TestLab::Network do
         subject.stub(:state) { :running }
         subject.stub(:down) { true }
         subject.stub(:destroy) { true }
-        subject.stub(:all_provisioners) { Array.new }
+        subject.stub(:provisioners) { Array.new }
 
         subject.deprovision
       end

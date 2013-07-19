@@ -61,11 +61,6 @@ class TestLab
         true
       end
 
-      # Returns all defined provisioners for this container's networks and the container iteself.
-      def all_provisioners
-        [self.node.provisioners, self.interfaces.map(&:network).map(&:provisioners), self.provisioners].flatten.compact.uniq
-      end
-
     end
 
   end
