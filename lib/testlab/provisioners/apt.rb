@@ -29,7 +29,7 @@ class TestLab
       def on_container_provision(container)
         @ui.logger.debug { "APT Provisioner: Container #{container.id}" }
 
-        bootstrap_template = File.join(TestLab::Provisioner.template_dir, "apt", "bootstrap.erb")
+        bootstrap_template = File.join(TestLab::Provisioner.template_dir, 'apt', 'provision.erb')
         container.ssh.bootstrap(ZTK::Template.render(bootstrap_template, @config))
       end
 

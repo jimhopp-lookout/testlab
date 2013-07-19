@@ -31,8 +31,8 @@ class TestLab
       def on_node_provision(node)
         @ui.logger.debug { "APT-CacherNG Provisioner: Node #{node.id}" }
 
-        bootstrap_template = File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "bootstrap.erb")
-        node.ssh.bootstrap(ZTK::Template.render(bootstrap_template, @config))
+        provision_template = File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'provision.erb')
+        node.bootstrap(ZTK::Template.render(provision_template, @config))
 
         context = {
           :apt => {
@@ -63,7 +63,8 @@ class TestLab
       # @param [TestLab::Node] node The node which we want to deprovision.
       # @return [Boolean] True if successful.
       def on_node_deprovision(node)
-        node.ssh.exec(%(DEBIAN_FRONTEND="noninteractive" sudo apt-get -y purge apt-cacher-ng))
+        deprovision_template = File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'deprovision.erb')
+        node.bootstrap(ZTK::Template.render(deprovision_template, @config))
 
         true
       end
@@ -87,8 +88,7 @@ class TestLab
         end
 
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng
-        apt_conf_sources_file = %(/etc/apt/sources.list)
-        container.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' #{apt_conf_sources_file}))
+        container.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' /etc/apt/sources.list))
       end
 
     end
