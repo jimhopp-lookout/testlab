@@ -17,9 +17,9 @@ class TestLab
       # @param [String] content The content to render on the container and
       #   execute.  This is generally a bash script of some sort for example.
       # @return [String] The output of *lxc-attach*.
-      def bootstrap(content)
+      def bootstrap(content, options={})
         if self.lxc_clone.exists?
-          self.ssh.bootstrap(content)
+          self.ssh.bootstrap(content, options)
         else
           self.lxc.bootstrap(content)
         end
