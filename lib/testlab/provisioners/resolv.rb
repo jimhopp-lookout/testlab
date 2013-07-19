@@ -15,8 +15,12 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:resolv] ||= Hash.new
-        @config[:resolv][:servers] ||= [TestLab::Network.ips, '8.8.8.8', '8.8.4.4'].flatten.compact.uniq
-        @config[:resolv][:search]  ||= TestLab::Container.domains.join(' ')
+
+        @config[:resolv][:servers] ||= Array.new
+        @config[:resolv][:servers].concat([TestLab::Network.ips, '8.8.8.8', '8.8.4.4'].flatten.compact.uniq)
+
+        @config[:resolv][:search] ||= Array.new
+        @config[:resolv][:search].concat([TestLab::Container.domains.join(' ')])
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
