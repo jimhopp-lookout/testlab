@@ -58,6 +58,16 @@ class TestLab
         true
       end
 
+      # APT-CacherNG: Node Deprovision
+      #
+      # @param [TestLab::Node] node The node which we want to deprovision.
+      # @return [Boolean] True if successful.
+      def on_node_deprovision(node)
+        node.ssh.exec(%(DEBIAN_FRONTEND="noninteractive" sudo apt-get -y purge apt-cacher-ng))
+
+        true
+      end
+
       # APT-CacherNG: Container Provision
       #
       # @param [TestLab::Container] container The container which we want to
