@@ -16,6 +16,7 @@ class TestLab
     autoload :Lifecycle,     'testlab/node/lifecycle'
     autoload :LXC,           'testlab/node/lxc'
     autoload :MethodMissing, 'testlab/node/method_missing'
+    autoload :Provision,     'testlab/node/provision'
     autoload :SSH,           'testlab/node/ssh'
     autoload :Status,        'testlab/node/status'
 
@@ -24,6 +25,7 @@ class TestLab
     include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::MethodMissing
+    include TestLab::Node::Provision
     include TestLab::Node::SSH
     include TestLab::Node::Status
 

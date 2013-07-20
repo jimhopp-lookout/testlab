@@ -14,11 +14,13 @@ class TestLab
     autoload :Bind,         'testlab/network/bind'
     autoload :ClassMethods, 'testlab/network/class_methods'
     autoload :Lifecycle,    'testlab/network/lifecycle'
+    autoload :Provision,    'testlab/network/provision'
     autoload :Status,       'testlab/network/status'
 
     include TestLab::Network::Actions
     include TestLab::Network::Bind
     include TestLab::Network::Lifecycle
+    include TestLab::Network::Provision
     include TestLab::Network::Status
 
     extend  TestLab::Network::ClassMethods
