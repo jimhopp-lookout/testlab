@@ -2,8 +2,10 @@
 domain <%= @resolv[:domain] %>
 <% end -%>
 <% if !@resolv[:search].nil? -%>
-search <%= @resolv[:search] %>
+search <%= @resolv[:search].flatten.compact.uniq.join(' ') %>
 <% end -%>
-<% @resolv[:servers].each do |server| -%>
+<% if !@resolv[:servers].nil? -%>
+<% @resolv[:servers].flatten.compact.uniq.each do |server| -%>
 nameserver <%= server %>
+<% end -%>
 <% end -%>

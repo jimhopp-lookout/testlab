@@ -17,10 +17,10 @@ class TestLab
         @config[:resolv] ||= Hash.new
 
         @config[:resolv][:servers] ||= Array.new
-        @config[:resolv][:servers].concat([TestLab::Network.ips, '8.8.8.8', '8.8.4.4'].flatten.compact.uniq)
+        @config[:resolv][:servers].concat([TestLab::Network.ips])
 
         @config[:resolv][:search] ||= Array.new
-        @config[:resolv][:search].concat([TestLab::Container.domains.join(' ')])
+        @config[:resolv][:search].concat([TestLab::Container.domains])
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
@@ -32,7 +32,7 @@ class TestLab
       def on_node_provision(node)
         @ui.logger.debug { "RESOLV Provisioner: Node #{node.id}" }
 
-        @config[:resolv][:servers] = ['127.0.0.1', '8.8.8.8', '8.8.4.4']
+        @config[:resolv][:servers] = %w(127.0.0.1)
 
         render_resolv_conf(node)
 
@@ -53,12 +53,16 @@ class TestLab
       end
 
       def render_resolv_conf(object)
-        resolv_conf_template = File.join(TestLab::Provisioner.template_dir, "resolv", "resolv.conf.erb")
-
         object.ssh.file(:target => %(/etc/resolv.conf), :chown => "root:root") do |file|
           file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
           file.puts(ZTK::Template.render(resolv_conf_template, @config))
         end
+      end
+
+    private
+
+      def resolv_conf_template
+        File.join(TestLab::Provisioner.template_dir, 'resolv', 'resolv.conf.erb')
       end
 
     end
