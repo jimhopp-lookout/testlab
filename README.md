@@ -22,17 +22,37 @@ TestLab can be run via the command-line or can be interfaced with directly via R
 
 # Using TestLab Interactively
 
-The TestLab command-line program `tl` follows in the style of git:
-
-    $ tl help
+    $ tl
     NAME
         tl - TestLab - A toolkit for building virtual computer labs
+
+        TestLab is based around the abstraction of three main components: nodes, networks and containers. Nodes represent a system
+        (bare-metal or virtualized) that hosts containers. Networks repesent a Linux bridge on a node. Containers simply represent a
+        Linux Container (LXC) running on its parent node which is typically connected to a network on the node.
+
+        In addition to the core component abstractions, TestLab shares a series of core tasks that are universal across all of the
+        components. These are create and destroy, up and down, provision and deprovision. Several other core tasks, such as build,
+        demolish, recycle and bounce encapsulate the previously mentioned tasks and simply act as convenience tasks.
+
+        You can execute almost all of the tasks against the entire lab, or individual lab components.
+
+        When building a lab from scratch, you will typically run 'tl build'. To breakdown your lab, destroying all the components, you
+        will typically run 'tl demolish'. If you want to re-build the lab you can run 'tl recycle' which will run the demolish task
+        followed by the build task against all the lab components. If you want to power-cycle the entire lab you can run 'tl bounce'
+        which will run the down task followed by the up task against all the lab components. Again these tasks can be run against the
+        lab as a whole or individual components.
+
+        You can view the status of the entire lab using 'tl status', or view the status of individual components using 'tl node status',
+        'tl network status' or 'tl container status'.
+
+        You can easily get help for any of the component tasks using the syntax 'tl help <component>'. This can be extended to the
+        following syntax 'tl help <task>' or 'tl help <component> <task>' for more in-depth help.
 
     SYNOPSIS
         tl [global options] command [command options] [arguments...]
 
     VERSION
-        0.9.1
+        1.1.0
 
     GLOBAL OPTIONS
         -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
@@ -48,27 +68,17 @@ The TestLab command-line program `tl` follows in the style of git:
         container   - Manage lab containers
         network     - Manage lab networks
         node        - Manage lab nodes
+        build       - Build the lab (create->up->provision)
+        demolish    - Demolish the lab (deprovision->down->destroy)
+        bounce      - Bounce the lab (down->up)
+        recycle     - Recycle the lab (demolish->build)
         create      - Create the lab components
         destroy     - Destroy the lab components
         up          - On-line the lab components
         down        - Off-line the lab components
         provision   - Provision the lab components
         deprovision - De-provision the lab components
-        build       - Build the lab
-        demolish    - Demolish the lab
         status      - Display the lab status
-
-You stand up your lab with the following command:
-
-    tl build
-
-You can down the entire lab (this would only down the containers and networks on the Local provider for example):
-
-    tl down
-
-You can also demolish it (only works for VM backed providers; this would be a NO-OP on the Local provider for example):
-
-    tl demolish
 
 ## Getting Help
 
@@ -173,11 +183,11 @@ We can run provision against a clone as well (note: running `build`, calls `up`,
 
 TestLab will add network routes for any networks defined in the `Labfile` witch have the `TestLab::Provisioner::Route` provisioner class specified for them.  This will allow you to directly interact with containers over the network.  Here is an example of the routes added with the multi-network `Labfile`.
 
-    $ tl network route show -n labnet
-    [TL] TestLab v0.6.1 Loaded
+    $ tl network route show
+    [TL] TestLab v1.1.0 Loaded
     TestLab routes:
-    10.10.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0
-    10.11.0.0       192.168.33.239  255.255.0.0     UG        0 0          0 vboxnet0
+    172.16.0.0      192.168.33.2    255.255.255.0   UG        0 0          0 vboxnet0
+    [TL] TestLab v1.1.0 Finished (0.5063 seconds)
 
 These routes can be manually manipulated as well (regardless of if you have specified the `TestLab::Provisioner::Route` provisioner class for the networks via the `Labfile`):
 
@@ -186,9 +196,9 @@ These routes can be manually manipulated as well (regardless of if you have spec
         route - Manage routes
 
     SYNOPSIS
-        tl [global options] network route [command options]  add
-        tl [global options] network route [command options]  del
-        tl [global options] network route [command options]  show
+        tl [global options] network route  add
+        tl [global options] network route  del
+        tl [global options] network route  show
 
     COMMANDS
         add  - Add routes to lab networks
