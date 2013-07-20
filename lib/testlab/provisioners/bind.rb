@@ -39,7 +39,21 @@ class TestLab
       # @param [TestLab::Node] node The node which we want to deprovision.
       # @return [Boolean] True if successful.
       def on_node_deprovision(node)
+        @ui.logger.debug { "BIND Deprovisioner: Node #{node.id}" }
+
         node.exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y purge bind9))
+
+        true
+      end
+
+      # Bind: Container Up
+      #
+      # @param [TestLab::Node] node The container which just came online.
+      # @return [Boolean] True if successful.
+      def on_container_up(container)
+        @ui.logger.debug { "BIND Provisioner: Container #{container.id}" }
+
+        bind_reload(container.node)
 
         true
       end
