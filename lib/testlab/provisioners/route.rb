@@ -21,20 +21,18 @@ class TestLab
       end
 
       # Route: Network Provision
-      def on_network_provision(network)
+      def on_network_up(network)
         manage_route(:add, network)
 
         true
       end
-      alias :on_network_up :on_network_provision
 
       # Route: Network Deprovision
-      def on_network_deprovision(network)
+      def on_network_down(network)
         manage_route(:del, network)
 
         true
       end
-      alias :on_network_down :on_network_deprovision
 
     private
 

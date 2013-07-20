@@ -29,7 +29,6 @@ class TestLab
 
         node.bootstrap(ZTK::Template.render(provision_template, @config))
       end
-      alias :on_node_up :on_node_provision
 
     private
 
