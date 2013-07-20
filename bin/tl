@@ -101,9 +101,11 @@ end
 post do |global,command,options,args|
   testlab_run_time = (Time.now.utc - @testlab_start_time)
 
-  message = format_message("TestLab v#{TestLab::VERSION} Finished (%0.4f seconds)".black.bold % testlab_run_time)
-  @testlab.ui.stdout.puts(message)
-  @testlab.ui.logger.info { message }
+  if !@ui.quiet?
+    message = format_message("TestLab v#{TestLab::VERSION} Finished (%0.4f seconds)".black.bold % testlab_run_time)
+    @testlab.ui.stdout.puts(message)
+    @testlab.ui.logger.info { message }
+  end
 
   true
 end
