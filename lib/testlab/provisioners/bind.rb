@@ -48,7 +48,7 @@ class TestLab
 
       # Bind: Container Up
       #
-      # @param [TestLab::Node] node The container which just came online.
+      # @param [TestLab::Container] node The container which just came online.
       # @return [Boolean] True if successful.
       def on_container_up(container)
         @ui.logger.debug { "BIND Provisioner: Container #{container.id}" }
