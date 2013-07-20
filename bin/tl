@@ -32,7 +32,7 @@ program_long_desc <<-EOF
 TestLab is based around the abstraction of three main components: nodes,
 networks and containers.  Nodes represent a system (bare-metal or virtualized)
 that hosts containers.  Networks repesent a Linux bridge on a node.  Containers
-simple represent a Linux Container (LXC) running on its parent node which is
+simply represent a Linux Container (LXC) running on its parent node which is
 typically connected to a network on the node.
 
 In addition to the core component abstractions, TestLab shares a series of core
@@ -45,7 +45,7 @@ You can execute almost all of the tasks against the entire lab, or individual
 lab components.
 
 When building a lab from scratch, you will typically run 'tl build'.  To
-breakdown your lab destroying all the components, you will typically run
+breakdown your lab, destroying all the components, you will typically run
 'tl demolish'.  If you want to re-build the lab you can run 'tl recycle' which
 will run the demolish task followed by the build task against all the lab
 components.  If you want to power-cycle the entire lab you can run 'tl bounce'
