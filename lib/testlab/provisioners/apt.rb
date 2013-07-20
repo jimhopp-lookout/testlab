@@ -17,6 +17,7 @@ class TestLab
         @config[:apt] ||= Hash.new
         @config[:apt][:install] ||= Array.new
         @config[:apt][:remove]  ||= Array.new
+        @config[:apt][:purge]   ||= Array.new
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
