@@ -7,11 +7,11 @@ class TestLab
     module GLI
       require 'ztk'
 
-      LAB_ACTION_ORDER = %W(create destroy up down provision deprovision build demolish).map(&:to_sym)
+      LAB_ACTION_ORDER = %W(build demolish create destroy up down provision deprovision).map(&:to_sym)
 
       LAB_ACTIONS = {
-        :create      => ["Construct %s",    "Attempts to create the <%= @component %>."],
-        :destroy     => ["Destruct %s",     "Attempts to destroy the <%= @component %>."],
+        :create      => ["Initialize %s",   "Attempts to create the <%= @component %>."],
+        :destroy     => ["Terminate %s",    "Attempts to destroy the <%= @component %>."],
         :up          => ["On-line %s",      "Attempts to online the <%= @component %>."],
         :down        => ["Off-line %s",     "Attempts to offline the <%= @component %>."],
         :provision   => ["Provision %s",    "Attempts to provision the <%= @component %>."],
