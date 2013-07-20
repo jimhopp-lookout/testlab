@@ -15,6 +15,13 @@ class TestLab
         self.ssh.bootstrap(content, options)
       end
 
+      # Node Execute
+      #
+      # Executes the supplied command on the node.
+      def exec(command, options={})
+        self.ssh.exec(command, options)
+      end
+
     end
 
   end

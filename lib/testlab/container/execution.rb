@@ -19,6 +19,13 @@ class TestLab
         end
       end
 
+      # Container Execute
+      #
+      # Executes the supplied command on the container.
+      def exec(command, options={})
+        self.ssh.exec(command, options)
+      end
+
     end
 
   end
