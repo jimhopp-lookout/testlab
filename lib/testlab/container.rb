@@ -88,6 +88,7 @@ class TestLab
     autoload :Provision,     'testlab/container/provision'
     autoload :SSH,           'testlab/container/ssh'
     autoload :Status,        'testlab/container/status'
+    autoload :Support,       'testlab/container/support'
     autoload :User,          'testlab/container/user'
 
     include TestLab::Container::Actions
@@ -102,6 +103,7 @@ class TestLab
     include TestLab::Container::Provision
     include TestLab::Container::SSH
     include TestLab::Container::Status
+    include TestLab::Container::Support
     include TestLab::Container::User
 
     extend  TestLab::Container::ClassMethods
