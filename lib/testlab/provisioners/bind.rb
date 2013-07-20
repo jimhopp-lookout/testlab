@@ -15,7 +15,9 @@ class TestLab
         @ui     = (ui     || TestLab.ui)
 
         @config[:bind] ||= Hash.new
-        @config[:bind][:domain] ||= "default.zone"
+        @config[:bind][:domain]     ||= "tld.invalid"
+        @config[:bind][:forwarders] ||= %w(8.8.8.8 8.8.4.4)
+
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
@@ -59,7 +61,7 @@ class TestLab
         bind_conf_template = File.join(TestLab::Provisioner.template_dir, "bind", "bind.erb")
 
         file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND Configuration", :char => '//'))
-        file.puts(ZTK::Template.render(bind_conf_template, {}))
+        file.puts(ZTK::Template.render(bind_conf_template, @config))
       end
 
       def build_bind_records
