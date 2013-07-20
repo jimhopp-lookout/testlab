@@ -55,6 +55,14 @@ class TestLab
         end
       end
 
+      def sudo
+        %(sudo -p '#{sudo_prompt}')
+      end
+
+      def sudo_prompt
+        %(sudo password for %u@%h: )
+      end
+
     end
 
   end
