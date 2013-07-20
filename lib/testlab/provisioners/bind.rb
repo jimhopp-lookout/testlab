@@ -55,6 +55,7 @@ class TestLab
 
         true
       end
+      alias :on_network_create :on_network_up
 
       # Builds the main bind configuration sections
       def build_bind_main_partial(file)
