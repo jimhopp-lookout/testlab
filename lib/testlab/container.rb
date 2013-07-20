@@ -77,6 +77,7 @@ class TestLab
     # Sub-Modules
     autoload :Actions,       'testlab/container/actions'
     autoload :ClassMethods,  'testlab/container/class_methods'
+    autoload :Execution,     'testlab/container/execution'
     autoload :Generators,    'testlab/container/generators'
     autoload :Interface,     'testlab/container/interface'
     autoload :IO,            'testlab/container/io'
@@ -88,6 +89,7 @@ class TestLab
     autoload :User,          'testlab/container/user'
 
     include TestLab::Container::Actions
+    include TestLab::Container::Execution
     include TestLab::Container::Generators
     include TestLab::Container::Interface
     include TestLab::Container::IO
