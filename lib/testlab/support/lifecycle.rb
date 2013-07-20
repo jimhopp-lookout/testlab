@@ -21,6 +21,14 @@ class TestLab
         true
       end
 
+      # Recycle the object
+      def recycle
+        demolish
+        build
+
+        true
+      end
+
       # Bounce the object
       def bounce
         down

@@ -99,30 +99,6 @@ EOF
     end
   end
 
-  # CONTAINER RECYCLE
-  ####################
-  c.desc 'Recycle containers'
-  c.long_desc <<-EOF
-Recycles a container.  The container is taken through a series of state changes to ensure it is pristine.
-
-The container is cycled in this order:
-
-Deprovision -> Down -> Destroy -> Create -> Up -> Provision
-EOF
-  c.command :recycle do |recycle|
-    recycle.action do |global_options, options, args|
-      iterate_objects_by_name(options[:name], TestLab::Container) do |container|
-        container.deprovision
-        container.down
-        container.destroy
-
-        container.create
-        container.up
-        container.provision
-      end
-    end
-  end
-
   # CONTAINER CLONE
   ##################
   c.desc 'Clone containers'

@@ -335,6 +335,19 @@ class TestLab
     true
   end
 
+  # Test Lab Recycle
+  #
+  # Attempts to recycle our lab topology.  This calls various methods on
+  # all of our nodes, networks and containers.
+  #
+  # @return [Boolean] True if successful.
+  def recycle
+    self.demolish
+    self.build
+
+    true
+  end
+
   # Node Method Proxy
   #
   # Iterates all of the lab nodes, sending the supplied method name and arguments

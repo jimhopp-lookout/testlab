@@ -7,7 +7,7 @@ class TestLab
     module GLI
       require 'ztk'
 
-      LAB_ACTION_ORDER = %W(build demolish bounce create destroy up down provision deprovision).map(&:to_sym)
+      LAB_ACTION_ORDER = %W(build demolish recycle bounce create destroy up down provision deprovision).map(&:to_sym)
 
       LAB_ACTIONS = {
         :create      => ["Initialize %s",   "Attempts to create the <%= @component %>."],
@@ -22,6 +22,13 @@ class TestLab
           The <%= @component %> are taken through the following states:
 
           Current -> Down -> Up
+          EOF
+        :recycle     => ["Recycle %s (demolish->build)", <<-EOF],
+          Attempts to recycle the <%= @component %>.  TestLab will attempt to demolish, then build the <%= @component %>.
+
+          The <%= @component %> are taken through the following states:
+
+          Current -> Demolish -> Build
           EOF
         :build       => ["Build %s (create->up->provision)", <<-EOF],
           Attempts to build the <%= @component %>.  TestLab will attempt to create, online and provision the <%= @component %>.

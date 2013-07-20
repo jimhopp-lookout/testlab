@@ -62,7 +62,7 @@ end
 #############
 desc 'Bounce the lab (down->up)'
 long_desc <<-EOF
-Attempts to bounce the lab.  TestLab will attempt to offline, then online lab components.
+Attempts to bounce the lab.  TestLab will attempt to offline, then online the lab components.
 
 The components are offlined in the following order:
 
@@ -75,6 +75,26 @@ EOF
 command :bounce do |bounce|
   bounce.action do |global_options,options,args|
     @testlab.bounce
+  end
+end
+
+# LAB RECYCLE
+##############
+desc 'Recycle the lab (demolish->build)'
+long_desc <<-EOF
+Attempts to recycle the lab.  TestLab will attempt to demolish, then build the lab components.
+
+The components are demolished in the following order:
+
+Containers -> Networks -> Nodes
+
+Then components are built in the following order:
+
+Nodes -> Networks -> Containers
+EOF
+command :recycle do |recycle|
+  recycle.action do |global_options,options,args|
+    @testlab.recycle
   end
 end
 
