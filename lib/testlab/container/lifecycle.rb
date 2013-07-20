@@ -21,6 +21,14 @@ class TestLab
         true
       end
 
+      # Bounce the container
+      def bounce
+        self.down
+        self.up
+
+        true
+      end
+
     end
 
   end

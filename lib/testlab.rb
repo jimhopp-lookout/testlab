@@ -322,6 +322,19 @@ class TestLab
     true
   end
 
+  # Test Lab Bounce
+  #
+  # Attempts to bounce our lab topology.  This calls various methods on
+  # all of our nodes, networks and containers.
+  #
+  # @return [Boolean] True if successful.
+  def bounce
+    self.down
+    self.up
+
+    true
+  end
+
   # Node Method Proxy
   #
   # Iterates all of the lab nodes, sending the supplied method name and arguments

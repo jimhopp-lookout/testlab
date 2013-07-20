@@ -21,6 +21,14 @@ class TestLab
         true
       end
 
+      # Bounce the node
+      def bounce
+        self.down
+        self.up
+
+        true
+      end
+
     end
   end
 end

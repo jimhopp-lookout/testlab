@@ -18,6 +18,66 @@
 #
 ################################################################################
 
+# LAB BUILD
+############
+desc 'Build the lab (create->up->provision)'
+long_desc <<-EOF
+Attempts to build the defined lab.  TestLab will attempt to create, online and provision the lab components.
+
+The components are built in the following order:
+
+Nodes -> Networks -> Containers
+
+TestLab will then attempt to build the components, executing the following tasks for each:
+
+Create -> Up -> Provision
+EOF
+command :build do |build|
+  build.action do |global_options,options,args|
+    @testlab.build
+  end
+end
+
+# LAB DEMOLISH
+###############
+desc 'Demolish the lab (deprovision->down->destroy)'
+long_desc <<-EOF
+Attempts to demolish the defined lab.  TestLab will attempt to deprovision, offline and destroy the lab components.
+
+The components are demolished in the following order:
+
+Containers -> Networks -> Nodes
+
+TestLab will then attempt to demolish the components, executing the following tasks for each:
+
+Deprovision -> Down -> Destroy
+EOF
+command :demolish do |demolish|
+  demolish.action do |global_options,options,args|
+    @testlab.demolish
+  end
+end
+
+# LAB BOUNCE
+#############
+desc 'Bounce the lab (down->up)'
+long_desc <<-EOF
+Attempts to bounce the lab.  TestLab will attempt to offline, then online lab components.
+
+The components are offlined in the following order:
+
+Containers -> Networks -> Nodes
+
+Then components are onlined in the following order:
+
+Nodes -> Networks -> Containers
+EOF
+command :bounce do |bounce|
+  bounce.action do |global_options,options,args|
+    @testlab.bounce
+  end
+end
+
 # LAB CREATE
 #############
 desc 'Create the lab components'
@@ -111,46 +171,6 @@ EOF
 command :deprovision do |deprovision|
   deprovision.action do |global_options,options,args|
     @testlab.deprovision
-  end
-end
-
-# LAB BUILD
-############
-desc 'Build the lab'
-long_desc <<-EOF
-Attempts to build the defined lab.  TestLab will attempt to create, online and provision the lab components.
-
-The components are built in the following order:
-
-Nodes -> Networks -> Containers
-
-TestLab will then attempt to build the components, executing the following tasks for each:
-
-Create -> Up -> Provision
-EOF
-command :build do |build|
-  build.action do |global_options,options,args|
-    @testlab.build
-  end
-end
-
-# LAB DEMOLISH
-###############
-desc 'Demolish the lab'
-long_desc <<-EOF
-Attempts to demolish the defined lab.  TestLab will attempt to deprovision, offline and destroy the lab components.
-
-The components are demolished in the following order:
-
-Containers -> Networks -> Nodes
-
-TestLab will then attempt to demolish the components, executing the following tasks for each:
-
-Deprovision -> Down -> Destroy
-EOF
-command :demolish do |demolish|
-  demolish.action do |global_options,options,args|
-    @testlab.demolish
   end
 end
 
