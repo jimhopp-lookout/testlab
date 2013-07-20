@@ -28,7 +28,39 @@ include TestLab::Utility::Misc
 version TestLab::VERSION
 
 program_desc %(TestLab - A toolkit for building virtual computer labs)
-# program_long_desc %(Program Long Description)
+program_long_desc <<-EOF
+TestLab is based around the abstraction of three main components: nodes,
+networks and containers.  Nodes represent a system (bare-metal or virtualized)
+that hosts containers.  Networks repesent a Linux bridge on a node.  Containers
+simple represent a Linux Container (LXC) running on its parent node which is
+typically connected to a network on the node.
+
+In addition to the core component abstractions, TestLab shares a series of core
+tasks that are universal across all of the components.  These are create and
+destroy, up and down, provision and deprovision.  Several other core tasks,
+such as build, demolish, recycle and bounce encapsulate the previously mentioned
+tasks and simply act as convenience tasks.
+
+You can execute almost all of the tasks against the entire lab, or individual
+lab components.
+
+When building a lab from scratch, you will typically run 'tl build'.  To
+breakdown your lab destroying all the components, you will typically run
+'tl demolish'.  If you want to re-build the lab you can run 'tl recycle' which
+will run the demolish task followed by the build task against all the lab
+components.  If you want to power-cycle the entire lab you can run 'tl bounce'
+which will run the down task followed by the up task against all the lab
+components.  Again these tasks can be run against the lab as a whole or
+individual components.
+
+You can view the status of the entire lab using 'tl status', or view the status
+of individual components using 'tl node status', 'tl network status' or
+'tl container status'.
+
+You can easily get help for any of the component tasks using the syntax
+'tl help <component>'.  This can be extended to the following syntax
+'tl help <task>' or 'tl help <component> <task>' for more in-depth help.
+EOF
 
 sort_help :manually
 default_command :help
