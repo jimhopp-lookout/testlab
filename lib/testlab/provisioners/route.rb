@@ -36,6 +36,8 @@ class TestLab
       end
       alias :on_network_down :on_network_deprovision
 
+    private
+
       def manage_route(action, network)
         command = ZTK::Command.new(:ui => @ui, :silence => true, :ignore_exit_status => true)
 
