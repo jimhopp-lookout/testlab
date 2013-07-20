@@ -82,7 +82,6 @@ class TestLab
     autoload :Generators,    'testlab/container/generators'
     autoload :Interface,     'testlab/container/interface'
     autoload :IO,            'testlab/container/io'
-    autoload :Lifecycle,     'testlab/container/lifecycle'
     autoload :LXC,           'testlab/container/lxc'
     autoload :MethodMissing, 'testlab/container/method_missing'
     autoload :Provision,     'testlab/container/provision'
@@ -97,7 +96,6 @@ class TestLab
     include TestLab::Container::Generators
     include TestLab::Container::Interface
     include TestLab::Container::IO
-    include TestLab::Container::Lifecycle
     include TestLab::Container::LXC
     include TestLab::Container::MethodMissing
     include TestLab::Container::Provision
@@ -109,6 +107,7 @@ class TestLab
     extend  TestLab::Container::ClassMethods
 
     include TestLab::Support::Execution
+    include TestLab::Support::Lifecycle
 
     include TestLab::Utility::Misc
 

@@ -12,7 +12,6 @@ class TestLab
     # Sub-Modules
     autoload :Actions,       'testlab/node/actions'
     autoload :ClassMethods,  'testlab/node/class_methods'
-    autoload :Lifecycle,     'testlab/node/lifecycle'
     autoload :LXC,           'testlab/node/lxc'
     autoload :MethodMissing, 'testlab/node/method_missing'
     autoload :Provision,     'testlab/node/provision'
@@ -20,7 +19,6 @@ class TestLab
     autoload :Status,        'testlab/node/status'
 
     include TestLab::Node::Actions
-    include TestLab::Node::Lifecycle
     include TestLab::Node::LXC
     include TestLab::Node::MethodMissing
     include TestLab::Node::Provision
@@ -30,6 +28,7 @@ class TestLab
     extend  TestLab::Node::ClassMethods
 
     include TestLab::Support::Execution
+    include TestLab::Support::Lifecycle
 
     include TestLab::Utility::Misc
 

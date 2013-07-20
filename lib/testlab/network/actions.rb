@@ -62,7 +62,7 @@ brctl delbr #{self.bridge}
         @ui.logger.debug { "Network Up: #{self.id} " }
 
         (self.node.state != :running) and return false
-        (self.state == :running) and return false
+        # (self.state == :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
@@ -81,7 +81,7 @@ ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broa
         @ui.logger.debug { "Network Down: #{self.id} " }
 
         (self.node.state != :running) and return false
-        (self.state != :running) and return false
+        # (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           self.node.bootstrap(<<-EOF, :ignore_exit_status => true)

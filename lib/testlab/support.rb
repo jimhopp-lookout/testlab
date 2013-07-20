@@ -12,6 +12,7 @@ class TestLab
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   module Support
     autoload :Execution, 'testlab/support/execution'
+    autoload :Lifecycle, 'testlab/support/lifecycle'
   end
 
 end
