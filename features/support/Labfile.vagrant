@@ -20,9 +20,6 @@ node 'vagrant' do
       :box      => 'raring64',
       :box_url  => 'https://dl.dropboxusercontent.com/u/22904185/boxes/raring64.box',
       :file     => File.dirname(__FILE__)
-    },
-    :bind => {
-      :domain => "default.zone"
     }
   })
 
@@ -32,7 +29,7 @@ node 'vagrant' do
     ]
 
     address       '10.128.0.1/16'
-    bridge        :br0
+    bridge        'br0'
   end
 
   container "test-server" do
@@ -56,7 +53,7 @@ node 'vagrant' do
 
     interface do
       network_id  'labnet'
-      name        :eth0
+      name        'eth0'
       address     '10.128.0.254/16'
       mac         '00:00:5e:63:b5:9f'
     end

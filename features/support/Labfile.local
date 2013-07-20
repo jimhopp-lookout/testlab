@@ -12,19 +12,13 @@ node 'vagrant' do
     TestLab::Provisioner::Resolv
   ]
 
-  config      ({
-    :bind => {
-      :domain => "default.zone"
-    }
-  })
-
   network 'labnet' do
     provisioners  [
       TestLab::Provisioner::Bind
     ]
 
     address       '10.128.0.1/16'
-    bridge        :br_test
+    bridge        'br_test'
   end
 
   container "test-server" do
@@ -48,7 +42,7 @@ node 'vagrant' do
 
     interface do
       network_id  'labnet'
-      name        :eth0
+      name        'eth0'
       address     '10.128.0.254/16'
       mac         '00:00:5e:63:b5:9f'
     end
