@@ -9,6 +9,7 @@ class TestLab
     #
     # @author Zachary Patten <zachary AT jovelabs DOT com>
     class Route
+      include TestLab::Utility::Misc
 
       def initialize(config={}, ui=nil)
         @config = (config || Hash.new)
@@ -41,9 +42,9 @@ class TestLab
         case RUBY_PLATFORM
         when /darwin/ then
           action = ((action == :del) ? :delete : :add)
-          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.address)} #{network.node.ip} #{TestLab::Utility.netmask(network.address)}))
+          command.exec(%(#{sudo} route #{action} -net #{TestLab::Utility.network(network.address)} #{network.node.ip} #{TestLab::Utility.netmask(network.address)}))
         when /linux/ then
-          command.exec(%(sudo route #{action} -net #{TestLab::Utility.network(network.address)} netmask #{TestLab::Utility.netmask(network.address)} gw #{network.node.ip}))
+          command.exec(%(#{sudo} route #{action} -net #{TestLab::Utility.network(network.address)} netmask #{TestLab::Utility.netmask(network.address)} gw #{network.node.ip}))
         end
       end
 
