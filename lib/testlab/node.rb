@@ -66,7 +66,7 @@ class TestLab
 
     def domain
       self.config[:bind] ||= Hash.new
-      self.config[:bind][:domain]
+      self.config[:bind][:domain] ||= 'tld.invalid'
     end
 
   end
