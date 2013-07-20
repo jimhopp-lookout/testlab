@@ -12,5 +12,8 @@ apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
 <% if !@apt[:remove].nil? -%>
 apt-get -y remove <%= @apt[:remove].flatten.compact.join(' ') %>
 <% end -%>
+<% if !@apt[:purge].nil? -%>
+apt-get -y purge <%= @apt[:purge].flatten.compact.join(' ') %>
+<% end -%>
 
 touch /.testlab-apt-provision
