@@ -11,7 +11,7 @@ class TestLab
         (self.state != :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
-          self.node.ssh.bootstrap(<<-EOF, :ignore_exit_status => true)
+          self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
 set -x
 grep '#{def_tag}' /etc/network/interfaces && exit 0
 cat <<EOI | tee -a /etc/network/interfaces
@@ -45,7 +45,7 @@ brctl setfd #{self.bridge} 0
         (self.state == :not_created) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
-          self.node.ssh.bootstrap(<<-EOF, :ignore_exit_status => true)
+          self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
 set -x
 sed -i '/#{def_tag}/,/#{end_tag}/d' /etc/network/interfaces
 brctl delbr #{self.bridge}
@@ -65,7 +65,7 @@ brctl delbr #{self.bridge}
         (self.state == :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
-          self.node.ssh.bootstrap(<<-EOF, :ignore_exit_status => true)
+          self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
 set -x
 ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broadcast} up
           EOF
@@ -84,7 +84,7 @@ ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broa
         (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
-          self.node.ssh.bootstrap(<<-EOF, :ignore_exit_status => true)
+          self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
 set -x
 ifconfig #{self.bridge} down
           EOF

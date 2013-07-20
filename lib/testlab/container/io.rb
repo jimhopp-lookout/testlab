@@ -25,7 +25,7 @@ class TestLab
         root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Compress', :cyan)) do
-          self.node.ssh.bootstrap(<<-EOF)
+          self.node.bootstrap(<<-EOF)
 set -x
 set -e
 
@@ -75,7 +75,7 @@ EOF
         end
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do
-          self.node.ssh.bootstrap(<<-EOF)
+          self.node.bootstrap(<<-EOF)
 set -x
 set -e
 
