@@ -41,7 +41,7 @@ EOF
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Export', :cyan)) do
           File.exists?(local_file) and FileUtils.rm_f(local_file)
-          self.node.ssh.download(remote_file, local_file)
+          self.node.download(remote_file, local_file)
         end
 
         @ui.stdout.puts
@@ -71,7 +71,7 @@ EOF
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
           self.node.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
-          self.node.ssh.upload(local_file, remote_file)
+          self.node.upload(local_file, remote_file)
         end
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Expand', :cyan)) do

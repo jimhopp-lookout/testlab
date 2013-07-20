@@ -84,7 +84,7 @@ class TestLab
       end
 
       # Builds the bind configuration sections for our zones
-      def build_bind_zone_partial(ssh, file)
+      def build_bind_zone_partial(node, file)
         bind_zone_template = File.join(TestLab::Provisioner.template_dir, "bind", 'bind-zone.erb')
 
         bind_records = build_bind_records
@@ -99,7 +99,7 @@ class TestLab
           file.puts
           file.puts(ZTK::Template.render(bind_zone_template, context))
 
-          build_bind_db(ssh, network.arpa, reverse_records[network.id])
+          build_bind_db(node, network.arpa, reverse_records[network.id])
         end
 
         TestLab::Container.domains.each do |domain|
@@ -110,30 +110,30 @@ class TestLab
           file.puts
           file.puts(ZTK::Template.render(bind_zone_template, context))
 
-          build_bind_db(ssh, domain, forward_records[domain])
+          build_bind_db(node, domain, forward_records[domain])
         end
       end
 
-      def build_bind_db(ssh, zone, records)
+      def build_bind_db(node, zone, records)
         bind_db_template = File.join(TestLab::Provisioner.template_dir, "bind", 'bind-db.erb')
 
-        ssh.file(:target => %(/etc/bind/db.#{zone}), :chown => "bind:bind") do |file|
+        node.file(:target => %(/etc/bind/db.#{zone}), :chown => "bind:bind") do |file|
           file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} BIND DB: #{zone}", :char => ';'))
           file.puts(ZTK::Template.render(bind_db_template, { :zone => zone, :records => records }))
         end
       end
 
       # Builds the BIND configuration
-      def build_bind_conf(ssh)
-        ssh.file(:target => %(/etc/bind/named.conf), :chown => "bind:bind") do |file|
+      def build_bind_conf(node)
+        node.file(:target => %(/etc/bind/named.conf), :chown => "bind:bind") do |file|
           build_bind_main_partial(file)
-          build_bind_zone_partial(ssh, file)
+          build_bind_zone_partial(node, file)
         end
       end
 
-      def bind_install(ssh)
-        exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install bind9))
-        exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
+      def bind_install(node)
+        node.exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y install bind9))
+        node.exec(%(sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}))
       end
 
       def bind_reload(node)
@@ -142,8 +142,8 @@ class TestLab
       end
 
       def bind_provision(node)
-        bind_install(node.ssh)
-        build_bind_conf(node.ssh)
+        bind_install(node)
+        build_bind_conf(node)
         bind_reload(node)
       end
 

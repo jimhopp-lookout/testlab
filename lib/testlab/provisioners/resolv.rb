@@ -53,7 +53,7 @@ class TestLab
       end
 
       def render_resolv_conf(object)
-        object.ssh.file(:target => %(/etc/resolv.conf), :chown => "root:root") do |file|
+        object.file(:target => %(/etc/resolv.conf), :chown => "root:root") do |file|
           file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
           file.puts(ZTK::Template.render(resolv_conf_template, @config))
         end

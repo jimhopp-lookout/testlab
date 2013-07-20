@@ -127,6 +127,7 @@ class TestLab
   autoload :Node,        'testlab/node'
   autoload :Provider,    'testlab/provider'
   autoload :Provisioner, 'testlab/provisioner'
+  autoload :Support,     'testlab/support'
   autoload :User,        'testlab/user'
   autoload :Utility,     'testlab/utility'
 

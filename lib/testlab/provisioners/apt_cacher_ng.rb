@@ -39,11 +39,11 @@ class TestLab
           }
         }
 
-        node.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
+        node.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(apt_conf_d_proxy_file_template, context))
         end
 
-        node.ssh.file(:target => apt_cacher_ng_security_conf_file, :chown => "root:root", :chmod => "0644") do |file|
+        node.file(:target => apt_cacher_ng_security_conf_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(apt_cacher_ng_security_conf_template, context))
         end
 
@@ -75,7 +75,7 @@ class TestLab
 
         @config[:apt][:cacher_ng] = { :proxy_url => "http://#{gateway_ip}:3142" }.merge(@config[:apt][:cacher_ng])
 
-        container.ssh.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
+        container.file(:target => apt_conf_d_proxy_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(apt_conf_d_proxy_file_template, @config))
         end
 
