@@ -209,7 +209,7 @@ Calling `TestLab.new` without a `:labfile` option will, by default, attempt to r
 There are several easy accessors available to grab the first container and execute the command `uptime` on it via and SSH connection:
 
     container = @testlab.containers.first
-    container.ssh.exec(%(uptime))
+    container.exec(%(uptime))
 
 We can also execute this command via `lxc-attach`:
 

@@ -72,7 +72,7 @@ class TestLab
             user.provision
           end
 
-          self.ssh.exec(%(sudo hostname #{self.fqdn}))
+          self.exec(%(sudo hostname #{self.fqdn}))
 
           do_provisioner_callbacks(self, :up, @ui)
         end
@@ -115,7 +115,7 @@ class TestLab
           # ensure our container is in "ephemeral" mode
           self.to_ephemeral
 
-          self.node.ssh.exec(%(sudo arp --verbose --delete #{self.ip}), :ignore_exit_status => true)
+          self.node.exec(%(sudo arp --verbose --delete #{self.ip}), :ignore_exit_status => true)
 
           ephemeral_arguments = Array.new
           ephemeral_arguments << %W(-o #{self.lxc_clone.name} -n #{self.lxc.name} -d)

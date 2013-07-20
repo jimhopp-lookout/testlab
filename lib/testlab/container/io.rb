@@ -70,7 +70,7 @@ EOF
         root_fs_path = self.lxc.fs_root.split(File::SEPARATOR).last
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Import', :cyan)) do
-          self.node.ssh.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
+          self.node.exec(%(sudo rm -fv #{remote_file}), :silence => true, :ignore_exit_status => true)
           self.node.ssh.upload(local_file, remote_file)
         end
 
@@ -117,9 +117,9 @@ EOF
 
         self.down
         please_wait(:ui => @ui, :message => format_object_action(self, 'Copy', :yellow)) do
-          self.node.ssh.exec(%(sudo rm -rf #{target_container.lxc.fs_root}))
-          self.node.ssh.exec(%(sudo rsync -a #{self.lxc.fs_root} #{target_container.lxc.container_root}))
-          self.node.ssh.exec(%(sudo rm -fv #{File.join(self.lxc.fs_root, '.*provision')}))
+          self.node.exec(%(sudo rm -rf #{target_container.lxc.fs_root}))
+          self.node.exec(%(sudo rsync -a #{self.lxc.fs_root} #{target_container.lxc.container_root}))
+          self.node.exec(%(sudo rm -fv #{File.join(self.lxc.fs_root, '.*provision')}))
         end
 
         # bring the source container back online if it was running before the copy operation

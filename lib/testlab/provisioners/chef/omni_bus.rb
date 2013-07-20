@@ -59,8 +59,8 @@ class TestLab
         # @return [Boolean] True if successful.
         def on_container_deprovision(container)
           if @chef_server.state == :running
-            @chef_server.ssh.exec(%(knife node delete #{container.id} --yes), :ignore_exit_status => true)
-            @chef_server.ssh.exec(%(knife client delete #{container.id} --yes), :ignore_exit_status => true)
+            @chef_server.exec(%(knife node delete #{container.id} --yes), :ignore_exit_status => true)
+            @chef_server.exec(%(knife client delete #{container.id} --yes), :ignore_exit_status => true)
           end
 
           true
@@ -94,7 +94,7 @@ node_name               #{@config[:chef][:client][:node_name].inspect}
         end
 
         def validation_pem
-          @chef_server.ssh.exec(%((cat ~/.chef/validation.pem || cat ~/.chef/chef-validator.pem) 2> /dev/null)).output.strip
+          @chef_server.exec(%((cat ~/.chef/validation.pem || cat ~/.chef/chef-validator.pem) 2> /dev/null)).output.strip
         end
 
       end

@@ -14,11 +14,11 @@ class TestLab
 
         # ensure the container user exists
         container_passwd_file = File.join(self.container.fs_root, "etc", "passwd")
-        if self.container.node.ssh.exec(%(sudo grep "#{self.username}" #{container_passwd_file}), :ignore_exit_status => true).exit_code != 0
+        if self.container.node.exec(%(sudo grep "#{self.username}" #{container_passwd_file}), :ignore_exit_status => true).exit_code != 0
 
           if !self.gid.nil?
             groupadd_command = %(groupadd --gid #{self.gid} #{self.username})
-            self.container.node.ssh.exec(%(sudo chroot #{self.container.fs_root} /bin/bash -c '#{groupadd_command}'))
+            self.container.node.exec(%(sudo chroot #{self.container.fs_root} /bin/bash -c '#{groupadd_command}'))
           end
 
           useradd_command = %W(useradd --create-home --shell /bin/bash --groups sudo)
@@ -50,15 +50,15 @@ class TestLab
 
         authkeys.each do |destination, source|
           @ui.logger.info { "SOURCE: #{source} >>> #{destination}" }
-          self.container.node.ssh.exec(%(sudo mkdir -pv #{File.dirname(destination)}))
+          self.container.node.exec(%(sudo mkdir -pv #{File.dirname(destination)}))
 
-          self.container.node.ssh.exec(%(sudo grep "$(cat #{source})" #{destination} || sudo cat #{source} | sudo tee -a #{destination}))
+          self.container.node.exec(%(sudo grep "$(cat #{source})" #{destination} || sudo cat #{source} | sudo tee -a #{destination}))
 
           public_identities.each do |pi|
-            self.container.node.ssh.exec(%(sudo grep "#{pi}" #{destination} || sudo echo "#{pi}" | sudo tee -a #{destination}))
+            self.container.node.exec(%(sudo grep "#{pi}" #{destination} || sudo echo "#{pi}" | sudo tee -a #{destination}))
           end
 
-          self.container.node.ssh.exec(%(sudo chmod -v 644 #{destination}))
+          self.container.node.exec(%(sudo chmod -v 644 #{destination}))
         end
 
         # ensure the container user home directory is owned by them

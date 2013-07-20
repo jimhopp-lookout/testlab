@@ -47,7 +47,7 @@ class TestLab
           file.puts(ZTK::Template.render(apt_cacher_ng_security_conf_template, context))
         end
 
-        node.ssh.exec(%(sudo service apt-cacher-ng restart))
+        node.exec(%(sudo service apt-cacher-ng restart))
 
         true
       end
@@ -80,7 +80,7 @@ class TestLab
         end
 
         # Fix the APT sources since LXC mudges them when using apt-cacher-ng
-        container.ssh.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' /etc/apt/sources.list))
+        container.exec(%(sudo sed -i 's/127.0.0.1:3142\\///g' /etc/apt/sources.list))
       end
 
     private

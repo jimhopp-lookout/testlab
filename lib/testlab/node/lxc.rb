@@ -21,7 +21,7 @@ class TestLab
       #
       # @return [String] The output of 'uname -m'.
       def arch
-        @arch ||= self.ssh.exec(%(uname -m)).output.strip
+        @arch ||= self.exec(%(uname -m)).output.strip
       end
 
     end
