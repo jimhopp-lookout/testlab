@@ -18,12 +18,7 @@ class TestLab
 
           self.node.exec(%(sudo arp --verbose --delete #{self.ip}), :ignore_exit_status => true)
 
-          ephemeral_arguments = Array.new
-          ephemeral_arguments << %W(-o #{self.lxc_clone.name} -n #{self.lxc.name} -d)
-          ephemeral_arguments << %W(--keep-data) if self.persist
-          ephemeral_arguments.flatten!.compact!
-
-          self.lxc_clone.start_ephemeral(ephemeral_arguments)
+          self.lxc_clone.start_ephemeral(clone_args)
         end
 
         true

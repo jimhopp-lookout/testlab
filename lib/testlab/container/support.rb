@@ -15,6 +15,18 @@ class TestLab
         end
       end
 
+      # Returns arguments for lxc-start-ephemeral
+      #
+      # @return [Array<String>] An array of arguments for lxc-start-ephemeral
+      def clone_args
+        arguments = Array.new
+
+        arguments << %W(-o #{self.lxc_clone.name} -n #{self.lxc.name} -d)
+        arguments << %W(--keep-data) if self.persist
+
+        arguments.flatten.compact
+      end
+
       # Attempt to detect the architecture of the node.  The value returned is
       # respective to the container distro.
       #
