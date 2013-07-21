@@ -30,6 +30,10 @@ When /^I bounce the containers with "([^"]*)"$/ do |app_name|
   container_cmd(app_name, %W(bounce -n test-server))
 end
 
+When /^I recycle the containers with "([^"]*)"$/ do |app_name|
+  container_cmd(app_name, %W(recycle -n test-server))
+end
+
 When /^I export the containers with "([^"]*)"$/ do |app_name|
   container_cmd(app_name, %W(export -n test-server --output=/tmp/test-server.sc))
 end
