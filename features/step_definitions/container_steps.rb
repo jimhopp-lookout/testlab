@@ -14,12 +14,20 @@ When /^I down the containers with "([^"]*)"$/ do |app_name|
   container_cmd(app_name, %W(down -n test-server))
 end
 
-When /^I clone the containers with "([^"]*)"$/ do |app_name|
-  container_cmd(app_name, %W(clone -n test-server))
+When /^I put the containers in a ephemeral state with "([^"]*)"$/ do |app_name|
+  container_cmd(app_name, %W(ephemeral -n test-server))
+end
+
+When /^I put the containers in a persistent state with "([^"]*)"$/ do |app_name|
+  container_cmd(app_name, %W(persistent -n test-server))
 end
 
 When /^I build the containers with "([^"]*)"$/ do |app_name|
   container_cmd(app_name, %W(build -n test-server))
+end
+
+When /^I bounce the containers with "([^"]*)"$/ do |app_name|
+  container_cmd(app_name, %W(bounce -n test-server))
 end
 
 When /^I export the containers with "([^"]*)"$/ do |app_name|

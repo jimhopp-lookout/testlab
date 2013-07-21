@@ -3,22 +3,31 @@ class TestLab
 
     module Clone
 
-      # Clone the container
+      # Put the container into an ephemeral state.
       #
-      # Prepares the container, if needed, for ephemeral cloning and clones it.
+      # Prepares the container, if needed, for ephemeral cloning.
       #
       # @return [Boolean] True if successful.
-      def clone
-        @ui.logger.debug { "Container Clone: #{self.id}" }
+      def ephemeral
+        @ui.logger.debug { "Container Ephemeral: #{self.id}" }
 
-        please_wait(:ui => @ui, :message => format_object_action(self, 'Clone', :yellow)) do
-
-          # ensure our container is in "ephemeral" mode
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Ephemeral', :yellow)) do
           self.to_ephemeral
+        end
 
-          self.node.exec(%(sudo arp --verbose --delete #{self.ip}), :ignore_exit_status => true)
+        true
+      end
 
-          self.lxc_clone.start_ephemeral(clone_args)
+      # Put the container into a persistent state.
+      #
+      # Prepares the container, if needed, for persistance.
+      #
+      # @return [Boolean] True if successful.
+      def persistent
+        @ui.logger.debug { "Container Persistent: #{self.id}" }
+
+        please_wait(:ui => @ui, :message => format_object_action(self, 'Persistent', :yellow)) do
+          self.to_static
         end
 
         true

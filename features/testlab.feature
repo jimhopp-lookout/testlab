@@ -39,19 +39,50 @@ Feature: TestLab command-line
   Scenario: TestLab clone
     When I build the lab with "tl"
     Then the exit status should be 0
-    When I clone the containers with "tl"
+
+    When I put the containers in a ephemeral state with "tl"
     Then the exit status should be 0
+
+    When I bounce the containers with "tl"
+    Then the exit status should be 0
+
+    When I bounce the containers with "tl"
+    Then the exit status should be 0
+
     When I build the containers with "tl"
     Then the exit status should be 0
-    When I clone the containers with "tl"
+
+    When I bounce the containers with "tl"
     Then the exit status should be 0
+
+    When I recycle the containers with "tl"
+    Then the exit status should be 0
+
+    When I bounce the containers with "tl"
+    Then the exit status should be 0
+
+    When I export the containers with "tl"
+    Then the exit status should be 1
+
+    When I put the containers in a persistent state with "tl"
+    Then the exit status should be 0
+
+    When I bounce the containers with "tl"
+    Then the exit status should be 0
+
+    When I bounce the containers with "tl"
+    Then the exit status should be 0
+
     When I build the containers with "tl"
     Then the exit status should be 0
-    When I down the containers with "tl"
+
+    When I bounce the containers with "tl"
     Then the exit status should be 0
-    When I up the containers with "tl"
+
+    When I recycle the containers with "tl"
     Then the exit status should be 0
-    When I build the containers with "tl"
+
+    When I bounce the containers with "tl"
     Then the exit status should be 0
 
 

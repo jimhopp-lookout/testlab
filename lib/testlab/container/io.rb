@@ -13,6 +13,11 @@ class TestLab
 
         (self.lxc.state == :not_created) and return false
 
+        # Throw an exception if we are attempting to export a container in a
+        # ephemeral state.
+        self.lxc_clone.exists? and raise ContainerError, 'You can not export ephemeral containers!'
+
+        # Ensure the container is stopped before we attempt to export it.
         self.down
 
         export_tempfile = Tempfile.new('export')
@@ -56,6 +61,9 @@ EOF
       # @return [Boolean] True if successful.
       def import(local_file)
         @ui.logger.debug { "Container Import: #{self.id} " }
+
+        # Ensure we are not in ephemeral mode.
+        self.to_static
 
         self.down
         self.destroy

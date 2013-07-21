@@ -99,18 +99,28 @@ EOF
     end
   end
 
-  # CONTAINER CLONE
-  ##################
-  c.desc 'Clone containers'
-  c.long_desc <<-EOF
-An ephemeral copy of the container is started.
+  # CONTAINER EPHEMERAL
+  ######################
+  c.desc 'Enable ephemeral mode for containers'
+  c.long_desc 'Put the container into a ephemeral clone state.'
 
-NOTE: There is a small delay incured during the first clone operation.
-EOF
-  c.command :clone do |clone|
-    clone.action do |global_options, options, args|
+  c.command :ephemeral do |ephemeral|
+    ephemeral.action do |global_options, options, args|
       iterate_objects_by_name(options[:name], TestLab::Container) do |container|
-        container.clone
+        container.ephemeral
+      end
+    end
+  end
+
+  # CONTAINER PERSISTENT
+  #######################
+  c.desc 'Enable persistent mode for containers'
+  c.long_desc 'Put the container into a persistent state.'
+
+  c.command :persistent do |persistent|
+    persistent.action do |global_options, options, args|
+      iterate_objects_by_name(options[:name], TestLab::Container) do |container|
+        container.persistent
       end
     end
   end
