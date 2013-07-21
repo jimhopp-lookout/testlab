@@ -89,6 +89,59 @@ TestLab uses the GLI RubyGem, which gives us a command line pattern similar to t
     tl help container
     tl help network
 
+## Container Help
+
+Here is a sample of the help output for the container tasks:
+
+    $ tl help container
+    NAME
+        container - Manage lab containers
+
+    SYNOPSIS
+        tl [global options] container [command options]  bounce
+        tl [global options] container [command options]  build
+        tl [global options] container [command options]  console
+        tl [global options] container [command options] [-t container|--to container] copy
+        tl [global options] container [command options]  create
+        tl [global options] container [command options]  demolish
+        tl [global options] container [command options]  deprovision
+        tl [global options] container [command options]  destroy
+        tl [global options] container [command options]  down
+        tl [global options] container [command options]  ephemeral
+        tl [global options] container [command options] [--output filename] [-c level|--compression level] export
+        tl [global options] container [command options] [--input filename] import
+        tl [global options] container [command options]  persistent
+        tl [global options] container [command options]  provision
+        tl [global options] container [command options]  recycle
+        tl [global options] container [command options] [-i filename|--identity filename] [-u username|--user username] ssh
+        tl [global options] container [command options]  ssh-config
+        tl [global options] container [command options]  status
+        tl [global options] container [command options]  up
+
+    COMMAND OPTIONS
+        -n, --name=container[,container,...] - Optional container ID or comma separated list of container IDs (default: none)
+
+    COMMANDS
+        build       - Build containers (create->up->provision)
+        demolish    - Demolish containers (deprovision->down->destroy)
+        recycle     - Recycle containers (demolish->build)
+        bounce      - Bounce containers (down->up)
+        create      - Initialize containers
+        destroy     - Terminate containers
+        up          - On-line containers
+        down        - Off-line containers
+        provision   - Provision containers
+        deprovision - De-provision containers
+        status      - Display containers status
+        ssh         - Container SSH console
+        ssh-config  - Container SSH configuration
+        console     - Container console
+        ephemeral   - Enable ephemeral mode for containers
+        persistent  - Enable persistent mode for containers
+        copy        - Copy containers
+        export      - Export containers
+        import      - Import containers
+
 ## Interacting with Containers
 
 Almost all commands dealing will containers will take this argument:
@@ -119,65 +172,51 @@ You can pass an optional username and/or identity to use.  By default TestLab wi
         -u, --user=username - Specify an SSH Username to use (default: none)
         -i, --identity=key  - Specify an SSH Identity Key to use (default: none)
 
-You can individually online, offline, create or destroy containers:
+You can individually create or destroy, online or offline and provision or deprovision containers:
 
-    tl container down -n server-www-1
+    tl container create -n server-www-1
+    tl container destroy -n server-www-1
+
     tl container up -n server-www-1
+    tl container down -n server-www-1
+
     tl container provision -n server-www-1
     tl container deprovision -n server-www-1
 
-You can recycle a container, effectively destroying then creating it again, provisioning it back to a "pristine" condition.
+You can recycle a container, destroying then creating it again, provisioning it back to a "pristine" condition based on the `Labfile`:
 
     tl container recycle -n server-www-1
+
+You can bounce a container, offlining then onlining it again:
+
+    tl container bounce -n server-www-1
 
 ## Ephemeral Container Cloning
 
 As it stands attempting to iterate infrastructure with Vagrant is a slow and painful process.  Enter LXC and ephemeral cloning.  The idea here is that you have a container that is provisioned to a "pristine" state according to the `Labfile`.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook, for example, and re-run it against the container.  Running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.
 
-Here we are cloning the container for the first time.  It takes a bit longer than normal because TestLab is actually shutting down the container so it can be retained as the "pristine" copy of it, and starting up a ephemeral container in its place.  Subsequent calls to clone are very fast.
+In order to use the ephemeral cloning in LXC, we first need to put our container or containers into an ephemeral mode.  This allows TestLab to do certain operations on the backend to prepare the container for ephemeral cloning.  Then when you are finished, you can easily return the container to a persistent mode.
 
-    $ tl container clone -n server-www-1
-    [TL] TestLab v0.6.1 Loaded
-    [TL] container server-www-1 clone                            # Completed in 13.0116 seconds!
-    $ tl container clone -n server-www-1
-    [TL] TestLab v0.6.1 Loaded
-    [TL] container server-www-1 clone                            # Completed in 0.9169 seconds!
-    $ tl container clone -n server-www-1
-    [TL] TestLab v0.6.1 Loaded
-    [TL] container server-www-1 clone                            # Completed in 1.0794 seconds!
-    $ tl container clone -n server-www-1
-    [TL] TestLab v0.6.1 Loaded
-    [TL] container server-www-1 clone                            # Completed in 1.0281 seconds!
+For example, to put the container into the ephemeral mode:
 
-The idea in the above example is that you run the initial clone command to put your container into an ephemeral clone state.  You would then modify the container in some fashion, test, etc.  When you where done with that iteration you would run the clone command again, losing all the changes you did to the container, replacing it with a new clean cloned copy of your original container.  RRP (Rinse, Repeat, Profit)
+    $ tl container ephemeral -n chef-client
+    [TL] TestLab v1.1.0 Loaded
+    [TL] container chef-client ephemeral                         # Completed in 17.3453 seconds!
+    [TL] TestLab v1.1.0 Finished (17.8546 seconds)
 
-We can also see the containers status reflects that it is a clone currently:
+Now with our container in the ephemeral mode, we can run all of the normal container tasks against it with one simple caveat.  When you offline the container and bring it back online, it will be reverted to the original state it was in before you put it into the ephemeral mode.  The short of all this is, you can do what you will to the container, but the moment you bounce it (offline then online it) it reverts.  This, as you can imagine, is extremely useful for developing applications and infrastructure as code.
 
-    $ tl container status -n server-www-1
-    [TL] TestLab v0.6.1 Loaded
-    +----------------------------------------------+
-    |       NODE_ID: vagrant                       |
-    |            ID: server-www-1                  |
-    |         CLONE: true                          |
-    |          FQDN: server-www-1.default.zone     |
-    |         STATE: running                       |
-    |        DISTRO: ubuntu                        |
-    |       RELEASE: precise                       |
-    |    INTERFACES: labnet:eth0:10.10.0.21/16     |
-    |  PROVISIONERS: Resolv/AptCacherNG/Apt/Shell  |
-    +----------------------------------------------+
+You can quickly revert that chef node back to it's previous state in the event the cookbook you are developing has wrecked the node.  For web developers, imagine having a mysql server running in an ephemeral container; you can quickly roll back all database operations just by bouncing the container.
 
-We can easily revert it back to a full container if we want to make "permanent" changes to it:
+This is effectively transactions for infrastructure.
 
-    $ tl container up -n server-www-1
+To put the container back into the default, persistent mode:
 
-We can even recycle it while it is in a cloned state:
+    $ tl container persistent -n chef-client
+    [TL] TestLab v1.1.0 Loaded
+    [TL] container chef-client persistent                        # Completed in 17.3692 seconds!
+    [TL] TestLab v1.1.0 Finished (17.8692 seconds)
 
-    $ tl container recycle -n server-www-1
-
-We can run provision against a clone as well (note: running `build`, calls `up`, which would revert us back to a non-cloned container and we would not want this to happen):
-
-    $ tl container provision -n server-www-1
 
 ## Network Routes
 
