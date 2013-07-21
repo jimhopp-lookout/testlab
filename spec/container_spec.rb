@@ -151,7 +151,9 @@ describe TestLab::Container do
         subject.stub(:detect_arch) { "amd64" }
         subject.lxc.stub(:create) { true }
         subject.lxc.stub(:state) { :not_created }
+        subject.lxc_clone.stub(:exists?) { false }
         subject.node.ssh.stub(:exec)
+
         subject.create
       end
     end
@@ -162,7 +164,8 @@ describe TestLab::Container do
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:state) { :stopped }
         subject.lxc.stub(:destroy) { true }
-        subject.lxc_clone.stub(:destroy) { true }
+        subject.lxc_clone.stub(:exists?) { false }
+
         subject.destroy
       end
     end
