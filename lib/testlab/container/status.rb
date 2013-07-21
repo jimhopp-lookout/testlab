@@ -53,7 +53,7 @@ class TestLab
 
         {
           :id => self.id,
-          :clone => self.lxc_clone.exists?,
+          :mode => self.mode,
           :fqdn => self.fqdn,
           :state => self.state,
           :distro => self.distro,
@@ -71,6 +71,18 @@ class TestLab
       # @return [Symbol] A symbol indicating the state of the container.
       def state
         self.lxc.state
+      end
+
+      # Container Mode
+      #
+      # What mode the container is in.
+      # @return [Symbol] A symbol indicating the mode of the container.
+      def mode
+        if self.lxc_clone.exists?
+          :ephemeral
+        else
+          :persistent
+        end
       end
 
     end
