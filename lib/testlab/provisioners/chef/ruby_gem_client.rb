@@ -9,20 +9,21 @@ class TestLab
       #
       # @author Zachary Patten <zachary AT jovelabs DOT com>
       class RubyGemClient
-        require 'json'
 
         def initialize(config={}, ui=nil)
           @config = (config || Hash.new)
           @ui     = (ui || TestLab.ui)
 
-          @chef_server = TestLab::Container.first('chef-server')
-
           @config[:chef] ||= Hash.new
           @config[:chef][:client] ||= Hash.new
-          @config[:chef][:client][:version]    ||= %(10.24.0)
-          @config[:chef][:client][:log_level]  ||= :info
-          @config[:chef][:client][:server_url] ||= "https://#{@chef_server.ip}"
-          @config[:chef][:client][:attributes] ||= Hash.new
+          @config[:chef][:client][:attach_to_container] ||= %(chef-server)
+          @config[:chef][:client][:version]             ||= %(10.24.0)
+          @config[:chef][:client][:log_level]           ||= :info
+          @config[:chef][:client][:attributes]          ||= Hash.new
+
+          @chef_server = TestLab::Container.first(@config[:chef][:client][:attach_to_container])
+
+          @config[:chef][:client][:server_url] ||= %(https://#{@chef_server.ip})
 
           @ui.logger.debug { "config(#{@config.inspect})" }
         end
