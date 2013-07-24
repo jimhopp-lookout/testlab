@@ -1,15 +1,6 @@
 options {
   directory "/var/cache/bind";
 
-  // If there is a firewall between you and nameservers you want
-  // to talk to, you may need to fix the firewall to allow multiple
-  // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
-
-  // If your ISP provided one or more IP addresses for stable
-  // nameservers, you probably want to use them as forwarders.
-  // Uncomment the following block, and insert the addresses replacing
-  // the all-0's placeholder.
-
 <% if !@bind[:forwarders].nil? -%>
   forwarders {
 <% @bind[:forwarders].flatten.compact.uniq.each do |forwarder| -%>
@@ -18,13 +9,12 @@ options {
   };
 
 <% end -%>
-  //========================================================================
-  // If BIND logs error messages about the root key being expired,
-  // you will need to update your keys.  See https://www.isc.org/bind-keys
-  //========================================================================
-  dnssec-validation auto;
+  lame-ttl 0;
+  max-cache-ttl 5;
+  max-ncache-ttl 5;
 
-  auth-nxdomain no;    # conform to RFC1035
+  dnssec-validation auto;
+  auth-nxdomain no;
   listen-on-v6 { any; };
 };
 
