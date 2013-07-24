@@ -54,7 +54,7 @@ EOF
       add.action do |global_options,options,args|
         iterate_objects_by_name(options[:name], TestLab::Network) do |network|
           p = TestLab::Provisioner::Route.new({}, @ui)
-          p.on_network_provision(network)
+          p.on_network_up(network)
           @testlab.ui.stdout.puts("Added routes successfully!".green.bold)
           @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
         end
@@ -68,7 +68,7 @@ EOF
       del.action do |global_options,options,args|
         iterate_objects_by_name(options[:name], TestLab::Network) do |network|
           p = TestLab::Provisioner::Route.new({}, @ui)
-          p.on_network_deprovision(network)
+          p.on_network_down(network)
           @testlab.ui.stdout.puts("Deleted routes successfully!".red.bold)
           @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
         end
