@@ -280,7 +280,7 @@ For more information see the TestLab Documentation, `testlab-repo`, command-line
 
 # EXAMPLE USE
 
-* See the `testlab-repo` - https://github.com/zpatten/testlab-repo
+* See the `testlab-repo` - https://github.com/lookout/testlab-repo
 
 # RUBIES TESTED AGAINST
 
@@ -298,15 +298,15 @@ IRC:
 
 Documentation:
 
-* http://zpatten.github.io/testlab/
+* http://lookout.github.io/testlab/
 
 Source:
 
-* https://github.com/zpatten/testlab
+* https://github.com/lookout/testlab
 
 Issues:
 
-* https://github.com/zpatten/testlab/issues
+* https://github.com/lookout/testlab/issues
 
 # LICENSE
 
