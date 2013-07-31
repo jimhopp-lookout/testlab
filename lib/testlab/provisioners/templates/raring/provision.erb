@@ -1,13 +1,13 @@
 set -x
 set -e
 
-[[ -f /.testlab-raring-provision ]] && exit 0
-
 export DEBIAN_FRONTEND="noninteractive"
 
 # Update APT and ensure our required packages are installed
 apt-get -y update
-apt-get -y install lxc bridge-utils debootstrap yum iptables iptables-persistent ntpdate ntp pbzip2
+<% %w(lxc bridge-utils debootstrap yum iptables iptables-persistent ntpdate ntp pbzip2).each do |package| -%>
+dpkg -l <%= package %> || apt-get -y install <%= package %>
+<% end -%>
 
 # Ensure the default lxc networking services are off
 service lxc-net stop || (service lxc-net start ; service lxc-net stop)
@@ -21,7 +21,8 @@ sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/' /etc/sysctl.conf
 sysctl -w net.ipv4.ip_forward=1
 
 # Install an iptable NAT rule
-iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
-iptables-save | tee /etc/iptables/rules.v4
-
-touch /.testlab-raring-provision
+iptables -t nat -v --list | grep "MASQUERADE"
+if [ $? -ne 0 ]; then
+  iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+  iptables-save | tee /etc/iptables/rules.v4
+fi
