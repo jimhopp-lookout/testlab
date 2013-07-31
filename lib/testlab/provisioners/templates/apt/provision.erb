@@ -7,18 +7,18 @@ apt-get -y update
 
 <% if !@apt[:install].nil? -%>
 <% @apt[:install].flatten.compact.each do |package| -%>
-dpkg -l <%= package %> || apt-get -y install <%= package %>
+dpkg --status <%= package %> &> /dev/null || apt-get -y install <%= package %>
 <% end -%>
 <% end -%>
 
 <% if !@apt[:remove].nil? -%>
 <% @apt[:remove].flatten.compact.each do |package| -%>
-dpkg -l <%= package %> && apt-get -y remove <%= package %>
+dpkg --status <%= package %> &> /dev/null && apt-get -y remove <%= package %>
 <% end -%>
 <% end -%>
 
 <% if !@apt[:purge].nil? -%>
 <% @apt[:purge].flatten.compact.each do |package| -%>
-dpkg -l <%= package %> && apt-get -y purge <%= package %>
+dpkg --status <%= package %> &> /dev/null && apt-get -y purge <%= package %>
 <% end -%>
 <% end -%>
