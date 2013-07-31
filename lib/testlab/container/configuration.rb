@@ -53,7 +53,7 @@ class TestLab
             'lxc.network.hwaddr' => interface.mac,
             'lxc.network.ipv4'   => "#{interface.ip}/#{interface.cidr} #{interface.netmask}"
           ]
-          if (self.container.primary_interface == self)
+          if (self.primary_interface == self)
             networks.last.merge!('lxc.network.ipv4.gateway' => :auto)
           end
         end
