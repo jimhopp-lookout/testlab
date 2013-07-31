@@ -79,6 +79,8 @@ class TestLab
 
           (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
 
+          ZTK::TCPSocketCheck.new(:ui => @ui, :host => self.primary_interface.ip, :port => 22).wait
+
           # If we are not in ephemeral mode we should attempt to provision our
           # defined users.
           if !self.lxc_clone.exists?
