@@ -18,7 +18,6 @@ class TestLab
         @config[:bind][:domain]     ||= "tld.invalid"
         @config[:bind][:forwarders] ||= %w(8.8.8.8 8.8.4.4)
 
-
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
 
@@ -30,18 +29,6 @@ class TestLab
         @ui.logger.debug { "BIND Provisioner: Node #{node.id}" }
 
         bind_provision(node)
-
-        true
-      end
-
-      # Bind: Node Deprovision
-      #
-      # @param [TestLab::Node] node The node which we want to deprovision.
-      # @return [Boolean] True if successful.
-      def on_node_deprovision(node)
-        @ui.logger.debug { "BIND Deprovisioner: Node #{node.id}" }
-
-        node.exec(%(sudo DEBIAN_FRONTEND="noninteractive" apt-get -y purge bind9))
 
         true
       end
