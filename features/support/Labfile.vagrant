@@ -57,6 +57,13 @@ node 'vagrant' do
       address     '10.128.0.254/16'
       mac         '00:00:5e:63:b5:9f'
     end
+
+    interface do
+      network_id  'labnet'
+      name        'eth0'
+      address     '10.128.0.253/16'
+      mac         '00:00:5e:63:b5:9e'
+    end
   end
 
 end
