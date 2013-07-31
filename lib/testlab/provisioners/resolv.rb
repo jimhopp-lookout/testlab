@@ -17,10 +17,10 @@ class TestLab
         @config[:resolv] ||= Hash.new
 
         @config[:resolv][:servers] ||= Array.new
-        @config[:resolv][:servers].concat([TestLab::Network.ips])
+        @config[:resolv][:servers].unshift([TestLab::Network.ips]).flatten!
 
         @config[:resolv][:search] ||= Array.new
-        @config[:resolv][:search].concat([TestLab::Container.domains])
+        @config[:resolv][:search].unshift([TestLab::Container.domains]).flatten!
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
@@ -32,9 +32,12 @@ class TestLab
       def on_node_provision(node)
         @ui.logger.debug { "RESOLV Provisioner: Node #{node.id}" }
 
-        @config[:resolv][:servers] = %w(127.0.0.1)
+        @config[:resolv].merge!(
+          :servers => %w(127.0.0.1),
+          :object => :node
+        )
 
-        render_resolv_conf(node)
+        node.bootstrap(ZTK::Template.render(provision_template, @config))
 
         true
       end
@@ -48,22 +51,19 @@ class TestLab
       def on_container_provision(container)
         @ui.logger.debug { "RESOLV Provisioner: Container #{container.id}" }
 
-        render_resolv_conf(container)
+        @config[:resolv].merge!(
+          :object => :container
+        )
+
+        container.bootstrap(ZTK::Template.render(provision_template, @config))
 
         true
       end
 
-      def render_resolv_conf(object)
-        object.file(:target => %(/etc/resolv.conf), :chown => "root:root") do |file|
-          file.puts(ZTK::Template.do_not_edit_notice(:message => "TestLab v#{TestLab::VERSION} RESOLVER Configuration"))
-          file.puts(ZTK::Template.render(resolv_conf_template, @config))
-        end
-      end
-
     private
 
-      def resolv_conf_template
-        File.join(TestLab::Provisioner.template_dir, 'resolv', 'resolv.conf.erb')
+      def provision_template
+        File.join(TestLab::Provisioner.template_dir, 'resolv', 'provision.erb')
       end
 
     end
