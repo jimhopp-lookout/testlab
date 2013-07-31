@@ -30,8 +30,8 @@ class TestLab
     def initialize(*args)
       @ui = TestLab.ui
 
+      @ui.logger.info { "Loading User '#{self.id}'" }
       super(*args)
-
       @ui.logger.info { "User '#{self.id}' Loaded" }
     end
 

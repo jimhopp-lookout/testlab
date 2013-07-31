@@ -11,6 +11,15 @@ class TestLab
 
     attribute  :testlab
     attribute  :config,  :default => Hash.new
+    attribute  :version, :default => TestLab::VERSION
+
+    def initialize(*args)
+      @ui = TestLab.ui
+
+      @ui.logger.info { "Loading Labfile '#{self.id}'" }
+      super(*args)
+      @ui.logger.info { "Labfile '#{self.id}' Loaded" }
+    end
 
     def config_dir
       self.testlab.config_dir

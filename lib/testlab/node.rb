@@ -44,7 +44,9 @@ class TestLab
 
 
     def initialize(*args)
-      @ui       = TestLab.ui
+      @ui = TestLab.ui
+
+      @ui.logger.info { "Loading Node '#{self.id}'" }
 
       super(*args)
 

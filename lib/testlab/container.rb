@@ -132,10 +132,10 @@ class TestLab
 
 
     def initialize(*args)
-      @ui          = TestLab.ui
+      @ui = TestLab.ui
 
+      @ui.logger.info { "Loading Container '#{self.id}'" }
       super(*args)
-
       @ui.logger.info { "Container '#{self.id}' Loaded" }
     end
 
