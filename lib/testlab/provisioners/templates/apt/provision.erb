@@ -1,19 +1,24 @@
 set -x
 set -e
 
-[[ -f /.testlab-apt-provision ]] && exit 0
-
 export DEBIAN_FRONTEND="noninteractive"
 
 apt-get -y update
+
 <% if !@apt[:install].nil? -%>
-apt-get -y install <%= @apt[:install].flatten.compact.join(' ') %>
+<% @apt[:install].flatten.compact.each do |package| -%>
+dpkg -l <%= package %> || apt-get -y install <%= package %>
 <% end -%>
-<% if !@apt[:remove].nil? -%>
-apt-get -y remove <%= @apt[:remove].flatten.compact.join(' ') %>
-<% end -%>
-<% if !@apt[:purge].nil? -%>
-apt-get -y purge <%= @apt[:purge].flatten.compact.join(' ') %>
 <% end -%>
 
-touch /.testlab-apt-provision
+<% if !@apt[:remove].nil? -%>
+<% @apt[:remove].flatten.compact.each do |package| -%>
+dpkg -l <%= package %> && apt-get -y remove <%= package %>
+<% end -%>
+<% end -%>
+
+<% if !@apt[:purge].nil? -%>
+<% @apt[:purge].flatten.compact.each do |package| -%>
+dpkg -l <%= package %> && apt-get -y purge <%= package %>
+<% end -%>
+<% end -%>
