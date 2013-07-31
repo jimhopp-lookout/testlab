@@ -1,5 +1,4 @@
 set -x
-set -e
 
 dpkg --status bind9 &> /dev/null || <%= (@resolv[:object] == :container).inspect %>
 
