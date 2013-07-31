@@ -43,21 +43,12 @@ class TestLab
           file.puts(ZTK::Template.render(apt_conf_d_proxy_file_template, context))
         end
 
+        node.exec(%(sudo mkdir -pv #{File.dirname(apt_cacher_ng_security_conf_file)}))
         node.file(:target => apt_cacher_ng_security_conf_file, :chown => "root:root", :chmod => "0644") do |file|
           file.puts(ZTK::Template.render(apt_cacher_ng_security_conf_template, context))
         end
 
         node.exec(%(sudo service apt-cacher-ng restart))
-
-        true
-      end
-
-      # APT-CacherNG: Node Deprovision
-      #
-      # @param [TestLab::Node] node The node which we want to deprovision.
-      # @return [Boolean] True if successful.
-      def on_node_deprovision(node)
-        node.bootstrap(ZTK::Template.render(deprovision_template, @config))
 
         true
       end
@@ -94,19 +85,15 @@ class TestLab
       end
 
       def apt_conf_d_proxy_file_template
-        File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "00proxy.erb")
+        File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', '00proxy.erb')
       end
 
       def apt_cacher_ng_security_conf_template
-        File.join(TestLab::Provisioner.template_dir, "apt_cacher_ng", "security.conf.erb")
+        File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'security.conf.erb')
       end
 
       def provision_template
         File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'provision.erb')
-      end
-
-      def deprovision_template
-        File.join(TestLab::Provisioner.template_dir, 'apt_cacher_ng', 'deprovision.erb')
       end
 
     end
