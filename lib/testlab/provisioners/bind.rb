@@ -32,30 +32,33 @@ class TestLab
 
         true
       end
+      alias :on_node_up :on_node_provision
 
-      # Bind: Container Up
+      # Bind: Container Provision
       #
       # @param [TestLab::Container] container The container which just came online.
       # @return [Boolean] True if successful.
-      def on_container_up(container)
+      def on_container_provision(container)
         @ui.logger.debug { "BIND Provisioner: Container #{container.id}" }
 
-        bind_reload(container.node)
+        bind_provision(container.node)
 
         true
       end
+      alias :on_container_up :on_container_provision
 
-      # Bind: Network Up
+      # Bind: Network Provision
       #
       # @param [TestLab::Network] network The network that is being onlined.
       # @return [Boolean] True if successful.
-      def on_network_up(network)
+      def on_network_provision(network)
         @ui.logger.debug { "BIND Provisioner: Network #{network.id}" }
 
-        bind_reload(network.node)
+        bind_provision(network.node)
 
         true
       end
+      alias :on_network_up :on_network_provision
 
       # Builds the main bind configuration sections
       def build_bind_main_partial(file)
