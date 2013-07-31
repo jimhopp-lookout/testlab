@@ -10,4 +10,6 @@ rvm:
 before_install: sudo ./spec/support/install-lxc.sh
 
 notifications:
+  email:
+    - testlab-ci@lookout.com
   irc: "irc.freenode.net#jovelabs"
