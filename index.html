@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Testlab : A toolkit for building virtual computer labs" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Testlab</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/lookout/testlab">View on GitHub</a>
+
+          <h1 id="project_title">Testlab</h1>
+          <h2 id="project_tagline">A toolkit for building virtual computer labs</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/lookout/testlab/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/lookout/testlab/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p><a href="http://badge.fury.io/rb/testlab"><img src="https://badge.fury.io/rb/testlab.png" alt="Gem Version"></a>
+<a href="https://gemnasium.com/zpatten/testlab"><img src="https://gemnasium.com/zpatten/testlab.png" alt="Dependency Status"></a>
+<a href="http://travis-ci.org/lookout/testlab"><img src="https://secure.travis-ci.org/lookout/testlab.png" alt="Build Status"></a>
+<a href="https://coveralls.io/r/zpatten/testlab"><img src="https://coveralls.io/repos/zpatten/testlab/badge.png?branch=master" alt="Coverage Status"></a>
+<a href="https://codeclimate.com/github/zpatten/testlab"><img src="https://codeclimate.com/github/zpatten/testlab.png" alt="Code Climate"></a></p>
+
+<h1>
+<a name="a-quick-note-on-versioning" class="anchor" href="#a-quick-note-on-versioning"><span class="octicon octicon-link"></span></a>A Quick Note on Versioning</h1>
+
+<p>I attempt to keep TestLab in line with Semantic Versioning when incrementing version numbers.  I am human so I may screw this up on, hopefully rare, occasion.  Semantic Versioning is delicious and everyone should be following this schema, especially when it comes to Ruby Gems which have a habit of pushing your projects into "dependency hell".</p>
+
+<ul>
+<li><a href="http://semver.org/">http://semver.org/</a></li>
+</ul><h1>
+<a name="testlab" class="anchor" href="#testlab"><span class="octicon octicon-link"></span></a>TestLab</h1>
+
+<p>A toolkit for building virtual computer labs.</p>
+
+<p>What is TestLab?  TestLab lets you iterate virtual infrastructure quickly.  Using a <code>Labfile</code> you can define how you want your virtual infrastructure laid out.  You can define multiple network segments and containers (i.e. boxen).  TestLab will then build and demolish this virtual infrastructure as you have dictated in the <code>Labfile</code>.</p>
+
+<p>TestLab can also import and export containers, making it easy to share them.  TestLab supports the latest LXC versions, allowing for ephemeral cloning operations, furthering your ability to iterate quickly.  TestLab can be used for many other applications, including infrastructure unit and integration testing, allowing for vastly more complex configurations and more effective resource sharing than traditional VM solutions.</p>
+
+<p>TestLab can be run via the command-line or can be interfaced with directly via Ruby code.</p>
+
+<h1>
+<a name="using-testlab-interactively" class="anchor" href="#using-testlab-interactively"><span class="octicon octicon-link"></span></a>Using TestLab Interactively</h1>
+
+<pre><code>$ tl
+NAME
+    tl - TestLab - A toolkit for building virtual computer labs
+
+    TestLab is based around the abstraction of three main components: nodes, networks and containers. Nodes represent a system
+    (bare-metal or virtualized) that hosts containers. Networks repesent a Linux bridge on a node. Containers simply represent a
+    Linux Container (LXC) running on its parent node which is typically connected to a network on the node.
+
+    In addition to the core component abstractions, TestLab shares a series of core tasks that are universal across all of the
+    components. These are create and destroy, up and down, provision and deprovision. Several other core tasks, such as build,
+    demolish, recycle and bounce encapsulate the previously mentioned tasks and simply act as convenience tasks.
+
+    You can execute almost all of the tasks against the entire lab, or individual lab components.
+
+    When building a lab from scratch, you will typically run 'tl build'. To breakdown your lab, destroying all the components, you
+    will typically run 'tl demolish'. If you want to re-build the lab you can run 'tl recycle' which will run the demolish task
+    followed by the build task against all the lab components. If you want to power-cycle the entire lab you can run 'tl bounce'
+    which will run the down task followed by the up task against all the lab components. Again these tasks can be run against the
+    lab as a whole or individual components.
+
+    You can view the status of the entire lab using 'tl status', or view the status of individual components using 'tl node status',
+    'tl network status' or 'tl container status'.
+
+    You can easily get help for any of the component tasks using the syntax 'tl help &lt;component&gt;'. This can be extended to the
+    following syntax 'tl help &lt;task&gt;' or 'tl help &lt;component&gt; &lt;task&gt;' for more in-depth help.
+
+SYNOPSIS
+    tl [global options] command [command options] [arguments...]
+
+VERSION
+    1.1.0
+
+GLOBAL OPTIONS
+    -l, --labfile=path/to/file     - Path to Labfile: ${REPO}/Labfile (default: none)
+    -r, --repo=path/to/directory   - Path to Repository directory: ${PWD} (default: /home/zpatten/code/chef-repo)
+    -c, --config=path/to/directory - Path to Configuration directory: ${REPO}/.testlab-$(hostname -s) (default: none)
+    --version                      - Display the program version
+    -v, --[no-]verbose             - Show verbose output
+    -q, --[no-]quiet               - Quiet mode
+    --help                         - Show this message
+
+COMMANDS
+    help        - Shows a list of commands or help for one command
+    container   - Manage lab containers
+    network     - Manage lab networks
+    node        - Manage lab nodes
+    build       - Build the lab (create-&gt;up-&gt;provision)
+    demolish    - Demolish the lab (deprovision-&gt;down-&gt;destroy)
+    bounce      - Bounce the lab (down-&gt;up)
+    recycle     - Recycle the lab (demolish-&gt;build)
+    create      - Create the lab components
+    destroy     - Destroy the lab components
+    up          - On-line the lab components
+    down        - Off-line the lab components
+    provision   - Provision the lab components
+    deprovision - De-provision the lab components
+    status      - Display the lab status
+</code></pre>
+
+<h2>
+<a name="getting-help" class="anchor" href="#getting-help"><span class="octicon octicon-link"></span></a>Getting Help</h2>
+
+<p>TestLab uses the GLI RubyGem, which gives us a command line pattern similar to that of Git.  Therefore help is easy to get:</p>
+
+<pre><code>tl help
+tl help node
+tl help container
+tl help network
+</code></pre>
+
+<h2>
+<a name="container-help" class="anchor" href="#container-help"><span class="octicon octicon-link"></span></a>Container Help</h2>
+
+<p>Here is a sample of the help output for the container tasks:</p>
+
+<pre><code>$ tl help container
+NAME
+    container - Manage lab containers
+
+SYNOPSIS
+    tl [global options] container [command options]  bounce
+    tl [global options] container [command options]  build
+    tl [global options] container [command options]  console
+    tl [global options] container [command options] [-t container|--to container] copy
+    tl [global options] container [command options]  create
+    tl [global options] container [command options]  demolish
+    tl [global options] container [command options]  deprovision
+    tl [global options] container [command options]  destroy
+    tl [global options] container [command options]  down
+    tl [global options] container [command options]  ephemeral
+    tl [global options] container [command options] [--output filename] [-c level|--compression level] export
+    tl [global options] container [command options] [--input filename] import
+    tl [global options] container [command options]  persistent
+    tl [global options] container [command options]  provision
+    tl [global options] container [command options]  recycle
+    tl [global options] container [command options] [-i filename|--identity filename] [-u username|--user username] ssh
+    tl [global options] container [command options]  ssh-config
+    tl [global options] container [command options]  status
+    tl [global options] container [command options]  up
+
+COMMAND OPTIONS
+    -n, --name=container[,container,...] - Optional container ID or comma separated list of container IDs (default: none)
+
+COMMANDS
+    build       - Build containers (create-&gt;up-&gt;provision)
+    demolish    - Demolish containers (deprovision-&gt;down-&gt;destroy)
+    recycle     - Recycle containers (demolish-&gt;build)
+    bounce      - Bounce containers (down-&gt;up)
+    create      - Initialize containers
+    destroy     - Terminate containers
+    up          - On-line containers
+    down        - Off-line containers
+    provision   - Provision containers
+    deprovision - De-provision containers
+    status      - Display containers status
+    ssh         - Container SSH console
+    ssh-config  - Container SSH configuration
+    console     - Container console
+    ephemeral   - Enable ephemeral mode for containers
+    persistent  - Enable persistent mode for containers
+    copy        - Copy containers
+    export      - Export containers
+    import      - Import containers
+</code></pre>
+
+<h2>
+<a name="interacting-with-containers" class="anchor" href="#interacting-with-containers"><span class="octicon octicon-link"></span></a>Interacting with Containers</h2>
+
+<p>Almost all commands dealing will containers will take this argument:</p>
+
+<pre><code>COMMAND OPTIONS
+    -n, --name=container[,container,...] - Optional container ID or comma separated list of container IDs (default: none)
+</code></pre>
+
+<p>You can interact with containers via SSH:</p>
+
+<pre><code>tl container ssh -n &lt;name&gt;
+</code></pre>
+
+<p>For example:</p>
+
+<pre><code>tl container ssh -n server-www-1
+</code></pre>
+
+<p>Would connect to the container defined as 'server-www-1' in our Labfile.</p>
+
+<p>You can pass an optional username and/or identity to use.  By default TestLab will attempt to SSH as the user defined in the <code>Labfile</code> for that container, otherwise the default user for the containers distro is used.</p>
+
+<pre><code>$ tl help container ssh
+NAME
+    ssh - Open an SSH console to a container
+
+SYNOPSIS
+    tl [global options] container ssh [command options]
+
+COMMAND OPTIONS
+    -u, --user=username - Specify an SSH Username to use (default: none)
+    -i, --identity=key  - Specify an SSH Identity Key to use (default: none)
+</code></pre>
+
+<p>You can individually create or destroy, online or offline and provision or deprovision containers:</p>
+
+<pre><code>tl container create -n server-www-1
+tl container destroy -n server-www-1
+
+tl container up -n server-www-1
+tl container down -n server-www-1
+
+tl container provision -n server-www-1
+tl container deprovision -n server-www-1
+</code></pre>
+
+<p>You can recycle a container, destroying then creating it again, provisioning it back to a "pristine" condition based on the <code>Labfile</code>:</p>
+
+<pre><code>tl container recycle -n server-www-1
+</code></pre>
+
+<p>You can bounce a container, offlining then onlining it again:</p>
+
+<pre><code>tl container bounce -n server-www-1
+</code></pre>
+
+<h2>
+<a name="ephemeral-container-cloning" class="anchor" href="#ephemeral-container-cloning"><span class="octicon octicon-link"></span></a>Ephemeral Container Cloning</h2>
+
+<p>As it stands attempting to iterate infrastructure with Vagrant is a slow and painful process.  Enter LXC and ephemeral cloning.  The idea here is that you have a container that is provisioned to a "pristine" state according to the <code>Labfile</code>.  You then clone this container and run actions against the container.  After running your actions against the container you want to maybe tweak your Chef cookbook, for example, and re-run it against the container.  Running an ever changing cookbook in development against the same system over and over again causes drift and problems.  With the cloning you can instantly reinstate the container as it was when you first cloned it.</p>
+
+<p>In order to use the ephemeral cloning in LXC, we first need to put our container or containers into an ephemeral mode.  This allows TestLab to do certain operations on the backend to prepare the container for ephemeral cloning.  Then when you are finished, you can easily return the container to a persistent mode.</p>
+
+<p>For example, to put the container into the ephemeral mode:</p>
+
+<pre><code>$ tl container ephemeral -n chef-client
+[TL] TestLab v1.1.0 Loaded
+[TL] container chef-client ephemeral                         # Completed in 17.3453 seconds!
+[TL] TestLab v1.1.0 Finished (17.8546 seconds)
+</code></pre>
+
+<p>Now with our container in the ephemeral mode, we can run all of the normal container tasks against it with one simple caveat.  When you offline the container and bring it back online, it will be reverted to the original state it was in before you put it into the ephemeral mode.  The short of all this is, you can do what you will to the container, but the moment you bounce it (offline then online it) it reverts.  This, as you can imagine, is extremely useful for developing applications and infrastructure as code.</p>
+
+<p>You can quickly revert that chef node back to it's previous state in the event the cookbook you are developing has wrecked the node.  For web developers, imagine having a mysql server running in an ephemeral container; you can quickly roll back all database operations just by bouncing the container.</p>
+
+<p>This is effectively transactions for infrastructure.</p>
+
+<p>To put the container back into the default, persistent mode:</p>
+
+<pre><code>$ tl container persistent -n chef-client
+[TL] TestLab v1.1.0 Loaded
+[TL] container chef-client persistent                        # Completed in 17.3692 seconds!
+[TL] TestLab v1.1.0 Finished (17.8692 seconds)
+</code></pre>
+
+<h2>
+<a name="network-routes" class="anchor" href="#network-routes"><span class="octicon octicon-link"></span></a>Network Routes</h2>
+
+<p>TestLab will add network routes for any networks defined in the <code>Labfile</code> witch have the <code>TestLab::Provisioner::Route</code> provisioner class specified for them.  This will allow you to directly interact with containers over the network.  Here is an example of the routes added with the multi-network <code>Labfile</code>.</p>
+
+<pre><code>$ tl network route show
+[TL] TestLab v1.1.0 Loaded
+TestLab routes:
+172.16.0.0      192.168.33.2    255.255.255.0   UG        0 0          0 vboxnet0
+[TL] TestLab v1.1.0 Finished (0.5063 seconds)
+</code></pre>
+
+<p>These routes can be manually manipulated as well (regardless of if you have specified the <code>TestLab::Provisioner::Route</code> provisioner class for the networks via the <code>Labfile</code>):</p>
+
+<pre><code>$ tl help network route
+NAME
+    route - Manage routes
+
+SYNOPSIS
+    tl [global options] network route  add
+    tl [global options] network route  del
+    tl [global options] network route  show
+
+COMMANDS
+    add  - Add routes to lab networks
+    del  - Delete routes to lab networks
+    show - Show routes to lab networks
+</code></pre>
+
+<h1>
+<a name="using-testlab-programmatically" class="anchor" href="#using-testlab-programmatically"><span class="octicon octicon-link"></span></a>Using TestLab Programmatically</h1>
+
+<p>Accessing TestLab via code is meant to be fairly easy and straightforward.  To get an instance of TestLab you only need about four lines of code:</p>
+
+<pre><code>log_file = File.join(Dir.pwd, "testlab.log")
+@logger = ZTK::Logger.new(log_file)
+@ui = ZTK::UI.new(:logger =&gt; @logger)
+@testlab = TestLab.new(:ui =&gt; @ui)
+</code></pre>
+
+<p>Calling <code>TestLab.new</code> without a <code>:labfile</code> option will, by default, attempt to read <code>Labfile</code> from the current directory.  This behavior can be changed by passing the <code>:labfile</code> key with a path to your desired "Labfile" as the value to your <code>TestLab.new</code>.</p>
+
+<p>There are several easy accessors available to grab the first container and execute the command <code>uptime</code> on it via and SSH connection:</p>
+
+<pre><code>container = @testlab.containers.first
+container.exec(%(uptime))
+</code></pre>
+
+<p>We can also execute this command via <code>lxc-attach</code>:</p>
+
+<pre><code>container.lxc.attach(%(-- uptime))
+</code></pre>
+
+<p>You can access all the nodes for example:</p>
+
+<pre><code>@testlab.nodes
+</code></pre>
+
+<p>For more information see the TestLab Documentation, <code>testlab-repo</code>, command-line binary and it never hurts to look at the TestLab source itself.</p>
+
+<h1>
+<a name="requirements" class="anchor" href="#requirements"><span class="octicon octicon-link"></span></a>REQUIREMENTS</h1>
+
+<ul>
+<li>Latest VirtualBox Package</li>
+<li>Latest Vagrant Package (non-gem version)</li>
+<li><p>Ubuntu 13.04 Base Box Recommended</p></li>
+<li><p>Ubuntu 13.04 Server 64-bit (Raring) Base Box - <a href="https://github.com/zpatten/raring64">https://github.com/zpatten/raring64</a></p></li>
+</ul><h1>
+<a name="example-use" class="anchor" href="#example-use"><span class="octicon octicon-link"></span></a>EXAMPLE USE</h1>
+
+<ul>
+<li>See the <code>testlab-repo</code> - <a href="https://github.com/lookout/testlab-repo">https://github.com/lookout/testlab-repo</a>
+</li>
+</ul><h1>
+<a name="rubies-tested-against" class="anchor" href="#rubies-tested-against"><span class="octicon octicon-link"></span></a>RUBIES TESTED AGAINST</h1>
+
+<ul>
+<li>Ruby 1.8.7 (REE)</li>
+<li>Ruby 1.8.7 (MBARI)</li>
+<li>Ruby 1.9.2</li>
+<li>Ruby 1.9.3</li>
+<li>Ruby 2.0.0</li>
+</ul><h1>
+<a name="resources" class="anchor" href="#resources"><span class="octicon octicon-link"></span></a>RESOURCES</h1>
+
+<p>IRC:</p>
+
+<ul>
+<li>#jovelabs on irc.freenode.net</li>
+</ul><p>Documentation:</p>
+
+<ul>
+<li><a href="http://lookout.github.io/testlab/">http://lookout.github.io/testlab/</a></li>
+</ul><p>Source:</p>
+
+<ul>
+<li><a href="https://github.com/lookout/testlab">https://github.com/lookout/testlab</a></li>
+</ul><p>Issues:</p>
+
+<ul>
+<li><a href="https://github.com/lookout/testlab/issues">https://github.com/lookout/testlab/issues</a></li>
+</ul><h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>LICENSE</h1>
+
+<p>TestLab - A framework for building lightweight virtual laboratories using LXC</p>
+
+<ul>
+<li>Author: Zachary Patten <a href="http://coderwall.com/zpatten"><img src="http://api.coderwall.com/zpatten/endorsecount.png" alt="endorse"></a>
+</li>
+<li>Copyright: Copyright (c) Zachary Patten</li>
+<li>License: Apache License, Version 2.0</li>
+</ul><p>Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at</p>
+
+<pre><code>http://www.apache.org/licenses/LICENSE-2.0
+</code></pre>
+
+<p>Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Testlab maintained by <a href="https://github.com/lookout">lookout</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
