@@ -112,6 +112,8 @@ describe TestLab::Network do
         subject.node.stub(:state) { :running }
         subject.stub(:state) { :not_created }
         subject.node.ssh.stub(:bootstrap) { true }
+        subject.stub(:provisioners) { Array.new }
+
         subject.create
       end
     end
@@ -121,6 +123,8 @@ describe TestLab::Network do
         subject.node.stub(:state) { :running }
         subject.stub(:state) { :stopped }
         subject.node.ssh.stub(:bootstrap) { true }
+        subject.stub(:provisioners) { Array.new }
+
         subject.destroy
       end
     end
@@ -130,6 +134,8 @@ describe TestLab::Network do
         subject.node.stub(:state) { :running }
         subject.stub(:state) { :stopped }
         subject.node.ssh.stub(:bootstrap) { true }
+        subject.stub(:provisioners) { Array.new }
+
         subject.up
       end
     end
@@ -139,6 +145,8 @@ describe TestLab::Network do
         subject.node.stub(:state) { :running }
         subject.stub(:state) { :running }
         subject.node.ssh.stub(:bootstrap) { true }
+        subject.stub(:provisioners) { Array.new }
+
         subject.down
       end
     end

@@ -71,6 +71,8 @@ describe TestLab::Node do
       it "should create the node" do
         subject.instance_variable_get(:@provider).stub(:create) { true }
         subject.stub(:state) { :not_created }
+        subject.stub(:provisioners) { Array.new }
+
         subject.create
       end
     end
@@ -79,6 +81,8 @@ describe TestLab::Node do
       it "should destroy the node" do
         subject.instance_variable_get(:@provider).stub(:destroy) { true }
         subject.stub(:state) { :stopped }
+        subject.stub(:provisioners) { Array.new }
+
         subject.destroy
       end
     end
@@ -87,6 +91,8 @@ describe TestLab::Node do
       it "should online the node" do
         subject.instance_variable_get(:@provider).stub(:up) { true }
         subject.stub(:state) { :stopped }
+        subject.stub(:provisioners) { Array.new }
+
         subject.up
       end
     end
@@ -95,6 +101,8 @@ describe TestLab::Node do
       it "should offline the node" do
         subject.instance_variable_get(:@provider).stub(:down) { true }
         subject.stub(:state) { :running }
+        subject.stub(:provisioners) { Array.new }
+
         subject.down
       end
     end

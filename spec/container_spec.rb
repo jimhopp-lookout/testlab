@@ -153,6 +153,7 @@ describe TestLab::Container do
         subject.lxc.stub(:state) { :not_created }
         subject.lxc_clone.stub(:exists?) { false }
         subject.node.ssh.stub(:exec)
+        subject.stub(:provisioners) { Array.new }
 
         subject.create
       end
@@ -165,6 +166,7 @@ describe TestLab::Container do
         subject.lxc.stub(:state) { :stopped }
         subject.lxc.stub(:destroy) { true }
         subject.lxc_clone.stub(:exists?) { false }
+        subject.stub(:provisioners) { Array.new }
 
         subject.destroy
       end
@@ -178,8 +180,11 @@ describe TestLab::Container do
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :running }
         subject.lxc.stub(:attach)
+        subject.stub(:provisioners) { Array.new }
 
         subject.lxc_clone.stub(:exists?) { false }
+
+        ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
 
         subject.up
       end
@@ -192,6 +197,8 @@ describe TestLab::Container do
         subject.lxc.stub(:stop) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :stopped }
+        subject.stub(:provisioners) { Array.new }
+
         subject.down
       end
     end
