@@ -1,0 +1,61 @@
+#!/usr/bin/env ruby
+################################################################################
+#
+#      Author: Zachary Patten <zachary AT jovelabs DOT com>
+#   Copyright: Copyright (c) Zachary Patten
+#     License: Apache License, Version 2.0
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#       http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+#
+################################################################################
+require 'rubygems'
+require 'bundler/setup'
+require 'testlab'
+require 'ztk'
+
+REGEX_ESCAPES = /([\[\]])/
+REGEX_ESCAPES_PREFIX = %(\\)
+
+current_dir = File.dirname(__FILE__)
+logger = ZTK::Logger.new(%(/tmp/tl-knife.log))
+
+ui = ZTK::UI.new(:logger => logger) # ui interface class
+l = TestLab.new(:ui => ui)          # lab
+l.boot                              # boot lab
+chef_server   = l.containers.find('chef-server').first
+
+verbose_flags = %w(-V --verbose)
+verbose       = ARGV.any?{ |arg| verbose_flags.include?(arg) }
+user          = ENV['USER']
+key           = File.join(l.config_dir, "#{chef_server.primary_user.username}.pem")
+knife_rb      = File.join(l.config_dir, "knife.rb")
+
+argv = ARGV.collect{ |arg| arg.gsub(REGEX_ESCAPES) { |match| "#{REGEX_ESCAPES_PREFIX}#{match}"} }
+
+arguments = Array.new
+arguments << %(/usr/bin/env knife)
+arguments << [argv]
+arguments << %(--user #{chef_server.primary_user.username})
+arguments << %(--key #{key})
+arguments << %(--server-url http://#{chef_server.ip}:4000)
+arguments << %(--config #{knife_rb})
+arguments = arguments.flatten.compact.join(' ')
+
+if verbose
+  puts("-" * 80)
+  puts(arguments)
+  puts("-" * 80)
+end
+
+command = ZTK::Command.new(:ui => ui, :replace_current_process => true)
+command.exec(arguments)
