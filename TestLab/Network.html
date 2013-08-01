@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: TestLab::Network
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (N)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../TestLab.html" title="TestLab (class)">TestLab</a></span></span>
+     &raquo; 
+    <span class="title">Network</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: TestLab::Network
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">ZTK::DSL::Base</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ZTK::DSL::Base</li>
+          
+            <li class="next">TestLab::Network</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="Network/ClassMethods.html" title="TestLab::Network::ClassMethods (module)">ClassMethods</a></span></dd>
+      
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="Network/Actions.html" title="TestLab::Network::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Network/Bind.html" title="TestLab::Network::Bind (module)">Bind</a></span>, <span class='object_link'><a href="Network/Provision.html" title="TestLab::Network::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Network/Status.html" title="TestLab::Network::Status (module)">Status</a></span>, <span class='object_link'><a href="Support/Lifecycle.html" title="TestLab::Support::Lifecycle (module)">Support::Lifecycle</a></span>, <span class='object_link'><a href="Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/testlab/network.rb<span class="defines">,<br />
+  lib/testlab/network/bind.rb,<br /> lib/testlab/network/status.rb,<br /> lib/testlab/network/actions.rb,<br /> lib/testlab/network/provision.rb,<br /> lib/testlab/network/class_methods.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Network Class</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Zachary Patten &lt;zachary AT jovelabs DOT com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Network/Actions.html" title="TestLab::Network::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Network/Bind.html" title="TestLab::Network::Bind (module)">Bind</a></span>, <span class='object_link'><a href="Network/ClassMethods.html" title="TestLab::Network::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Network/Provision.html" title="TestLab::Network::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Network/Status.html" title="TestLab::Network::Status (module)">Status</a></span>
+    
+  
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="STATUS_KEYS-constant" class="">STATUS_KEYS =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>node_id</span><span class='words_sep'> </span><span class='tstring_content'>state</span><span class='words_sep'> </span><span class='tstring_content'>interface</span><span class='words_sep'> </span><span class='tstring_content'>network</span><span class='words_sep'> </span><span class='tstring_content'>netmask</span><span class='words_sep'> </span><span class='tstring_content'>broadcast</span><span class='words_sep'> </span><span class='tstring_content'>provisioners</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Network) <strong>initialize</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Network.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Network/ClassMethods.html" title="TestLab::Network::ClassMethods (module)">ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Network/ClassMethods.html#ips-instance_method" title="TestLab::Network::ClassMethods#ips (method)">ips</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Utility/Misc.html#do_provisioner_callbacks-instance_method" title="TestLab::Utility::Misc#do_provisioner_callbacks (method)">#do_provisioner_callbacks</a></span>, <span class='object_link'><a href="Utility/Misc.html#format_message-instance_method" title="TestLab::Utility::Misc#format_message (method)">#format_message</a></span>, <span class='object_link'><a href="Utility/Misc.html#format_object-instance_method" title="TestLab::Utility::Misc#format_object (method)">#format_object</a></span>, <span class='object_link'><a href="Utility/Misc.html#format_object_action-instance_method" title="TestLab::Utility::Misc#format_object_action (method)">#format_object_action</a></span>, <span class='object_link'><a href="Utility/Misc.html#please_wait-instance_method" title="TestLab::Utility::Misc#please_wait (method)">#please_wait</a></span>, <span class='object_link'><a href="Utility/Misc.html#sudo-instance_method" title="TestLab::Utility::Misc#sudo (method)">#sudo</a></span>, <span class='object_link'><a href="Utility/Misc.html#sudo_prompt-instance_method" title="TestLab::Utility::Misc#sudo_prompt (method)">#sudo_prompt</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Support/Lifecycle.html" title="TestLab::Support::Lifecycle (module)">Support::Lifecycle</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Support/Lifecycle.html#bounce-instance_method" title="TestLab::Support::Lifecycle#bounce (method)">#bounce</a></span>, <span class='object_link'><a href="Support/Lifecycle.html#build-instance_method" title="TestLab::Support::Lifecycle#build (method)">#build</a></span>, <span class='object_link'><a href="Support/Lifecycle.html#demolish-instance_method" title="TestLab::Support::Lifecycle#demolish (method)">#demolish</a></span>, <span class='object_link'><a href="Support/Lifecycle.html#recycle-instance_method" title="TestLab::Support::Lifecycle#recycle (method)">#recycle</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Network/Status.html" title="TestLab::Network::Status (module)">Status</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Network/Status.html#broadcast-instance_method" title="TestLab::Network::Status#broadcast (method)">#broadcast</a></span>, <span class='object_link'><a href="Network/Status.html#cidr-instance_method" title="TestLab::Network::Status#cidr (method)">#cidr</a></span>, <span class='object_link'><a href="Network/Status.html#def_tag-instance_method" title="TestLab::Network::Status#def_tag (method)">#def_tag</a></span>, <span class='object_link'><a href="Network/Status.html#end_tag-instance_method" title="TestLab::Network::Status#end_tag (method)">#end_tag</a></span>, <span class='object_link'><a href="Network/Status.html#ip-instance_method" title="TestLab::Network::Status#ip (method)">#ip</a></span>, <span class='object_link'><a href="Network/Status.html#netmask-instance_method" title="TestLab::Network::Status#netmask (method)">#netmask</a></span>, <span class='object_link'><a href="Network/Status.html#network-instance_method" title="TestLab::Network::Status#network (method)">#network</a></span>, <span class='object_link'><a href="Network/Status.html#state-instance_method" title="TestLab::Network::Status#state (method)">#state</a></span>, <span class='object_link'><a href="Network/Status.html#status-instance_method" title="TestLab::Network::Status#status (method)">#status</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Network/Provision.html" title="TestLab::Network::Provision (module)">Provision</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Network/Provision.html#deprovision-instance_method" title="TestLab::Network::Provision#deprovision (method)">#deprovision</a></span>, <span class='object_link'><a href="Network/Provision.html#provision-instance_method" title="TestLab::Network::Provision#provision (method)">#provision</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Network/Bind.html" title="TestLab::Network::Bind (module)">Bind</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Network/Bind.html#arpa-instance_method" title="TestLab::Network::Bind#arpa (method)">#arpa</a></span>, <span class='object_link'><a href="Network/Bind.html#ptr-instance_method" title="TestLab::Network::Bind#ptr (method)">#ptr</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Network/Actions.html" title="TestLab::Network::Actions (module)">Actions</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Network/Actions.html#create-instance_method" title="TestLab::Network::Actions#create (method)">#create</a></span>, <span class='object_link'><a href="Network/Actions.html#destroy-instance_method" title="TestLab::Network::Actions#destroy (method)">#destroy</a></span>, <span class='object_link'><a href="Network/Actions.html#down-instance_method" title="TestLab::Network::Actions#down (method)">#down</a></span>, <span class='object_link'><a href="Network/Actions.html#up-instance_method" title="TestLab::Network::Actions#up (method)">#up</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="TestLab::Network (class)">Network</a></span></tt>) <strong>initialize</strong>(*args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Network</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/network.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
+
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Loading Network '</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Network '</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>' Loaded</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 31 18:32:10 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

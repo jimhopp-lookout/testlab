@@ -1,0 +1,1167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: TestLab::Provisioner::Bind
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../TestLab.html" title="TestLab (class)">TestLab</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Provisioner.html" title="TestLab::Provisioner (class)">Provisioner</a></span></span>
+     &raquo; 
+    <span class="title">Bind</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: TestLab::Provisioner::Bind
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">TestLab::Provisioner::Bind</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/testlab/provisioners/bind.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Bind Provisioner Class</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Zachary Patten &lt;zachary AT jovelabs DOT com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bind_install-instance_method" title="#bind_install (instance method)">- (Object) <strong>bind_install</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bind_provision-instance_method" title="#bind_provision (instance method)">- (Object) <strong>bind_provision</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bind_reload-instance_method" title="#bind_reload (instance method)">- (Object) <strong>bind_reload</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_bind_conf-instance_method" title="#build_bind_conf (instance method)">- (Object) <strong>build_bind_conf</strong>(node) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Builds the BIND configuration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_bind_db-instance_method" title="#build_bind_db (instance method)">- (Object) <strong>build_bind_db</strong>(node, zone, records) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_bind_main_partial-instance_method" title="#build_bind_main_partial (instance method)">- (Object) <strong>build_bind_main_partial</strong>(file) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Builds the main bind configuration sections.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_bind_records-instance_method" title="#build_bind_records (instance method)">- (Object) <strong>build_bind_records</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build_bind_zone_partial-instance_method" title="#build_bind_zone_partial (instance method)">- (Object) <strong>build_bind_zone_partial</strong>(node, file) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Builds the bind configuration sections for our zones.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Bind) <strong>initialize</strong>(config = {}, ui = nil) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Bind.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_container_provision-instance_method" title="#on_container_provision (instance method)">- (Boolean) <strong>on_container_provision</strong>(container) </a>
+    
+
+    
+      (also: #on_container_up)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Bind: Container Provision.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_network_provision-instance_method" title="#on_network_provision (instance method)">- (Boolean) <strong>on_network_provision</strong>(network) </a>
+    
+
+    
+      (also: #on_network_up)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Bind: Network Provision.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_node_provision-instance_method" title="#on_node_provision (instance method)">- (Boolean) <strong>on_node_provision</strong>(node) </a>
+    
+
+    
+      (also: #on_node_up)
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Bind: Node Provision.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="TestLab::Provisioner::Bind (class)">Bind</a></span></tt>) <strong>initialize</strong>(config = {}, ui = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Bind</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_ui'>ui</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@config</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span> <span class='op'>||</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span>     <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_ui'>ui</span>     <span class='op'>||</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:bind</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:bind</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:domain</span><span class='rbracket'>]</span>     <span class='op'>||=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tld.invalid</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:bind</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:forwarders</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='qwords_beg'>%w(</span><span class='tstring_content'>8.8.8.8</span><span class='words_sep'> </span><span class='tstring_content'>8.8.4.4</span><span class='words_sep'>)</span>
+
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>config(</span><span class='embexpr_beg'>#{</span><span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="bind_install-instance_method">
+  
+    - (<tt>Object</tt>) <strong>bind_install</strong>(node) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140
+141</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bind_install'>bind_install</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo DEBIAN_FRONTEND=&quot;noninteractive&quot; apt-get -y install bind9</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo rm -fv /etc/bind/{*.arpa,*.zone,*.conf*}</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bind_provision-instance_method">
+  
+    - (<tt>Object</tt>) <strong>bind_provision</strong>(node) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+148
+149
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 148</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bind_provision'>bind_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bind_install'>bind_install</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_build_bind_conf'>build_bind_conf</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bind_reload'>bind_reload</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bind_reload-instance_method">
+  
+    - (<tt>Object</tt>) <strong>bind_reload</strong>(node) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+143
+144
+145
+146</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 143</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bind_reload'>bind_reload</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo chown -Rv bind:bind /etc/bind</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo rndc reload</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_bind_conf-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_bind_conf</strong>(node) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Builds the BIND configuration</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 131</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_bind_conf'>build_bind_conf</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_file'>file</span><span class='lparen'>(</span><span class='symbol'>:target</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>/etc/bind/named.conf</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='symbol'>:chown</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind:bind</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_build_bind_main_partial'>build_bind_main_partial</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_build_bind_zone_partial'>build_bind_zone_partial</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_bind_db-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_bind_db</strong>(node, zone, records) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+121
+122
+123
+124
+125
+126
+127
+128</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 121</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_bind_db'>build_bind_db</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_zone'>zone</span><span class='comma'>,</span> <span class='id identifier rubyid_records'>records</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bind_db_template'>bind_db_template</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='period'>.</span><span class='id identifier rubyid_template_dir'>template_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>bind-db.erb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_file'>file</span><span class='lparen'>(</span><span class='symbol'>:target</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>/etc/bind/db.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_zone'>zone</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='symbol'>:chown</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind:bind</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_do_not_edit_notice'>do_not_edit_notice</span><span class='lparen'>(</span><span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TestLab v</span><span class='embexpr_beg'>#{</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>VERSION</span><span class='rbrace'>}</span><span class='tstring_content'> BIND DB: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_zone'>zone</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:char</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>;</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_bind_db_template'>bind_db_template</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='symbol'>:zone</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_zone'>zone</span><span class='comma'>,</span> <span class='symbol'>:records</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_records'>records</span> <span class='rbrace'>}</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_bind_main_partial-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_bind_main_partial</strong>(file) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Builds the main bind configuration sections</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+64
+65
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 64</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_bind_main_partial'>build_bind_main_partial</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bind_conf_template'>bind_conf_template</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='period'>.</span><span class='id identifier rubyid_template_dir'>template_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind.erb</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_do_not_edit_notice'>do_not_edit_notice</span><span class='lparen'>(</span><span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TestLab v</span><span class='embexpr_beg'>#{</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>VERSION</span><span class='rbrace'>}</span><span class='tstring_content'> BIND Configuration</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:char</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>//</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_bind_conf_template'>bind_conf_template</span><span class='comma'>,</span> <span class='ivar'>@config</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_bind_records-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_bind_records</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 71</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_bind_records'>build_bind_records</span>
+  <span class='id identifier rubyid_forward_records'>forward_records</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_reverse_records'>reverse_records</span> <span class='op'>=</span> <span class='const'>Hash</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+
+  <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_container'>container</span><span class='op'>|</span>
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_domain'>domain</span> <span class='op'>||=</span> <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:bind</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:domain</span><span class='rbracket'>]</span>
+
+    <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_interfaces'>interfaces</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_interface'>interface</span><span class='op'>|</span>
+      <span class='id identifier rubyid_forward_records'>forward_records</span><span class='lbracket'>[</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_domain'>domain</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+      <span class='id identifier rubyid_forward_records'>forward_records</span><span class='lbracket'>[</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_domain'>domain</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> IN A </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_interface'>interface</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span>
+
+      <span class='id identifier rubyid_reverse_records'>reverse_records</span><span class='lbracket'>[</span><span class='id identifier rubyid_interface'>interface</span><span class='period'>.</span><span class='id identifier rubyid_network_id'>network_id</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+      <span class='id identifier rubyid_reverse_records'>reverse_records</span><span class='lbracket'>[</span><span class='id identifier rubyid_interface'>interface</span><span class='period'>.</span><span class='id identifier rubyid_network_id'>network_id</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_interface'>interface</span><span class='period'>.</span><span class='id identifier rubyid_ptr'>ptr</span><span class='rbrace'>}</span><span class='tstring_content'> IN PTR </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_fqdn'>fqdn</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>)</span></span>
+    <span class='kw'>end</span>
+
+  <span class='kw'>end</span>
+  <span class='lbrace'>{</span> <span class='symbol'>:forward</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_forward_records'>forward_records</span><span class='comma'>,</span> <span class='symbol'>:reverse</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_reverse_records'>reverse_records</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build_bind_zone_partial-instance_method">
+  
+    - (<tt>Object</tt>) <strong>build_bind_zone_partial</strong>(node, file) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Builds the bind configuration sections for our zones</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 91</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build_bind_zone_partial'>build_bind_zone_partial</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_bind_zone_template'>bind_zone_template</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='period'>.</span><span class='id identifier rubyid_template_dir'>template_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bind</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>bind-zone.erb</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_bind_records'>bind_records</span> <span class='op'>=</span> <span class='id identifier rubyid_build_bind_records'>build_bind_records</span>
+  <span class='id identifier rubyid_forward_records'>forward_records</span> <span class='op'>=</span> <span class='id identifier rubyid_bind_records'>bind_records</span><span class='lbracket'>[</span><span class='symbol'>:forward</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_reverse_records'>reverse_records</span> <span class='op'>=</span> <span class='id identifier rubyid_bind_records'>bind_records</span><span class='lbracket'>[</span><span class='symbol'>:reverse</span><span class='rbracket'>]</span>
+
+  <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_network'>network</span><span class='op'>|</span>
+    <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='symbol'>:zone</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_arpa'>arpa</span>
+    <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_bind_zone_template'>bind_zone_template</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_build_bind_db'>build_bind_db</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_arpa'>arpa</span><span class='comma'>,</span> <span class='id identifier rubyid_reverse_records'>reverse_records</span><span class='lbracket'>[</span><span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_domains'>domains</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_domain'>domain</span><span class='op'>|</span>
+    <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+      <span class='symbol'>:zone</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_domain'>domain</span>
+    <span class='rbrace'>}</span>
+
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+    <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Template</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_bind_zone_template'>bind_zone_template</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='rparen'>)</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_build_bind_db'>build_bind_db</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='comma'>,</span> <span class='id identifier rubyid_domain'>domain</span><span class='comma'>,</span> <span class='id identifier rubyid_forward_records'>forward_records</span><span class='lbracket'>[</span><span class='id identifier rubyid_domain'>domain</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_container_provision-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>on_container_provision</strong>(container) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='on_container_up-instance_method'>on_container_up</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Bind: Container Provision</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>container</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Container.html" title="TestLab::Container (class)">TestLab::Container</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The container which just came online.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_container_provision'>on_container_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BIND Provisioner: Container </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_bind_provision'>bind_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_network_provision-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>on_network_provision</strong>(network) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='on_network_up-instance_method'>on_network_up</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Bind: Network Provision</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>network</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Network.html" title="TestLab::Network (class)">TestLab::Network</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The network that is being onlined.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+54
+55
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 54</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_network_provision'>on_network_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_network'>network</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BIND Provisioner: Network </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_bind_provision'>bind_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_node_provision-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>on_node_provision</strong>(node) 
+  
+
+  
+    <span class="aliases">Also known as:
+    <span class="names"><span id='on_node_up-instance_method'>on_node_up</span></span>
+    </span>
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Bind: Node Provision</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>node</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Node.html" title="TestLab::Node (class)">TestLab::Node</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The node that is being provisioned.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32
+33
+34</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provisioners/bind.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_node_provision'>on_node_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>BIND Provisioner: Node </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='id identifier rubyid_bind_provision'>bind_provision</span><span class='lparen'>(</span><span class='id identifier rubyid_node'>node</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 31 18:32:11 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

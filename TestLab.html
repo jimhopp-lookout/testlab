@@ -1,0 +1,2646 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: TestLab
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (T)</a> &raquo;
+    
+    
+    <span class="title">TestLab</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: TestLab
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">TestLab</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="TestLab/DualMethods.html" title="TestLab::DualMethods (module)">DualMethods</a></span></dd>
+      
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="TestLab/DualMethods.html" title="TestLab::DualMethods (module)">DualMethods</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/testlab.rb<span class="defines">,<br />
+  lib/testlab/user.rb,<br /> lib/testlab/node.rb,<br /> lib/testlab/version.rb,<br /> lib/testlab/labfile.rb,<br /> lib/testlab/support.rb,<br /> lib/testlab/utility.rb,<br /> lib/testlab/network.rb,<br /> lib/testlab/node/ssh.rb,<br /> lib/testlab/node/lxc.rb,<br /> lib/testlab/provider.rb,<br /> lib/testlab/interface.rb,<br /> lib/testlab/container.rb,<br /> lib/testlab/node/status.rb,<br /> lib/testlab/provisioner.rb,<br /> lib/testlab/utility/gli.rb,<br /> lib/testlab/container/io.rb,<br /> lib/testlab/utility/misc.rb,<br /> lib/testlab/node/actions.rb,<br /> lib/testlab/utility/cidr.rb,<br /> lib/testlab/network/bind.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/providers/aws.rb,<br /> lib/testlab/user/lifecycle.rb,<br /> lib/testlab/network/status.rb,<br /> lib/testlab/utility/logger.rb,<br /> lib/testlab/node/provision.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/providers/local.rb,<br /> lib/testlab/network/actions.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/provisioners/apt.rb,<br /> lib/testlab/network/provision.rb,<br /> lib/testlab/provisioners/bind.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/support/execution.rb,<br /> lib/testlab/provisioners/chef.rb,<br /> lib/testlab/support/lifecycle.rb,<br /> lib/testlab/providers/vagrant.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/provisioners/shell.rb,<br /> lib/testlab/provisioners/route.rb,<br /> lib/testlab/node/class_methods.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/provisioners/raring.rb,<br /> lib/testlab/node/method_missing.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/provisioners/resolv.rb,<br /> lib/testlab/container/generators.rb,<br /> lib/testlab/network/class_methods.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/method_missing.rb,<br /> lib/testlab/provisioners/apt_cacher_ng.rb,<br /> lib/testlab/provisioners/chef/omni_bus.rb,<br /> lib/testlab/provisioners/chef/omni_truck.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_client.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_server.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>TestLab - A framework for building lightweight virtual infrastructure using
+LXC</p>
+
+<p>The core concept with the TestLab is the <b>Labfile</b>.  This file
+dictates the topology of your virtual infrastructure.  With simple commands
+you can build and demolish this infrastructure on the fly for all sorts of
+purposes from automating infrastructure testing to testing new software to
+experimenting in general where you want to spin up alot of servers but do
+not want the overhead of virtualization.  At it's core TestLab uses Linux
+Containers (LXC) to accomplish this.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Sample Labfile:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_node'>node</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>vagrant</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
+
+  <span class='id identifier rubyid_provider'>provider</span>      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provider</span><span class='op'>::</span><span class='const'>Vagrant</span>
+  <span class='id identifier rubyid_provisioners'>provisioners</span>  <span class='lbracket'>[</span>
+    <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Raring</span><span class='comma'>,</span>
+    <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Bind</span>
+  <span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_config'>config</span>      <span class='lparen'>(</span><span class='lbrace'>{</span>
+    <span class='symbol'>:vagrant</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+      <span class='symbol'>:id</span>       <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>chef-rubygem-</span><span class='embexpr_beg'>#{</span><span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_hostname'>hostname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='comma'>,</span>
+      <span class='symbol'>:cpus</span>     <span class='op'>=&gt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Parallel</span><span class='op'>::</span><span class='const'>MAX_FORKS</span><span class='period'>.</span><span class='id identifier rubyid_div'>div</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='comma'>,</span>                    <span class='comment'># use half of the available processors
+</span>      <span class='symbol'>:memory</span>   <span class='op'>=&gt;</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Parallel</span><span class='op'>::</span><span class='const'>MAX_MEMORY</span><span class='period'>.</span><span class='id identifier rubyid_div'>div</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_div'>div</span><span class='lparen'>(</span><span class='int'>1024</span> <span class='op'>*</span> <span class='int'>1024</span><span class='rparen'>)</span><span class='comma'>,</span>  <span class='comment'># use a third of available RAM
+</span>      <span class='symbol'>:box</span>      <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>raring64</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+      <span class='symbol'>:box_url</span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>https://dl.dropboxusercontent.com/u/22904185/boxes/raring64.box</span><span class='tstring_end'>'</span></span><span class='comma'>,</span>
+      <span class='symbol'>:file</span>     <span class='op'>=&gt;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span><span class='lparen'>(</span><span class='kw'>__FILE__</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='symbol'>:bind</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+      <span class='symbol'>:domain</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>default.zone</span><span class='tstring_end'>&quot;</span></span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_network'>network</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>labnet</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_provisioners'>provisioners</span>  <span class='lbracket'>[</span><span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Route</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_address'>address</span>       <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>10.10.0.1/16</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_bridge'>bridge</span>        <span class='symbol'>:br0</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_container'>container</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>chef-server</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_distro'>distro</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_release'>release</span>       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_provisioners'>provisioners</span>   <span class='lbracket'>[</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Resolv</span><span class='comma'>,</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>AptCacherNG</span><span class='comma'>,</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Apt</span><span class='comma'>,</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Chef</span><span class='op'>::</span><span class='const'>RubyGemServer</span>
+    <span class='rbracket'>]</span>
+
+    <span class='id identifier rubyid_user'>user</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>deployer</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_password'>password</span>         <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>deployer</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_identity'>identity</span>         <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_public_identity'>public_identity</span>  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa.pub</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_uid'>uid</span>              <span class='int'>2600</span>
+      <span class='id identifier rubyid_gid'>gid</span>              <span class='int'>2600</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_network_id'>network_id</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>labnet</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_name'>name</span>        <span class='symbol'>:eth0</span>
+      <span class='id identifier rubyid_address'>address</span>     <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>10.10.0.254/16</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_mac'>mac</span>         <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>00:00:5e:63:b5:9f</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_container'>container</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>chef-client</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_distro'>distro</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_release'>release</span>       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+
+    <span class='id identifier rubyid_provisioners'>provisioners</span>  <span class='lbracket'>[</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Resolv</span><span class='comma'>,</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>AptCacherNG</span><span class='comma'>,</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Apt</span><span class='comma'>,</span>
+      <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provisioner</span><span class='op'>::</span><span class='const'>Chef</span><span class='op'>::</span><span class='const'>RubyGemClient</span>
+    <span class='rbracket'>]</span>
+
+    <span class='id identifier rubyid_user'>user</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>deployer</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_password'>password</span>         <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>deployer</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_identity'>identity</span>         <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_public_identity'>public_identity</span>  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>HOME</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>.ssh</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>id_rsa.pub</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_uid'>uid</span>              <span class='int'>2600</span>
+      <span class='id identifier rubyid_gid'>gid</span>              <span class='int'>2600</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_network_id'>network_id</span>  <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>labnet</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_name'>name</span>        <span class='symbol'>:eth0</span>
+      <span class='id identifier rubyid_address'>address</span>     <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>10.10.0.20/16</span><span class='tstring_end'>'</span></span>
+      <span class='id identifier rubyid_mac'>mac</span>         <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>00:00:5e:b7:e5:15</span><span class='tstring_end'>'</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>TestLab can be instantiated easily:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_log_file'>log_file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testlab.log</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_log_file'>log_file</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_ui'>ui</span> <span class='op'>=</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:logger</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_logger'>logger</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_testlab'>testlab</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ui'>ui</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>We can control things via code easily as well:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_testlab'>testlab</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span>   <span class='comment'># creates the lab
+</span><span class='id identifier rubyid_testlab'>testlab</span><span class='period'>.</span><span class='id identifier rubyid_up'>up</span>       <span class='comment'># ensures the lab is up and running
+</span><span class='id identifier rubyid_testlab'>testlab</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>    <span class='comment'># build the lab, creating all networks and containers
+</span><span class='id identifier rubyid_testlab'>testlab</span><span class='period'>.</span><span class='id identifier rubyid_demolish'>demolish</span> <span class='comment'># demolish the lab, destroy all networks and containers</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Zachary Patten &lt;zachary AT jovelabs DOT com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="TestLab/DualMethods.html" title="TestLab::DualMethods (module)">DualMethods</a></span>, <span class='object_link'><a href="TestLab/Support.html" title="TestLab::Support (module)">Support</a></span>, <span class='object_link'><a href="TestLab/Utility.html" title="TestLab::Utility (module)">Utility</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="TestLab/Container.html" title="TestLab::Container (class)">Container</a></span>, <span class='object_link'><a href="TestLab/ContainerError.html" title="TestLab::ContainerError (class)">ContainerError</a></span>, <span class='object_link'><a href="TestLab/Interface.html" title="TestLab::Interface (class)">Interface</a></span>, <span class='object_link'><a href="TestLab/InterfaceError.html" title="TestLab::InterfaceError (class)">InterfaceError</a></span>, <span class='object_link'><a href="TestLab/Labfile.html" title="TestLab::Labfile (class)">Labfile</a></span>, <span class='object_link'><a href="TestLab/LabfileError.html" title="TestLab::LabfileError (class)">LabfileError</a></span>, <span class='object_link'><a href="TestLab/Network.html" title="TestLab::Network (class)">Network</a></span>, <span class='object_link'><a href="TestLab/NetworkError.html" title="TestLab::NetworkError (class)">NetworkError</a></span>, <span class='object_link'><a href="TestLab/Node.html" title="TestLab::Node (class)">Node</a></span>, <span class='object_link'><a href="TestLab/NodeError.html" title="TestLab::NodeError (class)">NodeError</a></span>, <span class='object_link'><a href="TestLab/Provider.html" title="TestLab::Provider (class)">Provider</a></span>, <span class='object_link'><a href="TestLab/ProviderError.html" title="TestLab::ProviderError (class)">ProviderError</a></span>, <span class='object_link'><a href="TestLab/Provisioner.html" title="TestLab::Provisioner (class)">Provisioner</a></span>, <span class='object_link'><a href="TestLab/ProvisionerError.html" title="TestLab::ProvisionerError (class)">ProvisionerError</a></span>, <span class='object_link'><a href="TestLab/SupportError.html" title="TestLab::SupportError (class)">SupportError</a></span>, <span class='object_link'><a href="TestLab/TestLabError.html" title="TestLab::TestLabError (class)">TestLabError</a></span>, <span class='object_link'><a href="TestLab/User.html" title="TestLab::User (class)">User</a></span>, <span class='object_link'><a href="TestLab/UserError.html" title="TestLab::UserError (class)">UserError</a></span>, <span class='object_link'><a href="TestLab/UtilityError.html" title="TestLab::UtilityError (class)">UtilityError</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TestLab Gem Version</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.4.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_dir-instance_method" title="#config_dir (instance method)">- (Object) <strong>config_dir</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute config_dir.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#labfile_path-instance_method" title="#labfile_path (instance method)">- (Object) <strong>labfile_path</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute labfile_path.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#repo_dir-instance_method" title="#repo_dir (instance method)">- (Object) <strong>repo_dir</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute repo_dir.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#alive%3F-instance_method" title="#alive? (instance method)">- (Boolean) <strong>alive?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Alive?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#boot-instance_method" title="#boot (instance method)">- (Boolean) <strong>boot</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Boot TestLab.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#bounce-instance_method" title="#bounce (instance method)">- (Boolean) <strong>bounce</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Bounce.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#build-instance_method" title="#build (instance method)">- (Boolean) <strong>build</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Build.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config-instance_method" title="#config (instance method)">- (Hash) <strong>config</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Configuration.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#containers-instance_method" title="#containers (instance method)">- (Array&lt;TestLab::Container&gt;) <strong>containers</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Containers.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create-instance_method" title="#create (instance method)">- (Boolean) <strong>create</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Create.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#dead%3F-instance_method" title="#dead? (instance method)">- (Boolean) <strong>dead?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Dead?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#demolish-instance_method" title="#demolish (instance method)">- (Boolean) <strong>demolish</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Demolish.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#deprovision-instance_method" title="#deprovision (instance method)">- (Boolean) <strong>deprovision</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Deprovision.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#destroy-instance_method" title="#destroy (instance method)">- (Boolean) <strong>destroy</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Destroy.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#down-instance_method" title="#down (instance method)">- (Boolean) <strong>down</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Down.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (TestLab) <strong>initialize</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of TestLab.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#labfile-instance_method" title="#labfile (instance method)">- (TestLab::Labfile) <strong>labfile</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Labfile.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_missing-instance_method" title="#method_missing (instance method)">- (Object) <strong>method_missing</strong>(method_name, *method_args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Provider Method Handler.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#method_proxy-instance_method" title="#method_proxy (instance method)">- (Boolean) <strong>method_proxy</strong>(method_name, *method_args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Method Proxy.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#networks-instance_method" title="#networks (instance method)">- (Array&lt;TestLab::Network&gt;) <strong>networks</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Networks.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#node_method_proxy-instance_method" title="#node_method_proxy (instance method)">- (Boolean) <strong>node_method_proxy</strong>(method_name, *method_args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Node Method Proxy.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#nodes-instance_method" title="#nodes (instance method)">- (Array&lt;TestLab::Node&gt;) <strong>nodes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Nodes.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provision-instance_method" title="#provision (instance method)">- (Boolean) <strong>provision</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Provision.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#recycle-instance_method" title="#recycle (instance method)">- (Boolean) <strong>recycle</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Recycle.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reverse_method_proxy-instance_method" title="#reverse_method_proxy (instance method)">- (Boolean) <strong>reverse_method_proxy</strong>(method_name, *method_args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Reverse Method Proxy.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#up-instance_method" title="#up (instance method)">- (Boolean) <strong>up</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Test Lab Up.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="TestLab/DualMethods.html" title="TestLab::DualMethods (module)">DualMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="TestLab/DualMethods.html#build_command_line-instance_method" title="TestLab::DualMethods#build_command_line (method)">build_command_line</a></span>, <span class='object_link'><a href="TestLab/DualMethods.html#gem_dir-instance_method" title="TestLab::DualMethods#gem_dir (method)">gem_dir</a></span>, <span class='object_link'><a href="TestLab/DualMethods.html#hostname-instance_method" title="TestLab::DualMethods#hostname (method)">hostname</a></span>, <span class='object_link'><a href="TestLab/DualMethods.html#ui-instance_method" title="TestLab::DualMethods#ui (method)">ui</a></span>, <span class='object_link'><a href="TestLab/DualMethods.html#ui%3D-instance_method" title="TestLab::DualMethods#ui= (method)">ui=</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="TestLab/Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="TestLab/Utility/Misc.html#do_provisioner_callbacks-instance_method" title="TestLab::Utility::Misc#do_provisioner_callbacks (method)">#do_provisioner_callbacks</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html#format_message-instance_method" title="TestLab::Utility::Misc#format_message (method)">#format_message</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html#format_object-instance_method" title="TestLab::Utility::Misc#format_object (method)">#format_object</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html#format_object_action-instance_method" title="TestLab::Utility::Misc#format_object_action (method)">#format_object_action</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html#please_wait-instance_method" title="TestLab::Utility::Misc#please_wait (method)">#please_wait</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html#sudo-instance_method" title="TestLab::Utility::Misc#sudo (method)">#sudo</a></span>, <span class='object_link'><a href="TestLab/Utility/Misc.html#sudo_prompt-instance_method" title="TestLab::Utility::Misc#sudo_prompt (method)">#sudo_prompt</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="TestLab (class)">TestLab</a></span></tt>) <strong>initialize</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of TestLab</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>          <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:ui</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>    <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
+
+  <span class='ivar'>@repo_dir</span>        <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:repo_dir</span><span class='rbracket'>]</span>   <span class='op'>||</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span><span class='rparen'>)</span>
+
+  <span class='ivar'>@config_dir</span>      <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:config_dir</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@repo_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.testlab-</span><span class='embexpr_beg'>#{</span><span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_hostname'>hostname</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span><span class='lparen'>(</span><span class='ivar'>@config_dir</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='const'>FileUtils</span><span class='period'>.</span><span class='id identifier rubyid_mkdir_p'>mkdir_p</span><span class='lparen'>(</span><span class='ivar'>@config_dir</span><span class='rparen'>)</span>
+
+  <span class='id identifier rubyid_labfile_path'>labfile_path</span>     <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:labfile_path</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@repo_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Labfile</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='ivar'>@labfile_path</span>    <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='const'>ZTK</span><span class='op'>::</span><span class='const'>Locator</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_labfile_path'>labfile_path</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice this">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+  </p>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="method_missing-instance_method">
+  
+    - (<tt>Object</tt>) <strong>method_missing</strong>(method_name, *method_args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Provider Method Handler</p>
+
+<p>Proxies missing provider method calls to all nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="TestLab/Provider.html#PROXY_METHODS-constant" title="TestLab::Provider::PROXY_METHODS (constant)">TestLab::Provider::PROXY_METHODS</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+406
+407
+408
+409
+410
+411
+412
+413
+414</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 406</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TESTLAB METHOD MISSING: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method_args'>method_args</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+
+  <span class='kw'>if</span> <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Provider</span><span class='op'>::</span><span class='const'>PROXY_METHODS</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_node_method_proxy'>node_method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="config_dir=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="config_dir-instance_method">
+  
+    - (<tt>Object</tt>) <strong>config_dir</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute config_dir</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 136</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
+  <span class='ivar'>@config_dir</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="labfile_path=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="labfile_path-instance_method">
+  
+    - (<tt>Object</tt>) <strong>labfile_path</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute labfile_path</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_labfile_path'>labfile_path</span>
+  <span class='ivar'>@labfile_path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="repo_dir=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="repo_dir-instance_method">
+  
+    - (<tt>Object</tt>) <strong>repo_dir</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute repo_dir</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 137</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
+  <span class='ivar'>@repo_dir</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="alive?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>alive?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Alive?</p>
+
+<p>Are all of our nodes up and running?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if all nodes are running; false otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+216
+217
+218</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 216</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
+  <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_state'>state</span><span class='op'>|</span> <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="boot-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>boot</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Boot TestLab</p>
+
+<p>Change to the defined repository directory and load the <b>Labfile</b>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160
+161
+162
+163</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 158</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_boot'>boot</span>
+  <span class='ivar'>@labfile</span>         <span class='op'>=</span> <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Labfile</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_labfile_path'>labfile_path</span><span class='rparen'>)</span>
+  <span class='ivar'>@labfile</span><span class='period'>.</span><span class='id identifier rubyid_testlab'>testlab</span> <span class='op'>=</span> <span class='kw'>self</span>
+
+  <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='ivar'>@repo_dir</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="bounce-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>bounce</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Bounce</p>
+
+<p>Attempts to bounce our lab topology.  This calls various methods on all of
+our nodes, networks and containers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+331
+332
+333
+334
+335
+336</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 331</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_bounce'>bounce</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_up'>up</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="build-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>build</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Build</p>
+
+<p>Attempts to build our lab topology.  This calls various methods on all of
+our nodes, networks and containers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+307
+308
+309
+310
+311</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 307</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
+  <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:build</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="config-instance_method">
+  
+    - (<tt>Hash</tt>) <strong>config</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Configuration</p>
+
+<p>The hash defined in our <b>Labfile</b> DSL object which represents any
+high-level lab configuration options.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A hash representing the labs configuration options.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+207
+208
+209</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 207</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
+  <span class='ivar'>@labfile</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="containers-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="TestLab/Container.html" title="TestLab::Container (class)">TestLab::Container</a></span>&gt;</tt>) <strong>containers</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Containers</p>
+
+<p>Returns an array of our defined containers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="TestLab/Container.html" title="TestLab::Container (class)">TestLab::Container</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>An array of all defined containers.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+179
+180
+181</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 179</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_containers'>containers</span>
+  <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>create</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Create</p>
+
+<p>Attempts to create our lab topology.  This calls the create method on all
+of our nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+235
+236
+237
+238
+239</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 235</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
+  <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="dead?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>dead?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Dead?</p>
+
+<p>Are any of our nodes not up and running?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>False is all nodes are running; true otherwise.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+225
+226
+227</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 225</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_dead?'>dead?</span>
+  <span class='op'>!</span><span class='id identifier rubyid_alive?'>alive?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="demolish-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>demolish</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Demolish</p>
+
+<p>Attempts to demolish our lab topology.  This calls various methods on all
+of our nodes, networks and containers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+319
+320
+321
+322
+323</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 319</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_demolish'>demolish</span>
+  <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:demolish</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="deprovision-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>deprovision</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Deprovision</p>
+
+<p>Attempts to tearddown our lab topology.  This calls the deprovision method
+on all of our nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+295
+296
+297
+298
+299</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 295</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_deprovision'>deprovision</span>
+  <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:deprovision</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="destroy-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>destroy</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Destroy</p>
+
+<p>Attempts to destroy our lab topology.  This calls the destroy method on all
+of our nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+247
+248
+249
+250
+251</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 247</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
+  <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:destroy</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="down-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>down</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Down</p>
+
+<p>Attempts to down our lab topology.  This calls the down method on all of
+our nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+271
+272
+273
+274
+275</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 271</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span>
+  <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:down</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="labfile-instance_method">
+  
+    - (<tt><span class='object_link'><a href="TestLab/Labfile.html" title="TestLab::Labfile (class)">TestLab::Labfile</a></span></tt>) <strong>labfile</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Labfile</p>
+
+<p>Returns our top-level Labfile instance.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="TestLab/Labfile.html" title="TestLab::Labfile (class)">TestLab::Labfile</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The top-level Labfile instance.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+197
+198
+199</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 197</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_labfile'>labfile</span>
+  <span class='ivar'>@labfile</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="method_proxy-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>method_proxy</strong>(method_name, *method_args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Method Proxy</p>
+
+<p>Iterates all of the lab objects sending the supplied method name and
+arguments to each object.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 371</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_networks'>networks</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_network'>network</span><span class='op'>|</span>
+      <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_containers'>containers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_container'>container</span><span class='op'>|</span>
+      <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="networks-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="TestLab/Network.html" title="TestLab::Network (class)">TestLab::Network</a></span>&gt;</tt>) <strong>networks</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Networks</p>
+
+<p>Returns an array of our defined networks.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="TestLab/Network.html" title="TestLab::Network (class)">TestLab::Network</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>An array of all defined networks.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+188
+189
+190</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 188</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_networks'>networks</span>
+  <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="node_method_proxy-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>node_method_proxy</strong>(method_name, *method_args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Node Method Proxy</p>
+
+<p>Iterates all of the lab nodes, sending the supplied method name and
+arguments to each node.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+357
+358
+359
+360
+361
+362
+363</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 357</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_node_method_proxy'>node_method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="nodes-instance_method">
+  
+    - (<tt>Array&lt;<span class='object_link'><a href="TestLab/Node.html" title="TestLab::Node (class)">TestLab::Node</a></span>&gt;</tt>) <strong>nodes</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Nodes</p>
+
+<p>Returns an array of our defined nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="TestLab/Node.html" title="TestLab::Node (class)">TestLab::Node</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>An array of all defined nodes.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+170
+171
+172</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 170</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_nodes'>nodes</span>
+  <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="provision-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>provision</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Provision</p>
+
+<p>Attempts to provision our lab topology.  This calls the provision method on
+all of our nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+283
+284
+285
+286
+287</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 283</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_provision'>provision</span>
+  <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:provision</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="recycle-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>recycle</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Recycle</p>
+
+<p>Attempts to recycle our lab topology.  This calls various methods on all of
+our nodes, networks and containers.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+344
+345
+346
+347
+348
+349</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 344</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_recycle'>recycle</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_demolish'>demolish</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build'>build</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reverse_method_proxy-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>reverse_method_proxy</strong>(method_name, *method_args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Reverse Method Proxy</p>
+
+<p>Iterates all of the lab objects sending the supplied method name and
+arguments to each object.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 389</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_containers'>containers</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_container'>container</span><span class='op'>|</span>
+      <span class='id identifier rubyid_container'>container</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_networks'>networks</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_network'>network</span><span class='op'>|</span>
+      <span class='id identifier rubyid_network'>network</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="up-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>up</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Test Lab Up</p>
+
+<p>Attempts to up our lab topology.  This calls the up method on all of our
+nodes.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>True if successful.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+259
+260
+261
+262
+263</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 259</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_up'>up</span>
+  <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:up</span><span class='rparen'>)</span>
+
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 31 18:32:09 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

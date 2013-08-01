@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: TestLab::Provider
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../TestLab.html" title="TestLab (class)">TestLab</a></span></span>
+     &raquo; 
+    <span class="title">Provider</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: TestLab::Provider
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">TestLab::Provider</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/testlab/provider.rb<span class="defines">,<br />
+  lib/testlab/providers/aws.rb,<br /> lib/testlab/providers/local.rb,<br /> lib/testlab/providers/vagrant.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Provider Class</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Zachary Patten &lt;zachary AT jovelabs DOT com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Provider/AWS.html" title="TestLab::Provider::AWS (class)">AWS</a></span>, <span class='object_link'><a href="Provider/AWSError.html" title="TestLab::Provider::AWSError (class)">AWSError</a></span>, <span class='object_link'><a href="Provider/Local.html" title="TestLab::Provider::Local (class)">Local</a></span>, <span class='object_link'><a href="Provider/LocalError.html" title="TestLab::Provider::LocalError (class)">LocalError</a></span>, <span class='object_link'><a href="Provider/Vagrant.html" title="TestLab::Provider::Vagrant (class)">Vagrant</a></span>, <span class='object_link'><a href="Provider/VagrantError.html" title="TestLab::Provider::VagrantError (class)">VagrantError</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="PROXY_METHODS-constant" class="">PROXY_METHODS =
+          
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>instance_id</span><span class='words_sep'> </span><span class='tstring_content'>state</span><span class='words_sep'> </span><span class='tstring_content'>user</span><span class='words_sep'> </span><span class='tstring_content'>identity</span><span class='words_sep'> </span><span class='tstring_content'>ip</span><span class='words_sep'> </span><span class='tstring_content'>port</span><span class='words_sep'> </span><span class='tstring_content'>create</span><span class='words_sep'> </span><span class='tstring_content'>destroy</span><span class='words_sep'> </span><span class='tstring_content'>up</span><span class='words_sep'> </span><span class='tstring_content'>down</span><span class='words_sep'> </span><span class='tstring_content'>reload</span><span class='words_sep'> </span><span class='tstring_content'>status</span><span class='words_sep'> </span><span class='tstring_content'>alive?</span><span class='words_sep'> </span><span class='tstring_content'>dead?</span><span class='words_sep'> </span><span class='tstring_content'>exists?</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#template_dir-class_method" title="template_dir (class method)">+ (Object) <strong>template_dir</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the path to the gems provider templates.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="template_dir-class_method">
+  
+    + (<tt>Object</tt>) <strong>template_dir</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the path to the gems provider templates</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/provider.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_template_dir'>template_dir</span>
+  <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_gem_dir'>gem_dir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>lib</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>testlab</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>providers</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>templates</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 31 18:32:10 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

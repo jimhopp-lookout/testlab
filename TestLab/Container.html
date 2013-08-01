@@ -1,0 +1,683 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: TestLab::Container
+  
+    &mdash; Documentation by YARD 0.8.7
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../TestLab.html" title="TestLab (class)">TestLab</a></span></span>
+     &raquo; 
+    <span class="title">Container</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: TestLab::Container
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">ZTK::DSL::Base</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ZTK::DSL::Base</li>
+          
+            <li class="next">TestLab::Container</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+      <dt class="r2">Extended by:</dt>
+      <dd class="r2"><span class='object_link'><a href="Container/ClassMethods.html" title="TestLab::Container::ClassMethods (module)">ClassMethods</a></span></dd>
+      
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="Container/Actions.html" title="TestLab::Container::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Container/Clone.html" title="TestLab::Container::Clone (module)">Clone</a></span>, <span class='object_link'><a href="Container/Configuration.html" title="TestLab::Container::Configuration (module)">Configuration</a></span>, <span class='object_link'><a href="Container/Generators.html" title="TestLab::Container::Generators (module)">Generators</a></span>, <span class='object_link'><a href="Container/IO.html" title="TestLab::Container::IO (module)">IO</a></span>, <span class='object_link'><a href="Container/Interface.html" title="TestLab::Container::Interface (module)">Interface</a></span>, <span class='object_link'><a href="Container/LXC.html" title="TestLab::Container::LXC (module)">LXC</a></span>, <span class='object_link'><a href="Container/MethodMissing.html" title="TestLab::Container::MethodMissing (module)">MethodMissing</a></span>, <span class='object_link'><a href="Container/Provision.html" title="TestLab::Container::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Container/SSH.html" title="TestLab::Container::SSH (module)">SSH</a></span>, <span class='object_link'><a href="Container/Status.html" title="TestLab::Container::Status (module)">Status</a></span>, <span class='object_link'><a href="Container/Support.html" title="TestLab::Container::Support (module)">Support</a></span>, <span class='object_link'><a href="Container/User.html" title="TestLab::Container::User (module)">User</a></span>, <span class='object_link'><a href="Support/Execution.html" title="TestLab::Support::Execution (module)">Support::Execution</a></span>, <span class='object_link'><a href="Support/Lifecycle.html" title="TestLab::Support::Lifecycle (module)">Support::Lifecycle</a></span>, <span class='object_link'><a href="Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/testlab/container.rb<span class="defines">,<br />
+  lib/testlab/container/io.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/container/generators.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/method_missing.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Container Class</p>
+
+<p>This class represents the TestLab Container DSL object.</p>
+
+<p>The operating system is determined by the <b>distro</b> and <b>release</b>
+attributes. The hostname (container ID) is passed as a parameter to the
+container call. A <b>domain</b> may additionally be specified (overriding
+the global domain, if set).  If the <b>domain</b> attributes is omited,
+then the global domain is use, again only if it is set.  The hostname
+(container ID) and the domain will be joined together to form the FQDN of
+the container.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>A simple container definition with a single interface:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_container'>container</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>server-west-1</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_domain'>domain</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>west.zone</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_distro'>distro</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_release'>release</span>       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_user'>user</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_username'>username</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_password'>password</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_uid'>uid</span> <span class='int'>2600</span>
+    <span class='id identifier rubyid_gid'>gid</span> <span class='int'>2600</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_network_id'>network_id</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>west</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_name'>name</span>       <span class='symbol'>:eth0</span>
+    <span class='id identifier rubyid_address'>address</span>    <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>10.11.0.254/16</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_mac'>mac</span>        <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>00:00:5e:48:e9:6f</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Multiple interfaces can be defined as well:</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_container'>container</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dual-nic</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_distro'>distro</span>        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ubuntu</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_release'>release</span>       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>precise</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='id identifier rubyid_user'>user</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_username'>username</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_password'>password</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deployer</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_uid'>uid</span> <span class='int'>2600</span>
+    <span class='id identifier rubyid_gid'>gid</span> <span class='int'>2600</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_network_id'>network_id</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>east</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_name'>name</span>       <span class='symbol'>:eth0</span>
+    <span class='id identifier rubyid_address'>address</span>    <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>10.10.0.200/16</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_mac'>mac</span>        <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>00:00:5e:63:b5:9f</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_interface'>interface</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_network_id'>network_id</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>west</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_primary'>primary</span>    <span class='kw'>true</span>
+    <span class='id identifier rubyid_name'>name</span>       <span class='symbol'>:eth1</span>
+    <span class='id identifier rubyid_address'>address</span>    <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>10.11.0.200/16</span><span class='tstring_end'>'</span></span>
+    <span class='id identifier rubyid_mac'>mac</span>        <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>00:00:5e:08:63:df</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></code></pre>
+    
+  </div>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Interface.html" title="TestLab::Interface (class)">Interface</a></span></li>
+    
+  </ul>
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Zachary Patten &lt;zachary AT jovelabs DOT com&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Container/Actions.html" title="TestLab::Container::Actions (module)">Actions</a></span>, <span class='object_link'><a href="Container/ClassMethods.html" title="TestLab::Container::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="Container/Clone.html" title="TestLab::Container::Clone (module)">Clone</a></span>, <span class='object_link'><a href="Container/Configuration.html" title="TestLab::Container::Configuration (module)">Configuration</a></span>, <span class='object_link'><a href="Container/Generators.html" title="TestLab::Container::Generators (module)">Generators</a></span>, <span class='object_link'><a href="Container/IO.html" title="TestLab::Container::IO (module)">IO</a></span>, <span class='object_link'><a href="Container/Interface.html" title="TestLab::Container::Interface (module)">Interface</a></span>, <span class='object_link'><a href="Container/LXC.html" title="TestLab::Container::LXC (module)">LXC</a></span>, <span class='object_link'><a href="Container/MethodMissing.html" title="TestLab::Container::MethodMissing (module)">MethodMissing</a></span>, <span class='object_link'><a href="Container/Provision.html" title="TestLab::Container::Provision (module)">Provision</a></span>, <span class='object_link'><a href="Container/SSH.html" title="TestLab::Container::SSH (module)">SSH</a></span>, <span class='object_link'><a href="Container/Status.html" title="TestLab::Container::Status (module)">Status</a></span>, <span class='object_link'><a href="Container/Support.html" title="TestLab::Container::Support (module)">Support</a></span>, <span class='object_link'><a href="Container/User.html" title="TestLab::Container::User (module)">User</a></span>
+    
+  
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="STATUS_KEYS-constant" class="">STATUS_KEYS =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>An array of symbols of the various keys in our status hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="Container/Status.html" title="TestLab::Container::Status (module)">Status</a></span></li>
+    
+  </ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qwords_beg'>%w(</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>node_id</span><span class='words_sep'> </span><span class='tstring_content'>mode</span><span class='words_sep'> </span><span class='tstring_content'>fqdn</span><span class='words_sep'> </span><span class='tstring_content'>state</span><span class='words_sep'> </span><span class='tstring_content'>distro</span><span class='words_sep'> </span><span class='tstring_content'>release</span><span class='words_sep'> </span><span class='tstring_content'>interfaces</span><span class='words_sep'> </span><span class='tstring_content'>provisioners</span><span class='words_sep'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+  
+  
+  <h3 class="inherited">Constants included
+     from <span class='object_link'><a href="Container/IO.html" title="TestLab::Container::IO (module)">IO</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/IO.html#PBZIP2_MEMORY-constant" title="TestLab::Container::IO::PBZIP2_MEMORY (constant)">IO::PBZIP2_MEMORY</a></span></p>
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_dir-instance_method" title="#config_dir (instance method)">- (Object) <strong>config_dir</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Container) <strong>initialize</strong>(*args) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of Container.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#repo_dir-instance_method" title="#repo_dir (instance method)">- (Object) <strong>repo_dir</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/ClassMethods.html" title="TestLab::Container::ClassMethods (module)">ClassMethods</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/ClassMethods.html#domains-instance_method" title="TestLab::Container::ClassMethods#domains (method)">domains</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Utility/Misc.html" title="TestLab::Utility::Misc (module)">Utility::Misc</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Utility/Misc.html#do_provisioner_callbacks-instance_method" title="TestLab::Utility::Misc#do_provisioner_callbacks (method)">#do_provisioner_callbacks</a></span>, <span class='object_link'><a href="Utility/Misc.html#format_message-instance_method" title="TestLab::Utility::Misc#format_message (method)">#format_message</a></span>, <span class='object_link'><a href="Utility/Misc.html#format_object-instance_method" title="TestLab::Utility::Misc#format_object (method)">#format_object</a></span>, <span class='object_link'><a href="Utility/Misc.html#format_object_action-instance_method" title="TestLab::Utility::Misc#format_object_action (method)">#format_object_action</a></span>, <span class='object_link'><a href="Utility/Misc.html#please_wait-instance_method" title="TestLab::Utility::Misc#please_wait (method)">#please_wait</a></span>, <span class='object_link'><a href="Utility/Misc.html#sudo-instance_method" title="TestLab::Utility::Misc#sudo (method)">#sudo</a></span>, <span class='object_link'><a href="Utility/Misc.html#sudo_prompt-instance_method" title="TestLab::Utility::Misc#sudo_prompt (method)">#sudo_prompt</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Support/Lifecycle.html" title="TestLab::Support::Lifecycle (module)">Support::Lifecycle</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Support/Lifecycle.html#bounce-instance_method" title="TestLab::Support::Lifecycle#bounce (method)">#bounce</a></span>, <span class='object_link'><a href="Support/Lifecycle.html#build-instance_method" title="TestLab::Support::Lifecycle#build (method)">#build</a></span>, <span class='object_link'><a href="Support/Lifecycle.html#demolish-instance_method" title="TestLab::Support::Lifecycle#demolish (method)">#demolish</a></span>, <span class='object_link'><a href="Support/Lifecycle.html#recycle-instance_method" title="TestLab::Support::Lifecycle#recycle (method)">#recycle</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Support/Execution.html" title="TestLab::Support::Execution (module)">Support::Execution</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Support/Execution.html#bootstrap-instance_method" title="TestLab::Support::Execution#bootstrap (method)">#bootstrap</a></span>, <span class='object_link'><a href="Support/Execution.html#download-instance_method" title="TestLab::Support::Execution#download (method)">#download</a></span>, <span class='object_link'><a href="Support/Execution.html#exec-instance_method" title="TestLab::Support::Execution#exec (method)">#exec</a></span>, <span class='object_link'><a href="Support/Execution.html#file-instance_method" title="TestLab::Support::Execution#file (method)">#file</a></span>, <span class='object_link'><a href="Support/Execution.html#upload-instance_method" title="TestLab::Support::Execution#upload (method)">#upload</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/User.html" title="TestLab::Container::User (module)">User</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/User.html#primary_user-instance_method" title="TestLab::Container::User#primary_user (method)">#primary_user</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Support.html" title="TestLab::Container::Support (module)">Support</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Support.html#clone_args-instance_method" title="TestLab::Container::Support#clone_args (method)">#clone_args</a></span>, <span class='object_link'><a href="Container/Support.html#create_args-instance_method" title="TestLab::Container::Support#create_args (method)">#create_args</a></span>, <span class='object_link'><a href="Container/Support.html#detect_arch-instance_method" title="TestLab::Container::Support#detect_arch (method)">#detect_arch</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Status.html" title="TestLab::Container::Status (module)">Status</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Status.html#cidr-instance_method" title="TestLab::Container::Status#cidr (method)">#cidr</a></span>, <span class='object_link'><a href="Container/Status.html#fqdn-instance_method" title="TestLab::Container::Status#fqdn (method)">#fqdn</a></span>, <span class='object_link'><a href="Container/Status.html#ip-instance_method" title="TestLab::Container::Status#ip (method)">#ip</a></span>, <span class='object_link'><a href="Container/Status.html#mode-instance_method" title="TestLab::Container::Status#mode (method)">#mode</a></span>, <span class='object_link'><a href="Container/Status.html#ptr-instance_method" title="TestLab::Container::Status#ptr (method)">#ptr</a></span>, <span class='object_link'><a href="Container/Status.html#state-instance_method" title="TestLab::Container::Status#state (method)">#state</a></span>, <span class='object_link'><a href="Container/Status.html#status-instance_method" title="TestLab::Container::Status#status (method)">#status</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/SSH.html" title="TestLab::Container::SSH (module)">SSH</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/SSH.html#ssh-instance_method" title="TestLab::Container::SSH#ssh (method)">#ssh</a></span>, <span class='object_link'><a href="Container/SSH.html#ssh_config-instance_method" title="TestLab::Container::SSH#ssh_config (method)">#ssh_config</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Provision.html" title="TestLab::Container::Provision (module)">Provision</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Provision.html#deprovision-instance_method" title="TestLab::Container::Provision#deprovision (method)">#deprovision</a></span>, <span class='object_link'><a href="Container/Provision.html#provision-instance_method" title="TestLab::Container::Provision#provision (method)">#provision</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/MethodMissing.html" title="TestLab::Container::MethodMissing (module)">MethodMissing</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/MethodMissing.html#method_missing-instance_method" title="TestLab::Container::MethodMissing#method_missing (method)">#method_missing</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/LXC.html" title="TestLab::Container::LXC (module)">LXC</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/LXC.html#console-instance_method" title="TestLab::Container::LXC#console (method)">#console</a></span>, <span class='object_link'><a href="Container/LXC.html#exists%3F-instance_method" title="TestLab::Container::LXC#exists? (method)">#exists?</a></span>, <span class='object_link'><a href="Container/LXC.html#fs_root-instance_method" title="TestLab::Container::LXC#fs_root (method)">#fs_root</a></span>, <span class='object_link'><a href="Container/LXC.html#lxc-instance_method" title="TestLab::Container::LXC#lxc (method)">#lxc</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/IO.html" title="TestLab::Container::IO (module)">IO</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/IO.html#copy-instance_method" title="TestLab::Container::IO#copy (method)">#copy</a></span>, <span class='object_link'><a href="Container/IO.html#export-instance_method" title="TestLab::Container::IO#export (method)">#export</a></span>, <span class='object_link'><a href="Container/IO.html#import-instance_method" title="TestLab::Container::IO#import (method)">#import</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Interface.html" title="TestLab::Container::Interface (module)">Interface</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Interface.html#primary_interface-instance_method" title="TestLab::Container::Interface#primary_interface (method)">#primary_interface</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Generators.html" title="TestLab::Container::Generators (module)">Generators</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Generators.html#generate_ip-instance_method" title="TestLab::Container::Generators#generate_ip (method)">#generate_ip</a></span>, <span class='object_link'><a href="Container/Generators.html#generate_mac-instance_method" title="TestLab::Container::Generators#generate_mac (method)">#generate_mac</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Configuration.html" title="TestLab::Container::Configuration (module)">Configuration</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Configuration.html#build_lxc_config-instance_method" title="TestLab::Container::Configuration#build_lxc_config (method)">#build_lxc_config</a></span>, <span class='object_link'><a href="Container/Configuration.html#build_lxc_network_conf-instance_method" title="TestLab::Container::Configuration#build_lxc_network_conf (method)">#build_lxc_network_conf</a></span>, <span class='object_link'><a href="Container/Configuration.html#configure-instance_method" title="TestLab::Container::Configuration#configure (method)">#configure</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Clone.html" title="TestLab::Container::Clone (module)">Clone</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Clone.html#ephemeral-instance_method" title="TestLab::Container::Clone#ephemeral (method)">#ephemeral</a></span>, <span class='object_link'><a href="Container/Clone.html#lxc_clone-instance_method" title="TestLab::Container::Clone#lxc_clone (method)">#lxc_clone</a></span>, <span class='object_link'><a href="Container/Clone.html#persistent-instance_method" title="TestLab::Container::Clone#persistent (method)">#persistent</a></span>, <span class='object_link'><a href="Container/Clone.html#to_ephemeral-instance_method" title="TestLab::Container::Clone#to_ephemeral (method)">#to_ephemeral</a></span>, <span class='object_link'><a href="Container/Clone.html#to_static-instance_method" title="TestLab::Container::Clone#to_static (method)">#to_static</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Container/Actions.html" title="TestLab::Container::Actions (module)">Actions</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Container/Actions.html#create-instance_method" title="TestLab::Container::Actions#create (method)">#create</a></span>, <span class='object_link'><a href="Container/Actions.html#destroy-instance_method" title="TestLab::Container::Actions#destroy (method)">#destroy</a></span>, <span class='object_link'><a href="Container/Actions.html#down-instance_method" title="TestLab::Container::Actions#down (method)">#down</a></span>, <span class='object_link'><a href="Container/Actions.html#up-instance_method" title="TestLab::Container::Actions#up (method)">#up</a></span></p>
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="TestLab::Container (class)">Container</a></span></tt>) <strong>initialize</strong>(*args) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of Container</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134
+135
+136
+137
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 134</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
+
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Loading Container '</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>'</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container '</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'>' Loaded</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+<div id="method_missing_details" class="method_details_list">
+  <h2>Dynamic Method Handling</h2>
+  <p class="notice super">
+    This class handles dynamic methods through the <tt>method_missing</tt> method
+    
+      in the class <span class='object_link'><a href="Container/MethodMissing.html#method_missing-instance_method" title="TestLab::Container::MethodMissing#method_missing (method)">TestLab::Container::MethodMissing</a></span>
+    
+  </p>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="config_dir-instance_method">
+  
+    - (<tt>Object</tt>) <strong>config_dir</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 142</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="repo_dir-instance_method">
+  
+    - (<tt>Object</tt>) <strong>repo_dir</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Jul 31 18:32:10 2013 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
