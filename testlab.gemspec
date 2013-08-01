@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["zachary AT jovelabs DOT com"]
   spec.description   = %q{A toolkit for building virtual computer labs}
   spec.summary       = %q{A toolkit for building virtual computer labs}
-  spec.homepage      = "https://github.com/zpatten/testlab"
+  spec.homepage      = "http://hackers.lookout.com/testlab/"
   spec.license       = "Apache 2.0"
 
   spec.files         = `git ls-files`.split($/)
