@@ -59,6 +59,7 @@ class TestLab
 
         true
       end
+      alias :on_container_up :on_container_provision
 
     private
 
