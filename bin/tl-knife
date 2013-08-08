@@ -34,8 +34,8 @@ l = TestLab.new(:ui => ui)          # lab
 l.boot                              # boot lab
 chef_server   = l.containers.find('chef-server').first
 
-verbose_flags = %w(-V --verbose)
-verbose       = ARGV.any?{ |arg| verbose_flags.include?(arg) }
+verbose_flags = %w(-V -VV --verbose)
+verbose       = ARGV.any?{ |arg| verbose_flags.include?(arg) } || (!ENV['LOG_LEVEL'].nil? && (ENV['LOG_LEVEL'].upcase == 'DEBUG'))
 user          = ENV['USER']
 key           = File.join(l.config_dir, "#{chef_server.primary_user.username}.pem")
 knife_rb      = File.join(l.config_dir, "knife.rb")
