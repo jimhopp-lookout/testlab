@@ -17,10 +17,10 @@ class TestLab
         @config[:resolv] ||= Hash.new
 
         @config[:resolv][:servers] ||= Array.new
-        @config[:resolv][:servers].unshift([TestLab::Network.ips]).flatten!
+        @config[:resolv][:servers].unshift([TestLab::Network.ips]).flatten!.compact!
 
         @config[:resolv][:search] ||= Array.new
-        @config[:resolv][:search].unshift([TestLab::Container.domains]).flatten!
+        @config[:resolv][:search].unshift([TestLab::Container.domains]).flatten!.compact!
 
         @ui.logger.debug { "config(#{@config.inspect})" }
       end
