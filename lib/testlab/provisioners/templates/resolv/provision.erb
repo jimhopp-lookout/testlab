@@ -3,7 +3,7 @@ set -x
 dpkg --status bind9 &> /dev/null || <%= (@resolv[:object] == :container).inspect %>
 
 if [ $? -eq 0 ]; then
-  cat << EOF | tee /etc/resolv.conf
+  cat <<EOF | tee /etc/resolv.conf
 <%= ZTK::Template.do_not_edit_notice(:message => "TestLab Resolv Provisioner") %>
 <% if !@resolv[:domain].nil? -%>
 domain <%= @resolv[:domain] %>
