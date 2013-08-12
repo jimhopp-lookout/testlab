@@ -6,7 +6,7 @@
 <title>
   Module: TestLab::Network::Actions
   
-    &mdash; Documentation by YARD 0.8.7
+    &mdash; Documentation by YARD 0.8.6.2
   
 </title>
 
@@ -273,8 +273,8 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Network Create: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Create</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:green</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -282,7 +282,7 @@
 grep '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_def_tag'>def_tag</span><span class='rbrace'>}</span><span class='tstring_content'>' /etc/network/interfaces &amp;&amp; exit 0
 cat &lt;&lt;EOI | tee -a /etc/network/interfaces
 </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_def_tag'>def_tag</span><span class='rbrace'>}</span><span class='tstring_content'>
-auto br0
+auto </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bridge'>bridge</span><span class='rbrace'>}</span><span class='tstring_content'>
 iface </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_bridge'>bridge</span><span class='rbrace'>}</span><span class='tstring_content'> inet static
 bridge_ports none
 bridge_stp off
@@ -358,8 +358,8 @@ brctl setfd </span><span class='embexpr_beg'>#{</span><span class='kw'>self</spa
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Network Destroy: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Destroy</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:red</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -428,8 +428,8 @@ brctl delbr </span><span class='embexpr_beg'>#{</span><span class='kw'>self</spa
 <span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Network Down: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='comment'># (self.state != :running) and return false
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='comment'># (self.state == :running) or return false
 </span>
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Down</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:red</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -497,8 +497,8 @@ ifconfig </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><
 <span class='kw'>def</span> <span class='id identifier rubyid_up'>up</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Network Up: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='comment'># (self.state == :running) and return false
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='comment'># (self.state != :running) or return false
 </span>
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Up</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:green</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_bootstrap'>bootstrap</span><span class='lparen'>(</span><span class='heredoc_beg'>&lt;&lt;-EOF</span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -521,9 +521,9 @@ ifconfig </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><
 </div>
 
     <div id="footer">
-  Generated on Thu Aug  8 15:02:00 2013 by
+  Generated on Mon Aug 12 15:26:33 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   Module: TestLab::Container::Status
   
-    &mdash; Documentation by YARD 0.8.7
+    &mdash; Documentation by YARD 0.8.6.2
   
 </title>
 
@@ -513,16 +513,16 @@
       <pre class="lines">
 
 
-80
-81
-82
-83
 84
 85
-86</pre>
+86
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mode'>mode</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
@@ -645,13 +645,21 @@
 
 72
 73
-74</pre>
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -752,9 +760,9 @@
 </div>
 
     <div id="footer">
-  Generated on Thu Aug  8 15:02:00 2013 by
+  Generated on Mon Aug 12 15:26:33 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.7 (ruby-1.9.3).
+  0.8.6.2 (ruby-1.9.3).
 </div>
 
   </body>
