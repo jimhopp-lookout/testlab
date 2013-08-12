@@ -16,7 +16,7 @@ set -x
 grep '#{def_tag}' /etc/network/interfaces && exit 0
 cat <<EOI | tee -a /etc/network/interfaces
 #{def_tag}
-auto br0
+auto #{self.bridge}
 iface #{self.bridge} inet static
       bridge_ports none
       bridge_stp off
