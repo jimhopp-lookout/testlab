@@ -63,16 +63,19 @@ class TestLab
       # Online Vagrant-controlled VM
       def up
         self.vagrant_cli("up", self.instance_id)
+
         ZTK::TCPSocketCheck.new(:host => self.ip, :port => self.port, :wait => 120, :ui => @ui).wait
 
         true
       end
 
       # Halt Vagrant-controlled VM
-      def down
+      def down(*args)
         !self.exists? and raise VagrantError, MSG_NO_LAB
 
-        self.vagrant_cli("halt", self.instance_id)
+        arguments = (%W(halt #{self.instance_id}) + args).flatten.compact
+
+        self.vagrant_cli(*arguments)
 
         true
       end
