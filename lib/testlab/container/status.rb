@@ -70,7 +70,11 @@ class TestLab
       #
       # @return [Symbol] A symbol indicating the state of the container.
       def state
-        self.lxc.state
+        if self.lxc_clone.exists?
+          self.lxc_clone.state
+        else
+          self.lxc.state
+        end
       end
 
       # Container Mode

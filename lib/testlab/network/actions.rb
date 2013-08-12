@@ -7,8 +7,8 @@ class TestLab
       def create
         @ui.logger.debug { "Network Create: #{self.id} " }
 
-        (self.node.state != :running) and return false
-        (self.state != :not_created) and return false
+        (self.node.state == :running) or return false
+        (self.state == :not_created) or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
           self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
@@ -41,8 +41,8 @@ brctl setfd #{self.bridge} 0
       def destroy
         @ui.logger.debug { "Network Destroy: #{self.id} " }
 
-        (self.node.state != :running) and return false
-        (self.state == :not_created) and return false
+        (self.node.state == :running) or return false
+        (self.state != :not_created) or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
@@ -61,8 +61,8 @@ brctl delbr #{self.bridge}
       def up
         @ui.logger.debug { "Network Up: #{self.id} " }
 
-        (self.node.state != :running) and return false
-        # (self.state == :running) and return false
+        (self.node.state == :running) or return false
+        # (self.state != :running) or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
@@ -80,8 +80,8 @@ ifconfig #{self.bridge} #{self.ip} netmask #{self.netmask} broadcast #{self.broa
       def down
         @ui.logger.debug { "Network Down: #{self.id} " }
 
-        (self.node.state != :running) and return false
-        # (self.state != :running) and return false
+        (self.node.state == :running) or return false
+        # (self.state == :running) or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
           self.node.bootstrap(<<-EOF, :ignore_exit_status => true)
