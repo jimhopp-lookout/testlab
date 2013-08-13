@@ -63,15 +63,19 @@ class TestLab
 
       # Network Bridge State
       def state
-        exit_code = self.node.exec(%(sudo brctl show #{self.bridge} 2>&1 | grep -i 'No such device'), :ignore_exit_status => true).exit_code
-        if (exit_code == 0)
-          :not_created
+        if (self.node.state != :running)
+          :unknown
         else
-          output = self.node.exec(%(sudo ifconfig #{self.bridge} 2>&1 | grep 'MTU'), :ignore_exit_status => true).output.strip
-          if ((output =~ /UP/) || (output =~ /RUNNING/))
-            :running
+          exit_code = self.node.exec(%(sudo brctl show #{self.bridge} 2>&1 | grep -i 'No such device'), :ignore_exit_status => true).exit_code
+          if (exit_code == 0)
+            :not_created
           else
-            :stopped
+            output = self.node.exec(%(sudo ifconfig #{self.bridge} 2>&1 | grep 'MTU'), :ignore_exit_status => true).output
+            if ((output =~ /UP/) || (output =~ /RUNNING/))
+              :running
+            else
+              :stopped
+            end
           end
         end
       end
