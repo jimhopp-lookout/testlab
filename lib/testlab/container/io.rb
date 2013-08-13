@@ -11,7 +11,7 @@ class TestLab
       def export(compression=9, local_file=nil)
         @ui.logger.debug { "Container Export: #{self.id} " }
 
-        (self.lxc.state == :not_created) and return false
+        (self.state == :not_created) and raise ContainerError, 'You must create a container before you can export it!'
 
         # Throw an exception if we are attempting to export a container in a
         # ephemeral state.

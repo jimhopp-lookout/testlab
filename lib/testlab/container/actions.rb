@@ -72,7 +72,7 @@ class TestLab
             self.lxc.start(%(--daemon))
           end
 
-          (self.lxc.state != :running) and raise ContainerError, "The container failed to online!"
+          (self.state != :running) and raise ContainerError, "The container failed to online!"
 
           ZTK::TCPSocketCheck.new(:ui => @ui, :host => self.primary_interface.ip, :port => 22).wait
 
@@ -122,7 +122,7 @@ class TestLab
             self.persist and self.lxc.destroy(%(-f))
           end
 
-          (self.lxc.state == :running) and raise ContainerError, "The container failed to offline!"
+          (self.state == :running) and raise ContainerError, "The container failed to offline!"
 
           do_provisioner_callbacks(self, :down, @ui)
         end
