@@ -73,11 +73,7 @@ class TestLab
         if (self.node.state != :running)
           :unknown
         else
-          if self.is_ephemeral?
-            self.lxc_clone.state
-          else
-            self.lxc.state
-          end
+          self.lxc.state
         end
       end
 
