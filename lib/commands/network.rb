@@ -30,14 +30,10 @@ Displays the status of all networks or single/multiple networks if supplied via 
 EOF
   c.command :status do |status|
     status.action do |global_options, options, args|
-      networks = iterate_objects_by_name(options[:name], TestLab::Network).delete_if{ |network| network.node.dead? }
+      networks = iterate_objects_by_name(options[:name], TestLab::Network)
 
-      if (networks.count == 0)
-        @testlab.ui.stderr.puts("You either have no networks defined or dead nodes!".yellow)
-      else
-        ZTK::Report.new(:ui => @testlab.ui).list(networks, TestLab::Network::STATUS_KEYS) do |network|
-          OpenStruct.new(network.status)
-        end
+      ZTK::Report.new(:ui => @testlab.ui).list(networks, TestLab::Network::STATUS_KEYS) do |network|
+        OpenStruct.new(network.status)
       end
     end
   end

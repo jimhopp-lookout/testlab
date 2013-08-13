@@ -30,14 +30,10 @@ Displays the status of all containers or single/multiple containers if supplied 
 EOF
   c.command :status do |status|
     status.action do |global_options, options, args|
-      containers = iterate_objects_by_name(options[:name], TestLab::Container).delete_if{ |container| container.node.dead? }
+      containers = iterate_objects_by_name(options[:name], TestLab::Container)
 
-      if (containers.count == 0)
-        @testlab.ui.stderr.puts("You either have no containers defined or dead nodes!".yellow)
-      else
-        ZTK::Report.new(:ui => @testlab.ui).list(containers, TestLab::Container::STATUS_KEYS) do |container|
-          OpenStruct.new(container.status)
-        end
+      ZTK::Report.new(:ui => @testlab.ui).list(containers, TestLab::Container::STATUS_KEYS) do |container|
+        OpenStruct.new(container.status)
       end
     end
   end
