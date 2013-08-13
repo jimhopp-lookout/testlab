@@ -102,6 +102,7 @@ describe TestLab::Network do
 
     describe "#state" do
       it "should return the state of the bridge" do
+        subject.node.stub(:state) { :running }
         subject.node.ssh.stub(:exec) { OpenStruct.new(:output => "          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1") }
         subject.state.should == :running
       end

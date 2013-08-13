@@ -61,7 +61,9 @@ describe TestLab::Container do
 
     describe "#state" do
       it "should return the state of the container" do
+        subject.node.stub(:state) { :running }
         subject.lxc.stub(:state) { :not_created }
+        subject.lxc_clone.stub(:exists?) { false }
         subject.state.should == :not_created
       end
     end
@@ -166,6 +168,7 @@ describe TestLab::Container do
         subject.lxc.stub(:state) { :stopped }
         subject.lxc.stub(:destroy) { true }
         subject.lxc_clone.stub(:exists?) { false }
+        subject.lxc_clone.stub(:destroy) { false }
         subject.stub(:provisioners) { Array.new }
 
         subject.destroy
@@ -175,14 +178,16 @@ describe TestLab::Container do
     describe "#up" do
       it "should up the container" do
         subject.node.stub(:state) { :running }
+
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:start) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :running }
         subject.lxc.stub(:attach)
-        subject.stub(:provisioners) { Array.new }
 
         subject.lxc_clone.stub(:exists?) { false }
+
+        subject.stub(:provisioners) { Array.new }
 
         ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
 
@@ -193,10 +198,14 @@ describe TestLab::Container do
     describe "#down" do
       it "should down the container" do
         subject.node.stub(:state) { :running }
+
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:stop) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :stopped }
+
+        subject.lxc_clone.stub(:exists?) { false }
+
         subject.stub(:provisioners) { Array.new }
 
         subject.down
@@ -207,8 +216,12 @@ describe TestLab::Container do
       context "with no provisioner" do
         it "should provision the container" do
           subject.node.stub(:state) { :running }
+
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
+
+          subject.lxc_clone.stub(:exists?) { false }
+
           subject.stub(:provisioners) { Array.new }
 
           subject.provision
@@ -220,8 +233,12 @@ describe TestLab::Container do
           subject and (subject = TestLab::Container.first('server-shell'))
 
           subject.node.stub(:state) { :running }
+
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
+
+          subject.lxc_clone.stub(:exists?) { false }
+
           subject.stub(:provisioners) { Array.new }
 
           subject.provision
@@ -233,8 +250,12 @@ describe TestLab::Container do
       context "with no provisioner" do
         it "should deprovision the container" do
           subject.node.stub(:state) { :running }
+
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
+
+          subject.lxc_clone.stub(:exists?) { false }
+
           subject.stub(:provisioners) { Array.new }
 
           subject.deprovision
@@ -246,8 +267,12 @@ describe TestLab::Container do
           subject and (subject = TestLab::Container.first('server-shell'))
 
           subject.node.stub(:state) { :running }
+
           subject.lxc.stub(:exists?) { true }
           subject.lxc.stub(:state) { :stopped }
+
+          subject.lxc_clone.stub(:exists?) { false }
+
           subject.stub(:provisioners) { Array.new }
 
           subject.deprovision
