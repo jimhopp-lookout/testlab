@@ -52,7 +52,6 @@ EOF
           p = TestLab::Provisioner::Route.new({}, @ui)
           p.on_network_up(network)
           @testlab.ui.stdout.puts("Added routes successfully!".green.bold)
-          @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
         end
       end
     end
@@ -66,23 +65,28 @@ EOF
           p = TestLab::Provisioner::Route.new({}, @ui)
           p.on_network_down(network)
           @testlab.ui.stdout.puts("Deleted routes successfully!".red.bold)
-          @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
         end
       end
     end
 
     # ROUTE SHOW
     #############
+
+    # Route show helper method because OSX sucks
+    def osx_network(net)
+      net.network.split('.').delete_if{ |o| o == '0' }.join('.')
+    end
+
     route.desc 'Show routes to lab networks'
     route.command :show do |show|
       show.action do |global_options,options,args|
         iterate_objects_by_name(options[:name], TestLab::Network) do |network|
-          @testlab.ui.stdout.puts("TestLab routes:".green.bold)
+          @testlab.ui.stdout.puts("Routes for TestLab network '#{network.id}':".green.bold)
           case RUBY_PLATFORM
           when /darwin/ then
-            @testlab.ui.stdout.puts %x(netstat -nrf inet | grep '#{network.node.ip}').strip
+            @testlab.ui.stdout.puts %x(netstat -nrf inet | grep '#{osx_network(network)}/#{network.cidr}').strip
           when /linux/ then
-            @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.node.ip}').strip
+            @testlab.ui.stdout.puts %x(netstat -nr | grep '#{network.network}').strip
           end
         end
       end
