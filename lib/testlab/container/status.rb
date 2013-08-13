@@ -70,10 +70,14 @@ class TestLab
       #
       # @return [Symbol] A symbol indicating the state of the container.
       def state
-        if self.lxc_clone.exists?
-          self.lxc_clone.state
+        if (self.node.state != :running)
+          :unknown
         else
-          self.lxc.state
+          if self.is_ephemeral?
+            self.lxc_clone.state
+          else
+            self.lxc.state
+          end
         end
       end
 
@@ -82,10 +86,14 @@ class TestLab
       # What mode the container is in.
       # @return [Symbol] A symbol indicating the mode of the container.
       def mode
-        if self.lxc_clone.exists?
-          :ephemeral
+        if (self.node.state != :running)
+          :unknown
         else
-          :persistent
+          if self.is_ephemeral?
+            :ephemeral
+          else
+            :persistent
+          end
         end
       end
 

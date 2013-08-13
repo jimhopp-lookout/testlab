@@ -33,6 +33,26 @@ class TestLab
         true
       end
 
+      # Is Container Ephemeral?
+      #
+      # Returns true if the container is in ephemeral mode, false otherwise.
+      #
+      # @return [Boolean] Returns true if the container is ephemeral, false
+      #   otherwise.
+      def is_ephemeral?
+        self.lxc_clone.exists?
+      end
+
+      # Is Container Persistent?
+      #
+      # Returns true if the container is in persistent mode, false otherwise.
+      #
+      # @return [Boolean] Returns true if the container is persistent, false
+      #   otherwise.
+      def is_persistent?
+        !is_ephemeral?
+      end
+
       # LXC::Container object
       #
       # Returns a *LXC::Container* class instance configured for the clone of
@@ -52,7 +72,7 @@ class TestLab
       #
       # @return [Boolean] Returns true if successful.
       def to_static
-        if self.lxc_clone.exists?
+        if self.is_ephemeral?
           self.lxc.stop
           self.lxc.destroy(%(-f))
 
@@ -73,7 +93,7 @@ class TestLab
       #
       # @return [Boolean] Returns true if successful.
       def to_ephemeral
-        if (self.lxc.exists? && !self.lxc_clone.exists?)
+        if self.is_persistent?
           self.lxc_clone.stop
           self.lxc_clone.destroy(%(-f))
 
@@ -82,9 +102,6 @@ class TestLab
           self.lxc.destroy(%(-f))
 
           build_lxc_config(self.lxc_clone.config)
-        else
-          self.lxc.stop
-          self.persist and self.lxc.destroy(%(-f))
         end
 
         true
