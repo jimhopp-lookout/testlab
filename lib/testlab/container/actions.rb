@@ -66,7 +66,7 @@ class TestLab
             self.node.exec(%(sudo arp --verbose --delete #{interface.ip}), :ignore_exit_status => true)
           end
 
-          if self.lxc_clone.exists?
+          if self.is_ephemeral?
             self.lxc_clone.start_ephemeral(clone_args)
           else
             self.lxc.start(%(--daemon))
@@ -78,7 +78,7 @@ class TestLab
 
           # If we are not in ephemeral mode we should attempt to provision our
           # defined users.
-          if !self.lxc_clone.exists?
+          if self.is_persistent?
             self.users.each do |user|
               user.provision
             end
@@ -109,7 +109,7 @@ class TestLab
           self.lxc.stop
 
           # If we are in ephemeral mode...
-          if self.lxc_clone.exists?
+          if self.is_ephemeral?
 
             # IMPORTANT NOTE:
             #
