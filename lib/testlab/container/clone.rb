@@ -80,7 +80,7 @@ class TestLab
           self.lxc_clone.clone(%W(-o #{self.lxc_clone.name} -n #{self.lxc.name}))
           self.lxc_clone.destroy(%(-f))
 
-          build_lxc_config(self.lxc.config)
+          configure
         end
 
         true
@@ -101,7 +101,7 @@ class TestLab
           self.lxc.clone(%W(-o #{self.lxc.name} -n #{self.lxc_clone.name}))
           self.lxc.destroy(%(-f))
 
-          build_lxc_config(self.lxc_clone.config)
+          configure
         end
 
         true
