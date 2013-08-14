@@ -63,7 +63,7 @@ EOF
         @ui.logger.debug { "Container Import: #{self.id} " }
 
         # Ensure we are not in ephemeral mode.
-        self.to_static
+        self.persistent
 
         self.down
         self.destroy
