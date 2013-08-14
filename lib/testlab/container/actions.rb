@@ -14,6 +14,8 @@ class TestLab
 
         self.node.alive? or return false
 
+        persistent_operation_check(:create)
+
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
           configure
 

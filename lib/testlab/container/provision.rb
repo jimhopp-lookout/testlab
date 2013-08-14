@@ -32,6 +32,8 @@ class TestLab
 
         self.node.alive? or return false
 
+        persistent_operation_check(:deprovision)
+
         please_wait(:ui => @ui, :message => format_object_action(self, :deprovision, :red)) do
           do_provisioner_callbacks(self, :deprovision, @ui)
         end
