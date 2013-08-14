@@ -63,7 +63,7 @@ describe TestLab::Container do
 
     describe "#state" do
       it "should return the state of the container" do
-        subject.node.stub(:state) { :running }
+        subject.node.stub(:dead?) { false }
         subject.lxc.stub(:state) { :not_created }
         subject.lxc_clone.stub(:exists?) { false }
         subject.state.should == :not_created
