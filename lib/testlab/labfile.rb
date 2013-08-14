@@ -7,11 +7,13 @@ class TestLab
   #
   # @author Zachary Patten <zachary AT jovelabs DOT com>
   class Labfile < ZTK::DSL::Base
-    has_many   :nodes,   :class_name => 'TestLab::Node'
+    has_many   :dependencies,  :class_name => 'TestLab::Dependency'
+    has_many   :sources,       :class_name => 'TestLab::Source'
+    has_many   :nodes,         :class_name => 'TestLab::Node'
 
     attribute  :testlab
-    attribute  :config,  :default => Hash.new
-    attribute  :version, :default => TestLab::VERSION
+    attribute  :config,        :default => Hash.new
+    attribute  :version,       :default => TestLab::VERSION
 
     def initialize(*args)
       @ui = TestLab.ui

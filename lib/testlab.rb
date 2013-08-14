@@ -121,12 +121,14 @@ class TestLab
 
   # Main Classes
   autoload :Container,   'testlab/container'
+  autoload :Dependency,  'testlab/dependency'
   autoload :Interface,   'testlab/interface'
   autoload :Labfile,     'testlab/labfile'
   autoload :Network,     'testlab/network'
   autoload :Node,        'testlab/node'
   autoload :Provider,    'testlab/provider'
   autoload :Provisioner, 'testlab/provisioner'
+  autoload :Source,      'testlab/source'
   autoload :Support,     'testlab/support'
   autoload :User,        'testlab/user'
   autoload :Utility,     'testlab/utility'
