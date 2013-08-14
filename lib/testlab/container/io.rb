@@ -49,9 +49,7 @@ EOF
           self.node.download(remote_file, local_file)
         end
 
-        @ui.stdout.puts
-        @ui.stdout.puts("Your shipping container is now exported and available at '#{local_file}'!".green.bold)
-        @ui.stdout.puts
+        @ui.stdout.puts(format_message("Your shipping container is now exported and available at '#{local_file}'!".green.bold))
 
         true
       end
@@ -97,9 +95,7 @@ du -sh #{self.lxc.container_root}
 EOF
         end
 
-        @ui.stdout.puts
-        @ui.stdout.puts("Your shipping container is now imported and available for use!".green.bold)
-        @ui.stdout.puts
+        @ui.stdout.puts(format_message("Your shipping container is now imported and available for use!".green.bold))
 
         true
       end
