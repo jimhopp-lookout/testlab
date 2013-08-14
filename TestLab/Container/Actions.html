@@ -6,7 +6,7 @@
 <title>
   Module: TestLab::Container::Actions
   
-    &mdash; Documentation by YARD 0.8.6.2
+    &mdash; Documentation by YARD 0.8.7
   
 </title>
 
@@ -270,7 +270,8 @@ sub-system to create the container.</p>
 24
 25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 12</span>
@@ -278,8 +279,9 @@ sub-system to create the container.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Create: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+
+  <span class='id identifier rubyid_persistent_operation_check'>persistent_operation_check</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Create</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:green</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_configure'>configure</span>
@@ -342,7 +344,6 @@ sub-system to create the container.</p>
       <pre class="lines">
 
 
-34
 35
 36
 37
@@ -359,13 +360,12 @@ sub-system to create the container.</p>
 48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Destroy: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Destroy</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:red</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-f</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
@@ -427,6 +427,7 @@ sub-system to create the container.</p>
       <pre class="lines">
 
 
+100
 101
 102
 103
@@ -454,26 +455,22 @@ sub-system to create the container.</p>
 125
 126
 127
-128
-129
-130
-131</pre>
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Down: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Down</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:red</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
 
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_stop'>stop</span>
 
     <span class='comment'># If we are in ephemeral mode...
-</span>    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
+</span>    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_is_ephemeral?'>is_ephemeral?</span>
 
       <span class='comment'># IMPORTANT NOTE:
 </span>      <span class='comment'>#
@@ -482,11 +479,10 @@ sub-system to create the container.</p>
 </span>      <span class='comment'>#
 </span>      <span class='comment'># If we are using a memory backed COW filesystem for the ephemeral
 </span>      <span class='comment'># clones then it will be released when the container is stopped.
-</span>
-      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_persist'>persist</span> <span class='kw'>and</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-f</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
+</span>      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_persist'>persist</span> <span class='kw'>and</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>-f</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
-    <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The container failed to offline!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The container failed to offline!</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='id identifier rubyid_do_provisioner_callbacks'>do_provisioner_callbacks</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:down</span><span class='comma'>,</span> <span class='ivar'>@ui</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -582,8 +578,7 @@ sub-system to create the container.</p>
 90
 91
 92
-93
-94</pre>
+93</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/actions.rb', line 55</span>
@@ -591,8 +586,7 @@ sub-system to create the container.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_up'>up</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Up: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Up</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:green</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_configure'>configure</span>
@@ -602,19 +596,19 @@ sub-system to create the container.</p>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>sudo arp --verbose --delete </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_interface'>interface</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span><span class='rbrace'>}</span><span class='tstring_end'>)</span></span><span class='comma'>,</span> <span class='symbol'>:ignore_exit_status</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
-    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
+    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_is_ephemeral?'>is_ephemeral?</span>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_start_ephemeral'>start_ephemeral</span><span class='lparen'>(</span><span class='id identifier rubyid_clone_args'>clone_args</span><span class='rparen'>)</span>
     <span class='kw'>else</span>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_start'>start</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>%(</span><span class='tstring_content'>--daemon</span><span class='tstring_end'>)</span></span><span class='rparen'>)</span>
     <span class='kw'>end</span>
 
-    <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The container failed to online!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The container failed to online!</span><span class='tstring_end'>&quot;</span></span>
 
     <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>TCPSocketCheck</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:host</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_primary_interface'>primary_interface</span><span class='period'>.</span><span class='id identifier rubyid_ip'>ip</span><span class='comma'>,</span> <span class='symbol'>:port</span> <span class='op'>=&gt;</span> <span class='int'>22</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_wait'>wait</span>
 
     <span class='comment'># If we are not in ephemeral mode we should attempt to provision our
 </span>    <span class='comment'># defined users.
-</span>    <span class='kw'>if</span> <span class='op'>!</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
+</span>    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_is_persistent?'>is_persistent?</span>
       <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_users'>users</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_user'>user</span><span class='op'>|</span>
         <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_provision'>provision</span>
       <span class='kw'>end</span>
@@ -638,9 +632,9 @@ sub-system to create the container.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Aug 12 15:26:33 2013 by
+  Generated on Tue Aug 13 22:36:27 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.7 (ruby-1.9.3).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   Module: TestLab::Container::IO
   
-    &mdash; Documentation by YARD 0.8.6.2
+    &mdash; Documentation by YARD 0.8.7
   
 </title>
 
@@ -242,6 +242,10 @@
       <pre class="lines">
 
 
+108
+109
+110
+111
 112
 113
 114
@@ -266,14 +270,10 @@
 133
 134
 135
-136
-137
-138
-139
-140</pre>
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_copy'>copy</span><span class='lparen'>(</span><span class='id identifier rubyid_target_name'>target_name</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Copy: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -397,9 +397,7 @@
 52
 53
 54
-55
-56
-57</pre>
+55</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 11</span>
@@ -407,7 +405,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_export'>export</span><span class='lparen'>(</span><span class='id identifier rubyid_compression'>compression</span><span class='op'>=</span><span class='int'>9</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Export: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:not_created</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ContainerError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>You must create a container before you can export it!</span><span class='tstring_end'>'</span></span>
 
   <span class='comment'># Throw an exception if we are attempting to export a container in a
 </span>  <span class='comment'># ephemeral state.
@@ -445,9 +443,7 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_download'>download</span><span class='lparen'>(</span><span class='id identifier rubyid_remote_file'>remote_file</span><span class='comma'>,</span> <span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your shipping container is now exported and available at '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rbrace'>}</span><span class='tstring_content'>'!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span>
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your shipping container is now exported and available at '</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rbrace'>}</span><span class='tstring_content'>'!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -500,6 +496,8 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
       <pre class="lines">
 
 
+60
+61
 62
 63
 64
@@ -539,20 +537,16 @@ ls -lah </span><span class='embexpr_beg'>#{</span><span class='id identifier rub
 98
 99
 100
-101
-102
-103
-104
-105</pre>
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/io.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_local_file'>local_file</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Import: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
   <span class='comment'># Ensure we are not in ephemeral mode.
-</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_to_static'>to_static</span>
+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_persistent'>persistent</span>
 
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -586,9 +580,7 @@ du -sh </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><sp
 </span><span class='heredoc_end'>EOF
 </span>  <span class='kw'>end</span>
 
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your shipping container is now imported and available for use!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span>
-  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span>
+  <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span><span class='lparen'>(</span><span class='id identifier rubyid_format_message'>format_message</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Your shipping container is now imported and available for use!</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='period'>.</span><span class='id identifier rubyid_bold'>bold</span><span class='rparen'>)</span><span class='rparen'>)</span>
 
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -602,9 +594,9 @@ du -sh </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><sp
 </div>
 
     <div id="footer">
-  Generated on Mon Aug 12 15:26:32 2013 by
+  Generated on Tue Aug 13 22:36:26 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.7 (ruby-1.9.3).
 </div>
 
   </body>

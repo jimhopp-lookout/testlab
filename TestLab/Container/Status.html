@@ -6,7 +6,7 @@
 <title>
   Module: TestLab::Container::Status
   
-    &mdash; Documentation by YARD 0.8.6.2
+    &mdash; Documentation by YARD 0.8.7
   
 </title>
 
@@ -519,16 +519,24 @@
 87
 88
 89
-90</pre>
+90
+91
+92
+93
+94</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mode'>mode</span>
-  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
-    <span class='symbol'>:ephemeral</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
+    <span class='symbol'>:unknown</span>
   <span class='kw'>else</span>
-    <span class='symbol'>:persistent</span>
+    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_is_ephemeral?'>is_ephemeral?</span>
+      <span class='symbol'>:ephemeral</span>
+    <span class='kw'>else</span>
+      <span class='symbol'>:persistent</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -655,8 +663,8 @@
       <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
-  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_exists?'>exists?</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc_clone'>lxc_clone</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
+    <span class='symbol'>:unknown</span>
   <span class='kw'>else</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lxc'>lxc</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span>
   <span class='kw'>end</span>
@@ -760,9 +768,9 @@
 </div>
 
     <div id="footer">
-  Generated on Mon Aug 12 15:26:33 2013 by
+  Generated on Tue Aug 13 22:36:27 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.7 (ruby-1.9.3).
 </div>
 
   </body>

@@ -6,7 +6,7 @@
 <title>
   Module: TestLab::Container::Provision
   
-    &mdash; Documentation by YARD 0.8.6.2
+    &mdash; Documentation by YARD 0.8.7
   
 </title>
 
@@ -174,9 +174,8 @@
     
 <p>Deprovision the container</p>
 
-<p>Attempts to deprovision the container.  We first call the provisioner
-deprovision method defined for the container, if any.  Next we attempt to
-offline the container.  Afterwards the container is destroy.</p>
+<p>Attempts to deprovision the container.  Calls the containers defined
+provisioners deprovision methods.</p>
 
 
   </div>
@@ -208,6 +207,9 @@ offline the container.  Afterwards the container is destroy.</p>
       <pre class="lines">
 
 
+30
+31
+32
 33
 34
 35
@@ -217,18 +219,17 @@ offline the container.  Afterwards the container is destroy.</p>
 39
 40
 41
-42
-43
-44</pre>
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deprovision'>deprovision</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Deprovision: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
+
+  <span class='id identifier rubyid_persistent_operation_check'>persistent_operation_check</span><span class='lparen'>(</span><span class='symbol'>:deprovision</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:deprovision</span><span class='comma'>,</span> <span class='symbol'>:red</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_do_provisioner_callbacks'>do_provisioner_callbacks</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:deprovision</span><span class='comma'>,</span> <span class='ivar'>@ui</span><span class='rparen'>)</span>
@@ -255,9 +256,8 @@ offline the container.  Afterwards the container is destroy.</p>
     
 <p>Provision the container</p>
 
-<p>Attempts to provision the container.  We first create the container, then
-attempt to bring it online.  Afterwards the containers provisioner is
-called.</p>
+<p>Attempts to provision the container.  Calls the containers defined
+provisioners provision methods.</p>
 
 
   </div>
@@ -289,6 +289,7 @@ called.</p>
       <pre class="lines">
 
 
+12
 13
 14
 15
@@ -298,18 +299,15 @@ called.</p>
 19
 20
 21
-22
-23
-24</pre>
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/provision.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_provision'>provision</span>
   <span class='ivar'>@ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Container Provision: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
 
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
-  <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span> <span class='op'>!=</span> <span class='symbol'>:running</span><span class='rparen'>)</span> <span class='kw'>and</span> <span class='kw'>return</span> <span class='kw'>false</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_alive?'>alive?</span> <span class='kw'>or</span> <span class='kw'>return</span> <span class='kw'>false</span>
 
   <span class='id identifier rubyid_please_wait'>please_wait</span><span class='lparen'>(</span><span class='symbol'>:ui</span> <span class='op'>=&gt;</span> <span class='ivar'>@ui</span><span class='comma'>,</span> <span class='symbol'>:message</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_format_object_action'>format_object_action</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:provision</span><span class='comma'>,</span> <span class='symbol'>:green</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_do_provisioner_callbacks'>do_provisioner_callbacks</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='symbol'>:provision</span><span class='comma'>,</span> <span class='ivar'>@ui</span><span class='rparen'>)</span>
@@ -327,9 +325,9 @@ called.</p>
 </div>
 
     <div id="footer">
-  Generated on Mon Aug 12 15:26:33 2013 by
+  Generated on Tue Aug 13 22:36:27 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.8.6.2 (ruby-1.9.3).
+  0.8.7 (ruby-1.9.3).
 </div>
 
   </body>
