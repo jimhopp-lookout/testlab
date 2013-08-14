@@ -25,6 +25,7 @@ node 'vagrant' do
 
   network 'labnet' do
     provisioners  [
+      TestLab::Provisioner::Route,
       TestLab::Provisioner::Bind
     ]
 
@@ -38,6 +39,7 @@ node 'vagrant' do
 
     provisioners   [
       TestLab::Provisioner::Resolv,
+      TestLab::Provisioner::Bind,
       TestLab::Provisioner::AptCacherNG,
       TestLab::Provisioner::Apt
     ]

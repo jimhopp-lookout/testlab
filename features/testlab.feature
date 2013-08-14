@@ -25,6 +25,8 @@ Feature: TestLab command-line
     Then the exit status should be 0
     When I export the containers with "tl"
     Then the exit status should be 0
+    When I bounce the lab with "tl"
+    Then the exit status should be 0
 
 
   Scenario: TestLab import
@@ -33,6 +35,8 @@ Feature: TestLab command-line
     When I import the containers with "tl"
     Then the exit status should be 0
     When I build the lab with "tl"
+    Then the exit status should be 0
+    When I bounce the lab with "tl"
     Then the exit status should be 0
 
 
@@ -50,13 +54,13 @@ Feature: TestLab command-line
     Then the exit status should be 0
 
     When I build the containers with "tl"
-    Then the exit status should be 0
+    Then the exit status should be 1
 
     When I bounce the containers with "tl"
     Then the exit status should be 0
 
     When I recycle the containers with "tl"
-    Then the exit status should be 0
+    Then the exit status should be 1
 
     When I bounce the containers with "tl"
     Then the exit status should be 0
@@ -83,6 +87,9 @@ Feature: TestLab command-line
     Then the exit status should be 0
 
     When I bounce the containers with "tl"
+    Then the exit status should be 0
+
+    When I bounce the lab with "tl"
     Then the exit status should be 0
 
 

@@ -26,6 +26,10 @@ When /^I destroy the lab with "([^"]*)"$/ do |app_name|
   testlab_cmd(app_name, %W(destroy))
 end
 
+When /^I bounce the lab with "([^"]*)"$/ do |app_name|
+  testlab_cmd(app_name, %W(bounce))
+end
+
 def testlab_cmd(app_name, *args)
   args = args.join(' ')
   step %(I run `#{app_name} --repo=#{TEST_REPO} --labfile=#{TEST_LABFILE} #{args}`)
