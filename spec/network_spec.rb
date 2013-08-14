@@ -110,9 +110,11 @@ describe TestLab::Network do
 
     describe "#create" do
       it "should create the network bridge" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
-        subject.stub(:state) { :not_created }
         subject.node.ssh.stub(:bootstrap) { true }
+
+        subject.stub(:state) { :not_created }
         subject.stub(:provisioners) { Array.new }
 
         subject.create
@@ -121,9 +123,11 @@ describe TestLab::Network do
 
     describe "#destroy" do
       it "should destroy the network bridge" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
-        subject.stub(:state) { :stopped }
         subject.node.ssh.stub(:bootstrap) { true }
+
+        subject.stub(:state) { :stopped }
         subject.stub(:provisioners) { Array.new }
 
         subject.destroy
@@ -132,9 +136,11 @@ describe TestLab::Network do
 
     describe "#up" do
       it "should online the network bridge" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
-        subject.stub(:state) { :stopped }
         subject.node.ssh.stub(:bootstrap) { true }
+
+        subject.stub(:state) { :stopped }
         subject.stub(:provisioners) { Array.new }
 
         subject.up
@@ -143,9 +149,11 @@ describe TestLab::Network do
 
     describe "#down" do
       it "should offline the network bridge" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
-        subject.stub(:state) { :running }
         subject.node.ssh.stub(:bootstrap) { true }
+
+        subject.stub(:state) { :running }
         subject.stub(:provisioners) { Array.new }
 
         subject.down
@@ -154,7 +162,9 @@ describe TestLab::Network do
 
     describe "#provision" do
       it "should create and online the network" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
+
         subject.stub(:state) { :running }
         subject.stub(:create) { true }
         subject.stub(:up) { true }
@@ -166,7 +176,9 @@ describe TestLab::Network do
 
     describe "#deprovision" do
       it "should create and online the network" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
+
         subject.stub(:state) { :running }
         subject.stub(:down) { true }
         subject.stub(:destroy) { true }

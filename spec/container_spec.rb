@@ -22,7 +22,8 @@ require "spec_helper"
 describe TestLab::Container do
 
   subject {
-    @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new)
+    @logger = ZTK::Logger.new('/tmp/test.log')
+    @ui = ZTK::UI.new(:stdout => StringIO.new, :stderr => StringIO.new, :logger => @logger)
     @testlab = TestLab.new(:repo_dir => REPO_DIR, :labfile_path => LABFILE_PATH, :ui => @ui)
     @testlab.boot
     @testlab.containers.first
@@ -52,6 +53,7 @@ describe TestLab::Container do
 
     describe "#status" do
       it "should return a hash of status information about the container" do
+        subject.node.stub(:dead?) { false }
         subject.node.stub(:state) { :running }
         subject.lxc.stub(:state) { :not_created }
         subject.lxc_clone.stub(:exists?) { false }
@@ -150,13 +152,17 @@ describe TestLab::Container do
 
     describe "#create" do
       it "should create the container" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
-        subject.lxc.config.stub(:save) { true }
-        subject.stub(:detect_arch) { "amd64" }
+        subject.node.ssh.stub(:exec)
+
         subject.lxc.stub(:create) { true }
         subject.lxc.stub(:state) { :not_created }
+        subject.lxc.config.stub(:save) { true }
+
         subject.lxc_clone.stub(:exists?) { false }
-        subject.node.ssh.stub(:exec)
+
+        subject.stub(:detect_arch) { "amd64" }
         subject.stub(:provisioners) { Array.new }
 
         subject.create
@@ -165,12 +171,16 @@ describe TestLab::Container do
 
     describe "#destroy" do
       it "should destroy the container" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
+
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:state) { :stopped }
         subject.lxc.stub(:destroy) { true }
+
         subject.lxc_clone.stub(:exists?) { false }
         subject.lxc_clone.stub(:destroy) { false }
+
         subject.stub(:provisioners) { Array.new }
 
         subject.destroy
@@ -179,16 +189,21 @@ describe TestLab::Container do
 
     describe "#up" do
       it "should up the container" do
+        subject.node.stub(:dead?) { false }
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
+        subject.node.stub(:arch) { "x86_64" }
+        subject.node.stub(:exec) { }
 
         subject.lxc.stub(:exists?) { true }
         subject.lxc.stub(:start) { true }
         subject.lxc.stub(:wait) { true }
         subject.lxc.stub(:state) { :running }
-        subject.lxc.stub(:attach)
 
         subject.lxc_clone.stub(:exists?) { false }
 
+        subject.stub(:exec) { }
+        subject.stub(:configure) { }
         subject.stub(:provisioners) { Array.new }
 
         ZTK::TCPSocketCheck.any_instance.stub(:wait) { true }
@@ -199,6 +214,7 @@ describe TestLab::Container do
 
     describe "#down" do
       it "should down the container" do
+        subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
 
         subject.lxc.stub(:exists?) { true }
@@ -217,6 +233,7 @@ describe TestLab::Container do
     describe "#provision" do
       context "with no provisioner" do
         it "should provision the container" do
+          subject.node.stub(:alive?) { true }
           subject.node.stub(:state) { :running }
 
           subject.lxc.stub(:exists?) { true }
@@ -234,6 +251,7 @@ describe TestLab::Container do
         it "should provision the container" do
           subject and (subject = TestLab::Container.first('server-shell'))
 
+          subject.node.stub(:alive?) { true }
           subject.node.stub(:state) { :running }
 
           subject.lxc.stub(:exists?) { true }
@@ -251,6 +269,7 @@ describe TestLab::Container do
     describe "#deprovision" do
       context "with no provisioner" do
         it "should deprovision the container" do
+          subject.node.stub(:alive?) { true }
           subject.node.stub(:state) { :running }
 
           subject.lxc.stub(:exists?) { true }
@@ -268,6 +287,7 @@ describe TestLab::Container do
         it "should deprovision the container" do
           subject and (subject = TestLab::Container.first('server-shell'))
 
+          subject.node.stub(:alive?) { true }
           subject.node.stub(:state) { :running }
 
           subject.lxc.stub(:exists?) { true }
