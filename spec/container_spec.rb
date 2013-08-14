@@ -214,6 +214,7 @@ describe TestLab::Container do
 
     describe "#down" do
       it "should down the container" do
+        subject.node.stub(:dead?) { false }
         subject.node.stub(:alive?) { true }
         subject.node.stub(:state) { :running }
 
