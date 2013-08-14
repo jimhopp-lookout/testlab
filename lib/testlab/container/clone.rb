@@ -33,6 +33,23 @@ class TestLab
         true
       end
 
+      # Persistent Operation Check
+      #
+      # Checks if the container is operating in ephemeral mode, and if it is
+      # raises an exception indicating the operation can not proceed.
+      #
+      # If the container is operating in persistent mode, no output is generated
+      # and true is returned indicating the operation can continue.
+      #
+      # @return [Boolean] True if the operation can continue; false otherwise.
+      def persistent_operation_check(action)
+        if is_ephemeral?
+          raise ContainerError, "You can not #{action} #{self.id} because it is currently in ephemeral mode!"
+        end
+
+        true
+      end
+
       # Is Container Ephemeral?
       #
       # Returns true if the container is in ephemeral mode, false otherwise.
