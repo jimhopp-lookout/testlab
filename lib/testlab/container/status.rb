@@ -70,7 +70,7 @@ class TestLab
       #
       # @return [Symbol] A symbol indicating the state of the container.
       def state
-        if (self.node.state != :running)
+        if self.node.dead?
           :unknown
         else
           self.lxc.state
@@ -82,7 +82,7 @@ class TestLab
       # What mode the container is in.
       # @return [Symbol] A symbol indicating the mode of the container.
       def mode
-        if (self.node.state != :running)
+        if self.node.dead?
           :unknown
         else
           if self.is_ephemeral?

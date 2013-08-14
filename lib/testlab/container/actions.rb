@@ -12,8 +12,7 @@ class TestLab
       def create
         @ui.logger.debug { "Container Create: #{self.id}" }
 
-        (self.node.state == :running) or return false
-        (self.state == :not_created) or return false
+        self.node.alive? or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Create', :green)) do
           configure
@@ -34,8 +33,7 @@ class TestLab
       def destroy
         @ui.logger.debug { "Container Destroy: #{self.id}" }
 
-        (self.node.state == :running) or return false
-        (self.state != :not_created) or return false
+        self.node.alive? or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Destroy', :red)) do
           self.lxc.destroy(%(-f))
@@ -55,8 +53,7 @@ class TestLab
       def up
         @ui.logger.debug { "Container Up: #{self.id}" }
 
-        (self.node.state == :running) or return false
-        (self.state != :running) or return false
+        self.node.alive? or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Up', :green)) do
           configure
@@ -101,8 +98,7 @@ class TestLab
       def down
         @ui.logger.debug { "Container Down: #{self.id}" }
 
-        (self.node.state == :running) or return false
-        (self.state == :running) or return false
+        self.node.alive? or return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Down', :red)) do
 
@@ -118,7 +114,6 @@ class TestLab
             #
             # If we are using a memory backed COW filesystem for the ephemeral
             # clones then it will be released when the container is stopped.
-
             self.persist and self.lxc.destroy(%(-f))
           end
 

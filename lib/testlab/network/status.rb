@@ -63,7 +63,7 @@ class TestLab
 
       # Network Bridge State
       def state
-        if (self.node.state != :running)
+        if self.node.dead?
           :unknown
         else
           exit_code = self.node.exec(%(sudo brctl show #{self.bridge} 2>&1 | grep -i 'No such device'), :ignore_exit_status => true).exit_code

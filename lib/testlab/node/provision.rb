@@ -7,8 +7,6 @@ class TestLab
       def provision
         @ui.logger.debug { "Node Provision: #{self.id} " }
 
-        (self.state != :running) and return false
-
         please_wait(:ui => @ui, :message => format_object_action(self, 'Provision', :green)) do
           do_provisioner_callbacks(self, :provision, @ui)
         end
@@ -19,8 +17,6 @@ class TestLab
       # Deprovision the node.
       def deprovision
         @ui.logger.debug { "Node Deprovision: #{self.id} " }
-
-        (self.state != :running) and return false
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Deprovision', :red)) do
           do_provisioner_callbacks(self, :deprovision, @ui)
