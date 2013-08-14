@@ -29,8 +29,6 @@ class TestLab
       # A collection of all states the VM can be in
       ALL_STATES      = (VALID_STATES + INVALID_STATES).flatten
 
-      MSG_NO_LAB      = %(We could not find a test lab!)
-
 ################################################################################
 
       def initialize(config={}, ui=nil)
@@ -50,8 +48,6 @@ class TestLab
 
       # Destroy Vagrant-controlled VM
       def destroy
-        !self.exists? and raise VagrantError, MSG_NO_LAB
-
         self.alive? and self.down
         self.exists? and self.vagrant_cli("destroy", "--force", self.instance_id)
 
@@ -71,8 +67,6 @@ class TestLab
 
       # Halt Vagrant-controlled VM
       def down(*args)
-        !self.exists? and raise VagrantError, MSG_NO_LAB
-
         arguments = (%W(halt #{self.instance_id}) + args).flatten.compact
 
         self.vagrant_cli(*arguments)
