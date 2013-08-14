@@ -12,7 +12,7 @@ class TestLab
         @ui.logger.debug { "Container Ephemeral: #{self.id}" }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Ephemeral', :yellow)) do
-          self.to_ephemeral
+          is_persistent? and self.to_ephemeral
         end
 
         true
@@ -27,7 +27,7 @@ class TestLab
         @ui.logger.debug { "Container Persistent: #{self.id}" }
 
         please_wait(:ui => @ui, :message => format_object_action(self, 'Persistent', :yellow)) do
-          self.to_static
+          is_ephemeral? and self.to_persistent
         end
 
         true
@@ -71,7 +71,7 @@ class TestLab
       # occur.
       #
       # @return [Boolean] Returns true if successful.
-      def to_static
+      def to_persistent
         if self.is_ephemeral?
           self.lxc.stop
           self.lxc.destroy(%(-f))
