@@ -73,6 +73,10 @@ class TestLab
       # @return [Boolean] Returns true if successful.
       def to_persistent
         if self.is_ephemeral?
+          self_state = self.state
+
+          configure
+
           self.lxc.stop
           self.lxc.destroy(%(-f))
 
@@ -80,7 +84,8 @@ class TestLab
           self.lxc_clone.clone(%W(-o #{self.lxc_clone.name} -n #{self.lxc.name}))
           self.lxc_clone.destroy(%(-f))
 
-          configure
+          # bring our container back online if it was running before the operation
+          (self_state == :running) and self.up
         end
 
         true
@@ -94,6 +99,10 @@ class TestLab
       # @return [Boolean] Returns true if successful.
       def to_ephemeral
         if self.is_persistent?
+          self_state = self.state
+
+          configure
+
           self.lxc_clone.stop
           self.lxc_clone.destroy(%(-f))
 
@@ -101,7 +110,8 @@ class TestLab
           self.lxc.clone(%W(-o #{self.lxc.name} -n #{self.lxc_clone.name}))
           self.lxc.destroy(%(-f))
 
-          configure
+          # bring our container back online if it was running before the operation
+          (self_state == :running) and self.up
         end
 
         true
