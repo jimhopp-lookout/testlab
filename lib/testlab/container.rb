@@ -130,13 +130,43 @@ class TestLab
     # NOTE: tmpfs is very memory intensive and is disabled by default.
     attribute   :persist,       :default => true
 
+    # Is this a template?  Never build it if so.
+    attribute   :template,      :default => false
+
+    # Should we inherit a container?
+    attribute   :inherit
+
 
     def initialize(*args)
       @ui = TestLab.ui
 
-      @ui.logger.info { "Loading Container '#{self.id}'" }
+      @ui.logger.debug { "Loading Container" }
       super(*args)
-      @ui.logger.info { "Container '#{self.id}' Loaded" }
+      @ui.logger.debug { "Container '#{self.id}' Loaded" }
+
+      if !self.inherit.nil?
+        @ui.logger.debug { "INHERIT: #{self.inherit}" }
+
+        parent = TestLab::Container.first(self.inherit)
+        if parent.nil?
+          raise ContainerError, "Could not find the container you specified to inherit attributes from!"
+        end
+
+        # Inherit the containers attributes
+        parent.attributes.reject{ |k,v| (k == :id) }.each do |key, value|
+          self.send("#{key}=", value.dup)
+        end
+
+        # Inherit the containers users
+        parent.users.each do |user|
+          inherited_user = TestLab::User.new
+          inherited_user.container_id = self.id
+
+          user.attributes.reject{ |k,v| [:id, :container_id].include?(k) }.each do |key, value|
+            inherited_user.send("#{key}=", (value.dup rescue value))
+          end
+        end
+      end
     end
 
     def config_dir
