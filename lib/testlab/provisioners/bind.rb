@@ -41,7 +41,7 @@ class TestLab
       def on_container_provision(container)
         @ui.logger.debug { "BIND Provisioner: Container #{container.id}" }
 
-        bind_provision(container.node)
+        bind_reload(container.node)
 
         true
       end
@@ -54,7 +54,7 @@ class TestLab
       def on_network_provision(network)
         @ui.logger.debug { "BIND Provisioner: Network #{network.id}" }
 
-        bind_provision(network.node)
+        bind_reload(network.node)
 
         true
       end
