@@ -10,7 +10,7 @@ class TestLab
       #
       # @return [Array<String>] A unique array of all defined domain names.
       def domains
-        self.all.map do |container|
+        self.all.select{ |container| (!container.template rescue true) }.map do |container|
           container.domain ||= container.node.domain
           container.domain
         end.compact.uniq
