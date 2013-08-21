@@ -46,7 +46,7 @@ class TestLab
     def initialize(*args)
       @ui = TestLab.ui
 
-      @ui.logger.info { "Loading Node '#{self.id}'" }
+      @ui.logger.debug { "Loading Node" }
 
       super(*args)
 
@@ -54,7 +54,7 @@ class TestLab
 
       raise NodeError, "You must specify a provider class!" if self.provider.nil?
 
-      @ui.logger.info { "Node '#{self.id}' Loaded" }
+      @ui.logger.debug { "Node '#{self.id}' Loaded" }
     end
 
     def config_dir

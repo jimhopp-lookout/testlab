@@ -41,9 +41,9 @@ class TestLab
     def initialize(*args)
       @ui = TestLab.ui
 
-      @ui.logger.info { "Loading Network '#{self.id}'" }
+      @ui.logger.debug { "Loading Network" }
       super(*args)
-      @ui.logger.info { "Network '#{self.id}' Loaded" }
+      @ui.logger.debug { "Network '#{self.id}' Loaded" }
     end
 
   end

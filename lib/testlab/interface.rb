@@ -21,9 +21,9 @@ class TestLab
     def initialize(*args)
       @ui = TestLab.ui
 
-      @ui.logger.info { "Loading Interface '#{self.id}'" }
+      @ui.logger.debug { "Loading Interface" }
       super(*args)
-      @ui.logger.info { "Interface '#{self.id}' Loaded" }
+      @ui.logger.debug { "Interface '#{self.id}' Loaded" }
     end
 
     def ip
