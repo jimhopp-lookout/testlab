@@ -76,10 +76,10 @@ class TestLab
         klass_name = klass.to_s.split('::').last.downcase
 
         if name.nil?
-          objects = klass.all
+          objects = klass.all.select{ |object| (!object.template rescue true) }
         else
           names = name.split(',')
-          objects = klass.find(names)
+          objects = klass.find(names).select{ |object| (!object.template rescue true) }
         end
 
         (objects.nil? || (objects.count == 0)) and raise TestLab::TestLabError, "We could not find any of the #{klass_name}s you supplied!"
