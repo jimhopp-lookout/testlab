@@ -9,7 +9,7 @@ class TestLab
       def provision
         @ui.logger.debug { "User Create: #{self.username} " }
 
-        node_home_dir = ((self.container.node.user == "root") ? %(/root) : %(/home/#{self.container.node.user}))
+        node_home_dir = home_dir(self.container.node.user)
         node_authkeys = File.join(node_home_dir, ".ssh", "authorized_keys")
 
         # ensure the container user exists
