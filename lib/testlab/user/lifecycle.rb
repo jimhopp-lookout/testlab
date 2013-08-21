@@ -48,6 +48,12 @@ class TestLab
           end
         end
 
+        if (public_identities.count > 0)
+          id_rsa_pub = File.join(user_home_dir, ".ssh", "id_rsa.pub")
+          self.container.node.exec(%(sudo grep -e "#{public_identities.first}" #{id_rsa_pub} || echo "#{public_identities.first}" | sudo tee #{id_rsa_pub}), :ignore_exit_status => true)
+          self.container.node.exec(%(sudo chmod -v 644 #{id_rsa_pub}), :ignore_exit_status => true)
+        end
+
         authkeys.each do |destination, source|
           @ui.logger.info { "SOURCE: #{source} >>> #{destination}" }
           self.container.node.exec(%(sudo mkdir -pv #{File.dirname(destination)}))
@@ -70,8 +76,8 @@ class TestLab
 
         if (identities.count > 0)
           id_rsa = File.join(user_home_dir, ".ssh", "id_rsa")
-          self.container.node.exec(%(sudo grep -e "#{identities.first}" #{id_rsa} || echo "#{identities.first}" | sudo tee #{id_rsa}))
-          self.container.node.exec(%(sudo chmod -v 400 #{id_rsa}))
+          self.container.node.exec(%(sudo grep -e "#{identities.first}" #{id_rsa} || echo "#{identities.first}" | sudo tee #{id_rsa}), :ignore_exit_status => true)
+          self.container.node.exec(%(sudo chmod -v 400 #{id_rsa}), :ignore_exit_status => true)
         end
 
         # ensure the container user home directory is owned by them
