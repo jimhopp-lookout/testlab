@@ -171,7 +171,6 @@ class TestLab
           end
         end
 
-        self.template = false
       end
     end
 
