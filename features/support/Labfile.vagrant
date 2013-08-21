@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 #^syntax detection
 
+version ">= 1.5.1"
+
 node 'vagrant' do
 
   provider      TestLab::Provider::Vagrant
