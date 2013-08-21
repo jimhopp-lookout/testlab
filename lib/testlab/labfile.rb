@@ -31,11 +31,11 @@ class TestLab
 
         if version_arguments.count == 1
           if (TestLab::VERSION != version_arguments.first)
-            raise LabfileError, 'Your Labfile is not compatible with this Version of TestLab!'
+            raise LabfileError, "This Labfile is not compatible with this version of TestLab! (#{version})"
           end
         elsif version_arguments.count == 2
           if !TestLab::VERSION.send(version_arguments.first, version_arguments.last)
-            raise LabfileError, 'Your Labfile is not compatible with this Version of TestLab!'
+            raise LabfileError, "This Labfile is not compatible with this version of TestLab! (#{version})"
           end
         else
           raise LabfileError, 'Invalid version!'
