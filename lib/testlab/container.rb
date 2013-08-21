@@ -81,6 +81,7 @@ class TestLab
     autoload :Configuration, 'testlab/container/configuration'
     autoload :Generators,    'testlab/container/generators'
     autoload :Interface,     'testlab/container/interface'
+
     autoload :IO,            'testlab/container/io'
     autoload :LXC,           'testlab/container/lxc'
     autoload :MethodMissing, 'testlab/container/method_missing'
@@ -157,7 +158,7 @@ class TestLab
         end
 
         # Inherit the containers attributes
-        parent.attributes.reject{ |k,v| [:id, :template].include?(k) }.each do |key, value|
+        parent.attributes.reject{ |k,v| [:id, :node_id, :inherit, :template].include?(k) }.each do |key, value|
           self.send("#{key}=", (value.dup rescue value))
         end
 
