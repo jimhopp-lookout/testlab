@@ -125,6 +125,8 @@ class TestLab
     attribute   :release,       :default => 'precise'
     attribute   :arch
 
+    attribute   :tags,          :default => Array.new
+
     # Instructs ephemeral containers to persist; otherwise tmpfs will be used
     # as the backend store for ephemeral containers.
     # NOTE: tmpfs is very memory intensive and is disabled by default.
@@ -143,6 +145,8 @@ class TestLab
       @ui.logger.debug { "Loading Container" }
       super(*args)
       @ui.logger.debug { "Container '#{self.id}' Loaded" }
+
+      self.tags ||= [ self.id ]
 
       if !self.inherit.nil?
         @ui.logger.debug { "INHERIT: #{self.inherit}" }
