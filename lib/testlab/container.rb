@@ -72,7 +72,7 @@ class TestLab
     # An array of symbols of the various keys in our status hash.
     #
     # @see TestLab::Container::Status
-    STATUS_KEYS   = %w(id node_id mode fqdn state distro release interfaces provisioners).map(&:to_sym)
+    STATUS_KEYS   = %w(id node_id mode fqdn state distro release interfaces provisioners inherited).map(&:to_sym)
 
     # Sub-Modules
     autoload :Actions,       'testlab/container/actions'

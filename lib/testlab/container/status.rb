@@ -60,7 +60,8 @@ class TestLab
           :release => self.release,
           :interfaces => interfaces,
           :provisioners => self.provisioners.map(&:to_s).collect{ |p| p.split('::').last }.join(','),
-          :node_id => self.node.id
+          :node_id => self.node.id,
+          :inherited => (self.inherit.nil? ? 'none' : self.inherit)
         }
       end
 
