@@ -81,7 +81,6 @@ class TestLab
     autoload :Configuration, 'testlab/container/configuration'
     autoload :Generators,    'testlab/container/generators'
     autoload :Interface,     'testlab/container/interface'
-
     autoload :IO,            'testlab/container/io'
     autoload :LXC,           'testlab/container/lxc'
     autoload :MethodMissing, 'testlab/container/method_missing'
