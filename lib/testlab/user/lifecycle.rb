@@ -61,6 +61,19 @@ class TestLab
           self.container.node.exec(%(sudo chmod -v 644 #{destination}))
         end
 
+        identities = Array.new
+        !self.identity.nil? and [self.identity].flatten.compact.each do |i|
+          if File.exists?(i)
+            identities << ::IO.read(i).strip
+          end
+        end
+
+        if (identities.count > 0)
+          id_rsa = File.join(user_home_dir, ".ssh", "id_rsa")
+          self.container.node.exec(%(sudo grep -e "#{identities.first}" #{id_rsa} || echo "#{identities.first}" | sudo tee #{id_rsa}))
+          self.container.node.exec(%(sudo chmod -v 400 #{id_rsa}))
+        end
+
         # ensure the container user home directory is owned by them
         home_dir = self.container.lxc.attach(%(-- /bin/bash -c 'grep #{self.username} /etc/passwd | cut -d ":" -f6')).strip
         self.container.lxc.attach(%(-- /bin/bash -c 'sudo chown -Rv $(id -u #{self.username}):$(id -g #{self.username}) #{home_dir}'))
