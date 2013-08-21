@@ -154,7 +154,7 @@ class TestLab
 
         # Inherit the containers attributes
         parent.attributes.reject{ |k,v| (k == :id) }.each do |key, value|
-          self.send("#{key}=", value.dup)
+          self.send("#{key}=", (value.dup rescue value))
         end
 
         # Inherit the containers users
