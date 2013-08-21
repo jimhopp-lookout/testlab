@@ -13,14 +13,34 @@ class TestLab
 
     attribute  :testlab
     attribute  :config,        :default => Hash.new
-    attribute  :version,       :default => TestLab::VERSION
+    attribute  :version
 
     def initialize(*args)
       @ui = TestLab.ui
 
-      @ui.logger.info { "Loading Labfile '#{self.id}'" }
+      @ui.logger.debug { "Loading Labfile" }
       super(*args)
-      @ui.logger.info { "Labfile '#{self.id}' Loaded" }
+      @ui.logger.debug { "Labfile '#{self.id}' Loaded" }
+
+      if version.nil?
+        raise LabfileError, 'You must version the Labfile!'
+      else
+        @ui.logger.debug { "Labfile Version: #{version}" }
+        version_arguments = version.split
+        @ui.logger.debug { version_arguments.inspect }
+
+        if version_arguments.count == 1
+          if (TestLab::VERSION != version_arguments.first)
+            raise LabfileError, 'Your Labfile is not compatible with this Version of TestLab!'
+          end
+        elsif version_arguments.count == 2
+          if !TestLab::VERSION.send(version_arguments.first, version_arguments.last)
+            raise LabfileError, 'Your Labfile is not compatible with this Version of TestLab!'
+          end
+        else
+          raise LabfileError, 'Invalid version!'
+        end
+      end
     end
 
     def config_dir
