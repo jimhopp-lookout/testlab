@@ -513,7 +513,6 @@
       <pre class="lines">
 
 
-84
 85
 86
 87
@@ -523,10 +522,11 @@
 91
 92
 93
-94</pre>
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mode'>mode</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -651,16 +651,16 @@
       <pre class="lines">
 
 
-72
 73
 74
 75
 76
 77
-78</pre>
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state'>state</span>
   <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_dead?'>dead?</span>
@@ -736,7 +736,8 @@
 62
 63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/testlab/container/status.rb', line 49</span>
@@ -755,7 +756,8 @@
     <span class='symbol'>:release</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_release'>release</span><span class='comma'>,</span>
     <span class='symbol'>:interfaces</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_interfaces'>interfaces</span><span class='comma'>,</span>
     <span class='symbol'>:provisioners</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_provisioners'>provisioners</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_s</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>::</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>,</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='symbol'>:node_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+    <span class='symbol'>:node_id</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+    <span class='symbol'>:inherited</span> <span class='op'>=&gt;</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inherit'>inherit</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>none</span><span class='tstring_end'>'</span></span> <span class='op'>:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inherit'>inherit</span><span class='rparen'>)</span>
   <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -768,7 +770,7 @@
 </div>
 
     <div id="footer">
-  Generated on Wed Aug 14 01:22:49 2013 by
+  Generated on Wed Aug 21 17:00:33 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>

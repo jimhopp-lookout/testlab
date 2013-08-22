@@ -103,7 +103,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">lib/testlab.rb<span class="defines">,<br />
-  lib/testlab/node.rb,<br /> lib/testlab/user.rb,<br /> lib/testlab/support.rb,<br /> lib/testlab/utility.rb,<br /> lib/testlab/network.rb,<br /> lib/testlab/version.rb,<br /> lib/testlab/labfile.rb,<br /> lib/testlab/provider.rb,<br /> lib/testlab/node/ssh.rb,<br /> lib/testlab/node/lxc.rb,<br /> lib/testlab/container.rb,<br /> lib/testlab/interface.rb,<br /> lib/testlab/provisioner.rb,<br /> lib/testlab/utility/gli.rb,<br /> lib/testlab/node/status.rb,<br /> lib/testlab/network/bind.rb,<br /> lib/testlab/container/io.rb,<br /> lib/testlab/utility/cidr.rb,<br /> lib/testlab/node/actions.rb,<br /> lib/testlab/utility/misc.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/providers/aws.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/user/lifecycle.rb,<br /> lib/testlab/utility/logger.rb,<br /> lib/testlab/node/provision.rb,<br /> lib/testlab/network/status.rb,<br /> lib/testlab/providers/local.rb,<br /> lib/testlab/network/actions.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/provisioners/apt.rb,<br /> lib/testlab/providers/vagrant.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/network/provision.rb,<br /> lib/testlab/provisioners/bind.rb,<br /> lib/testlab/support/lifecycle.rb,<br /> lib/testlab/support/execution.rb,<br /> lib/testlab/provisioners/chef.rb,<br /> lib/testlab/provisioners/shell.rb,<br /> lib/testlab/node/class_methods.rb,<br /> lib/testlab/provisioners/route.rb,<br /> lib/testlab/provisioners/resolv.rb,<br /> lib/testlab/provisioners/raring.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/node/method_missing.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/container/generators.rb,<br /> lib/testlab/network/class_methods.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/method_missing.rb,<br /> lib/testlab/provisioners/apt_cacher_ng.rb,<br /> lib/testlab/provisioners/chef/omni_bus.rb,<br /> lib/testlab/provisioners/chef/omni_truck.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_client.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_server.rb</span>
+  lib/testlab/user.rb,<br /> lib/testlab/node.rb,<br /> lib/testlab/source.rb,<br /> lib/testlab/network.rb,<br /> lib/testlab/version.rb,<br /> lib/testlab/support.rb,<br /> lib/testlab/utility.rb,<br /> lib/testlab/labfile.rb,<br /> lib/testlab/node/ssh.rb,<br /> lib/testlab/node/lxc.rb,<br /> lib/testlab/provider.rb,<br /> lib/testlab/interface.rb,<br /> lib/testlab/container.rb,<br /> lib/testlab/dependency.rb,<br /> lib/testlab/utility/gli.rb,<br /> lib/testlab/provisioner.rb,<br /> lib/testlab/node/status.rb,<br /> lib/testlab/utility/misc.rb,<br /> lib/testlab/utility/cidr.rb,<br /> lib/testlab/network/bind.rb,<br /> lib/testlab/container/io.rb,<br /> lib/testlab/node/actions.rb,<br /> lib/testlab/providers/aws.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/node/provision.rb,<br /> lib/testlab/network/status.rb,<br /> lib/testlab/user/lifecycle.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/utility/logger.rb,<br /> lib/testlab/providers/local.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/network/actions.rb,<br /> lib/testlab/provisioners/apt.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/support/execution.rb,<br /> lib/testlab/provisioners/bind.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/provisioners/chef.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/providers/vagrant.rb,<br /> lib/testlab/network/provision.rb,<br /> lib/testlab/support/lifecycle.rb,<br /> lib/testlab/node/class_methods.rb,<br /> lib/testlab/provisioners/shell.rb,<br /> lib/testlab/provisioners/route.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/provisioners/resolv.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/provisioners/raring.rb,<br /> lib/testlab/node/method_missing.rb,<br /> lib/testlab/container/generators.rb,<br /> lib/testlab/network/class_methods.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/method_missing.rb,<br /> lib/testlab/provisioners/chef/omni_bus.rb,<br /> lib/testlab/provisioners/apt_cacher_ng.rb,<br /> lib/testlab/provisioners/chef/omni_truck.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_server.rb,<br /> lib/testlab/provisioners/chef/ruby_gem_client.rb</span>
 </dd>
   
 </dl>
@@ -267,7 +267,7 @@ Containers (LXC) to accomplish this.</p>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="TestLab/Container.html" title="TestLab::Container (class)">Container</a></span>, <span class='object_link'><a href="TestLab/ContainerError.html" title="TestLab::ContainerError (class)">ContainerError</a></span>, <span class='object_link'><a href="TestLab/Interface.html" title="TestLab::Interface (class)">Interface</a></span>, <span class='object_link'><a href="TestLab/InterfaceError.html" title="TestLab::InterfaceError (class)">InterfaceError</a></span>, <span class='object_link'><a href="TestLab/Labfile.html" title="TestLab::Labfile (class)">Labfile</a></span>, <span class='object_link'><a href="TestLab/LabfileError.html" title="TestLab::LabfileError (class)">LabfileError</a></span>, <span class='object_link'><a href="TestLab/Network.html" title="TestLab::Network (class)">Network</a></span>, <span class='object_link'><a href="TestLab/NetworkError.html" title="TestLab::NetworkError (class)">NetworkError</a></span>, <span class='object_link'><a href="TestLab/Node.html" title="TestLab::Node (class)">Node</a></span>, <span class='object_link'><a href="TestLab/NodeError.html" title="TestLab::NodeError (class)">NodeError</a></span>, <span class='object_link'><a href="TestLab/Provider.html" title="TestLab::Provider (class)">Provider</a></span>, <span class='object_link'><a href="TestLab/ProviderError.html" title="TestLab::ProviderError (class)">ProviderError</a></span>, <span class='object_link'><a href="TestLab/Provisioner.html" title="TestLab::Provisioner (class)">Provisioner</a></span>, <span class='object_link'><a href="TestLab/ProvisionerError.html" title="TestLab::ProvisionerError (class)">ProvisionerError</a></span>, <span class='object_link'><a href="TestLab/SupportError.html" title="TestLab::SupportError (class)">SupportError</a></span>, <span class='object_link'><a href="TestLab/TestLabError.html" title="TestLab::TestLabError (class)">TestLabError</a></span>, <span class='object_link'><a href="TestLab/User.html" title="TestLab::User (class)">User</a></span>, <span class='object_link'><a href="TestLab/UserError.html" title="TestLab::UserError (class)">UserError</a></span>, <span class='object_link'><a href="TestLab/UtilityError.html" title="TestLab::UtilityError (class)">UtilityError</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="TestLab/Container.html" title="TestLab::Container (class)">Container</a></span>, <span class='object_link'><a href="TestLab/ContainerError.html" title="TestLab::ContainerError (class)">ContainerError</a></span>, <span class='object_link'><a href="TestLab/Dependency.html" title="TestLab::Dependency (class)">Dependency</a></span>, <span class='object_link'><a href="TestLab/DependencyError.html" title="TestLab::DependencyError (class)">DependencyError</a></span>, <span class='object_link'><a href="TestLab/Interface.html" title="TestLab::Interface (class)">Interface</a></span>, <span class='object_link'><a href="TestLab/InterfaceError.html" title="TestLab::InterfaceError (class)">InterfaceError</a></span>, <span class='object_link'><a href="TestLab/Labfile.html" title="TestLab::Labfile (class)">Labfile</a></span>, <span class='object_link'><a href="TestLab/LabfileError.html" title="TestLab::LabfileError (class)">LabfileError</a></span>, <span class='object_link'><a href="TestLab/Network.html" title="TestLab::Network (class)">Network</a></span>, <span class='object_link'><a href="TestLab/NetworkError.html" title="TestLab::NetworkError (class)">NetworkError</a></span>, <span class='object_link'><a href="TestLab/Node.html" title="TestLab::Node (class)">Node</a></span>, <span class='object_link'><a href="TestLab/NodeError.html" title="TestLab::NodeError (class)">NodeError</a></span>, <span class='object_link'><a href="TestLab/Provider.html" title="TestLab::Provider (class)">Provider</a></span>, <span class='object_link'><a href="TestLab/ProviderError.html" title="TestLab::ProviderError (class)">ProviderError</a></span>, <span class='object_link'><a href="TestLab/Provisioner.html" title="TestLab::Provisioner (class)">Provisioner</a></span>, <span class='object_link'><a href="TestLab/ProvisionerError.html" title="TestLab::ProvisionerError (class)">ProvisionerError</a></span>, <span class='object_link'><a href="TestLab/Source.html" title="TestLab::Source (class)">Source</a></span>, <span class='object_link'><a href="TestLab/SourceError.html" title="TestLab::SourceError (class)">SourceError</a></span>, <span class='object_link'><a href="TestLab/SupportError.html" title="TestLab::SupportError (class)">SupportError</a></span>, <span class='object_link'><a href="TestLab/TestLabError.html" title="TestLab::TestLabError (class)">TestLabError</a></span>, <span class='object_link'><a href="TestLab/User.html" title="TestLab::User (class)">User</a></span>, <span class='object_link'><a href="TestLab/UserError.html" title="TestLab::UserError (class)">UserError</a></span>, <span class='object_link'><a href="TestLab/UtilityError.html" title="TestLab::UtilityError (class)">UtilityError</a></span>
     
   
 </p>
@@ -290,7 +290,7 @@ Containers (LXC) to accomplish this.</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.5.1</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1.6.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -1003,8 +1003,6 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-140
-141
 142
 143
 144
@@ -1014,10 +1012,12 @@ Containers (LXC) to accomplish this.</p>
 148
 149
 150
-151</pre>
+151
+152
+153</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>          <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:ui</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>ZTK</span><span class='op'>::</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span>
@@ -1079,18 +1079,18 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-406
-407
 408
 409
 410
 411
 412
 413
-414</pre>
+414
+415
+416</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 406</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 408</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TESTLAB METHOD MISSING: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method_name'>method_name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>(</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_method_args'>method_args</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='rbrace'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
@@ -1139,12 +1139,12 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-136
-137
-138</pre>
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='ivar'>@config_dir</span>
@@ -1182,12 +1182,12 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-138
-139
-140</pre>
+140
+141
+142</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_labfile_path'>labfile_path</span>
   <span class='ivar'>@labfile_path</span>
@@ -1225,12 +1225,12 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-137
-138
-139</pre>
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 137</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='ivar'>@repo_dir</span>
@@ -1293,12 +1293,12 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-216
-217
-218</pre>
+218
+219
+220</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 218</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_alive?'>alive?</span>
   <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:state</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_state'>state</span><span class='op'>|</span> <span class='id identifier rubyid_state'>state</span> <span class='op'>==</span> <span class='symbol'>:running</span> <span class='rbrace'>}</span>
@@ -1354,15 +1354,15 @@ Containers (LXC) to accomplish this.</p>
       <pre class="lines">
 
 
-158
-159
 160
 161
 162
-163</pre>
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_boot'>boot</span>
   <span class='ivar'>@labfile</span>         <span class='op'>=</span> <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Labfile</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span><span class='lparen'>(</span><span class='id identifier rubyid_labfile_path'>labfile_path</span><span class='rparen'>)</span>
@@ -1422,15 +1422,15 @@ our nodes, networks and containers.</p>
       <pre class="lines">
 
 
-331
-332
 333
 334
 335
-336</pre>
+336
+337
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 333</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_bounce'>bounce</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_down'>down</span>
@@ -1490,14 +1490,14 @@ our nodes, networks and containers.</p>
       <pre class="lines">
 
 
-307
-308
 309
 310
-311</pre>
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 309</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build'>build</span>
   <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:build</span><span class='rparen'>)</span>
@@ -1556,12 +1556,12 @@ high-level lab configuration options.</p>
       <pre class="lines">
 
 
-207
-208
-209</pre>
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
   <span class='ivar'>@labfile</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span>
@@ -1617,12 +1617,12 @@ high-level lab configuration options.</p>
       <pre class="lines">
 
 
-179
-180
-181</pre>
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 181</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_containers'>containers</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Container</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -1679,14 +1679,14 @@ of our nodes.</p>
       <pre class="lines">
 
 
-235
-236
 237
 238
-239</pre>
+239
+240
+241</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 237</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:create</span><span class='rparen'>)</span>
@@ -1744,12 +1744,12 @@ of our nodes.</p>
       <pre class="lines">
 
 
-225
-226
-227</pre>
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 227</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dead?'>dead?</span>
   <span class='op'>!</span><span class='id identifier rubyid_alive?'>alive?</span>
@@ -1806,14 +1806,14 @@ of our nodes, networks and containers.</p>
       <pre class="lines">
 
 
-319
-320
 321
 322
-323</pre>
+323
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 321</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_demolish'>demolish</span>
   <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:demolish</span><span class='rparen'>)</span>
@@ -1872,14 +1872,14 @@ on all of our nodes.</p>
       <pre class="lines">
 
 
-295
-296
 297
 298
-299</pre>
+299
+300
+301</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 295</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 297</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deprovision'>deprovision</span>
   <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:deprovision</span><span class='rparen'>)</span>
@@ -1938,14 +1938,14 @@ of our nodes.</p>
       <pre class="lines">
 
 
-247
-248
 249
 250
-251</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 249</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:destroy</span><span class='rparen'>)</span>
@@ -2004,14 +2004,14 @@ our nodes.</p>
       <pre class="lines">
 
 
-271
-272
 273
 274
-275</pre>
+275
+276
+277</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 271</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_down'>down</span>
   <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='symbol'>:down</span><span class='rparen'>)</span>
@@ -2069,12 +2069,12 @@ our nodes.</p>
       <pre class="lines">
 
 
-197
-198
-199</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_labfile'>labfile</span>
   <span class='ivar'>@labfile</span>
@@ -2131,8 +2131,6 @@ arguments to each object.</p>
       <pre class="lines">
 
 
-371
-372
 373
 374
 375
@@ -2141,10 +2139,12 @@ arguments to each object.</p>
 378
 379
 380
-381</pre>
+381
+382
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 371</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 373</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
@@ -2208,12 +2208,12 @@ arguments to each object.</p>
       <pre class="lines">
 
 
-188
-189
-190</pre>
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_networks'>networks</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Network</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -2270,16 +2270,16 @@ arguments to each node.</p>
       <pre class="lines">
 
 
-357
-358
 359
 360
 361
 362
-363</pre>
+363
+364
+365</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 357</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 359</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_node_method_proxy'>node_method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
@@ -2339,12 +2339,12 @@ arguments to each node.</p>
       <pre class="lines">
 
 
-170
-171
-172</pre>
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_nodes'>nodes</span>
   <span class='const'>TestLab</span><span class='op'>::</span><span class='const'>Node</span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -2401,14 +2401,14 @@ all of our nodes.</p>
       <pre class="lines">
 
 
-283
-284
 285
 286
-287</pre>
+287
+288
+289</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 283</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 285</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_provision'>provision</span>
   <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:provision</span><span class='rparen'>)</span>
@@ -2467,15 +2467,15 @@ our nodes, networks and containers.</p>
       <pre class="lines">
 
 
-344
-345
 346
 347
 348
-349</pre>
+349
+350
+351</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 344</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 346</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_recycle'>recycle</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_demolish'>demolish</span>
@@ -2535,8 +2535,6 @@ arguments to each object.</p>
       <pre class="lines">
 
 
-389
-390
 391
 392
 393
@@ -2545,10 +2543,12 @@ arguments to each object.</p>
 396
 397
 398
-399</pre>
+399
+400
+401</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 391</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reverse_method_proxy'>reverse_method_proxy</span><span class='lparen'>(</span><span class='id identifier rubyid_method_name'>method_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_method_args'>method_args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_nodes'>nodes</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_node'>node</span><span class='op'>|</span>
@@ -2613,14 +2613,14 @@ nodes.</p>
       <pre class="lines">
 
 
-259
-260
 261
 262
-263</pre>
+263
+264
+265</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_up'>up</span>
   <span class='id identifier rubyid_method_proxy'>method_proxy</span><span class='lparen'>(</span><span class='symbol'>:up</span><span class='rparen'>)</span>
@@ -2637,7 +2637,7 @@ nodes.</p>
 </div>
 
     <div id="footer">
-  Generated on Wed Aug 14 01:22:50 2013 by
+  Generated on Wed Aug 21 17:00:34 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>
