@@ -105,7 +105,7 @@
   
     <dt class="r2 last">Defined in:</dt>
     <dd class="r2 last">lib/testlab/container.rb<span class="defines">,<br />
-  lib/testlab/container/io.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/container/generators.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/method_missing.rb</span>
+  lib/testlab/container/io.rb,<br /> lib/testlab/container/ssh.rb,<br /> lib/testlab/container/lxc.rb,<br /> lib/testlab/container/user.rb,<br /> lib/testlab/container/clone.rb,<br /> lib/testlab/container/status.rb,<br /> lib/testlab/container/support.rb,<br /> lib/testlab/container/actions.rb,<br /> lib/testlab/container/interface.rb,<br /> lib/testlab/container/provision.rb,<br /> lib/testlab/container/generators.rb,<br /> lib/testlab/container/configuration.rb,<br /> lib/testlab/container/class_methods.rb,<br /> lib/testlab/container/method_missing.rb</span>
 </dd>
   
 </dl>
@@ -569,9 +569,6 @@ the container.</p>
       <pre class="lines">
 
 
-142
-143
-144
 145
 146
 147
@@ -602,10 +599,13 @@ the container.</p>
 172
 173
 174
-175</pre>
+175
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@ui</span> <span class='op'>=</span> <span class='const'>TestLab</span><span class='period'>.</span><span class='id identifier rubyid_ui'>ui</span>
@@ -678,12 +678,12 @@ the container.</p>
       <pre class="lines">
 
 
-177
-178
-179</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_config_dir'>config_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_config_dir'>config_dir</span>
@@ -708,12 +708,12 @@ the container.</p>
       <pre class="lines">
 
 
-181
-182
-183</pre>
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/testlab/container.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_repo_dir'>repo_dir</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_node'>node</span><span class='period'>.</span><span class='id identifier rubyid_repo_dir'>repo_dir</span>
@@ -728,7 +728,7 @@ the container.</p>
 </div>
 
     <div id="footer">
-  Generated on Wed Aug 21 17:00:35 2013 by
+  Generated on Mon Aug 26 08:51:09 2013 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7 (ruby-1.9.3).
 </div>
