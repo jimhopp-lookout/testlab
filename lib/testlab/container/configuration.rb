@@ -27,6 +27,11 @@ class TestLab
 
         lxc_config['lxc.arch']    = self.arch
         lxc_config['lxc.utsname'] = self.fqdn
+
+        unless self.aa_profile.nil?
+          lxc_config['lxc.aa_profile'] = self.aa_profile
+        end
+
         lxc_config.networks       = build_lxc_network_conf(self.interfaces)
 
         lxc_config.save

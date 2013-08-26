@@ -125,6 +125,8 @@ class TestLab
     attribute   :release,       :default => 'precise'
     attribute   :arch
 
+    attribute   :aa_profile
+
     attribute   :tags,          :default => Array.new
 
     # Instructs ephemeral containers to persist; otherwise tmpfs will be used
