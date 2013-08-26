@@ -32,6 +32,10 @@ class TestLab
           lxc_config['lxc.aa_profile'] = self.aa_profile
         end
 
+        unless self.cap_drop.nil?
+          lxc_config['lxc.cap.drop'] = [self.cap_drop].flatten.compact.map(&:downcase).join(' ')
+        end
+
         lxc_config.networks       = build_lxc_network_conf(self.interfaces)
 
         lxc_config.save

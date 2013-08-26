@@ -126,6 +126,7 @@ class TestLab
     attribute   :arch
 
     attribute   :aa_profile
+    attribute   :cap_drop
 
     attribute   :tags,          :default => Array.new
 
