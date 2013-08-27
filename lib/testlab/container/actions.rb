@@ -68,7 +68,7 @@ class TestLab
           if self.is_ephemeral?
             self.lxc_clone.start_ephemeral(clone_args)
           else
-            self.lxc.start(%(--daemon))
+            self.lxc.start(start_args)
           end
 
           (self.state != :running) and raise ContainerError, "The container failed to online!"

@@ -15,6 +15,26 @@ class TestLab
         end
       end
 
+      # Returns arguments for lxc-start
+      #
+      # @return [Array<String>] An array of arguments for lxc-start
+      def start_args
+        arguments = Array.new
+
+        unless self.aa_profile.nil?
+          arguments << %W(-s lxc.aa_profile="#{self.aa_profile}")
+        end
+
+        unless self.cap_drop.nil?
+          cap_drop = [self.cap_drop].flatten.compact.map(&:downcase).join(' ')
+          arguments << %W(-s lxc.cap.drop="#{cap_drop}")
+        end
+
+        arguments << %W(-d)
+
+        arguments.flatten.compact
+      end
+
       # Returns arguments for lxc-start-ephemeral
       #
       # @return [Array<String>] An array of arguments for lxc-start-ephemeral
